@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		183FC1B43CAC1F4162D06876 /* Pods_coinflashUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D87185B0096A3FFED202487 /* Pods_coinflashUITests.framework */; };
 		3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC023B1F78F16700DD6558 /* AppDelegate.swift */; };
 		3FCC023E1F78F16700DD6558 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC023D1F78F16700DD6558 /* ViewController.swift */; };
 		3FCC02411F78F16700DD6558 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FCC023F1F78F16700DD6558 /* Main.storyboard */; };
@@ -14,6 +15,9 @@
 		3FCC02461F78F16700DD6558 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FCC02441F78F16700DD6558 /* LaunchScreen.storyboard */; };
 		3FCC02511F78F16700DD6558 /* coinflashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC02501F78F16700DD6558 /* coinflashTests.swift */; };
 		3FCC025C1F78F16700DD6558 /* coinflashUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC025B1F78F16700DD6558 /* coinflashUITests.swift */; };
+		3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */; };
+		6AD120B7C913CC48A7586DD0 /* Pods_coinflashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */; };
+		8AA2F2093DD96E4F4CCB42D7 /* Pods_coinflash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA844273D1373ADDF75EEE2F /* Pods_coinflash.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coinflashTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D87185B0096A3FFED202487 /* Pods_coinflashUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coinflashUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FCCE0FE2D004E311A242478 /* Pods-coinflashUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashUITests/Pods-coinflashUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2DD22795A95AC01C1CA2B39C /* Pods-coinflash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflash/Pods-coinflash.debug.xcconfig"; sourceTree = "<group>"; };
 		3FCC02381F78F16700DD6558 /* coinflash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coinflash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FCC023B1F78F16700DD6558 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FCC023D1F78F16700DD6558 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +55,12 @@
 		3FCC02571F78F16700DD6558 /* coinflashUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = coinflashUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FCC025B1F78F16700DD6558 /* coinflashUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coinflashUITests.swift; sourceTree = "<group>"; };
 		3FCC025D1F78F16700DD6558 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		50405860F458963D2234B2F3 /* Pods-coinflash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflash.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflash/Pods-coinflash.release.xcconfig"; sourceTree = "<group>"; };
+		68F80628794C280040E2F105 /* Pods-coinflashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.release.xcconfig"; sourceTree = "<group>"; };
+		A7C2B8AE755AA69688FE88C6 /* Pods-coinflashTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CCF7E6BC4EFE63A02450DD33 /* Pods-coinflashUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashUITests/Pods-coinflashUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		EA844273D1373ADDF75EEE2F /* Pods_coinflash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coinflash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AA2F2093DD96E4F4CCB42D7 /* Pods_coinflash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AD120B7C913CC48A7586DD0 /* Pods_coinflashTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				183FC1B43CAC1F4162D06876 /* Pods_coinflashUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +98,8 @@
 				3FCC024F1F78F16700DD6558 /* coinflashTests */,
 				3FCC025A1F78F16700DD6558 /* coinflashUITests */,
 				3FCC02391F78F16700DD6558 /* Products */,
+				B2555A39542D171CD0A9C536 /* Pods */,
+				E6DA9D63E3BDC003613C547E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +118,7 @@
 			children = (
 				3FCC023B1F78F16700DD6558 /* AppDelegate.swift */,
 				3FCC023D1F78F16700DD6558 /* ViewController.swift */,
+				3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */,
 				3FCC023F1F78F16700DD6558 /* Main.storyboard */,
 				3FCC02421F78F16700DD6558 /* Assets.xcassets */,
 				3FCC02441F78F16700DD6558 /* LaunchScreen.storyboard */,
@@ -125,6 +145,29 @@
 			path = coinflashUITests;
 			sourceTree = "<group>";
 		};
+		B2555A39542D171CD0A9C536 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2DD22795A95AC01C1CA2B39C /* Pods-coinflash.debug.xcconfig */,
+				50405860F458963D2234B2F3 /* Pods-coinflash.release.xcconfig */,
+				A7C2B8AE755AA69688FE88C6 /* Pods-coinflashTests.debug.xcconfig */,
+				68F80628794C280040E2F105 /* Pods-coinflashTests.release.xcconfig */,
+				CCF7E6BC4EFE63A02450DD33 /* Pods-coinflashUITests.debug.xcconfig */,
+				1FCCE0FE2D004E311A242478 /* Pods-coinflashUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E6DA9D63E3BDC003613C547E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EA844273D1373ADDF75EEE2F /* Pods_coinflash.framework */,
+				0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */,
+				0D87185B0096A3FFED202487 /* Pods_coinflashUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +175,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3FCC02601F78F16700DD6558 /* Build configuration list for PBXNativeTarget "coinflash" */;
 			buildPhases = (
+				64D8D8904EAB9D982E914F49 /* [CP] Check Pods Manifest.lock */,
 				3FCC02341F78F16700DD6558 /* Sources */,
 				3FCC02351F78F16700DD6558 /* Frameworks */,
 				3FCC02361F78F16700DD6558 /* Resources */,
+				9C5170AB979725ADD36CEA1D /* [CP] Embed Pods Frameworks */,
+				847F658D26B83E3273A9F208 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -149,9 +195,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3FCC02631F78F16700DD6558 /* Build configuration list for PBXNativeTarget "coinflashTests" */;
 			buildPhases = (
+				6D093E11DC58BEE1DD9F6D5D /* [CP] Check Pods Manifest.lock */,
 				3FCC02481F78F16700DD6558 /* Sources */,
 				3FCC02491F78F16700DD6558 /* Frameworks */,
 				3FCC024A1F78F16700DD6558 /* Resources */,
+				171FDB2D253F2B7FF4D3F841 /* [CP] Embed Pods Frameworks */,
+				EDE28C2B271BCBF531E030CD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -167,9 +216,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3FCC02661F78F16700DD6558 /* Build configuration list for PBXNativeTarget "coinflashUITests" */;
 			buildPhases = (
+				0D6103327EA181B5F367EDAF /* [CP] Check Pods Manifest.lock */,
 				3FCC02531F78F16700DD6558 /* Sources */,
 				3FCC02541F78F16700DD6558 /* Frameworks */,
 				3FCC02551F78F16700DD6558 /* Resources */,
+				F272F710ED0413063B27371A /* [CP] Embed Pods Frameworks */,
+				7377508E9756873B7E6E25B9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -254,6 +306,153 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0D6103327EA181B5F367EDAF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-coinflashUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		171FDB2D253F2B7FF4D3F841 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		64D8D8904EAB9D982E914F49 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-coinflash-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6D093E11DC58BEE1DD9F6D5D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-coinflashTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7377508E9756873B7E6E25B9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflashUITests/Pods-coinflashUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		847F658D26B83E3273A9F208 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflash/Pods-coinflash-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9C5170AB979725ADD36CEA1D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflash/Pods-coinflash-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EDE28C2B271BCBF531E030CD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F272F710ED0413063B27371A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflashUITests/Pods-coinflashUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3FCC02341F78F16700DD6558 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -261,6 +460,7 @@
 			files = (
 				3FCC023E1F78F16700DD6558 /* ViewController.swift in Sources */,
 				3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */,
+				3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +624,7 @@
 		};
 		3FCC02611F78F16700DD6558 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DD22795A95AC01C1CA2B39C /* Pods-coinflash.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -439,6 +640,7 @@
 		};
 		3FCC02621F78F16700DD6558 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50405860F458963D2234B2F3 /* Pods-coinflash.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -454,6 +656,7 @@
 		};
 		3FCC02641F78F16700DD6558 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A7C2B8AE755AA69688FE88C6 /* Pods-coinflashTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -471,6 +674,7 @@
 		};
 		3FCC02651F78F16700DD6558 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68F80628794C280040E2F105 /* Pods-coinflashTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -488,6 +692,7 @@
 		};
 		3FCC02671F78F16700DD6558 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCF7E6BC4EFE63A02450DD33 /* Pods-coinflashUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -504,6 +709,7 @@
 		};
 		3FCC02681F78F16700DD6558 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FCCE0FE2D004E311A242478 /* Pods-coinflashUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
