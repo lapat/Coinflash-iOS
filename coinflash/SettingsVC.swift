@@ -27,6 +27,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate{
         let imageView = UIImageView(image: backgroundImage)
         self.tableView.backgroundView = imageView
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
 
     @IBAction func didTapBackButton(for button: UIButton){
         print("button tapped")
