@@ -19,6 +19,7 @@ class MainPageVC: UITableViewController{
         self.tableView.backgroundView = imageView
     }
     
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard let headerView = tableView.tableHeaderView else {
