@@ -19,6 +19,21 @@ class MainPageVC: UITableViewController{
         self.tableView.backgroundView = imageView
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard let headerView = tableView.tableHeaderView else {
+            return
+        }
+        let size = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+        print(size)
+        if headerView.frame.size.height != size.height {
+            headerView.frame.size.height = size.height
+            tableView.tableHeaderView = headerView
+            tableView.layoutIfNeeded()
+            print("did layout")
+        }
+    }
+    
     // IBactions
     @IBAction func didTapOnMenuButton(sender: UIButton){
         print("tapped on the menu button")
