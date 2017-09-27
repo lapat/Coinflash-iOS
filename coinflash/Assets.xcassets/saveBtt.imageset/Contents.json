@@ -1,0 +1,23 @@
+{
+  "info" : {
+    "author" : "zeplin",
+    "version" : 1
+  },
+  "images" : [
+    {
+      "idiom" : "universal",
+      "filename" : "saveBtt.png",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "saveBtt@2x.png",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "saveBtt@3x.png",
+      "scale" : "3x"
+    }
+  ]
+}
