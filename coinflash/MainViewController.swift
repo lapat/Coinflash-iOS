@@ -11,7 +11,6 @@ import UIKit
 
 class MainViewController: UIViewController, UITableViewDataSource{
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "basicCell")
         return cell
