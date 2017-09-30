@@ -41,6 +41,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             let email = user.profile.email
             print("User email address is \(String( describing: email))")
             // ...
+            self.performSegue(withIdentifier: "mainPageSegue", sender: self)
         } else {
             print("ERROR ::\(error.localizedDescription)")
         }
