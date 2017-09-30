@@ -3,7 +3,7 @@
 //  coinflash
 //
 //  Created by TJ on 9/25/17.
-//  Copyright © 2017 TJ. All rights reserved.
+//  Copyright © 2017 CoinFlash. All rights reserved.
 //
 
 import UIKit

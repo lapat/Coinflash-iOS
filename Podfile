@@ -6,7 +6,7 @@ target 'coinflash' do
   use_frameworks!
   
   # Pods for coinflash
-  pod 'GoogleSignIn'
+  pod 'Google/SignIn'
 
   target 'coinflashTests' do
     inherit! :search_paths

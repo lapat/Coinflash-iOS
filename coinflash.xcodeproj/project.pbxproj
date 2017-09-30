@@ -21,6 +21,9 @@
 		3FCC02721F7BD52D00DD6558 /* BuyPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */; };
 		6AD120B7C913CC48A7586DD0 /* Pods_coinflashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */; };
 		8AA2F2093DD96E4F4CCB42D7 /* Pods_coinflash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA844273D1373ADDF75EEE2F /* Pods_coinflash.framework */; };
+		ACA3DA931F7FE9C500185245 /* AccountSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */; };
+		ACA3DA9A1F7FF42F00185245 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACA3DA991F7FF34000185245 /* GoogleService-Info.plist */; };
+		ACA3DA9C1F7FF4F400185245 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3DA9B1F7FF4F400185245 /* LoginVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +68,10 @@
 		50405860F458963D2234B2F3 /* Pods-coinflash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflash.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflash/Pods-coinflash.release.xcconfig"; sourceTree = "<group>"; };
 		68F80628794C280040E2F105 /* Pods-coinflashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.release.xcconfig"; sourceTree = "<group>"; };
 		A7C2B8AE755AA69688FE88C6 /* Pods-coinflashTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.debug.xcconfig"; sourceTree = "<group>"; };
+		ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingVC.swift; sourceTree = "<group>"; };
+		ACA3DA941F7FEC3200185245 /* coinflash-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "coinflash-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACA3DA991F7FF34000185245 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		ACA3DA9B1F7FF4F400185245 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		CCF7E6BC4EFE63A02450DD33 /* Pods-coinflashUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashUITests/Pods-coinflashUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EA844273D1373ADDF75EEE2F /* Pods_coinflash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coinflash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -100,6 +107,8 @@
 		3FCC022F1F78F16700DD6558 = {
 			isa = PBXGroup;
 			children = (
+				ACA3DA991F7FF34000185245 /* GoogleService-Info.plist */,
+				ACA3DA941F7FEC3200185245 /* coinflash-Bridging-Header.h */,
 				3FCC023A1F78F16700DD6558 /* coinflash */,
 				3FCC024F1F78F16700DD6558 /* coinflashTests */,
 				3FCC025A1F78F16700DD6558 /* coinflashUITests */,
@@ -122,12 +131,14 @@
 		3FCC023A1F78F16700DD6558 /* coinflash */ = {
 			isa = PBXGroup;
 			children = (
-				3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */,
 				3FCC023B1F78F16700DD6558 /* AppDelegate.swift */,
+				3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */,
 				3FCC023D1F78F16700DD6558 /* NavViewController.swift */,
 				3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */,
 				3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */,
 				3FCC026D1F796B3C00DD6558 /* MainPageVC.swift */,
+				ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */,
+				ACA3DA9B1F7FF4F400185245 /* LoginVC.swift */,
 				3FCC023F1F78F16700DD6558 /* Main.storyboard */,
 				3FCC02421F78F16700DD6558 /* Assets.xcassets */,
 				3FCC02441F78F16700DD6558 /* LaunchScreen.storyboard */,
@@ -250,10 +261,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
 				LastUpgradeCheck = 0900;
-				ORGANIZATIONNAME = "Tabish Manzoor";
+				ORGANIZATIONNAME = CoinFlash;
 				TargetAttributes = {
 					3FCC02371F78F16700DD6558 = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					3FCC024B1F78F16700DD6558 = {
@@ -293,6 +305,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACA3DA9A1F7FF42F00185245 /* GoogleService-Info.plist in Resources */,
 				3FCC02461F78F16700DD6558 /* LaunchScreen.storyboard in Resources */,
 				3FCC02431F78F16700DD6558 /* Assets.xcassets in Resources */,
 				3FCC02411F78F16700DD6558 /* Main.storyboard in Resources */,
@@ -331,7 +344,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		171FDB2D253F2B7FF4D3F841 /* [CP] Embed Pods Frameworks */ = {
@@ -364,7 +377,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		6D093E11DC58BEE1DD9F6D5D /* [CP] Check Pods Manifest.lock */ = {
@@ -382,7 +395,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		7377508E9756873B7E6E25B9 /* [CP] Copy Pods Resources */ = {
@@ -479,6 +492,8 @@
 			files = (
 				3FCC023E1F78F16700DD6558 /* NavViewController.swift in Sources */,
 				3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */,
+				ACA3DA9C1F7FF4F400185245 /* LoginVC.swift in Sources */,
+				ACA3DA931F7FE9C500185245 /* AccountSettingVC.swift in Sources */,
 				3FCC026E1F796B3C00DD6558 /* MainPageVC.swift in Sources */,
 				3FCC02721F7BD52D00DD6558 /* BuyPageController.swift in Sources */,
 				3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */,
@@ -649,12 +664,15 @@
 			baseConfigurationReference = 2DD22795A95AC01C1CA2B39C /* Pods-coinflash.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DA8CC8669S;
 				INFOPLIST_FILE = coinflash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = talall.coinflash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "coinflash-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -665,12 +683,14 @@
 			baseConfigurationReference = 50405860F458963D2234B2F3 /* Pods-coinflash.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DA8CC8669S;
 				INFOPLIST_FILE = coinflash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = talall.coinflash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "coinflash-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

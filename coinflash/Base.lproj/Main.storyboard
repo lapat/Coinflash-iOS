@@ -1127,7 +1127,7 @@
         <!--Account Settings-->
         <scene sceneID="fe3-PJ-qy0">
             <objects>
-                <viewController title="Account Settings" id="1mL-Jc-yYf" sceneMemberID="viewController">
+                <viewController title="Account Settings" id="1mL-Jc-yYf" customClass="AccountSettingsVC" customModule="coinflash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lNV-bH-C9g">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1201,7 +1201,7 @@
         <!--Login-->
         <scene sceneID="Ibr-cn-NF7">
             <objects>
-                <viewController title="Login" id="BYF-Qi-s9i" sceneMemberID="viewController">
+                <viewController title="Login" id="BYF-Qi-s9i" customClass="LoginVC" customModule="coinflash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B4l-sA-hWh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1235,21 +1235,33 @@
                                     <constraint firstAttribute="bottom" secondItem="2vv-Eh-R2P" secondAttribute="bottom" constant="50" id="fxg-YP-8Ei"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vut-ZC-G23" customClass="GIDSignInButton">
+                                <rect key="frame" x="112" y="279" width="150" height="150"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="height" secondItem="B4l-sA-hWh" secondAttribute="height" id="1NM-lS-ETt"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="height" secondItem="B4l-sA-hWh" secondAttribute="height" id="1sq-Oc-fOc"/>
+                            <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="Grt-SB-zcR" secondAttribute="centerX" id="3A5-yq-ePW"/>
+                            <constraint firstItem="Vut-ZC-G23" firstAttribute="top" secondItem="Grt-SB-zcR" secondAttribute="bottom" constant="74.5" id="Cty-bS-dGz"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" id="Ejv-qs-59Z"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="width" secondItem="B4l-sA-hWh" secondAttribute="width" id="UZA-Q1-nPA"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" id="eXJ-cD-9Ko"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="centerX" secondItem="aPe-3H-acc" secondAttribute="centerX" id="gXG-AT-ZwJ"/>
+                            <constraint firstItem="Vut-ZC-G23" firstAttribute="width" secondItem="Grt-SB-zcR" secondAttribute="width" id="lqT-y1-KWa"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="width" secondItem="B4l-sA-hWh" secondAttribute="width" id="mw1-q1-AG0"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="centerX" secondItem="aPe-3H-acc" secondAttribute="centerX" id="wv5-ST-1qE"/>
+                            <constraint firstItem="Vut-ZC-G23" firstAttribute="height" secondItem="Grt-SB-zcR" secondAttribute="height" id="zXk-2K-O5R"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aPe-3H-acc"/>
                     </view>
                     <navigationItem key="navigationItem" id="dfA-ms-Na2"/>
+                    <connections>
+                        <outlet property="signInButton" destination="Vut-ZC-G23" id="8GD-aS-9fB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZFr-fn-yz5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
