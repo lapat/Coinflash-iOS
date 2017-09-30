@@ -92,6 +92,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXZ-bs-Uuz">
                                 <rect key="frame" x="114.5" y="417" width="153.5" height="26"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="19"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -121,13 +122,14 @@
                                 <rect key="frame" x="104.5" y="602" width="165" height="45"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="manageIcons" translatesAutoresizingMaskIntoConstraints="NO" id="OSh-kC-ywR">
-                                <rect key="frame" x="79" y="305.5" width="27" height="31"/>
+                                <rect key="frame" x="76" y="305.5" width="30" height="31"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="portfolioIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ZeQ-o9-buU">
                                 <rect key="frame" x="75" y="360" width="31" height="31"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settingIcons" translatesAutoresizingMaskIntoConstraints="NO" id="Xeq-9e-Vnb">
                                 <rect key="frame" x="72" y="413" width="34" height="34"/>
+                                <gestureRecognizers/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -1340,11 +1342,57 @@
                                     <constraint firstAttribute="height" constant="0.5" id="Qxu-mP-x4S"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i8D-Kq-3Ee">
+                                <rect key="frame" x="8" y="277.5" width="359" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="me3-YI-Gct"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="IHC-Im-yN9">
+                                        <rect key="frame" x="0.0" y="28" width="359" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IHC-Im-yN9" id="mJj-Up-n1z">
+                                            <rect key="frame" x="0.0" y="0.0" width="359" height="99.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bankBlue" translatesAutoresizingMaskIntoConstraints="NO" id="baJ-Sm-Z22">
+                                                    <rect key="frame" x="8" y="27" width="55" height="45"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City Bank" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DGu-wp-2qQ">
+                                                    <rect key="frame" x="79" y="8" width="72.5" height="23.5"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="80m-xA-HM3">
+                                                    <rect key="frame" x="79" y="33" width="272" height="59"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </tableView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="80m-xA-HM3" secondAttribute="trailing" constant="8" id="BBa-S0-Q0V"/>
+                                                <constraint firstItem="DGu-wp-2qQ" firstAttribute="top" secondItem="mJj-Up-n1z" secondAttribute="top" constant="8" id="dKB-Go-p6k"/>
+                                                <constraint firstItem="80m-xA-HM3" firstAttribute="leading" secondItem="baJ-Sm-Z22" secondAttribute="trailing" constant="16" id="il8-QH-H8g"/>
+                                                <constraint firstItem="80m-xA-HM3" firstAttribute="top" secondItem="DGu-wp-2qQ" secondAttribute="bottom" constant="1.5" id="isP-iS-N7Z"/>
+                                                <constraint firstItem="DGu-wp-2qQ" firstAttribute="leading" secondItem="baJ-Sm-Z22" secondAttribute="trailing" constant="16" id="lWX-m3-7yY"/>
+                                                <constraint firstItem="baJ-Sm-Z22" firstAttribute="leading" secondItem="mJj-Up-n1z" secondAttribute="leading" constant="8" id="obU-4Q-Rcg"/>
+                                                <constraint firstItem="baJ-Sm-Z22" firstAttribute="centerY" secondItem="mJj-Up-n1z" secondAttribute="centerY" id="wH1-OH-9jE"/>
+                                                <constraint firstAttribute="bottom" secondItem="80m-xA-HM3" secondAttribute="bottom" constant="7.5" id="xWL-Jj-X0X"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DGu-wp-2qQ" secondAttribute="trailing" constant="20" symbolic="YES" id="yze-Er-LVT"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="biu-qR-UdG" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5rS-uU-nfj" secondAttribute="trailing" constant="44" id="46L-0A-KTf"/>
+                            <constraint firstItem="i8D-Kq-3Ee" firstAttribute="leading" secondItem="biu-qR-UdG" secondAttribute="leading" constant="8" id="8IC-HO-3Xx"/>
                             <constraint firstItem="5rS-uU-nfj" firstAttribute="top" secondItem="hRE-X9-uJS" secondAttribute="bottom" constant="8" id="8bc-Jz-jpY"/>
+                            <constraint firstItem="biu-qR-UdG" firstAttribute="trailing" secondItem="i8D-Kq-3Ee" secondAttribute="trailing" constant="8" id="BEW-C8-D6P"/>
                             <constraint firstItem="ysO-Ic-2rS" firstAttribute="centerX" secondItem="biu-qR-UdG" secondAttribute="centerX" id="Bk6-rM-gjg"/>
                             <constraint firstItem="V8D-Si-3ec" firstAttribute="top" secondItem="5rS-uU-nfj" secondAttribute="bottom" constant="8" id="FSZ-de-oF7"/>
                             <constraint firstItem="IXP-Ph-oIX" firstAttribute="centerX" secondItem="V8D-Si-3ec" secondAttribute="centerX" id="I8X-QV-Ecd"/>
@@ -1356,6 +1404,7 @@
                             <constraint firstItem="biu-qR-UdG" firstAttribute="trailing" secondItem="hRE-X9-uJS" secondAttribute="trailing" id="YPP-kX-kkV"/>
                             <constraint firstItem="5rS-uU-nfj" firstAttribute="centerX" secondItem="biu-qR-UdG" secondAttribute="centerX" id="dT8-j8-BIe"/>
                             <constraint firstItem="Wgw-bi-El7" firstAttribute="centerY" secondItem="biu-qR-UdG" secondAttribute="centerY" id="eeb-bo-Lli"/>
+                            <constraint firstItem="i8D-Kq-3Ee" firstAttribute="top" secondItem="ysO-Ic-2rS" secondAttribute="bottom" constant="8" id="gcI-OZ-hmw"/>
                             <constraint firstItem="V8D-Si-3ec" firstAttribute="centerX" secondItem="5rS-uU-nfj" secondAttribute="leading" id="hFL-eG-vVG"/>
                             <constraint firstItem="biu-qR-UdG" firstAttribute="top" secondItem="hRE-X9-uJS" secondAttribute="top" id="i26-b7-uR9"/>
                             <constraint firstItem="ysO-Ic-2rS" firstAttribute="leading" secondItem="biu-qR-UdG" secondAttribute="leading" id="j5i-xe-Ebp"/>
@@ -1366,7 +1415,7 @@
                             <constraint firstItem="xc8-dN-Bl0" firstAttribute="centerX" secondItem="5rS-uU-nfj" secondAttribute="trailing" id="swP-2g-LgM"/>
                             <constraint firstItem="hRE-X9-uJS" firstAttribute="centerX" secondItem="biu-qR-UdG" secondAttribute="centerX" id="swg-QA-kaJ"/>
                             <constraint firstItem="Wgw-bi-El7" firstAttribute="width" secondItem="lNV-bH-C9g" secondAttribute="width" id="ywS-nM-IZP"/>
-                            <constraint firstItem="5rS-uU-nfj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="biu-qR-UdG" secondAttribute="leading" constant="45" id="z0X-js-oRP"/>
+                            <constraint firstItem="5rS-uU-nfj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="biu-qR-UdG" secondAttribute="leading" constant="44" id="z0X-js-oRP"/>
                             <constraint firstItem="IXP-Ph-oIX" firstAttribute="top" secondItem="V8D-Si-3ec" secondAttribute="bottom" constant="8" id="zci-Ju-EKg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="biu-qR-UdG"/>
@@ -1444,6 +1493,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bankBlue" width="55" height="45"/>
         <image name="bankGray" width="55" height="45"/>
         <image name="bg" width="385" height="669"/>
         <image name="btcBtt" width="40" height="40"/>
@@ -1461,7 +1511,7 @@
         <image name="loginGoogleBt" width="316" height="45"/>
         <image name="logoLogin2" width="161" height="164"/>
         <image name="logout" width="165" height="45"/>
-        <image name="manageIcons" width="27" height="31"/>
+        <image name="manageIcons" width="30" height="31"/>
         <image name="menu" width="22" height="15"/>
         <image name="portfolioIcon" width="31" height="31"/>
         <image name="saveBtt" width="195" height="52"/>
