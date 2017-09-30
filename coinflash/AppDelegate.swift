@@ -7,16 +7,10 @@
 //
 
 import UIKit
+import SideMenu
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        
-    }
+class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
@@ -27,9 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
+    
+        // Setting up the side menu
+        SideMenuManager.menuEnableSwipeGestures = true
         
-        //GIDSignIn.sharedInstance().delegate = self as! GIDSignInDelegate
-        return true
+       return true
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

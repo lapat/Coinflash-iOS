@@ -16,7 +16,6 @@
 		3FCC02511F78F16700DD6558 /* coinflashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC02501F78F16700DD6558 /* coinflashTests.swift */; };
 		3FCC025C1F78F16700DD6558 /* coinflashUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC025B1F78F16700DD6558 /* coinflashUITests.swift */; };
 		3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */; };
-		3FCC026E1F796B3C00DD6558 /* MainPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC026D1F796B3C00DD6558 /* MainPageVC.swift */; };
 		3FCC02701F7A3F0800DD6558 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */; };
 		3FCC02721F7BD52D00DD6558 /* BuyPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */; };
 		6AD120B7C913CC48A7586DD0 /* Pods_coinflashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */; };
@@ -62,7 +61,6 @@
 		3FCC025B1F78F16700DD6558 /* coinflashUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coinflashUITests.swift; sourceTree = "<group>"; };
 		3FCC025D1F78F16700DD6558 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
-		3FCC026D1F796B3C00DD6558 /* MainPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageVC.swift; sourceTree = "<group>"; };
 		3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyPageController.swift; sourceTree = "<group>"; };
 		50405860F458963D2234B2F3 /* Pods-coinflash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflash.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflash/Pods-coinflash.release.xcconfig"; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 				3FCC023D1F78F16700DD6558 /* NavViewController.swift */,
 				3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */,
 				3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */,
-				3FCC026D1F796B3C00DD6558 /* MainPageVC.swift */,
 				ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */,
 				ACA3DA9B1F7FF4F400185245 /* LoginVC.swift */,
 				3FCC023F1F78F16700DD6558 /* Main.storyboard */,
@@ -494,7 +491,6 @@
 				3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */,
 				ACA3DA9C1F7FF4F400185245 /* LoginVC.swift in Sources */,
 				ACA3DA931F7FE9C500185245 /* AccountSettingVC.swift in Sources */,
-				3FCC026E1F796B3C00DD6558 /* MainPageVC.swift in Sources */,
 				3FCC02721F7BD52D00DD6558 /* BuyPageController.swift in Sources */,
 				3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */,
 				3FCC02701F7A3F0800DD6558 /* MainViewController.swift in Sources */,

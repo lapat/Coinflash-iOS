@@ -8,8 +8,16 @@
 
 import Foundation
 import UIKit
+import SideMenu
 
 class MainViewController: UIViewController, UITableViewDataSource{
+    
+    override func viewDidLoad() {
+        SideMenuManager.menuWidth = UIScreen.main.bounds.size.width * 0.75
+        SideMenuManager.menuDismissOnPush = true
+        SideMenuManager.menuPresentMode = .menuSlideIn
+        SideMenuManager.menuParallaxStrength = 3
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "basicCell")

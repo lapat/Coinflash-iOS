@@ -7,6 +7,8 @@ target 'coinflash' do
   
   # Pods for coinflash
   pod 'Google/SignIn'
+  pod 'coinbase-official'
+  pod 'SideMenu'
 
   target 'coinflashTests' do
     inherit! :search_paths
