@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -717,9 +718,9 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fXX-Up-T3B">
                                         <rect key="frame" x="29" y="550" width="317" height="45"/>
-                                        <state key="normal" image="googleSign"/>
+                                        <state key="normal" image="loginGoogleBt"/>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginLogo" translatesAutoresizingMaskIntoConstraints="NO" id="3Iy-fw-ffa">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoLogin2" translatesAutoresizingMaskIntoConstraints="NO" id="3Iy-fw-ffa">
                                         <rect key="frame" x="112.5" y="45" width="150" height="150"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="150" id="ANp-IL-njU"/>
@@ -1135,7 +1136,7 @@
                                 <rect key="frame" x="-0.5" y="10" width="375" height="667"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hRE-X9-uJS">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="52"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAX-wX-sbg">
                                         <rect key="frame" x="8" y="8" width="22" height="36"/>
@@ -1158,17 +1159,37 @@
                                     <constraint firstAttribute="height" constant="52" id="vx2-0Q-Ukd"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="linkedIcon" translatesAutoresizingMaskIntoConstraints="NO" id="5rS-uU-nfj">
+                                <rect key="frame" x="45" y="80" width="286" height="93"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5rS-uU-nfj" secondAttribute="height" multiplier="286:93" id="pYU-ae-4nD"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bankGray" translatesAutoresizingMaskIntoConstraints="NO" id="V8D-Si-3ec">
+                                <rect key="frame" x="17.5" y="181" width="55" height="45"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coinbaseTopGray" translatesAutoresizingMaskIntoConstraints="NO" id="xc8-dN-Bl0">
+                                <rect key="frame" x="307" y="181" width="48" height="57"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="biu-qR-UdG" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5rS-uU-nfj" secondAttribute="trailing" constant="44" id="46L-0A-KTf"/>
+                            <constraint firstItem="5rS-uU-nfj" firstAttribute="top" secondItem="hRE-X9-uJS" secondAttribute="bottom" constant="8" id="8bc-Jz-jpY"/>
+                            <constraint firstItem="V8D-Si-3ec" firstAttribute="top" secondItem="5rS-uU-nfj" secondAttribute="bottom" constant="8" id="FSZ-de-oF7"/>
                             <constraint firstItem="Wgw-bi-El7" firstAttribute="height" secondItem="lNV-bH-C9g" secondAttribute="height" id="Pl3-Zw-DeW"/>
+                            <constraint firstItem="xc8-dN-Bl0" firstAttribute="top" secondItem="5rS-uU-nfj" secondAttribute="bottom" constant="8" id="R3l-tW-vgH"/>
                             <constraint firstItem="Wgw-bi-El7" firstAttribute="centerX" secondItem="biu-qR-UdG" secondAttribute="centerX" id="S87-p3-i2N"/>
                             <constraint firstItem="biu-qR-UdG" firstAttribute="trailing" secondItem="hRE-X9-uJS" secondAttribute="trailing" id="YPP-kX-kkV"/>
+                            <constraint firstItem="5rS-uU-nfj" firstAttribute="centerX" secondItem="biu-qR-UdG" secondAttribute="centerX" id="dT8-j8-BIe"/>
                             <constraint firstItem="Wgw-bi-El7" firstAttribute="centerY" secondItem="biu-qR-UdG" secondAttribute="centerY" id="eeb-bo-Lli"/>
-                            <constraint firstItem="biu-qR-UdG" firstAttribute="top" secondItem="hRE-X9-uJS" secondAttribute="top" constant="20" id="i26-b7-uR9"/>
+                            <constraint firstItem="V8D-Si-3ec" firstAttribute="centerX" secondItem="5rS-uU-nfj" secondAttribute="leading" id="hFL-eG-vVG"/>
+                            <constraint firstItem="biu-qR-UdG" firstAttribute="top" secondItem="hRE-X9-uJS" secondAttribute="top" id="i26-b7-uR9"/>
                             <constraint firstItem="hRE-X9-uJS" firstAttribute="leading" secondItem="biu-qR-UdG" secondAttribute="leading" id="nHk-fs-emc"/>
+                            <constraint firstItem="xc8-dN-Bl0" firstAttribute="centerX" secondItem="5rS-uU-nfj" secondAttribute="trailing" id="swP-2g-LgM"/>
                             <constraint firstItem="hRE-X9-uJS" firstAttribute="centerX" secondItem="biu-qR-UdG" secondAttribute="centerX" id="swg-QA-kaJ"/>
                             <constraint firstItem="Wgw-bi-El7" firstAttribute="width" secondItem="lNV-bH-C9g" secondAttribute="width" id="ywS-nM-IZP"/>
+                            <constraint firstItem="5rS-uU-nfj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="biu-qR-UdG" secondAttribute="leading" constant="45" id="z0X-js-oRP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="biu-qR-UdG"/>
                     </view>
@@ -1193,12 +1214,12 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2vv-Eh-R2P">
                                         <rect key="frame" x="29.5" y="572" width="316" height="45"/>
-                                        <state key="normal" image="googleSign"/>
+                                        <state key="normal" image="loginGoogleBt"/>
                                         <connections>
-                                            <segue destination="Lae-RI-fL0" kind="show" id="R7W-Ri-WqJ"/>
+                                            <segue destination="1mL-Jc-yYf" kind="show" id="sx8-5b-odL"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Grt-SB-zcR">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoLogin2" translatesAutoresizingMaskIntoConstraints="NO" id="Grt-SB-zcR">
                                         <rect key="frame" x="112" y="44.5" width="150" height="150"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="150" id="TjF-Fq-Z2V"/>
@@ -1236,19 +1257,22 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bankGray" width="55" height="45"/>
         <image name="bg" width="385" height="669"/>
         <image name="btcBtt" width="40" height="40"/>
         <image name="buynowBt" width="134" height="52"/>
         <image name="circleBlue" width="347" height="315"/>
+        <image name="coinbaseTopGray" width="48" height="57"/>
         <image name="createBtt" width="316" height="45"/>
         <image name="ethBtt" width="40" height="40"/>
         <image name="gainDown" width="12" height="14"/>
-        <image name="googleSign" width="316" height="45"/>
         <image name="graphic1" width="79" height="79"/>
         <image name="itemOffIcon" width="25" height="25"/>
         <image name="itemOnIcon" width="25" height="25"/>
         <image name="line" width="1" height="1"/>
-        <image name="loginLogo" width="161" height="164"/>
+        <image name="linkedIcon" width="286" height="93"/>
+        <image name="loginGoogleBt" width="316" height="45"/>
+        <image name="logoLogin2" width="161" height="164"/>
         <image name="menu" width="22" height="15"/>
         <image name="saveBtt" width="195" height="52"/>
         <image name="settingIconn" width="24" height="24"/>

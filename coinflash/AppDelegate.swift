@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  coinflash
 //
-//  Created by Tabish Manzoor on 9/25/17.
-//  Copyright © 2017 Tabish Manzoor. All rights reserved.
+//  Created by TJ on 9/25/17.
+//  Copyright © 2017 TJ. All rights reserved.
 //
 
 import UIKit
