@@ -10,6 +10,15 @@ import Foundation
 import UIKit
 
 class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
+    
+    var userID: String = ""
+    var idToken: String = ""
+    var fullName: String = ""
+    var givenName: String = ""
+    var familyName: String = ""
+    var email: String = ""
+    
+    
     func sign(inWillDispatch signIn: GIDSignIn!, error: Error!) {
         
         guard error == nil else {
@@ -26,9 +35,17 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!)
     {
         if (error == nil) {
+            // save all the data in view settings
+            self.userID = user.userID
+            self.idToken = user.authentication.idToken
+            self.fullName = user.profile.name
+            self.givenName = user.profile.givenName
+            self.familyName = user.profile.familyName
+            
             // Perform any operations on signed in user here.
             let userId = user.userID                  // For client-side use only!
-            print("User id is \(String( userId!))")
+            print("User id is \(String(describing: String( userId!)))")
+            
             
             let idToken = user.authentication.idToken // Safe to send to the server
             print("Authentication idToken is \(String( describing: idToken))")

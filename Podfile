@@ -9,6 +9,7 @@ target 'coinflash' do
   pod 'Google/SignIn'
   pod 'coinbase-official'
   pod 'SideMenu'
+  pod 'ReactiveSwift'
 
   target 'coinflashTests' do
     inherit! :search_paths

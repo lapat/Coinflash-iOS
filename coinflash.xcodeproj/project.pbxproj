@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		183FC1B43CAC1F4162D06876 /* Pods_coinflashUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D87185B0096A3FFED202487 /* Pods_coinflashUITests.framework */; };
+		3F012E331F84D2550026EFC0 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F012E321F84D2550026EFC0 /* MenuVC.swift */; };
 		3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC023B1F78F16700DD6558 /* AppDelegate.swift */; };
 		3FCC023E1F78F16700DD6558 /* NavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC023D1F78F16700DD6558 /* NavViewController.swift */; };
 		3FCC02411F78F16700DD6558 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FCC023F1F78F16700DD6558 /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		0D87185B0096A3FFED202487 /* Pods_coinflashUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coinflashUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FCCE0FE2D004E311A242478 /* Pods-coinflashUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashUITests/Pods-coinflashUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2DD22795A95AC01C1CA2B39C /* Pods-coinflash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflash/Pods-coinflash.debug.xcconfig"; sourceTree = "<group>"; };
+		3F012E321F84D2550026EFC0 /* MenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		3FCC02381F78F16700DD6558 /* coinflash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coinflash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FCC023B1F78F16700DD6558 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FCC023D1F78F16700DD6558 /* NavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */,
 				ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */,
 				ACA3DA9B1F7FF4F400185245 /* LoginVC.swift */,
+				3F012E321F84D2550026EFC0 /* MenuVC.swift */,
 				3FCC023F1F78F16700DD6558 /* Main.storyboard */,
 				3FCC02421F78F16700DD6558 /* Assets.xcassets */,
 				3FCC02441F78F16700DD6558 /* LaunchScreen.storyboard */,
@@ -341,7 +344,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		171FDB2D253F2B7FF4D3F841 /* [CP] Embed Pods Frameworks */ = {
@@ -374,7 +377,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6D093E11DC58BEE1DD9F6D5D /* [CP] Check Pods Manifest.lock */ = {
@@ -392,7 +395,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7377508E9756873B7E6E25B9 /* [CP] Copy Pods Resources */ = {
@@ -438,12 +441,20 @@
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/coinbase-official/coinbase_official.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/coinbase_official.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -492,6 +503,7 @@
 				ACA3DA9C1F7FF4F400185245 /* LoginVC.swift in Sources */,
 				ACA3DA931F7FE9C500185245 /* AccountSettingVC.swift in Sources */,
 				3FCC02721F7BD52D00DD6558 /* BuyPageController.swift in Sources */,
+				3F012E331F84D2550026EFC0 /* MenuVC.swift in Sources */,
 				3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */,
 				3FCC02701F7A3F0800DD6558 /* MainViewController.swift in Sources */,
 			);
