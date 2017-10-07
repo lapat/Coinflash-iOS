@@ -11,15 +11,15 @@ target 'coinflash' do
   pod 'SideMenu'
   pod 'ReactiveSwift'
   pod 'Alamofire'
-
+  
   target 'coinflashTests' do
     inherit! :search_paths
     # Pods for testing
   end
-
+  
   target 'coinflashUITests' do
     inherit! :search_paths
     # Pods for testing
   end
-
+  
 end

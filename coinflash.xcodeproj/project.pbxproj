@@ -20,6 +20,7 @@
 		3FCC02701F7A3F0800DD6558 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */; };
 		3FCC02721F7BD52D00DD6558 /* BuyPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */; };
 		6AD120B7C913CC48A7586DD0 /* Pods_coinflashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */; };
+		77182A001F8997CD0098F501 /* Vars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771829FF1F8997CD0098F501 /* Vars.swift */; };
 		8AA2F2093DD96E4F4CCB42D7 /* Pods_coinflash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA844273D1373ADDF75EEE2F /* Pods_coinflash.framework */; };
 		ACA3DA931F7FE9C500185245 /* AccountSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */; };
 		ACA3DA9A1F7FF42F00185245 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACA3DA991F7FF34000185245 /* GoogleService-Info.plist */; };
@@ -67,6 +68,7 @@
 		3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyPageController.swift; sourceTree = "<group>"; };
 		50405860F458963D2234B2F3 /* Pods-coinflash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflash.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflash/Pods-coinflash.release.xcconfig"; sourceTree = "<group>"; };
 		68F80628794C280040E2F105 /* Pods-coinflashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.release.xcconfig"; sourceTree = "<group>"; };
+		771829FF1F8997CD0098F501 /* Vars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vars.swift; sourceTree = "<group>"; };
 		A7C2B8AE755AA69688FE88C6 /* Pods-coinflashTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingVC.swift; sourceTree = "<group>"; };
 		ACA3DA941F7FEC3200185245 /* coinflash-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "coinflash-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				3FCC02421F78F16700DD6558 /* Assets.xcassets */,
 				3FCC02441F78F16700DD6558 /* LaunchScreen.storyboard */,
 				3FCC02471F78F16700DD6558 /* Info.plist */,
+				771829FF1F8997CD0098F501 /* Vars.swift */,
 			);
 			path = coinflash;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				ACA3DA931F7FE9C500185245 /* AccountSettingVC.swift in Sources */,
 				3FCC02721F7BD52D00DD6558 /* BuyPageController.swift in Sources */,
 				3F012E331F84D2550026EFC0 /* MenuVC.swift in Sources */,
+				77182A001F8997CD0098F501 /* Vars.swift in Sources */,
 				3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */,
 				3FCC02701F7A3F0800DD6558 /* MainViewController.swift in Sources */,
 			);

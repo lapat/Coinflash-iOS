@@ -46,7 +46,6 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             let userId = user.userID                  // For client-side use only!
             print("User id is \(String(describing: String( userId!)))")
             
-            
             let idToken = user.authentication.idToken // Safe to send to the server
             print("Authentication idToken is \(String( describing: idToken))")
             let fullName = user.profile.name
