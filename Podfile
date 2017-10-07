@@ -10,6 +10,7 @@ target 'coinflash' do
   pod 'coinbase-official'
   pod 'SideMenu'
   pod 'ReactiveSwift'
+  pod 'Alamofire'
 
   target 'coinflashTests' do
     inherit! :search_paths
