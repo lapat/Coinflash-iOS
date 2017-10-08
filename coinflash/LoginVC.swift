@@ -86,8 +86,8 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             let data = response.result.value as! [String: Any]
             HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String)
             SVProgressHUD.dismiss()
+            self.performSegue(withIdentifier: "mainPageSegue", sender: self)
         }
-        //self.performSegue(withIdentifier: "mainPageSegue", sender: self)
     }
     
     @IBOutlet weak var signInButton: GIDSignInButton!
