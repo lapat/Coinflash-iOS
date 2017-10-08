@@ -8,6 +8,7 @@
 
 import UIKit
 import SideMenu
+import coinbase_official
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -48,6 +49,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if url.scheme == "com.coinbasepermittedcoinflash.apps.coinflash-1234567"{
+            CoinbaseOAuth.finishAuthentication(for: url, clientId: "2e9035f26ec0c4bda426ffbff1f2bb800c88cec0a2f8322b85e3edd07fa2085d", clientSecret: "e4bdb576e075dbf838f3029672fda7a90b4aae4a05f2dbce2602212ada50e9ca", completion: { (result, error) in
+                if error != nil {
+                    // Could not authenticate.
+                } else {
+                    // Tokens successfully obtained!
+                    // Do something with them (store them, etc.)
+                    if let result = result as? [String : AnyObject] {
+                        if let accessToken = result["access_token"] as? String {
+                            let apiClient = Coinbase(oAuthAccessToken: accessToken)
+                            print(apiClient!)
+                            print(result)
+                        }
+                    }
+                    // Note that you should also store 'expire_in' and refresh the token using CoinbaseOAuth.getOAuthTokensForRefreshToken() when it expires
+                }
+            })
+        }
+        
+        print("outside if \(url.scheme)")
+        return true
     }
 
 

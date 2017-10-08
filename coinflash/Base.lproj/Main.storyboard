@@ -1531,6 +1531,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysH-wV-Qx0">
                                 <rect key="frame" x="15" y="621.5" width="141" height="31"/>
                                 <state key="normal" image="addCoinbase"/>
+                                <connections>
+                                    <action selector="didTapOnAddCoinbaseButtonWithSender:" destination="1mL-Jc-yYf" eventType="touchUpInside" id="uJQ-nU-ua8"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -40,10 +40,8 @@ struct GlobalSettings{
         hasBitcoinWallet = false
         hasEtherWaleet = false
         hasPaymentMethod = false
-        
     }
 }
-
 var globalSettings: GlobalSettings = GlobalSettings()
 
 

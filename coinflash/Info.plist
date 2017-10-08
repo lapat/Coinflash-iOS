@@ -32,6 +32,14 @@
 			<key>CFBundleURLSchemes</key>
 			<array/>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.coinbasepermittedcoinflash.apps.coinflash-1234567</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>

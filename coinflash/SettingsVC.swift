@@ -71,6 +71,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         
         self.changeToInvestSlider.value = globalSettings.percentOfChangeToInvest
         self.changeToInvestSliderValueLabel.text = "\(Int(globalSettings.percentOfChangeToInvest))%"
+        self.capOnInvestmentTextField.text = "$\(globalSettings.capOnInvestment!)"
     }
     
     //Setting taps actions
@@ -114,14 +115,25 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         return true
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let str = (textField.text! + string)
+        if str.characters.count <= 4 {
+            return true
+        }
+        textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+        return false
+    }
+    
     func cancelNumberPad(){
         capOnInvestmentTextField.resignFirstResponder()
+        capOnInvestmentTextField.text = "$\(globalSettings.capOnInvestment!)"
     }
     
     func doneWithNumberPad(){
         capOnInvestmentTextField.resignFirstResponder()
-        var temp = capOnInvestmentTextField.text!.remove(at: capOnInvestmentTextField.text!.startIndex)
-        //globalSettings.capOnInvestment = Int(temp)
+        var temp = capOnInvestmentTextField.text!
+        temp.remove(at: temp.startIndex)
+        globalSettings.capOnInvestment = Int(temp)
         print(globalSettings.capOnInvestment)
     }
     
