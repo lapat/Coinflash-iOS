@@ -10,7 +10,10 @@ import UIKit
 
 class HelperFunctions: NSObject {
 
-    static func addLoadingScreen(view: UIViewController){
-        
+    static func saveLoginInfo(user: GIDGoogleUser, userIdMobile: String!, mobileAccessToken: String!){
+        googleUser = user
+        user_mobile_access_token = mobileAccessToken
+        user_id_mobile = userIdMobile
+        user_isLoggedIn = true
     }
 }

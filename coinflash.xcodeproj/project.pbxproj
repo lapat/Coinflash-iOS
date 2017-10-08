@@ -22,9 +22,9 @@
 		6AD120B7C913CC48A7586DD0 /* Pods_coinflashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */; };
 		7708387B1F89AA12009306B1 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7708387A1F89AA12009306B1 /* HelperFunctions.swift */; };
 		77182A001F8997CD0098F501 /* Vars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771829FF1F8997CD0098F501 /* Vars.swift */; };
+		777CBC001F89B80A00724DC5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */; };
 		8AA2F2093DD96E4F4CCB42D7 /* Pods_coinflash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA844273D1373ADDF75EEE2F /* Pods_coinflash.framework */; };
 		ACA3DA931F7FE9C500185245 /* AccountSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */; };
-		ACA3DA9A1F7FF42F00185245 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACA3DA991F7FF34000185245 /* GoogleService-Info.plist */; };
 		ACA3DA9C1F7FF4F400185245 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3DA9B1F7FF4F400185245 /* LoginVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,10 +71,10 @@
 		68F80628794C280040E2F105 /* Pods-coinflashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.release.xcconfig"; sourceTree = "<group>"; };
 		7708387A1F89AA12009306B1 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		771829FF1F8997CD0098F501 /* Vars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vars.swift; sourceTree = "<group>"; };
+		777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A7C2B8AE755AA69688FE88C6 /* Pods-coinflashTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingVC.swift; sourceTree = "<group>"; };
 		ACA3DA941F7FEC3200185245 /* coinflash-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "coinflash-Bridging-Header.h"; sourceTree = "<group>"; };
-		ACA3DA991F7FF34000185245 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ACA3DA9B1F7FF4F400185245 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		CCF7E6BC4EFE63A02450DD33 /* Pods-coinflashUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashUITests/Pods-coinflashUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EA844273D1373ADDF75EEE2F /* Pods_coinflash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coinflash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,7 +111,7 @@
 		3FCC022F1F78F16700DD6558 = {
 			isa = PBXGroup;
 			children = (
-				ACA3DA991F7FF34000185245 /* GoogleService-Info.plist */,
+				777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */,
 				ACA3DA941F7FEC3200185245 /* coinflash-Bridging-Header.h */,
 				3FCC023A1F78F16700DD6558 /* coinflash */,
 				3FCC024F1F78F16700DD6558 /* coinflashTests */,
@@ -311,7 +311,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACA3DA9A1F7FF42F00185245 /* GoogleService-Info.plist in Resources */,
+				777CBC001F89B80A00724DC5 /* GoogleService-Info.plist in Resources */,
 				3FCC02461F78F16700DD6558 /* LaunchScreen.storyboard in Resources */,
 				3FCC02431F78F16700DD6558 /* Assets.xcassets in Resources */,
 				3FCC02411F78F16700DD6558 /* Main.storyboard in Resources */,
@@ -697,7 +697,7 @@
 				DEVELOPMENT_TEAM = DA8CC8669S;
 				INFOPLIST_FILE = coinflash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = talall.coinflash;
+				PRODUCT_BUNDLE_IDENTIFIER = tallal.coinflash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "coinflash-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -716,7 +716,7 @@
 				DEVELOPMENT_TEAM = DA8CC8669S;
 				INFOPLIST_FILE = coinflash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = talall.coinflash;
+				PRODUCT_BUNDLE_IDENTIFIER = tallal.coinflash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "coinflash-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
