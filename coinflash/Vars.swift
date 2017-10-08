@@ -51,11 +51,15 @@ var globalSettings: GlobalSettings = GlobalSettings()
 struct TRansactionInfo{
     var cctransaction_name: String!
     var cctransaction_date: String!
-    var cctransaction_amount: Float!
+    var cctransaction_coinbase_transaction_id: String!
+    var cctransaction_invested: String!
+    var cctransaction_amount: String!
     init(){
         cctransaction_date = ""
         cctransaction_name = ""
-        cctransaction_amount = 0
+        cctransaction_coinbase_transaction_id = ""
+        cctransaction_invested = "Not invested"
+        cctransaction_amount = ""
     }
 }
 var cctransaction_global: TRansactionInfo! = TRansactionInfo()

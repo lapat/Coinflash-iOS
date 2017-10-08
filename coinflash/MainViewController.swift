@@ -22,12 +22,14 @@ class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var LabelBitcoinInvestmentRate: UILabel?
     @IBOutlet weak var LabelEtherInvestmentRate: UILabel?
     @IBOutlet weak var SliderinvestmentRateDecider: UISlider?
+    @IBOutlet weak var ccTransationTableView: UITableView?
     
+    var cctransations = [cctransaction_global]
     
     @IBAction func InvestmentRateSlider(_ sender: Any) {
         let Rate = SliderinvestmentRateDecider?.value
-        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", Rate!) + "%"
-        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - Rate!)) + "%"
+        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", Rate!) + "$"
+        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - Rate!)) + "$"
         
     }
     
@@ -41,7 +43,12 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "basicCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! ccTransationCellView
+        
+        cell.Name.text = cctransations[indexPath.row]?.cctransaction_name
+        cell.Date.text = cctransations[indexPath.row]?.cctransaction_date
+        cell.Price.text = cctransations[indexPath.row]?.cctransaction_amount
+        cell.invested.text = cctransations[indexPath.row]?.cctransaction_invested
         
         return cell
     }
@@ -51,7 +58,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return cctransations.count
     }
     
     
@@ -61,16 +68,42 @@ class MainViewController: UIViewController, UITableViewDataSource{
             "Content-Type": "application/x-www-form-urlencoded"
         ]
         let parameters: [String: String] = [
-            "mobile_secret" : "8dkkaiei20kdjkwoeo29ddkskalw82asD!",
-            "user_id_mobile" : "7481",
-            "mobile_access_token" : "1bfeb051d88a45d2bc6ede6592bb44",
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
         ]
-       Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+       Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+             let data = response.result.value as! [String: Any]
+             let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
         
-            if let json = response.result.value {
-                print("JSON: \(json)") // serialized json response
-                
+             self.cctransations.removeAll()
+        
+        
+        for index in 0...TransationArray.count - 1 {
+            let transation = TransationArray[index]
+             var singleTransation = cctransaction_global
+            if transation["cctransaction_name"] != nil{
+                singleTransation?.cctransaction_name = transation["cctransaction_name"] as! String
             }
+            if transation["cctransaction_date"] != nil{
+                var date: String = transation["cctransaction_date"] as! String
+                let truncated = String(date.characters.dropFirst(5))
+                singleTransation?.cctransaction_date = truncated
+            }
+            if transation["cctransaction_amount"] != nil{
+                singleTransation?.cctransaction_amount = transation["cctransaction_amount"] as! String!
+            }
+            if transation["coinbase_transaction_id"] != nil{
+                singleTransation?.cctransaction_coinbase_transaction_id = transation["coinbase_transaction_id"] as! String
+                singleTransation?.cctransaction_invested = "invested"
+            }
+            else{
+                singleTransation?.cctransaction_invested = "Not invested"
+            }
+            self.cctransations.append(singleTransation)
+            
+        }
+            self.ccTransationTableView?.reloadData()
         }
        
 
