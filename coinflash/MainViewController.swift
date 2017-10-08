@@ -25,8 +25,10 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     
     @IBAction func InvestmentRateSlider(_ sender: Any) {
-        var Rate = SliderinvestmentRateDecider?.value
-        print(Rate)
+        let Rate = SliderinvestmentRateDecider?.value
+        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", Rate!) + "%"
+        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - Rate!)) + "%"
+        
     }
     
     override func viewDidLoad() {
@@ -38,7 +40,9 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "basicCell")
+        
         return cell
     }
     
@@ -47,8 +51,9 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 10
     }
+    
     
     func requestCoinFlashUserinfo(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         print("working")

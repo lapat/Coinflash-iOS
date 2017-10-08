@@ -269,7 +269,7 @@
                                         <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZEF-4j-x7q">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="ZEF-4j-x7q">
                                         <rect key="frame" x="6" y="376" width="363" height="31"/>
                                         <connections>
                                             <action selector="InvestmentRateSlider:" destination="Lae-RI-fL0" eventType="valueChanged" id="6EM-G7-Jl0"/>
