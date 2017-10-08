@@ -11,7 +11,7 @@ target 'coinflash' do
   pod 'ReactiveSwift'
   pod 'Alamofire'
   pod 'SVProgressHUD'
-  
+  pod 'ChartsRealm'
   use_frameworks!
   
   target 'coinflashTests' do

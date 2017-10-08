@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Lae-RI-fL0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vXF-hv-nJU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -1207,22 +1207,21 @@
                                         <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKJ-9o-qqW">
-                                        <rect key="frame" x="8" y="327.5" width="359" height="180"/>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKJ-9o-qqW" customClass="LineChartView" customModule="Charts">
+                                        <rect key="frame" x="0.0" y="328" width="375" height="180"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="180" id="OXQ-NA-2hy"/>
-                                            <constraint firstAttribute="width" constant="359" id="oG2-zz-UlW"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zk2-Rv-x5V">
-                                        <rect key="frame" x="166" y="242" width="50" height="50"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M2l-ZN-Z1Y" customClass="PieChartView" customModule="Charts">
+                                        <rect key="frame" x="146" y="234" width="83" height="57"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="63h-J4-Djw"/>
-                                            <constraint firstAttribute="width" constant="50" id="JSg-37-4Dc"/>
+                                            <constraint firstAttribute="width" constant="83" id="Tpw-SD-VIh"/>
+                                            <constraint firstAttribute="height" constant="57" id="c6Q-xk-Wpn"/>
                                         </constraints>
-                                        <state key="normal" image="graphic1"/>
-                                    </button>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1233,14 +1232,15 @@
                                     <constraint firstItem="Qw9-c0-4cb" firstAttribute="centerX" secondItem="r3i-pe-kmq" secondAttribute="centerX" id="4dY-8W-G5j"/>
                                     <constraint firstItem="XKJ-9o-qqW" firstAttribute="top" secondItem="e3e-TI-yAw" secondAttribute="bottom" constant="3" id="7yh-EY-GIH"/>
                                     <constraint firstItem="Jhy-xw-YeY" firstAttribute="top" secondItem="rE5-1C-YHZ" secondAttribute="bottom" constant="8" id="ALs-eR-xkl"/>
+                                    <constraint firstItem="M2l-ZN-Z1Y" firstAttribute="top" secondItem="4Tq-am-TbW" secondAttribute="bottom" constant="-87.5" id="C6o-ZJ-ZyP"/>
                                     <constraint firstItem="e3e-TI-yAw" firstAttribute="top" secondItem="4Tq-am-TbW" secondAttribute="bottom" constant="-13.5" id="ChE-SC-aNk"/>
                                     <constraint firstItem="4Tq-am-TbW" firstAttribute="top" secondItem="pf4-d9-ZDA" secondAttribute="top" id="FHB-S2-Fou"/>
                                     <constraint firstItem="b05-W6-rC0" firstAttribute="centerY" secondItem="RYU-nE-Nkd" secondAttribute="centerY" id="H86-kY-eHY"/>
                                     <constraint firstAttribute="trailing" secondItem="J2Q-ac-O1k" secondAttribute="trailing" constant="8" id="PHm-Tu-Afn"/>
                                     <constraint firstItem="b05-W6-rC0" firstAttribute="leading" secondItem="RYU-nE-Nkd" secondAttribute="trailing" constant="3.5" id="QOD-2S-R6M"/>
+                                    <constraint firstItem="M2l-ZN-Z1Y" firstAttribute="centerX" secondItem="4Tq-am-TbW" secondAttribute="centerX" id="Sqa-77-266"/>
                                     <constraint firstItem="Qw9-c0-4cb" firstAttribute="top" secondItem="r3i-pe-kmq" secondAttribute="bottom" constant="110.5" id="Ual-4q-Q9t"/>
                                     <constraint firstItem="RYU-nE-Nkd" firstAttribute="top" secondItem="g4w-b9-YMN" secondAttribute="bottom" id="Udo-kc-18V"/>
-                                    <constraint firstItem="zk2-Rv-x5V" firstAttribute="top" secondItem="yrK-3u-RW6" secondAttribute="bottom" constant="0.5" id="V24-85-eIJ"/>
                                     <constraint firstItem="RYU-nE-Nkd" firstAttribute="centerX" secondItem="4Tq-am-TbW" secondAttribute="centerX" id="WQz-C7-5ZD"/>
                                     <constraint firstItem="g4w-b9-YMN" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Jhy-xw-YeY" secondAttribute="bottom" constant="46.5" id="YFd-VI-dRi"/>
                                     <constraint firstItem="g4w-b9-YMN" firstAttribute="centerX" secondItem="Jhy-xw-YeY" secondAttribute="centerX" constant="-1" id="Ylt-Lw-JbD"/>
@@ -1249,6 +1249,7 @@
                                     <constraint firstItem="J2Q-ac-O1k" firstAttribute="top" secondItem="4Tq-am-TbW" secondAttribute="bottom" constant="-13.5" id="dhn-DG-WxI"/>
                                     <constraint firstItem="4Tq-am-TbW" firstAttribute="leading" secondItem="pf4-d9-ZDA" secondAttribute="leading" constant="8" id="dqs-h0-jLs"/>
                                     <constraint firstAttribute="trailing" secondItem="4Tq-am-TbW" secondAttribute="trailing" constant="8" id="flJ-ZD-JfU"/>
+                                    <constraint firstItem="M2l-ZN-Z1Y" firstAttribute="top" secondItem="sZG-C4-0oA" secondAttribute="bottom" constant="4" id="gmM-az-JoG"/>
                                     <constraint firstItem="RYU-nE-Nkd" firstAttribute="centerY" secondItem="4Tq-am-TbW" secondAttribute="centerY" id="hwG-Dp-jxr"/>
                                     <constraint firstAttribute="trailing" secondItem="Qw9-c0-4cb" secondAttribute="trailing" constant="8" id="jmj-2Q-i1W"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="b05-W6-rC0" secondAttribute="trailing" constant="20" symbolic="YES" id="kSD-HF-4B1"/>
@@ -1265,7 +1266,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zk2-Rv-x5V" firstAttribute="centerX" secondItem="epW-jd-9X9" secondAttribute="centerX" constant="3.5" id="AYg-W1-iu8"/>
                             <constraint firstItem="n4t-LW-mgo" firstAttribute="height" secondItem="EHH-ky-FVG" secondAttribute="height" id="Jb9-kg-VA4"/>
                             <constraint firstItem="n4t-LW-mgo" firstAttribute="centerY" secondItem="epW-jd-9X9" secondAttribute="centerY" id="Kq3-eb-eHx"/>
                             <constraint firstItem="rE5-1C-YHZ" firstAttribute="centerX" secondItem="epW-jd-9X9" secondAttribute="centerX" constant="2.5" id="Mwe-QH-87S"/>
@@ -1276,6 +1276,7 @@
                             <constraint firstItem="yrK-3u-RW6" firstAttribute="centerX" secondItem="epW-jd-9X9" secondAttribute="centerX" id="bXt-H0-G1n"/>
                             <constraint firstItem="pf4-d9-ZDA" firstAttribute="leading" secondItem="EHH-ky-FVG" secondAttribute="leading" id="eba-sP-vVD"/>
                             <constraint firstItem="n4t-LW-mgo" firstAttribute="width" secondItem="EHH-ky-FVG" secondAttribute="width" id="fKy-c2-e8y"/>
+                            <constraint firstItem="XKJ-9o-qqW" firstAttribute="width" secondItem="EHH-ky-FVG" secondAttribute="width" id="h3u-dr-QEM"/>
                             <constraint firstAttribute="trailing" secondItem="pf4-d9-ZDA" secondAttribute="trailing" id="k7M-Xr-M9E"/>
                             <constraint firstItem="pf4-d9-ZDA" firstAttribute="bottom" secondItem="epW-jd-9X9" secondAttribute="bottom" id="qVz-K3-aza"/>
                             <constraint firstItem="rE5-1C-YHZ" firstAttribute="top" secondItem="epW-jd-9X9" secondAttribute="top" constant="8" id="r9G-pC-zaf"/>
@@ -1285,6 +1286,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="zcY-0k-Hh1"/>
                     <connections>
+                        <outlet property="CrypotEitherBitPieChart" destination="M2l-ZN-Z1Y" id="eRY-0x-WhX"/>
+                        <outlet property="CryptoPriceGraph" destination="XKJ-9o-qqW" id="Efv-BP-HcI"/>
                         <outlet property="LabelCoin" destination="RYU-nE-Nkd" id="J54-tJ-eHE"/>
                         <outlet property="LabelCurrency" destination="g4w-b9-YMN" id="8BP-KH-OaI"/>
                         <outlet property="LabelGroth" destination="sZG-C4-0oA" id="UCG-2x-C4L"/>
@@ -1296,7 +1299,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RPy-ck-Yo3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="620" y="862"/>
+            <point key="canvasLocation" x="620" y="861.3193403298352"/>
         </scene>
         <!--Account Settings-->
         <scene sceneID="fe3-PJ-qy0">
@@ -1641,7 +1644,6 @@
         <image name="createBtt" width="316" height="45"/>
         <image name="ethBtt" width="40" height="40"/>
         <image name="gainDown" width="12" height="14"/>
-        <image name="graphic1" width="79" height="79"/>
         <image name="itemOffIcon" width="25" height="25"/>
         <image name="itemOnIcon" width="25" height="25"/>
         <image name="line" width="1" height="1"/>
