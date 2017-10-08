@@ -1062,6 +1062,7 @@
                                         <color key="backgroundColor" red="0.0" green="0.47934520244598389" blue="0.99908632040023804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="Gf9-0q-KLl"/>
+                                            <constraint firstAttribute="height" constant="1" id="Uq8-EK-TOJ"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spare Change Accrued since Monday" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jhy-xw-YeY">
@@ -1258,7 +1259,6 @@
                                     <constraint firstItem="e3e-TI-yAw" firstAttribute="leading" secondItem="pf4-d9-ZDA" secondAttribute="leading" constant="8" id="q9V-mo-lFo"/>
                                     <constraint firstAttribute="bottom" secondItem="4Tq-am-TbW" secondAttribute="bottom" constant="325.5" id="s6r-Sa-fY5"/>
                                     <constraint firstItem="yrK-3u-RW6" firstAttribute="width" secondItem="syc-EO-atS" secondAttribute="width" id="seG-My-eGH"/>
-                                    <constraint firstItem="yrK-3u-RW6" firstAttribute="top" secondItem="syc-EO-atS" secondAttribute="bottom" constant="3" id="sj0-h3-QbF"/>
                                     <constraint firstItem="r3i-pe-kmq" firstAttribute="leading" secondItem="pf4-d9-ZDA" secondAttribute="leading" constant="8" id="txD-cw-oN2"/>
                                     <constraint firstItem="Qw9-c0-4cb" firstAttribute="top" secondItem="XKJ-9o-qqW" secondAttribute="bottom" constant="8" id="xsD-fj-avV"/>
                                 </constraints>
