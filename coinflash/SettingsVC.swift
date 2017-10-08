@@ -17,6 +17,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate{
     override func viewDidLoad() {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.loadGlobalSettings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +41,11 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate{
     // Nav pop with swipe recognizer
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+    
+    // Settings Properties
+    func loadGlobalSettings(){
+        
     }
     
     //Setting taps actions
