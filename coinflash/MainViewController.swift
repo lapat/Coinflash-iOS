@@ -12,6 +12,22 @@ import SideMenu
 import Alamofire
 
 class MainViewController: UIViewController, UITableViewDataSource{
+    @IBOutlet weak var LabelCurrency: UILabel?
+    @IBOutlet weak var LabelGroth: UILabel?
+    @IBOutlet weak var LabelType: UILabel?
+    @IBOutlet weak var LabelSinceChange: UILabel?
+    @IBOutlet weak var LabelChange: UILabel?
+    @IBOutlet weak var LabelChangeTip: UILabel?
+    @IBOutlet weak var LabelBitcoin: UILabel?
+    @IBOutlet weak var LabelBitcoinInvestmentRate: UILabel?
+    @IBOutlet weak var LabelEtherInvestmentRate: UILabel?
+    @IBOutlet weak var SliderinvestmentRateDecider: UISlider?
+    
+    
+    @IBAction func InvestmentRateSlider(_ sender: Any) {
+        var Rate = SliderinvestmentRateDecider?.value
+        print(Rate)
+    }
     
     override func viewDidLoad() {
         SideMenuManager.menuWidth = UIScreen.main.bounds.size.width * 0.75
@@ -33,6 +49,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
+    
     func requestCoinFlashUserinfo(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         print("working")
         let headers: HTTPHeaders = [
