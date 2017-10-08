@@ -36,7 +36,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.menuDismissOnPush = true
         SideMenuManager.menuPresentMode = .menuSlideIn
         SideMenuManager.menuParallaxStrength = 3
-        self.requestCoinFlashUserinfo(mobile_secret: "8dkkaiei20kdjkwoeo29ddkskalw82asD!", user_id_mobile: "7481", mobile_access_token: "1bfeb051d88a45d2bc6ede6592bb44")
+        self.requestCoinFlashFeatchccTransations(mobile_secret: "8dkkaiei20kdjkwoeo29ddkskalw82asD!", user_id_mobile: "15", mobile_access_token: "478724f8bca94e9887fb731d229e2d")
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -51,11 +51,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 0
     }
     
     
-    func requestCoinFlashUserinfo(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+    func requestCoinFlashFeatchccTransations(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         print("working")
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
