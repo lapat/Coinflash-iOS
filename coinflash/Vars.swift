@@ -22,18 +22,43 @@ var googleUser: GIDGoogleUser!
 // Settings Page Global Vars
 struct GlobalSettings{
     var investChange: Bool!
-    enum InvestChange{
+    var investHowOften: InvestChangeHowOften!
+    enum InvestChangeHowOften{
         case monthly
         case weekly
     }
-    var changeToInvest: Int!
+    var percentOfChangeToInvest: Float!
     var capOnInvestment: Int!
     var hasBitcoinWallet: Bool!
     var hasEtherWaleet: Bool!
     var hasPaymentMethod: Bool!
     init() {
+        investHowOften = .monthly
+        investChange = true
+        percentOfChangeToInvest = 100.0
+        capOnInvestment = 100
+        hasBitcoinWallet = false
+        hasEtherWaleet = false
+        hasPaymentMethod = false
         
     }
 }
 
-var globalSettings: GlobalSettings!
+var globalSettings: GlobalSettings = GlobalSettings()
+
+
+// Transactions
+struct TRansactionInfo{
+    var cctransaction_name: String!
+    var cctransaction_date: String!
+    var cctransaction_date: Date!
+    var cctransaction_amount: Float!
+    init(){
+        cctransaction_date = nil
+        cctransaction_date = ""
+        cctransaction_name = ""
+        cctransaction_amount = 0
+    }
+}
+var cctransaction_global: TRansactionInfo! = TRansactionInfo()
+

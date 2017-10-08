@@ -46,18 +46,18 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             
             
             // Perform any operations on signed in user here.
-            let userId = user.userID                  // For client-side use only!
+            //let userId = user.userID                  // For client-side use only!
             //print("User id is \(String(describing: String( userId!)))")
             
-            let idToken = user.authentication.idToken // Safe to send to the server
+            //let idToken = user.authentication.idToken // Safe to send to the server
             //print("Authentication idToken is \(String( describing: idToken))")
-            let fullName = user.profile.name
+            //let fullName = user.profile.name
             //print("User full name is \(String( describing: fullName))")
-            let givenName = user.profile.givenName
+            //let givenName = user.profile.givenName
             //print("User given profile name is \(String( describing: givenName))")
-            let familyName = user.profile.familyName
+            //let familyName = user.profile.familyName
             //print("User family name is \(String( describing: familyName))")
-            let email = user.profile.email
+            //let email = user.profile.email
             //print("User email address is \(String( describing: email))")
             
             // save info and send to server
@@ -79,7 +79,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     func requestServerForLoginConfirmation(googleUser user: GIDGoogleUser){
         let header: HTTPHeaders = ["content-type": "application/x-www-form-urlencoded"]
         let parameter: Parameters = ["id_token": user.authentication.idToken, "mobile_secret": user_mobile_secret]
-        
+        print(user.authentication.idToken)
         SVProgressHUD.show()
         Alamofire.request("\(baseUrl)login2/", method: HTTPMethod.post, parameters: parameter, headers: header).responseJSON { (response) in
             
