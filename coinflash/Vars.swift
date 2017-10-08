@@ -51,10 +51,8 @@ var globalSettings: GlobalSettings = GlobalSettings()
 struct TRansactionInfo{
     var cctransaction_name: String!
     var cctransaction_date: String!
-    var cctransaction_date: Date!
     var cctransaction_amount: Float!
     init(){
-        cctransaction_date = nil
         cctransaction_date = ""
         cctransaction_name = ""
         cctransaction_amount = 0
