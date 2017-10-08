@@ -8,10 +8,9 @@
 
 import Foundation
 
-
 var baseUrl = "https://coinflashapp.com/"
 var id_token: String!
-var mobile_secret: String!
+var mobile_secret: String! = "8dkkaiei20kdjkwoeo29ddkskalw82asD!"
 var user_id_mobile: String!
 
 struct ProfileGoogle{
@@ -21,6 +20,4 @@ struct ProfileGoogle{
     var onboard_status: String!
     var locale: String!
     var userId: String!
-    var mobile
 }
-

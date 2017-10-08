@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import Alamofire
+import SVProgressHUD
 
 class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     
@@ -42,22 +44,26 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             self.givenName = user.profile.givenName
             self.familyName = user.profile.familyName
             
+            
             // Perform any operations on signed in user here.
             let userId = user.userID                  // For client-side use only!
             print("User id is \(String(describing: String( userId!)))")
             
             let idToken = user.authentication.idToken // Safe to send to the server
-            print("Authentication idToken is \(String( describing: idToken))")
+            //print("Authentication idToken is \(String( describing: idToken))")
             let fullName = user.profile.name
-            print("User full name is \(String( describing: fullName))")
+            //print("User full name is \(String( describing: fullName))")
             let givenName = user.profile.givenName
-            print("User given profile name is \(String( describing: givenName))")
+            //print("User given profile name is \(String( describing: givenName))")
             let familyName = user.profile.familyName
-            print("User family name is \(String( describing: familyName))")
+            //print("User family name is \(String( describing: familyName))")
             let email = user.profile.email
-            print("User email address is \(String( describing: email))")
-            // ...
-            self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+            //print("User email address is \(String( describing: email))")
+            
+            // save info and send to server
+            
+            self.requestServerForLoginConfirmation(googleUser: user)
+            
         } else {
             print("ERROR ::\(error.localizedDescription)")
         }
@@ -69,7 +75,20 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         
     }
 
-    
+    // Check Google info from server
+    func requestServerForLoginConfirmation(googleUser user: GIDGoogleUser){
+        id_token = user.authentication.idToken
+        let header: HTTPHeaders = ["content-type": "application/x-www-form-urlencoded"]
+        let parameter: Parameters = ["id_token": user.authentication.idToken, "mobile_secret": mobile_secret]
+        print("user id_token is \(id_token)")
+        
+        SVProgressHUD.show()
+        Alamofire.request("\(baseUrl)login2/", method: HTTPMethod.post, parameters: parameter, headers: header).responseJSON { (response) in
+            print(response)
+            SVProgressHUD.dismiss()
+        }
+        //self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+    }
     
     @IBOutlet weak var signInButton: GIDSignInButton!
     
