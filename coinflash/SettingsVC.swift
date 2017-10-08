@@ -121,7 +121,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     func doneWithNumberPad(){
         capOnInvestmentTextField.resignFirstResponder()
         var temp = capOnInvestmentTextField.text!.remove(at: capOnInvestmentTextField.text!.startIndex)
-        globalSettings.capOnInvestment = Int(temp)
+        //globalSettings.capOnInvestment = Int(temp)
         print(globalSettings.capOnInvestment)
     }
     
