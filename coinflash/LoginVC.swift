@@ -47,7 +47,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             
             // Perform any operations on signed in user here.
             let userId = user.userID                  // For client-side use only!
-            print("User id is \(String(describing: String( userId!)))")
+            //print("User id is \(String(describing: String( userId!)))")
             
             let idToken = user.authentication.idToken // Safe to send to the server
             //print("Authentication idToken is \(String( describing: idToken))")
@@ -74,17 +74,17 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     {
         
     }
-
+    
     // Check Google info from server
     func requestServerForLoginConfirmation(googleUser user: GIDGoogleUser){
-        id_token = user.authentication.idToken
         let header: HTTPHeaders = ["content-type": "application/x-www-form-urlencoded"]
-        let parameter: Parameters = ["id_token": user.authentication.idToken, "mobile_secret": mobile_secret]
-        print("user id_token is \(id_token)")
+        let parameter: Parameters = ["id_token": user.authentication.idToken, "mobile_secret": user_mobile_secret]
         
         SVProgressHUD.show()
         Alamofire.request("\(baseUrl)login2/", method: HTTPMethod.post, parameters: parameter, headers: header).responseJSON { (response) in
-            print(response)
+            
+            let data = response.result.value as! [String: Any]
+            HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String)
             SVProgressHUD.dismiss()
         }
         //self.performSegue(withIdentifier: "mainPageSegue", sender: self)
