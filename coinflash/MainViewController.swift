@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SideMenu
 import Alamofire
+import SVProgressHUD
 
 class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var LabelCurrency: UILabel?
@@ -49,7 +50,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         cell.Date.text = cctransations[indexPath.row]?.cctransaction_date
         cell.Price.text = cctransations[indexPath.row]?.cctransaction_amount
         cell.invested.text = cctransations[indexPath.row]?.cctransaction_invested
-        
         return cell
     }
     
@@ -63,7 +63,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     
     func requestCoinFlashFeatchccTransations(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
-        print("working")
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
@@ -72,8 +71,15 @@ class MainViewController: UIViewController, UITableViewDataSource{
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
         ]
+        SVProgressHUD.show()
+        
        Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
              let data = response.result.value as! [String: Any]
+             if data["cc_transactions_array"] == nil
+             {
+                SVProgressHUD.dismiss()
+                return
+             }
              let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
         
              self.cctransations.removeAll()
@@ -104,6 +110,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
             
         }
             self.ccTransationTableView?.reloadData()
+            SVProgressHUD.dismiss()
+        
         }
        
 

@@ -56,8 +56,22 @@ struct TRansactionInfo{
         cctransaction_date = ""
         cctransaction_name = ""
         cctransaction_coinbase_transaction_id = ""
-        cctransaction_invested = "Not invested"
+        cctransaction_invested = ""
         cctransaction_amount = ""
+    }
+}
+struct TCryptoInfo{
+    var TCryptoInfo_crypto: String!
+    var TCryptoInfo_price: String!
+    var TCryptoInfo_Date: String!
+    var TCryptoInfo_type: String!
+    var TCryptoInfo_Value: String!
+    init(){
+        TCryptoInfo_crypto = ""
+        TCryptoInfo_price = ""
+        TCryptoInfo_Date = ""
+        TCryptoInfo_type = ""
+        TCryptoInfo_Value = ""
     }
 }
 var cctransaction_global: TRansactionInfo! = TRansactionInfo()
