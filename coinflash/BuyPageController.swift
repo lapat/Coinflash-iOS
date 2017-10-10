@@ -31,7 +31,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         Cryptodates = ["9-10","9-10","9-10","9-10","9-10","9-10","9-10","9-10"]
         Cryptoprices = [3110.0,3210.0,3510.0,3410.0,3310.0,3210.0,3110.0,3210.0,3310.0]
         
-        
         //Set Chart Properties
         CryptoPriceGraph.chartDescription?.text = ""
         self.CryptoPriceGraph.rightAxis.drawLabelsEnabled = false
