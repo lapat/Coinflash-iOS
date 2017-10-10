@@ -30,9 +30,8 @@ class MenuVC: UIViewController {
         //o2.send(value: "ao") // Just triggers the above to print "work"
         //o2.send(value: "ao")
         
-        
-        
     }
+    
     func __sigs() -> (sig: Signal<Any?, NoError>, os: [Any]) {
         let (s1, o1) = Signal<String, NoError>.pipe() // In actual code I have 10+ signals in each method
         let (s2, o2) = Signal<Any?, NoError>.pipe()
