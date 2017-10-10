@@ -16,4 +16,8 @@ class HelperFunctions: NSObject {
         user_id_mobile = userIdMobile
         user_isLoggedIn = true
     }
+    
+    
+    // MARK: - Coin base Helpers
+    
 }

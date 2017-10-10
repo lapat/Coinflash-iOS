@@ -58,3 +58,19 @@ struct TRansactionInfo{
 }
 var cctransaction_global: TRansactionInfo! = TRansactionInfo()
 
+// Coinbase
+struct CoinbaseInfo{
+    var accessToken: String!
+    var refreshToken: String!
+    var expiresIn: NSNumber!
+    var loggedIn: Bool
+    init(){
+        accessToken = ""
+        refreshToken = ""
+        expiresIn = 0
+        loggedIn = false
+    }
+}
+var coinbaseInfoObject: CoinbaseInfo = CoinbaseInfo()
+
+

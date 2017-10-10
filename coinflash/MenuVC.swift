@@ -44,7 +44,6 @@ class MenuVC: UIViewController {
         return (sig: s, os: [o1, o2])
     }
 
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -33,6 +33,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     }
     
     @IBAction func didTapOnAddCoinbaseButton(sender: UIButton){
-        CoinbaseOAuth.startAuthentication(withClientId: "2e9035f26ec0c4bda426ffbff1f2bb800c88cec0a2f8322b85e3edd07fa2085d", scope: "wallet:buys:create", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-1234567://coinbase-oauth", meta: nil)
+        CoinbaseOAuth.startAuthentication(withClientId: "2e9035f26ec0c4bda426ffbff1f2bb800c88cec0a2f8322b85e3edd07fa2085d", scope: "wallet:buys:create", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: nil)
     }
 }
