@@ -418,7 +418,7 @@
                                 <rect key="frame" x="343" y="28" width="24" height="24"/>
                                 <state key="normal" image="settingIconn"/>
                                 <connections>
-                                    <segue destination="1mL-Jc-yYf" kind="show" id="SdM-Y7-GfY"/>
+                                    <segue destination="xam-tU-CdB" kind="show" id="tn7-CS-QaY"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1686,6 +1686,6 @@
         <image name="settingIcons" width="34" height="34"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="pdj-mW-GPu"/>
+        <segue reference="I5M-EP-JW7"/>
     </inferredMetricsTieBreakers>
 </document>

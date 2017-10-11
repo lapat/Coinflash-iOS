@@ -41,12 +41,13 @@ class HelperFunctions: NSObject {
         UserDefaults.standard.set(user_isLoggedIn, forKey: "user_isLoggedIn")
         
         // save google user
-        //let data: NSData = NSData(base64Encoded: googleUser, options: nil)
-        UserDefaults.standard.set(data, forKey: "googleUser")
-        
+        //let googleData  = NSKeyedArchiver.archivedData(withRootObject: googleUser)
+       // UserDefaults.standard.set(googleData, forKey: "googleUser")
+        /*
         UserDefaults.standard.set(globalSettings, forKey: "globalSettings")
         UserDefaults.standard.set(cctransaction_global, forKey: "cctransaction_global")
         UserDefaults.standard.set(coinbaseInfoObject, forKey: "coinbaseInfoObject")
+         */
     }
     
     // loads the nsuser defaults and save them to the vars
@@ -55,8 +56,14 @@ class HelperFunctions: NSObject {
         user_id_mobile = UserDefaults.standard.value(forKey: "user_id_mobile") as? String
         user_mobile_access_token = UserDefaults.standard.value(forKey: "user_mobile_access_token") as? String
         user_isLoggedIn = UserDefaults.standard.value(forKey: "user_isLoggedIn") as? Bool
-        googleUser = UserDefaults.standard.value(forKey: "googleUser") as? GIDGoogleUser
+        
         /*
+        if let loadedData = UserDefaults.standard.value(forKey: "googleUser"){
+            if let user = NSKeyedUnarchiver.unarchiveObject(with: loadedData as! Data){
+                googleUser = user as! GIDGoogleUser
+            }
+        }
+        
         if UserDefaults.standard.value(forKey: "globalSettings") != nil{
             globalSettings = UserDefaults.standard.value(forKey: "globalSettings") as! GlobalSettings
         }

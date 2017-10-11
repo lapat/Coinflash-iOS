@@ -81,12 +81,19 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         let parameter: Parameters = ["id_token": user.authentication.idToken, "mobile_secret": user_mobile_secret]
         print(user.authentication.idToken)
         SVProgressHUD.show()
-        Alamofire.request("\(baseUrl)login2/", method: HTTPMethod.post, parameters: parameter, headers: header).responseJSON { (response) in
-            
-            let data = response.result.value as! [String: Any]
-            HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String)
-            SVProgressHUD.dismiss()
-            self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+        Alamofire.request("\(baseUrl)login2/", method: HTTPMethod.post, parameters: parameter, headers: header)
+            .validate()
+            .responseJSON { (response) in
+            switch response.result{
+            case .success:
+                let data = response.result.value as! [String: Any]
+                HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String)
+                SVProgressHUD.dismiss()
+                self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+            case .failure:
+                print(response.error)
+                SVProgressHUD.dismiss()
+            }
         }
     }
     
