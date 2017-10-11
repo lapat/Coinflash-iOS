@@ -75,4 +75,6 @@ struct TCryptoInfo{
     }
 }
 var cctransaction_global: TRansactionInfo! = TRansactionInfo()
+var TCryptoInfo_global: TCryptoInfo! = TCryptoInfo()
+
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		183FC1B43CAC1F4162D06876 /* Pods_coinflashUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D87185B0096A3FFED202487 /* Pods_coinflashUITests.framework */; };
 		3F012E331F84D2550026EFC0 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F012E321F84D2550026EFC0 /* MenuVC.swift */; };
+		3F2079371F8D4B19006DFD6E /* CryptoTransationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2079361F8D4B19006DFD6E /* CryptoTransationCellView.swift */; };
 		3F5BBF131F8AC68A00BCA472 /* ccTransationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BBF121F8AC68A00BCA472 /* ccTransationCellView.swift */; };
 		3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC023B1F78F16700DD6558 /* AppDelegate.swift */; };
 		3FCC023E1F78F16700DD6558 /* NavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC023D1F78F16700DD6558 /* NavViewController.swift */; };
@@ -52,6 +53,7 @@
 		1FCCE0FE2D004E311A242478 /* Pods-coinflashUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashUITests/Pods-coinflashUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2DD22795A95AC01C1CA2B39C /* Pods-coinflash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflash/Pods-coinflash.debug.xcconfig"; sourceTree = "<group>"; };
 		3F012E321F84D2550026EFC0 /* MenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
+		3F2079361F8D4B19006DFD6E /* CryptoTransationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoTransationCellView.swift; sourceTree = "<group>"; };
 		3F5BBF121F8AC68A00BCA472 /* ccTransationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ccTransationCellView.swift; sourceTree = "<group>"; };
 		3FCC02381F78F16700DD6558 /* coinflash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coinflash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FCC023B1F78F16700DD6558 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				771829FF1F8997CD0098F501 /* Vars.swift */,
 				7708387A1F89AA12009306B1 /* HelperFunctions.swift */,
 				3F5BBF121F8AC68A00BCA472 /* ccTransationCellView.swift */,
+				3F2079361F8D4B19006DFD6E /* CryptoTransationCellView.swift */,
 			);
 			path = coinflash;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F2079371F8D4B19006DFD6E /* CryptoTransationCellView.swift in Sources */,
 				3FCC023E1F78F16700DD6558 /* NavViewController.swift in Sources */,
 				3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */,
 				ACA3DA9C1F7FF4F400185245 /* LoginVC.swift in Sources */,

@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 import Charts
+import SideMenu
+import Alamofire
+import SVProgressHUD
+
 class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDelegate{
     @IBOutlet weak var btcBtn: UIButton?
     @IBOutlet weak var btcEth: UIButton?
@@ -22,6 +26,19 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     @IBOutlet weak var CryptoPriceGraph: LineChartView!
     var Cryptodates:[String]!
     var Cryptoprices:[Double]!
+    var DataToBeLoaded = [TCryptoInfo]()
+    var DataToBeLoadedwithColor = UIColor()
+    
+    @IBOutlet weak var CryptoTransationTableView: UITableView!
+    // Either Variables
+    var EitherTransation = [TCryptoInfo]()
+    var EitherTotal : Double = 0.0
+    var EitherTotalPrice : Double = 0.0
+    
+    // Bitcoin Variables
+    var BitcoinTransation = [TCryptoInfo]()
+    var BitcoinTotal : Double = 0.0
+    var BitcoinTotalPrice : Double = 0.0
     
     
     @IBOutlet weak var CrypotEitherBitPieChart: PieChartView!
@@ -60,10 +77,21 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         let type = ["ETH", "BIT"]
         let percentage = [20.0,80.0]
         self.setCryptoPieChart(dataPoints: type, values:percentage)
+        // Featch Data From Server
+        self.requestCoinFlashFeatchwallet(mobile_secret: "8dkkaiei20kdjkwoeo29ddkskalw82asD!", user_id_mobile: "1", mobile_access_token: "3f506ad810db4baba56493fcd25799")
         
+    
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "basicCell")
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! CryptoTransationCellView
+        
+        cell.CryptoPrice.text = DataToBeLoaded[indexPath.row].TCryptoInfo_crypto + " / $" + DataToBeLoaded[indexPath.row].TCryptoInfo_price
+        cell.CryptoPrice.textColor = self.DataToBeLoadedwithColor
+        cell.Date.text = DataToBeLoaded[indexPath.row].TCryptoInfo_Date
+        cell.Value.text = DataToBeLoaded[indexPath.row].TCryptoInfo_Value
+        cell.CryptoType.text = DataToBeLoaded[indexPath.row].TCryptoInfo_type
+        
         return cell
     }
     
@@ -72,7 +100,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return DataToBeLoaded.count
     }
     
     @IBAction func changThemeToEther(for button: UIButton){
@@ -83,6 +111,14 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelGroth?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         LabelType?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         boundryCricleImage?.image = UIImage(named: "circleGreen")
+        
+        // Value assignement
+        self.DataToBeLoaded = self.EitherTransation
+        self.DataToBeLoadedwithColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
+        self.CryptoTransationTableView.reloadData()
+        self.LabelCoin?.text =  String(self.EitherTotal)
+        self.LabelCurrency?.text =  "$ " + String(self.EitherTotalPrice) + " Dollar"
+        
     }
     @IBAction func changThemeToBitCoin(for button: UIButton){
         btcBtn?.isEnabled  = false
@@ -91,8 +127,15 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelCurrency?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         LabelGroth?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         LabelType?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
-        
         boundryCricleImage?.image = UIImage(named: "circleBlue")
+        
+        // Value assignement
+        self.DataToBeLoaded = self.BitcoinTransation
+        self.DataToBeLoadedwithColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
+        self.CryptoTransationTableView.reloadData()
+        self.LabelCoin?.text =  String(self.BitcoinTotal)
+        self.LabelCurrency?.text =  "$ " + String(self.BitcoinTotalPrice) + " Dollar"
+        
     }
     func setCryptoPieChart(dataPoints: [String], values: [Double]){
         var dataEntries: [ChartDataEntry] = []
@@ -144,6 +187,72 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.CryptoPriceGraph.xAxis.valueFormatter = DefaultAxisValueFormatter(block: { (index, _) -> String in
             return date[Int(index)]
         })
+    }
+    func requestCoinFlashFeatchwallet(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+            ]
+        SVProgressHUD.show()
+        
+        Alamofire.request("https://coinflashapp.com/coinflashtransactions3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            self.BitcoinTransation.removeAll()
+            self.EitherTransation.removeAll()
+            
+            if let array = response.result.value as? NSArray {
+                for obj in array {
+                    if let dict = obj as? NSDictionary {
+                        var singleTransation = TCryptoInfo_global
+                        
+                        singleTransation?.TCryptoInfo_crypto  = dict.value(forKey: "coinbase_crypto_amount") as! String
+                        singleTransation?.TCryptoInfo_price  = dict.value(forKey: "coinbase_total_amount_spent") as! String
+                        singleTransation?.TCryptoInfo_Value  = dict.value(forKey: "coinbase_amount_spent_on_crypto") as! String
+                        singleTransation?.TCryptoInfo_Date  = dict.value(forKey: "coinbase_time_transaction_will_payout") as! String
+                        singleTransation?.TCryptoInfo_type  = dict.value(forKey: "crypto_type") as! String
+                        
+                        
+                        if singleTransation?.TCryptoInfo_Date   != nil{
+                            var date: String = singleTransation!.TCryptoInfo_Date
+                            var truncated = String(date.characters.dropFirst(5))
+                            truncated = String(truncated.characters.dropLast(10))
+                            singleTransation?.TCryptoInfo_Date = truncated
+                        }
+                        if singleTransation?.TCryptoInfo_type != nil{
+                            let cryptoType = singleTransation?.TCryptoInfo_type
+                            
+                            if(cryptoType == "1")
+                            {
+                                singleTransation?.TCryptoInfo_type = "BTC"
+                                self.BitcoinTotal = self.BitcoinTotal + Double(singleTransation!.TCryptoInfo_crypto)!
+                                self.BitcoinTotalPrice = self.BitcoinTotalPrice + Double(singleTransation!.TCryptoInfo_price)!
+                                self.BitcoinTransation.append(singleTransation!)
+                            }
+                            else
+                            {
+                                singleTransation?.TCryptoInfo_type = "ETH"
+                                self.EitherTotal = self.EitherTotal + Double(singleTransation!.TCryptoInfo_crypto)!
+                                self.EitherTotalPrice = self.EitherTotalPrice + Double(singleTransation!.TCryptoInfo_price)!
+                                self.EitherTransation.append(singleTransation!)
+                            }
+                        }
+                        
+                        
+                       
+                    }
+                }
+            }
+            // Loading the data in the Table
+            self.changThemeToBitCoin(for: self.btcBtn!)
+            SVProgressHUD.dismiss()
+            
+            
+        }
+        
+        
     }
     
 }
