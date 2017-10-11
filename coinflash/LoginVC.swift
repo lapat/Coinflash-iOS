@@ -98,6 +98,10 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         // set delegates
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
+        
+        if user_isLoggedIn == true{
+            self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+        }
     }
     
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,

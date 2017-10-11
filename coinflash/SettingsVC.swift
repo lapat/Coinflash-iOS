@@ -137,6 +137,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         print(globalSettings.capOnInvestment)
     }
     
+    @IBAction func didTapOnBackButton(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // tableview delegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if  indexPath.row == 1{

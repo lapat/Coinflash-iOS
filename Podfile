@@ -8,10 +8,10 @@ target 'coinflash' do
   pod 'Google/SignIn'
   pod 'coinbase-official'
   pod 'SideMenu'
-  pod 'ReactiveSwift'
+  pod 'ReactiveCocoa'
   pod 'Alamofire'
   pod 'SVProgressHUD'
-  pod 'ChartsRealm'
+  pod 'ChartsRealm', '3.0.3'
   use_frameworks!
   
   target 'coinflashTests' do

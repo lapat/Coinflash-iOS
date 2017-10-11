@@ -43,15 +43,53 @@ class MenuVC: UIViewController {
         
         return (sig: s, os: [o1, o2])
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     // View Navigation:
-    @IBAction func didTapOnSettings(sender: UIGestureRecognizer){
-        sendSignal(withMessage: "Account Settings")
+    @IBAction func didTapOnSettings(sender: UIButton){
+        //sendSignal(withMessage: "Account Settings")
+        let nvController = (UIApplication.shared.delegate as! AppDelegate).mainNavController
+        if nvController!.topViewController!.isKind(of: AccountSettingsVC){
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        nvController?.popViewController(animated: false)
+        dismiss(animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyboard.instantiateViewController(withIdentifier: "account-settings-view")
+        nvController?.pushViewController(newViewController, animated: true)
+    }
+    
+    @IBAction func didTapOnPortFolioButton(sender: UIButton){
+        //sendSignal(withMessage: "Account Settings")
+        let nvController = (UIApplication.shared.delegate as! AppDelegate).mainNavController
+        if nvController!.topViewController!.isKind(of: BuyPageController) {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        nvController?.popViewController(animated: false)
+        dismiss(animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyboard.instantiateViewController(withIdentifier: "buypage-view")
+        nvController?.pushViewController(newViewController, animated: true)
+    }
+    
+    @IBAction func didTapOnManageChangeButton(sender: UIButton){
+        //sendSignal(withMessage: "Account Settings")
+        let nvController = (UIApplication.shared.delegate as! AppDelegate).mainNavController
+        if (nvController!.topViewController!.isKind(of: MainViewController)){
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        nvController?.popViewController(animated: false)
+        dismiss(animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyboard.instantiateViewController(withIdentifier: "mainpage-view")
+        nvController?.pushViewController(newViewController, animated: true)
     }
     
     func sendSignal(withMessage message: String)  {
