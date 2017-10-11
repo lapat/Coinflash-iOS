@@ -14,7 +14,8 @@ import coinbase_official
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
+    var processingBacklink: Bool = false
+    var mainNavController: UINavigationController!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -22,9 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
-    
+        
         // Setting up the side menu
         SideMenuManager.menuEnableSwipeGestures = true
+        
+        HelperFunctions.loadNSUserDefaults()
         
        return true
     }
@@ -32,13 +35,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        HelperFunctions.saveNSUserDefaults()
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        HelperFunctions.saveNSUserDefaults()
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
@@ -49,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        HelperFunctions.saveNSUserDefaults()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -66,6 +72,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             print(result)
                         }
                     }
+                    HelperFunctions.coinBaseSaveLoginInfo(info: result as! NSDictionary)
+                    self.processingBacklink = false
                     // Note that you should also store 'expire_in' and refresh the token using CoinbaseOAuth.getOAuthTokensForRefreshToken() when it expires
                 }
             })

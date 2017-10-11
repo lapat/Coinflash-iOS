@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// General user apis
+// General user apis
 var baseUrl = "https://coinflashapp.com/"
 var user_id_token: String!
 var user_mobile_secret: String! = "8dkkaiei20kdjkwoeo29ddkskalw82asD!"
@@ -19,7 +19,7 @@ var user_isLoggedIn: Bool!
 var googleUser: GIDGoogleUser!
 
 
-// Settings Page Global Vars
+// MARK: - Settings Page Global Vars
 struct GlobalSettings{
     var investChange: Bool!
     var investHowOften: InvestChangeHowOften!
@@ -45,7 +45,7 @@ struct GlobalSettings{
 var globalSettings: GlobalSettings = GlobalSettings()
 
 
-// Transactions
+// MARK: - Transactions
 struct TRansactionInfo{
     var cctransaction_name: String!
     var cctransaction_date: String!
@@ -60,6 +60,8 @@ struct TRansactionInfo{
         cctransaction_amount = ""
     }
 }
+
+// MARK: - Crypto Info
 struct TCryptoInfo{
     var TCryptoInfo_crypto: String!
     var TCryptoInfo_price: String!
@@ -76,5 +78,23 @@ struct TCryptoInfo{
 }
 var cctransaction_global: TRansactionInfo! = TRansactionInfo()
 var TCryptoInfo_global: TCryptoInfo! = TCryptoInfo()
+
+
+// MARK: - Coinbase
+struct CoinbaseInfo{
+    var accessToken: String!
+    var refreshToken: String!
+    var expiresIn: NSNumber!
+    var scope: String!
+    var tokenType : String!
+    var loggedIn: Bool
+    init(){
+        accessToken = ""
+        refreshToken = ""
+        expiresIn = 0
+        loggedIn = false
+    }
+}
+var coinbaseInfoObject: CoinbaseInfo = CoinbaseInfo()
 
 
