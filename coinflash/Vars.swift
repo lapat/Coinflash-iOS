@@ -103,15 +103,9 @@ var coinbaseInfoObject: CoinbaseInfo = CoinbaseInfo()
 // MARK: - Plaid
 struct PlaidInfo{
     var accessToken: String!
-    var bankname: String!
-    var expiresIn: NSNumber!
-    var scope: String!
-    var tokenType : String!
     var loggedIn: Bool
     init(){
         accessToken = ""
-        bankname = ""
-        expiresIn = 0
         loggedIn = false
     }
 }
