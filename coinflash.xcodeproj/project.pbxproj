@@ -13,6 +13,7 @@
 		3F5BBF131F8AC68A00BCA472 /* ccTransationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BBF121F8AC68A00BCA472 /* ccTransationCellView.swift */; };
 		3FAAB76A1F90355700DF423B /* PopUpViewGraphTypeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAAB7691F90355700DF423B /* PopUpViewGraphTypeSelector.swift */; };
 		3FAAB76C1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAAB76B1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift */; };
+		3FAAB7731F90F39100DF423B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */; };
 		3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC023B1F78F16700DD6558 /* AppDelegate.swift */; };
 		3FCC023E1F78F16700DD6558 /* NavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC023D1F78F16700DD6558 /* NavViewController.swift */; };
 		3FCC02411F78F16700DD6558 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FCC023F1F78F16700DD6558 /* Main.storyboard */; };
@@ -21,7 +22,6 @@
 		3FCC02511F78F16700DD6558 /* coinflashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC02501F78F16700DD6558 /* coinflashTests.swift */; };
 		3FCC025C1F78F16700DD6558 /* coinflashUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC025B1F78F16700DD6558 /* coinflashUITests.swift */; };
 		3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */; };
-		3FCC02701F7A3F0800DD6558 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */; };
 		3FCC02721F7BD52D00DD6558 /* BuyPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */; };
 		6AD120B7C913CC48A7586DD0 /* Pods_coinflashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */; };
 		7708387B1F89AA12009306B1 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7708387A1F89AA12009306B1 /* HelperFunctions.swift */; };
@@ -48,6 +48,19 @@
 			remoteInfo = coinflash;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3FAAB7721F90A33E00DF423B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coinflashTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +232,7 @@
 				3FCC02361F78F16700DD6558 /* Resources */,
 				9C5170AB979725ADD36CEA1D /* [CP] Embed Pods Frameworks */,
 				847F658D26B83E3273A9F208 /* [CP] Copy Pods Resources */,
+				3FAAB7721F90A33E00DF423B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -462,6 +476,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${PODS_ROOT}/Plaid/ios/LinkKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -479,6 +494,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LinkKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -530,6 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FAAB7731F90F39100DF423B /* MainViewController.swift in Sources */,
 				3F2079371F8D4B19006DFD6E /* CryptoTransationCellView.swift in Sources */,
 				3FCC023E1F78F16700DD6558 /* NavViewController.swift in Sources */,
 				3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */,
@@ -542,7 +559,6 @@
 				77182A001F8997CD0098F501 /* Vars.swift in Sources */,
 				3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */,
 				3FAAB76C1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift in Sources */,
-				3FCC02701F7A3F0800DD6558 /* MainViewController.swift in Sources */,
 				3F5BBF131F8AC68A00BCA472 /* ccTransationCellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -713,6 +729,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DA8CC8669S;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods",
+				);
 				INFOPLIST_FILE = coinflash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tallal.coinflash;
@@ -732,6 +752,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DA8CC8669S;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods",
+				);
 				INFOPLIST_FILE = coinflash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tallal.coinflash;

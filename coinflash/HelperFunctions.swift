@@ -73,4 +73,16 @@ class HelperFunctions: NSObject {
         }
          */
     }
+    static func SaveBankInfo(){
+        UserDefaults.standard.set(plaidInfoObject.accessToken, forKey: "bank_token_id")
+        UserDefaults.standard.set(plaidInfoObject.bankname, forKey: "bank_token_name")
+        
+        
+    }
+    static func LoadBankInfo(){
+        plaidInfoObject.accessToken = UserDefaults.standard.value(forKey: "bank_token_id") as? String
+        plaidInfoObject.bankname = UserDefaults.standard.value(forKey: "bank_token_name") as? String
+        
+        print("echo")
+    }
 }

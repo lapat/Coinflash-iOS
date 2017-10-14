@@ -12,6 +12,7 @@ target 'coinflash' do
   pod 'Alamofire'
   pod 'SVProgressHUD'
   pod 'ChartsRealm', '3.0.3'
+  pod 'Plaid'
   use_frameworks!
   
   target 'coinflashTests' do
