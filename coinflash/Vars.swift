@@ -25,7 +25,7 @@ enum OnBoardStatus{
     case agreedTOCNoPlaidOrCoinbase
     case linkedPlaidButNoCoinbase
     case linkedCoinbaseButNoPlaid
-    case linkedPlainAndCoinbase
+    case linkedPlaidAndCoinbase
 }
 
 

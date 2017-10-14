@@ -25,6 +25,12 @@ class HelperFunctions: NSObject {
         if status == 2{
             user_onboard_status = OnBoardStatus.linkedPlaidButNoCoinbase
         }
+        if status == 3{
+            user_onboard_status = OnBoardStatus.linkedCoinbaseButNoPlaid
+        }
+        if status == 4{
+            user_onboard_status = OnBoardStatus.linkedPlaidAndCoinbase
+        }
         self.saveNSUserDefaults()
     }
     
