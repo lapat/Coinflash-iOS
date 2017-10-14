@@ -18,6 +18,7 @@ var user_isLoggedIn: Bool!
 var user_onboard_status: OnBoardStatus!
 
 var googleUser: GIDGoogleUser!
+var PlaidBankInfoData = [PlaidInfo]()
 
 enum OnBoardStatus{
     case didNotAcceptTOC
@@ -41,6 +42,7 @@ struct GlobalSettings{
     var hasBitcoinWallet: Bool!
     var hasEtherWaleet: Bool!
     var hasPaymentMethod: Bool!
+    
     init() {
         investHowOften = .monthly
         investChange = true
@@ -107,3 +109,19 @@ struct CoinbaseInfo{
 var coinbaseInfoObject: CoinbaseInfo = CoinbaseInfo()
 
 
+// MARK: - Plaid
+struct PlaidInfo{
+    var accessToken: String!
+    var bankname: String!
+    var expiresIn: NSNumber!
+    var scope: String!
+    var tokenType : String!
+    var loggedIn: Bool
+    init(){
+        accessToken = ""
+        bankname = ""
+        expiresIn = 0
+        loggedIn = false
+    }
+}
+var plaidInfoObject: PlaidInfo = PlaidInfo()

@@ -83,7 +83,7 @@ class MenuVC: UIViewController {
     @IBAction func didTapOnManageChangeButton(sender: UIButton){
         //sendSignal(withMessage: "Account Settings")
         let nvController = (UIApplication.shared.delegate as! AppDelegate).mainNavController
-        if (nvController!.topViewController!.isKind(of: MainViewController)){
+        if (nvController!.topViewController!.isKind(of: MainViewController )){
             dismiss(animated: true, completion: nil)
             return
         }

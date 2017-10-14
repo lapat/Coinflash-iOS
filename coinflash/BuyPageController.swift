@@ -28,6 +28,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     var Cryptoprices:[Double]!
     var DataToBeLoaded = [TCryptoInfo]()
     var DataToBeLoadedwithColor = UIColor()
+    var CurrencyRatePolixCode : String = "USDT_BTC"
     
     @IBOutlet weak var CryptoTransationTableView: UITableView!
     // Either Variables
@@ -40,13 +41,17 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     var BitcoinTotal : Double = 0.0
     var BitcoinTotalPrice : Double = 0.0
     
+    //Gain
+    var coinbaseAmountSpentOnCrypto : Double = 0.0
+    var coinbaseCryptoAmount : Double = 0.0
+    var priceOfCryptoToday : Double = 0.0
     
     @IBOutlet weak var CrypotEitherBitPieChart: PieChartView!
     override func viewDidLoad() {
         
         // Sample Dataset
         Cryptodates = ["9-10","9-10","9-10","9-10","9-10","9-10","9-10","9-10"]
-        Cryptoprices = [3110.0,3210.0,3510.0,3410.0,3310.0,3210.0,3110.0,3210.0,3310.0]
+        Cryptoprices = [3110.0,3210.0,3510.0,3410.0,3310.0,3210.0,3110.0,3210.0]
         
         //Set Chart Properties
         CryptoPriceGraph.chartDescription?.text = ""
@@ -79,7 +84,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.setCryptoPieChart(dataPoints: type, values:percentage)
         // Featch Data From Server
         self.requestCoinFlashFeatchwallet(mobile_secret: "8dkkaiei20kdjkwoeo29ddkskalw82asD!", user_id_mobile: "1", mobile_access_token: "3f506ad810db4baba56493fcd25799")
-        
+        self.LoadCryptoGraphCurrentPriceHistery()
     
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -118,6 +123,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.CryptoTransationTableView.reloadData()
         self.LabelCoin?.text =  String(self.EitherTotal)
         self.LabelCurrency?.text =  "$ " + String(self.EitherTotalPrice) + " Dollar"
+        self.CurrencyRatePolixCode = "USDT_ETH"
         
     }
     @IBAction func changThemeToBitCoin(for button: UIButton){
@@ -135,6 +141,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.CryptoTransationTableView.reloadData()
         self.LabelCoin?.text =  String(self.BitcoinTotal)
         self.LabelCurrency?.text =  "$ " + String(self.BitcoinTotalPrice) + " Dollar"
+        self.CurrencyRatePolixCode = "USDT_BTC"
         
     }
     func setCryptoPieChart(dataPoints: [String], values: [Double]){
@@ -187,6 +194,45 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.CryptoPriceGraph.xAxis.valueFormatter = DefaultAxisValueFormatter(block: { (index, _) -> String in
             return date[Int(index)]
         })
+    }
+    func calculateGain(){
+        //var calculateGain = (sum(coinbase_crypto_amount)*(price of crypto today))-sum(coinbase_amount_spent_on_crypto)
+        
+    }
+    func LoadCryptoGraphCurrentPriceHistery(){
+        let EndDate = Date().timeIntervalSince1970
+        let StartDate = EndDate - 604800
+        
+        
+        print(StartDate)
+        print(EndDate)
+        let TimePhase = String(StartDate) + "&end=" + String(EndDate) + "&period=86400"
+        let url = "https://poloniex.com/public?command=returnChartData&currencyPair="+self.CurrencyRatePolixCode+"&start=" + TimePhase
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        print(url)
+        Alamofire.request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: nil)
+            .responseJSON { response in
+                if let array = response.result.value as? NSArray {
+                    for obj in array {
+                        if let dict = obj as? NSDictionary {
+                           
+                            
+                            var DateDate  = dict.value(forKey: "date") as! String
+                        }
+                    }
+                }
+        }
+       
+        print("-----------------------------")
+    }
+    func SelectGraphType(){
+        
+        
+        
+        
+        
     }
     func requestCoinFlashFeatchwallet(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [
@@ -248,9 +294,25 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             // Loading the data in the Table
             self.changThemeToBitCoin(for: self.btcBtn!)
             SVProgressHUD.dismiss()
-            
-            
         }
+    }
+    @IBAction func showPopup(_ sender: AnyObject) {
+        
+        ShowBuyPopUp()
+        /*
+        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GraphPopUp") as! PopUpViewGraphTypeSelector
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParentViewController: self)
+         */
+    }
+    func ShowBuyPopUp(){
+        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BuyPopUp") as! PopUpViewBuyNowSelector
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParentViewController: self)
         
         
     }
