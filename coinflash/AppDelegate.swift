@@ -65,8 +65,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        if url.scheme == "com.coinbasepermittedcoinflash.apps.coinflash-1234567"{
-            CoinbaseOAuth.finishAuthentication(for: url, clientId: "2e9035f26ec0c4bda426ffbff1f2bb800c88cec0a2f8322b85e3edd07fa2085d", clientSecret: "e4bdb576e075dbf838f3029672fda7a90b4aae4a05f2dbce2602212ada50e9ca", completion: { (result, error) in
+        if url.scheme == "com.coinbasepermittedcoinflash.apps.coinflash-12345678"{
+            CoinbaseOAuth.finishAuthentication(for: url, clientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", clientSecret: "c1206329ae9c879294696544da3406d83754a350c33920266279210389971278", completion: { (result, error) in
                 if error != nil {
                     // Could not authenticate.
                 } else {

@@ -10,12 +10,36 @@ import UIKit
 
 class HelperFunctions: NSObject {
 
-    static func saveLoginInfo(user: GIDGoogleUser, userIdMobile: String!, mobileAccessToken: String!){
+    static func saveLoginInfo(user: GIDGoogleUser, userIdMobile: String!, mobileAccessToken: String!, onboardStatus: String!){
         googleUser = user
         user_mobile_access_token = mobileAccessToken
         user_id_mobile = userIdMobile
         user_isLoggedIn = true
+        let status = Int(onboardStatus)
+        if status == 0{
+            user_onboard_status = OnBoardStatus.didNotAcceptTOC
+        }
+        if status == 1{
+            user_onboard_status = OnBoardStatus.agreedTOCNoPlaidOrCoinbase
+        }
+        if status == 2{
+            user_onboard_status = OnBoardStatus.linkedPlaidButNoCoinbase
+        }
+        if status == 3{
+            user_onboard_status = OnBoardStatus.linkedCoinbaseButNoPlaid
+        }
+        if status == 4{
+            user_onboard_status = OnBoardStatus.linkedPlaidAndCoinbase
+        }
         self.saveNSUserDefaults()
+    }
+    
+    static func updateVariablesForUserLoggingOut(){
+        googleUser = nil
+        user_mobile_access_token = ""
+        user_id_mobile = ""
+        user_isLoggedIn = false
+        //self.saveNSUserDefaults()
     }
     
     
