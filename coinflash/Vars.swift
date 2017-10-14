@@ -15,8 +15,17 @@ var user_mobile_secret: String! = "8dkkaiei20kdjkwoeo29ddkskalw82asD!"
 var user_id_mobile: String!
 var user_mobile_access_token: String!
 var user_isLoggedIn: Bool!
+var user_onboard_status: OnBoardStatus!
 
 var googleUser: GIDGoogleUser!
+
+enum OnBoardStatus{
+    case didNotAcceptTOC
+    case agreedTOCNoPlaidOrCoinbase
+    case linkedPlaidButNoCoinbase
+    case linkedCoinbaseButNoPlaid
+    case linkedPlainAndCoinbase
+}
 
 
 // MARK: - Settings Page Global Vars

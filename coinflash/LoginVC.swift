@@ -87,7 +87,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             switch response.result{
             case .success:
                 let data = response.result.value as! [String: Any]
-                HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String)
+                HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
                 SVProgressHUD.dismiss()
                 self.performSegue(withIdentifier: "mainPageSegue", sender: self)
             case .failure:

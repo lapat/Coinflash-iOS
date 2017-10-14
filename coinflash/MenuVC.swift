@@ -9,6 +9,8 @@
 import UIKit
 import ReactiveSwift
 import Result
+import SVProgressHUD
+import Alamofire
 
 class MenuVC: UIViewController {
 
@@ -96,7 +98,38 @@ class MenuVC: UIViewController {
         print(message)
     }
     
-
+    @IBAction func didTapLogoutButton(){
+        //let header: HTTPHeaders = []
+        let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token]
+        SVProgressHUD.show()
+        Alamofire.request("\(baseUrl)signout2/", method: HTTPMethod.post, parameters: parameter)
+            .validate()
+            .responseJSON { (response) in
+                switch response.result{
+                case .success:
+                    let data = response.result.value as! [String: Any]
+                    print(data)
+                    // Dismiss all views and load the login view
+                    user_isLoggedIn = false
+                    let nvController = (UIApplication.shared.delegate as! AppDelegate).mainNavController
+                    nvController?.view.removeFromSuperview()
+                    
+                    // get the present storyboard
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let newViewController = storyboard.instantiateViewController(withIdentifier: "login-view")
+                    self.present(newViewController, animated: true, completion: nil)
+                    
+                    // Tell the helper to update the variables for logout state
+                    HelperFunctions.updateVariablesForUserLoggingOut()
+                    
+                    SVProgressHUD.dismiss()
+                case .failure:
+                    print(response.error as Any)
+                    SVProgressHUD.dismiss()
+                }
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
