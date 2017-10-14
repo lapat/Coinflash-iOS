@@ -18,7 +18,6 @@ var user_isLoggedIn: Bool!
 var user_onboard_status: OnBoardStatus!
 
 var googleUser: GIDGoogleUser!
-var PlaidBankInfoData = [PlaidInfo]()
 
 enum OnBoardStatus{
     case didNotAcceptTOC
@@ -112,10 +111,10 @@ var coinbaseInfoObject: CoinbaseInfo = CoinbaseInfo()
 // MARK: - Plaid
 struct PlaidInfo{
     var accessToken: String!
-    var loggedIn: Bool
+    var loggedIn: String!
     init(){
         accessToken = ""
-        loggedIn = false
+        loggedIn = "false"
     }
 }
 var plaidInfoObject: PlaidInfo = PlaidInfo()
