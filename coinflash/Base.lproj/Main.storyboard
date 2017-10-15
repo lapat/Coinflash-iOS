@@ -1403,7 +1403,7 @@
                                         <rect key="frame" x="119" y="205" width="105" height="34"/>
                                         <color key="backgroundColor" red="0.1860615611076355" green="0.65319794416427612" blue="0.12694603204727173" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="105" id="sfx-hA-ocJ"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="sfx-hA-ocJ"/>
                                         </constraints>
                                         <state key="normal" title="CONFIRM">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1419,9 +1419,9 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This will not reduce your spare change accrued" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLS-uf-THp">
-                                        <rect key="frame" x="67" y="152" width="208" height="49"/>
+                                        <rect key="frame" x="4.5" y="152" width="333" height="49"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="208" id="6lO-as-7Z2"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="208" id="6lO-as-7Z2"/>
                                             <constraint firstAttribute="height" constant="49" id="Q5b-9n-soH"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="15"/>

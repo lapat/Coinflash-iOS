@@ -13,6 +13,7 @@ target 'coinflash' do
   pod 'SVProgressHUD'
   pod 'ChartsRealm', '3.0.3'
   pod 'Plaid'
+  pod 'SwiftyJSON'
   use_frameworks!
   
   target 'coinflashTests' do

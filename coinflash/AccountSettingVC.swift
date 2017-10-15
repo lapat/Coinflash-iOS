@@ -11,10 +11,14 @@ import UIKit
 import coinbase_official
 import SVProgressHUD
 import Alamofire
+import SwiftyJSON
 
 class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var bankTable: UITableView!
     @IBOutlet weak var coinbaseLinkedLabel: UILabel!
+    var plaidAccounts: [JSON]!
+    
+    
     
     override func viewDidLoad() {
         
@@ -28,6 +32,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         }else{
             coinbaseLinkedLabel.text = "Coinbase Not Linked"
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.getCoinFlashUserInfo()
     }
     
     func viewDidEnterForground(notificaiton: NSNotification){
@@ -57,17 +65,20 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
-        if indexPath.row == 0{
-            cell = tableView.dequeueReusableCell(withIdentifier: "normalCell")
-        }
-        else{
+        if indexPath.row == 0 && plaidAccounts == nil{
             cell = tableView.dequeueReusableCell(withIdentifier: "disabledCell")
+        }else{
+            cell = tableView.dequeueReusableCell(withIdentifier: "normalCell")
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        if plaidAccounts == nil{
+            return 1
+        }else{
+            return plaidAccounts.count
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -103,4 +114,32 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 }
         }
     }
+    
+    //MARK: - parse the coinflashuser
+    func getCoinFlashUserInfo(){
+        let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token]
+        SVProgressHUD.show(withStatus: "Loading Account info")
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        Alamofire.request("\(baseUrl)coinflashuser3/", method: HTTPMethod.post, parameters: parameter)
+            .validate()
+            .responseJSON { (response) in
+                switch response.result{
+                case .success(let value):
+                    let json = JSON(value)
+                    print(value)
+                    let accounts = json[0]["plaid_accounts"].array
+                    self.plaidAccounts = accounts
+                    
+                    self.bankTable.reloadData()
+                    // dismiss the progress hud
+                    SVProgressHUD.dismiss()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                case .failure:
+                    print(response.error as Any)
+                    SVProgressHUD.dismiss()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
+        }
+    }
+    
 }

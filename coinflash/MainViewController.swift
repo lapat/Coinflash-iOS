@@ -38,7 +38,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - Rate!)) + "$"
         
     }
-   
     
     @IBAction func TestPlaid(_ sender: Any) {
         if plaidInfoObject.loggedIn == true{
@@ -64,13 +63,14 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     override func viewDidLoad() {
-        SideMenuManager.menuWidth = UIScreen.main.bounds.size.width * 0.75
-        SideMenuManager.menuDismissOnPush = true
-        SideMenuManager.menuPresentMode = .menuSlideIn
-        SideMenuManager.menuParallaxStrength = 3
+        SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
+        SideMenuManager.default.menuDismissOnPush = true
+        SideMenuManager.default.menuPresentMode = .menuSlideIn
+        SideMenuManager.default.menuParallaxStrength = 3
         //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
