@@ -41,7 +41,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
    
     
     @IBAction func TestPlaid(_ sender: Any) {
-        if plaidInfoObject.loggedIn == "true"{
+        if plaidInfoObject.loggedIn == true{
             let alert = UIAlertController(title: "Bank Account Link", message: "Already Logged In Do You want to deLink ?", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: DelinkPlaid))
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
@@ -70,7 +70,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.menuParallaxStrength = 3
         //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,7 +90,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cctransations.count
     }
-    
     
     func requestCoinFlashFeatchccTransations(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [

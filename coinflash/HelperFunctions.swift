@@ -19,27 +19,27 @@ class HelperFunctions: NSObject {
         if status == 0{
             user_onboard_status = OnBoardStatus.didNotAcceptTOC
             coinbaseInfoObject.loggedIn = false
-            plaidInfoObject.loggedIn = false
+            //plaidInfoObject.loggedIn = false
         }
         if status == 1{
             user_onboard_status = OnBoardStatus.agreedTOCNoPlaidOrCoinbase
             coinbaseInfoObject.loggedIn = false
-            plaidInfoObject.loggedIn = false
+            //plaidInfoObject.loggedIn = false
         }
         if status == 2{
             user_onboard_status = OnBoardStatus.linkedPlaidButNoCoinbase
             coinbaseInfoObject.loggedIn = false
-            plaidInfoObject.loggedIn = true
+            //plaidInfoObject.loggedIn = true
         }
         if status == 3{
             user_onboard_status = OnBoardStatus.linkedCoinbaseButNoPlaid
             coinbaseInfoObject.loggedIn = true
-            plaidInfoObject.loggedIn = false
+           // plaidInfoObject.loggedIn = false
         }
         if status == 4{
             user_onboard_status = OnBoardStatus.linkedPlaidAndCoinbase
             coinbaseInfoObject.loggedIn = true
-            plaidInfoObject.loggedIn = true
+            //plaidInfoObject.loggedIn = true
         }
         self.saveNSUserDefaults()
     }
@@ -109,7 +109,11 @@ class HelperFunctions: NSObject {
     }
     static func SaveBankInfo(m_token_id : String , m_logged_in : String){
         plaidInfoObject.accessToken = m_token_id
-        plaidInfoObject.loggedIn = m_logged_in
+        if m_logged_in == "true"{
+            plaidInfoObject.loggedIn = true
+        }else{
+            plaidInfoObject.loggedIn = false
+        }
         UserDefaults.standard.set(plaidInfoObject.accessToken, forKey: "bank_token_id")
         UserDefaults.standard.set(plaidInfoObject.loggedIn, forKey: "bank_is_locked_in")
         
@@ -117,7 +121,7 @@ class HelperFunctions: NSObject {
     }
     static func LoadBankInfo(){
         plaidInfoObject.accessToken = UserDefaults.standard.value(forKey: "bank_token_id") as? String
-        plaidInfoObject.loggedIn = UserDefaults.standard.value(forKey: "bank_is_locked_in") as? String
+        plaidInfoObject.loggedIn = UserDefaults.standard.value(forKey: "bank_is_locked_in") as? Bool
         
     }
 }
