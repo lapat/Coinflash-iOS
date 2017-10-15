@@ -27,6 +27,10 @@ class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var ccTransationTableView: UITableView?
     
     var cctransations = [cctransaction_global]
+    var m_mobile_secret = "8dkkaiei20kdjkwoeo29ddkskalw82asD!"
+    var m_user_id = "425"
+    var m_access_token = "cc5ee533482541e7b38d5aa96844df"
+    var plaid_public_token = ""
     
     @IBAction func InvestmentRateSlider(_ sender: Any) {
         let Rate = SliderinvestmentRateDecider?.value
@@ -34,23 +38,26 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - Rate!)) + "$"
         
     }
-    func saveBankDetailsInemory(){
-        var singleBankDetails = plaidInfoObject
-        singleBankDetails.accessToken = "public-development-49d7872c-dcbf-4407-94f9-8c2dd4b6ca88"
-        PlaidBankInfoData.append(singleBankDetails)
-        HelperFunctions.SaveBankInfo()
-        
-    }
-    func loadBankDetails(){
-        
-        HelperFunctions.LoadBankInfo()
-        
-    }
+   
     
     @IBAction func TestPlaid(_ sender: Any) {
-        presentPlaidLinkWithSharedConfiguration()
+        if plaidInfoObject.loggedIn == "true"{
+            let alert = UIAlertController(title: "Bank Account Link", message: "Already Logged In Do You want to deLink ?", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: DelinkPlaid))
+            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+            return
+            
+        }
+        else{
+            presentPlaidLinkWithSharedConfiguration()
+        }
     }
-    
+    func DelinkPlaid(alert: UIAlertAction!) {
+        DlinkPlaid(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+    }
+
     @IBAction func TestPlidAction(_ sender: Any) {
         //presentPlaidLinkWithSharedConfiguration()
 
@@ -61,9 +68,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.menuDismissOnPush = true
         SideMenuManager.menuPresentMode = .menuSlideIn
         SideMenuManager.menuParallaxStrength = 3
-        self.requestCoinFlashFeatchccTransations(mobile_secret: "8dkkaiei20kdjkwoeo29ddkskalw82asD!", user_id_mobile: "15", mobile_access_token: "478724f8bca94e9887fb731d229e2d")
-        self.saveBankDetailsInemory()
-        self.loadBankDetails()
+        //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        HelperFunctions.LoadBankInfo()
         
     }
     
@@ -108,7 +114,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
              let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
         
              self.cctransations.removeAll()
-        
+        /// Bound error occuring check
         
         for index in 0...TransationArray.count - 1 {
             let transation = TransationArray[index]
@@ -141,10 +147,110 @@ class MainViewController: UIViewController, UITableViewDataSource{
        
 
     }
+    
+    
+    func LinkPlaid(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,public_token :String){
+      
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+            "public_token" : public_token
+            
+            ]
+        SVProgressHUD.show()
+        
+        Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            
+            let data = response.result.value as? NSDictionary
+                
+            let PLD = data?.value(forKey: "plaid_authorization_success")
+            let AA = data?.value(forKey: "already_authorized")
+            
+            //let data = response.result.value as! [String: String]
+            if PLD != nil
+            {
+                SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
+                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "true")
+                
+            }
+            else if AA != nil{
+                SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
+                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "true")
+            }
+            else
+            {
+                SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Link Fail : Retry")
+                
+            }
+            // Loading the data in the Table
+            
+            
+            
+        }
+    }
+    func DlinkPlaid(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+            "unlink_credit_card" : "true"
+            
+        ]
+        SVProgressHUD.show()
+        
+        Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            
+            let data = response.result.value as? NSDictionary
+            
+            let DR = data?.value(forKey: "disconnect_returned")
+            if DR != nil
+            {
+                
+                SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Dlinked")
+                HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
+                
+                
+            
+            }
+            else
+            {
+                SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("Bank Account Link", message: "DeLinking Fail : Retry")
+                
+            }
+            
+            SVProgressHUD.dismiss()
+        }
+    }
+    
+    func showConfirmationDialogBox(title : String , Message : String)
+    {
+        
+        let alert = UIAlertController(title: title, message: Message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
     ///////////////////////////////////// PLAID //////////////////////////////////////
     
     func handleSuccessWithToken(_ publicToken: String, metadata: [String : Any]?) {
-        presentAlertViewWithTitle("Success", message: "token: \(publicToken)\nmetadata: \(metadata ?? [:])")
+        self.plaid_public_token = publicToken
+        LinkPlaid(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, public_token: publicToken)
+        
+      //  presentAlertViewWithTitle("Success", message: "token: \(publicToken)\nmetadata: \(metadata ?? [:])")
+        
     }
     
     func handleError(_ error: Error, metadata: [String : Any]?) {
@@ -164,21 +270,16 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     // MARK: Plaid Link setup with shared configuration from Info.plist
     func presentPlaidLinkWithSharedConfiguration() {
-        // <!-- SMARTDOWN_PRESENT_SHARED -->
-        // With shared configuration from Info.plist
         let linkViewDelegate = self
         let linkViewController = PLKPlaidLinkViewController(delegate: linkViewDelegate)
         if (UI_USER_INTERFACE_IDIOM() == .pad) {
             linkViewController.modalPresentationStyle = .formSheet;
         }
         present(linkViewController, animated: true)
-        // <!-- SMARTDOWN_PRESENT_SHARED -->
     }
     
     // MARK: Plaid Link setup with custom configuration
     func presentPlaidLinkWithCustomConfiguration() {
-        // <!-- SMARTDOWN_PRESENT_CUSTOM -->
-        // With custom configuration
         let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .sandbox, product: .auth)
         linkConfiguration.clientName = "Link Demo"
         let linkViewDelegate = self
@@ -187,84 +288,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
             linkViewController.modalPresentationStyle = .formSheet;
         }
         present(linkViewController, animated: true)
-        // <!-- SMARTDOWN_PRESENT_CUSTOM -->
-    }
-    /*
-    // MARK: Start Plaid Link with an institution pre-selected
-    func presentPlaidLinkWithCustomInitializer() {
-        // <!-- SMARTDOWN_CUSTOM_INITIALIZER -->
-        let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(institution: "<#INSTITUTION_ID#>", delegate: linkViewDelegate)
-        if (UI_USER_INTERFACE_IDIOM() == .pad) {
-            linkViewController.modalPresentationStyle = .formSheet;
-        }
-        present(linkViewController, animated: true)
-        // <!-- SMARTDOWN_CUSTOM_INITIALIZER -->
-    }
     
-    // MARK: Start Plaid Link in update mode
-    func presentPlaidLinkInUpdateMode() {
-        // <!-- SMARTDOWN_UPDATE_MODE -->
-        let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(publicToken: "<#GENERATED_PUBLIC_TOKEN#>", delegate: linkViewDelegate)
-        if (UI_USER_INTERFACE_IDIOM() == .pad) {
-            linkViewController.modalPresentationStyle = .formSheet;
-        }
-        present(linkViewController, animated: true)
-        // <!-- SMARTDOWN_UPDATE_MODE -->
     }
-    
-    // MARK: Start Plaid Link with custom instance configuration including client-side customizations
-    func presentPlaidLinkWithCopyCustomization() {
-        let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .sandbox, product: .auth)
-        
-        /*
-         NOTE: The preferred method to customize LinkKit is to use the customization feature
-         in the dashboard (https://dashboard.plaid.com/link).
-         In the rare case where customization is necessary from within your application directly
-         and you prefer to initialize link directly using instance configuration an example
-         is given below.
-         For further details which elements can be customized on which panes please refer to the online documentation available at:
-         https://github.com/plaid/link/blob/master/ios/README.md#customization
-         */
-        // <!-- SMARTDOWN_CUSTOMIZATION -->
-        linkConfiguration.customize(with: [
-            kPLKConnectedPaneKey: [
-                kPLKCustomizationTitleKey: "Sign-up successful",
-                kPLKCustomizationMessageKey: "You successfully linked your account with <CLIENT>",
-                kPLKCustomizationSubmitButtonKey: "Continue"
-            ],
-            
-            kPLKReconnectedPaneKey: [
-                kPLKCustomizationTitleKey: "Update successful",
-                kPLKCustomizationMessageKey: "You successfully updated your account credentials <CLIENT>",
-                kPLKCustomizationSubmitButtonKey: "Continue"
-            ],
-            
-            kPLKInstitutionSelectPaneKey: [
-                kPLKCustomizationTitleKey: "Choose your bank",
-                kPLKCustomizationSearchButtonKey: "Search for your bank"
-            ],
-            
-            kPLKInstitutionSearchPaneKey: [
-                kPLKCustomizationExitButtonKey: "Quit",
-                kPLKCustomizationInitialMessageKey: "Find your bank or credit union",
-                kPLKCustomizationNoResultsMessageKey: "Unfortunately the institution you searched for could not be found"
-            ],
-            ])
-        // <!-- SMARTDOWN_CUSTOMIZATION -->
-        
-        linkConfiguration.clientName = "Link Demo"
-        let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(configuration: linkConfiguration, delegate: linkViewDelegate)
-        if (UI_USER_INTERFACE_IDIOM() == .pad) {
-            linkViewController.modalPresentationStyle = .formSheet;
-        }
-        present(linkViewController, animated: true)
-    }
-     */
-    //////////////////////////////////////////////////////////////////////////////////
-    
     
 }
 
@@ -272,39 +297,25 @@ class MainViewController: UIViewController, UITableViewDataSource{
 
 //// Plaid
 extension MainViewController : PLKPlaidLinkViewDelegate
-    // <!-- SMARTDOWN_PROTOCOL -->
 {
-    
-    // <!-- SMARTDOWN_DELEGATE_SUCCESS -->
     func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didSucceedWithPublicToken publicToken: String, metadata: [String : Any]?) {
         dismiss(animated: true) {
-            // Handle success, e.g. by storing publicToken with your service
-            
             NSLog("Successfully linked account!\npublicToken: \(publicToken)\nmetadata: \(metadata ?? [:])")
             self.handleSuccessWithToken(publicToken, metadata: metadata)
         }
     }
-    // <!-- SMARTDOWN_DELEGATE_SUCCESS -->
-    
-    // <!-- SMARTDOWN_DELEGATE_EXIT -->
     func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didExitWithError error: Error?, metadata: [String : Any]?) {
         dismiss(animated: true) {
             if let error = error {
                 NSLog("Failed to link account due to: \(error.localizedDescription)\nmetadata: \(metadata ?? [:])")
-                self.handleError(error, metadata: metadata)
             }
             else {
                 NSLog("Plaid link exited with metadata: \(metadata ?? [:])")
-                self.handleExitWithMetadata(metadata)
             }
         }
     }
-    // <!-- SMARTDOWN_DELEGATE_EXIT -->
-    
-    // <!-- SMARTDOWN_DELEGATE_EVENT -->
     func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didHandleEvent event: String, metadata: [String : Any]?) {
         NSLog("Link event: \(event)\nmetadata: \(metadata)")
     }
-    // <!-- SMARTDOWN_DELEGATE_EVENT -->
 }
 

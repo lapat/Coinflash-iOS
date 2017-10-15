@@ -107,16 +107,17 @@ class HelperFunctions: NSObject {
         }
          */
     }
-    static func SaveBankInfo(){
+    static func SaveBankInfo(m_token_id : String , m_logged_in : String){
+        plaidInfoObject.accessToken = m_token_id
+        plaidInfoObject.loggedIn = m_logged_in
         UserDefaults.standard.set(plaidInfoObject.accessToken, forKey: "bank_token_id")
-        UserDefaults.standard.set(plaidInfoObject.bankname, forKey: "bank_token_name")
+        UserDefaults.standard.set(plaidInfoObject.loggedIn, forKey: "bank_is_locked_in")
         
         
     }
     static func LoadBankInfo(){
         plaidInfoObject.accessToken = UserDefaults.standard.value(forKey: "bank_token_id") as? String
-        plaidInfoObject.bankname = UserDefaults.standard.value(forKey: "bank_token_name") as? String
+        plaidInfoObject.loggedIn = UserDefaults.standard.value(forKey: "bank_is_locked_in") as? String
         
-        print("echo")
     }
 }
