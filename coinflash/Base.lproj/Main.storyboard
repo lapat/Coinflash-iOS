@@ -477,7 +477,6 @@
                                     <rect key="frame" x="19" y="11" width="25" height="22"/>
                                     <state key="normal" image="back"/>
                                     <connections>
-                                        <action selector="didTapBackButtonFor:" destination="xam-tU-CdB" eventType="touchUpInside" id="0IY-I7-tOh"/>
                                         <action selector="didTapOnBackButton" destination="xam-tU-CdB" eventType="touchUpInside" id="I8O-7b-khR"/>
                                     </connections>
                                 </button>

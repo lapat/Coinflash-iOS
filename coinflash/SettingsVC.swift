@@ -155,24 +155,14 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         self.changeToInvestSlider.value = Float(globalSettings.percentOfChangeToInvest)
         self.changeToInvestSliderValueLabel.text = "\(Int(globalSettings.percentOfChangeToInvest))%"
         self.capOnInvestmentTextField.text = "$\(globalSettings.capOnInvestment!)"
+        
+        self.tempCapOnInvestmentValue = globalSettings.capOnInvestment
+        self.tempChangeCapValue = globalSettings.percentOfChangeToInvest
     }
     
     // Saves global settings
     @IBAction func saveGlobalSettings(){
         self.requestToUpdateUserSettings()
-        return()
-        if monthlyButton?.isSelected == true{
-            globalSettings.investHowOften = .monthly
-        }else{
-            globalSettings.investHowOften = .weekly
-        }
-        if investChangeControl.isOn == true{
-            globalSettings.investChange = true
-        }else{
-            globalSettings.investChange = false
-        }
-        
-        globalSettings.percentOfChangeToInvest = self.tempChangeCapValue
     }
     
     //MARK: - API REQUESTS
@@ -195,7 +185,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                                      "how_often": howOften, "cap": self.tempCapOnInvestmentValue, "user_set_primary_coinbase_account_id": "",
                                      "user_set_primary_coinbase_btc_account_id":"", "User_set_primary_coinbase_eth_account_id":"",
                                      "user_set_primary_coinflash_debit_wallet_id":""]
-        SVProgressHUD.show(withStatus: "Loading Account info")
+        SVProgressHUD.show(withStatus: "Updating Info")
         UIApplication.shared.beginIgnoringInteractionEvents()
         Alamofire.request("\(baseUrl)coinflashuser3/", method: HTTPMethod.post, parameters: parameter)
             .validate()
@@ -207,10 +197,24 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                     // dismiss the progress hud
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
+                    if self.monthlyButton?.isSelected == true{
+                        globalSettings.investHowOften = .monthly
+                    }else{
+                        globalSettings.investHowOften = .weekly
+                    }
+                    if self.investChangeControl.isOn == true{
+                        globalSettings.investChange = true
+                    }else{
+                        globalSettings.investChange = false
+                    }
+                    
+                    globalSettings.percentOfChangeToInvest = self.tempChangeCapValue
+                    globalSettings.capOnInvestment = self.tempCapOnInvestmentValue
                 case .failure:
                     print(response.error as Any)
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
+                    self.loadGlobalSettings()
                 }
         }
         
