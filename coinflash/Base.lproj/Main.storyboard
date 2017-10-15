@@ -1544,12 +1544,12 @@
                                     <constraint firstAttribute="height" constant="0.5" id="Qxu-mP-x4S"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i8D-Kq-3Ee">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i8D-Kq-3Ee">
                                 <rect key="frame" x="8" y="278" width="359" height="231.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="normalCell" id="IHC-Im-yN9">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="normalCell" id="IHC-Im-yN9" customClass="PlaidBankCell" customModule="coinflash" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="359" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IHC-Im-yN9" id="mJj-Up-n1z">
@@ -1601,6 +1601,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="bankAccountNumber" destination="jPc-f7-QC5" id="PAN-oi-BV8"/>
+                                            <outlet property="bankNameLabel" destination="DGu-wp-2qQ" id="8HV-7i-FXs"/>
+                                            <outlet property="bankPicImageView" destination="baJ-Sm-Z22" id="tnh-qZ-1NE"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="disabledCell" id="v00-UN-SfU">
                                         <rect key="frame" x="0.0" y="72" width="359" height="44"/>
@@ -1726,6 +1731,7 @@
                         <viewLayoutGuide key="safeArea" id="biu-qR-UdG"/>
                     </view>
                     <connections>
+                        <outlet property="addCoinbaseButton" destination="ysH-wV-Qx0" id="b0D-qq-voh"/>
                         <outlet property="bankTable" destination="i8D-Kq-3Ee" id="RA7-Ot-8jh"/>
                         <outlet property="coinbaseLinkedLabel" destination="PlE-aS-C4e" id="mQb-fv-HDz"/>
                     </connections>

@@ -13,9 +13,18 @@ import SVProgressHUD
 import Alamofire
 import SwiftyJSON
 
+class PlaidBankCell: UITableViewCell{
+    @IBOutlet weak var bankPicImageView: UIImageView!
+    @IBOutlet weak var bankNameLabel: UILabel!
+    @IBOutlet weak var bankAccountNumber: UILabel!
+    
+    
+}
+
 class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var bankTable: UITableView!
     @IBOutlet weak var coinbaseLinkedLabel: UILabel!
+    @IBOutlet weak var addCoinbaseButton: UIButton!
     var plaidAccounts: [JSON]!
     
     
@@ -29,8 +38,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     override func viewWillAppear(_ animated: Bool) {
         if coinbaseInfoObject.loggedIn == true{
             coinbaseLinkedLabel.text = "Coinbase Linked"
+            self.addCoinbaseButton.isHidden = true
         }else{
             coinbaseLinkedLabel.text = "Coinbase Not Linked"
+            self.addCoinbaseButton.isHidden = false
         }
     }
     
@@ -50,6 +61,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     self.requestCoinbaseLinkAPIRequest()
                 }else{
                     self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
+                    self.addCoinbaseButton.isHidden = false
                 }
                 (UIApplication.shared.delegate as! AppDelegate).processingBacklink = false
             })
@@ -59,6 +71,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 self.requestCoinbaseLinkAPIRequest()
             }else{
                 coinbaseLinkedLabel.text = "Coinbase Not Linked"
+                self.addCoinbaseButton.isHidden = false
             }
         }
     }
@@ -68,7 +81,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         if indexPath.row == 0 && plaidAccounts == nil{
             cell = tableView.dequeueReusableCell(withIdentifier: "disabledCell")
         }else{
-            cell = tableView.dequeueReusableCell(withIdentifier: "normalCell")
+            let plaidCell = tableView.dequeueReusableCell(withIdentifier: "normalCell") as! PlaidBankCell
+            plaidCell.bankNameLabel.text = plaidAccounts[indexPath.row]["plaid_account_name"].string
+            plaidCell.bankAccountNumber.text = ("**** **** ****\(plaidAccounts[indexPath.row]["last_four_digits"].string!)")
+            cell = plaidCell
         }
         return cell
     }
@@ -107,10 +123,12 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
+                    self.addCoinbaseButton.isHidden = true
                 case .failure:
                     print(response.error as Any)
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
+                    self.addCoinbaseButton.isHidden = false
                 }
         }
     }
