@@ -17,8 +17,6 @@ class PlaidBankCell: UITableViewCell{
     @IBOutlet weak var bankPicImageView: UIImageView!
     @IBOutlet weak var bankNameLabel: UILabel!
     @IBOutlet weak var bankAccountNumber: UILabel!
-    
-    
 }
 
 class AccountSettingsVC: UIViewController, UITableViewDataSource{

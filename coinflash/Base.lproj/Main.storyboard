@@ -478,6 +478,7 @@
                                     <state key="normal" image="back"/>
                                     <connections>
                                         <action selector="didTapBackButtonFor:" destination="xam-tU-CdB" eventType="touchUpInside" id="0IY-I7-tOh"/>
+                                        <action selector="didTapOnBackButton" destination="xam-tU-CdB" eventType="touchUpInside" id="I8O-7b-khR"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -494,6 +495,9 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZS5-gH-hXd">
                                     <rect key="frame" x="90" y="5" width="195" height="45"/>
                                     <state key="normal" image="saveBtt"/>
+                                    <connections>
+                                        <action selector="saveGlobalSettings" destination="xam-tU-CdB" eventType="touchUpInside" id="qBW-Op-gAm"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
