@@ -18,18 +18,28 @@ class HelperFunctions: NSObject {
         let status = Int(onboardStatus)
         if status == 0{
             user_onboard_status = OnBoardStatus.didNotAcceptTOC
+            coinbaseInfoObject.loggedIn = false
+            plaidInfoObject.loggedIn = false
         }
         if status == 1{
             user_onboard_status = OnBoardStatus.agreedTOCNoPlaidOrCoinbase
+            coinbaseInfoObject.loggedIn = false
+            plaidInfoObject.loggedIn = false
         }
         if status == 2{
             user_onboard_status = OnBoardStatus.linkedPlaidButNoCoinbase
+            coinbaseInfoObject.loggedIn = false
+            plaidInfoObject.loggedIn = true
         }
         if status == 3{
             user_onboard_status = OnBoardStatus.linkedCoinbaseButNoPlaid
+            coinbaseInfoObject.loggedIn = true
+            plaidInfoObject.loggedIn = false
         }
         if status == 4{
             user_onboard_status = OnBoardStatus.linkedPlaidAndCoinbase
+            coinbaseInfoObject.loggedIn = true
+            plaidInfoObject.loggedIn = true
         }
         self.saveNSUserDefaults()
     }

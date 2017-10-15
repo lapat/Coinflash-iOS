@@ -1746,10 +1746,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="jzD-OA-f9v">
-                                <rect key="frame" x="0.0" y="10" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="5" width="375" height="677"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DLh-QT-8QI">
-                                <rect key="frame" x="0.0" y="10" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="677"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoLogin2" translatesAutoresizingMaskIntoConstraints="NO" id="Grt-SB-zcR">
                                         <rect key="frame" x="112" y="45" width="150" height="150"/>
@@ -1777,16 +1777,16 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jzD-OA-f9v" firstAttribute="height" secondItem="B4l-sA-hWh" secondAttribute="height" id="1NM-lS-ETt"/>
-                            <constraint firstItem="DLh-QT-8QI" firstAttribute="height" secondItem="B4l-sA-hWh" secondAttribute="height" id="1sq-Oc-fOc"/>
+                            <constraint firstItem="DLh-QT-8QI" firstAttribute="height" secondItem="B4l-sA-hWh" secondAttribute="height" constant="10" id="1sq-Oc-fOc"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" id="Ejv-qs-59Z"/>
                             <constraint firstItem="aPe-3H-acc" firstAttribute="bottom" secondItem="Vut-ZC-G23" secondAttribute="bottom" constant="20" id="FyN-hm-pNT"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="jzD-OA-f9v" secondAttribute="centerX" id="HMe-Xx-ehf"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="DLh-QT-8QI" secondAttribute="centerX" id="Rez-NA-cKD"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="width" secondItem="B4l-sA-hWh" secondAttribute="width" id="UZA-Q1-nPA"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="aPe-3H-acc" secondAttribute="centerX" id="ahs-Wv-kjb"/>
-                            <constraint firstItem="DLh-QT-8QI" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" id="eXJ-cD-9Ko"/>
+                            <constraint firstItem="DLh-QT-8QI" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" constant="-5" id="eXJ-cD-9Ko"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="centerX" secondItem="aPe-3H-acc" secondAttribute="centerX" id="gXG-AT-ZwJ"/>
+                            <constraint firstItem="DLh-QT-8QI" firstAttribute="height" secondItem="jzD-OA-f9v" secondAttribute="height" id="hKQ-6h-G1s"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="width" secondItem="B4l-sA-hWh" secondAttribute="width" id="mw1-q1-AG0"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="B4l-sA-hWh" secondAttribute="centerX" id="rcS-ow-inK"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="centerX" secondItem="aPe-3H-acc" secondAttribute="centerX" id="wv5-ST-1qE"/>
@@ -1801,7 +1801,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZFr-fn-yz5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3140" y="117"/>
+            <point key="canvasLocation" x="-3140" y="116.49175412293854"/>
         </scene>
         <!--Pop Up View Graph Type Selector-->
         <scene sceneID="dk3-dn-QFy">
