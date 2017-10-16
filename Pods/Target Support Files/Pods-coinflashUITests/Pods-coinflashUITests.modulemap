@@ -1,0 +1,6 @@
+framework module Pods_coinflashUITests {
+  umbrella header "Pods-coinflashUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

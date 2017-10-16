@@ -1,0 +1,79 @@
+PODS:
+  - Alamofire (4.5.1)
+  - coinbase-official (3.3.0):
+    - coinbase-official/client (= 3.3.0)
+    - coinbase-official/core (= 3.3.0)
+    - coinbase-official/OAuth (= 3.3.0)
+  - coinbase-official/client (3.3.0):
+    - coinbase-official/core
+  - coinbase-official/core (3.3.0)
+  - coinbase-official/OAuth (3.3.0):
+    - coinbase-official/core
+  - FirebaseAnalytics (3.9.0):
+    - FirebaseCore (~> 3.6)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseCore (3.6.0):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (1.0.10):
+    - FirebaseCore (~> 3.6)
+  - Google/Core (3.1.0):
+    - FirebaseAnalytics (~> 3.2)
+  - Google/SignIn (3.1.0):
+    - Google/Core
+    - GoogleSignIn (~> 4.0)
+  - GoogleSignIn (4.1.0):
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
+    - GTMOAuth2 (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleToolboxForMac/DebugUtils (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.1)
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
+  - GTMOAuth2 (1.1.5):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.1.12):
+    - GTMSessionFetcher/Full (= 1.1.12)
+  - GTMSessionFetcher/Core (1.1.12)
+  - GTMSessionFetcher/Full (1.1.12):
+    - GTMSessionFetcher/Core (= 1.1.12)
+  - ReactiveSwift (2.0.1):
+    - Result (~> 3.2)
+  - Result (3.2.4)
+  - SideMenu (3.0.2)
+  - SVProgressHUD (2.2.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - coinbase-official
+  - Google/SignIn
+  - ReactiveSwift
+  - SideMenu
+  - SVProgressHUD
+
+SPEC CHECKSUMS:
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  coinbase-official: 57de4952bdb85e16a8f99930c57e16505ff571ed
+  FirebaseAnalytics: e5fe8486efc01bec33f6bf82e2fa9fce4b124052
+  FirebaseCore: 9691ee2ade70c098d7cf92440f4303f16d83ca75
+  FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
+  Google: 98da4b1a60ed0beb80a290387a28333406a1eb90
+  GoogleSignIn: 8c599fc10d25b2af86a3f82fd9631e863f2b1400
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  GTMOAuth2: be83fd28d63ae3087e7d351b1f39c1a7e24ab6e7
+  GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
+  ReactiveSwift: 60a29ff35988a964fd2bb759755cb6594de523fc
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  SideMenu: 8fe957e0f5dcf1a1175c8ba5d47978d4eb2a89da
+  SVProgressHUD: db27c54e6e18bc903341661fc9feb55e04905cc4
+
+PODFILE CHECKSUM: cab71588f7298a6d0708051c19af53d14ddc3fd1
+
+COCOAPODS: 1.3.1

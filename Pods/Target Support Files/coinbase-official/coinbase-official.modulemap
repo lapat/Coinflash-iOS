@@ -1,0 +1,6 @@
+framework module coinbase_official {
+  umbrella header "coinbase-official-umbrella.h"
+
+  export *
+  module * { export * }
+}
