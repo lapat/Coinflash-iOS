@@ -9,14 +9,31 @@
 import Foundation
 import UIKit
 
-class SettingsVC: UITableViewController, UIGestureRecognizerDelegate{
+class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFieldDelegate{
     
     @IBOutlet weak var monthlyButton: UIButton?
     @IBOutlet weak var weeklyButton: UIButton?
+    @IBOutlet weak var investChangeControl: UISwitch!
+    @IBOutlet weak var changeToInvestSlider: UISlider!
+    @IBOutlet weak var changeToInvestSliderValueLabel: UILabel!
+    @IBOutlet weak var capOnInvestmentTextField: UITextField!
     
     override func viewDidLoad() {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.loadGlobalSettings()
+        
+        // CapOnInvestmentTextField initializations
+        capOnInvestmentTextField.delegate = self
+        capOnInvestmentTextField.returnKeyType = .done
+        let numberToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 50))
+        numberToolbar.barStyle = UIBarStyle.default
+        numberToolbar.items = [
+            UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(cancelNumberPad)),
+            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.doneWithNumberPad))]
+        numberToolbar.sizeToFit()
+        capOnInvestmentTextField.inputAccessoryView = numberToolbar
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +57,21 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate{
     // Nav pop with swipe recognizer
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+    
+    // Settings Properties
+    func loadGlobalSettings(){
+        if globalSettings.investHowOften == .monthly{
+            monthlyButton?.isSelected = true
+            weeklyButton?.isSelected = false
+        }else{
+            monthlyButton?.isSelected = false
+            weeklyButton?.isSelected = true
+        }
+        
+        self.changeToInvestSlider.value = globalSettings.percentOfChangeToInvest
+        self.changeToInvestSliderValueLabel.text = "\(Int(globalSettings.percentOfChangeToInvest))%"
+        self.capOnInvestmentTextField.text = "$\(globalSettings.capOnInvestment!)"
     }
     
     //Setting taps actions
@@ -67,7 +99,48 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate{
            // }
         }
     }
-
+    
+    //Slider chnages
+    @IBAction func changeToInvestSliderChanged(sender: UISlider){
+        globalSettings.percentOfChangeToInvest = sender.value
+        self.changeToInvestSliderValueLabel.text = "\(Int(sender.value))%"
+    }
+    
+    //Cap on investment TextField saved
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let str = (textField.text! + string)
+        if str.characters.count <= 4 {
+            return true
+        }
+        textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+        return false
+    }
+    
+    func cancelNumberPad(){
+        capOnInvestmentTextField.resignFirstResponder()
+        capOnInvestmentTextField.text = "$\(globalSettings.capOnInvestment!)"
+    }
+    
+    func doneWithNumberPad(){
+        capOnInvestmentTextField.resignFirstResponder()
+        var temp = capOnInvestmentTextField.text!
+        temp.remove(at: temp.startIndex)
+        globalSettings.capOnInvestment = Int(temp)
+        print(globalSettings.capOnInvestment)
+    }
+    
+    @IBAction func didTapOnBackButton(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // tableview delegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if  indexPath.row == 1{
@@ -79,5 +152,3 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate{
         return UITableViewAutomaticDimension
     }
 }
-
-

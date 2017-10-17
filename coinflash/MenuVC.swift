@@ -9,6 +9,8 @@
 import UIKit
 import ReactiveSwift
 import Result
+import SVProgressHUD
+import Alamofire
 
 class MenuVC: UIViewController {
 
@@ -30,9 +32,8 @@ class MenuVC: UIViewController {
         //o2.send(value: "ao") // Just triggers the above to print "work"
         //o2.send(value: "ao")
         
-        
-        
     }
+    
     func __sigs() -> (sig: Signal<Any?, NoError>, os: [Any]) {
         let (s1, o1) = Signal<String, NoError>.pipe() // In actual code I have 10+ signals in each method
         let (s2, o2) = Signal<Any?, NoError>.pipe()
@@ -44,23 +45,91 @@ class MenuVC: UIViewController {
         
         return (sig: s, os: [o1, o2])
     }
-
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     // View Navigation:
-    @IBAction func didTapOnSettings(sender: UIGestureRecognizer){
-        sendSignal(withMessage: "Account Settings")
+    @IBAction func didTapOnSettings(sender: UIButton){
+        //sendSignal(withMessage: "Account Settings")
+        let nvController = (UIApplication.shared.delegate as! AppDelegate).mainNavController
+        if nvController!.topViewController!.isKind(of: AccountSettingsVC){
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        nvController?.popViewController(animated: false)
+        dismiss(animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyboard.instantiateViewController(withIdentifier: "account-settings-view")
+        nvController?.pushViewController(newViewController, animated: true)
+    }
+    
+    @IBAction func didTapOnPortFolioButton(sender: UIButton){
+        //sendSignal(withMessage: "Account Settings")
+        let nvController = (UIApplication.shared.delegate as! AppDelegate).mainNavController
+        if nvController!.topViewController!.isKind(of: BuyPageController) {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        nvController?.popViewController(animated: false)
+        dismiss(animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyboard.instantiateViewController(withIdentifier: "buypage-view")
+        nvController?.pushViewController(newViewController, animated: true)
+    }
+    
+    @IBAction func didTapOnManageChangeButton(sender: UIButton){
+        //sendSignal(withMessage: "Account Settings")
+        let nvController = (UIApplication.shared.delegate as! AppDelegate).mainNavController
+        if (nvController!.topViewController!.isKind(of: MainViewController )){
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        nvController?.popViewController(animated: false)
+        dismiss(animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyboard.instantiateViewController(withIdentifier: "mainpage-view")
+        nvController?.pushViewController(newViewController, animated: true)
     }
     
     func sendSignal(withMessage message: String)  {
         print(message)
     }
     
-
+    @IBAction func didTapLogoutButton(){
+        //let header: HTTPHeaders = []
+        let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token]
+        SVProgressHUD.show()
+        Alamofire.request("\(baseUrl)signout2/", method: HTTPMethod.post, parameters: parameter)
+            .validate()
+            .responseJSON { (response) in
+                switch response.result{
+                case .success:
+                    let data = response.result.value as! [String: Any]
+                    print(data)
+                    // Dismiss all views and load the login view
+                    user_isLoggedIn = false
+                    let nvController = (UIApplication.shared.delegate as! AppDelegate).mainNavController
+                    nvController?.view.removeFromSuperview()
+                    
+                    // get the present storyboard
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let newViewController = storyboard.instantiateViewController(withIdentifier: "login-view")
+                    self.present(newViewController, animated: true, completion: nil)
+                    
+                    // Tell the helper to update the variables for logout state
+                    HelperFunctions.updateVariablesForUserLoggingOut()
+                    
+                    SVProgressHUD.dismiss()
+                case .failure:
+                    print(response.error as Any)
+                    SVProgressHUD.dismiss()
+                }
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

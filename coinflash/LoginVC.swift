@@ -44,20 +44,19 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             self.givenName = user.profile.givenName
             self.familyName = user.profile.familyName
             
-            
             // Perform any operations on signed in user here.
-            let userId = user.userID                  // For client-side use only!
-            print("User id is \(String(describing: String( userId!)))")
+            //let userId = user.userID                  // For client-side use only!
+            //print("User id is \(String(describing: String( userId!)))")
             
-            let idToken = user.authentication.idToken // Safe to send to the server
+            //let idToken = user.authentication.idToken // Safe to send to the server
             //print("Authentication idToken is \(String( describing: idToken))")
-            let fullName = user.profile.name
+            //let fullName = user.profile.name
             //print("User full name is \(String( describing: fullName))")
-            let givenName = user.profile.givenName
+            //let givenName = user.profile.givenName
             //print("User given profile name is \(String( describing: givenName))")
-            let familyName = user.profile.familyName
+            //let familyName = user.profile.familyName
             //print("User family name is \(String( describing: familyName))")
-            let email = user.profile.email
+            //let email = user.profile.email
             //print("User email address is \(String( describing: email))")
             
             // save info and send to server
@@ -72,22 +71,29 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     // Finished disconnecting |user| from the app successfully if |error| is |nil|.
     public func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!)
     {
-        
+        print(error)
     }
-
+    
     // Check Google info from server
     func requestServerForLoginConfirmation(googleUser user: GIDGoogleUser){
-        id_token = user.authentication.idToken
         let header: HTTPHeaders = ["content-type": "application/x-www-form-urlencoded"]
-        let parameter: Parameters = ["id_token": user.authentication.idToken, "mobile_secret": mobile_secret]
-        print("user id_token is \(id_token)")
-        
+        let parameter: Parameters = ["id_token": user.authentication.idToken, "mobile_secret": user_mobile_secret]
+        print(user.authentication.idToken)
         SVProgressHUD.show()
-        Alamofire.request("\(baseUrl)login2/", method: HTTPMethod.post, parameters: parameter, headers: header).responseJSON { (response) in
-            print(response)
-            SVProgressHUD.dismiss()
+        Alamofire.request("\(baseUrl)login2/", method: HTTPMethod.post, parameters: parameter, headers: header)
+            .validate()
+            .responseJSON { (response) in
+            switch response.result{
+            case .success:
+                let data = response.result.value as! [String: Any]
+                HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
+                SVProgressHUD.dismiss()
+                self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+            case .failure:
+                print(response.error)
+                SVProgressHUD.dismiss()
+            }
         }
-        //self.performSegue(withIdentifier: "mainPageSegue", sender: self)
     }
     
     @IBOutlet weak var signInButton: GIDSignInButton!
@@ -98,6 +104,10 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         // set delegates
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
+        
+        if user_isLoggedIn == true{
+            self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+        }
     }
     
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,

@@ -8,12 +8,14 @@
 
 import UIKit
 import SideMenu
-
+import coinbase_official
+import LinkKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
+    var processingBacklink: Bool = false
+    var mainNavController: UINavigationController!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -21,9 +23,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
-    
+        
         // Setting up the side menu
         SideMenuManager.menuEnableSwipeGestures = true
+        
+        HelperFunctions.loadNSUserDefaults()
+        
+        // Plaid Configuration
+        #if USE_CUSTOM_CONFIG
+            setupPlaidWithCustomConfiguration()
+        #else
+            setupPlaidLinkWithSharedConfiguration()
+        #endif
         
        return true
     }
@@ -31,13 +42,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        HelperFunctions.saveNSUserDefaults()
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        HelperFunctions.saveNSUserDefaults()
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
@@ -48,6 +61,75 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        HelperFunctions.saveNSUserDefaults()
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if url.scheme == "com.coinbasepermittedcoinflash.apps.coinflash-12345678"{
+            CoinbaseOAuth.finishAuthentication(for: url, clientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", clientSecret: "c1206329ae9c879294696544da3406d83754a350c33920266279210389971278", completion: { (result, error) in
+                if error != nil {
+                    // Could not authenticate.
+                } else {
+                    // Tokens successfully obtained!
+                    // Do something with them (store them, etc.)
+                    if let result = result as? [String : AnyObject] {
+                        if let accessToken = result["access_token"] as? String {
+                            let apiClient = Coinbase(oAuthAccessToken: accessToken)
+                            print(apiClient!)
+                            print(result)
+                        }
+                    }
+                    HelperFunctions.coinBaseSaveLoginInfo(info: result as! NSDictionary)
+                    self.processingBacklink = false
+                    // Note that you should also store 'expire_in' and refresh the token using CoinbaseOAuth.getOAuthTokensForRefreshToken() when it expires
+                }
+            })
+        }
+        
+        print("outside if \(url.scheme)")
+        return true
+    }
+    
+    // MARK: Plaid Link setup with shared configuration from Info.plist
+    func setupPlaidLinkWithSharedConfiguration() {
+        // <!-- SMARTDOWN_SETUP_SHARED -->
+        // With shared configuration from Info.plist
+        PLKPlaidLink.setup { (success, error) in
+            if (success) {
+                // Handle success here, e.g. by posting a notification
+                NSLog("Plaid Link setup was successful")
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PLDPlaidLinkSetupFinished"), object: self)
+            }
+            else if let error = error {
+                NSLog("Unable to setup Plaid Link due to: \(error.localizedDescription)")
+            }
+            else {
+                NSLog("Unable to setup Plaid Link")
+            }
+        }
+        // <!-- SMARTDOWN_SETUP_SHARED -->
+    }
+    
+    // MARK: Plaid Link setup with custom configuration
+    func setupPlaidWithCustomConfiguration() {
+        // <!-- SMARTDOWN_SETUP_CUSTOM -->
+        // With custom configuration
+        let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .development, product: .auth)
+        linkConfiguration.clientName = "Link Demo"
+        PLKPlaidLink.setup(with: linkConfiguration) { (success, error) in
+            if (success) {
+                // Handle success here, e.g. by posting a notification
+                NSLog("Plaid Link setup was successful")
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PLDPlaidLinkSetupFinished"), object: self)
+            }
+            else if let error = error {
+                NSLog("Unable to setup Plaid Link due to: \(error.localizedDescription)")
+            }
+            else {
+                NSLog("Unable to setup Plaid Link")
+            }
+        }
+        // <!-- SMARTDOWN_SETUP_CUSTOM -->
     }
 
 

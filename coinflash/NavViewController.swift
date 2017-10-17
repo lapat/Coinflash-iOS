@@ -18,6 +18,10 @@ class NavViewController: UINavigationController {
         let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
         statusBar.backgroundColor = UIColor(red: 171/255, green: 194/255, blue: 222/255, alpha: 1)
         //statusBar.backgroundColor = UIColor.red
+        
+        // set its instance in app delegate
+        (UIApplication.shared.delegate as! AppDelegate).mainNavController = self
+        
     }
 
     override func didReceiveMemoryWarning() {
