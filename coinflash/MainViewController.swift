@@ -13,6 +13,30 @@ import Alamofire
 import SVProgressHUD
 import LinkKit
 
+//// Plaid
+extension MainViewController : PLKPlaidLinkViewDelegate
+{
+    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didSucceedWithPublicToken publicToken: String, metadata: [String : Any]?) {
+        dismiss(animated: true) {
+            NSLog("Successfully linked account!\npublicToken: \(publicToken)\nmetadata: \(metadata ?? [:])")
+            self.handleSuccessWithToken(publicToken, metadata: metadata)
+        }
+    }
+    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didExitWithError error: Error?, metadata: [String : Any]?) {
+        dismiss(animated: true) {
+            if let error = error {
+                NSLog("Failed to link account due to: \(error.localizedDescription)\nmetadata: \(metadata ?? [:])")
+            }
+            else {
+                NSLog("Plaid link exited with metadata: \(metadata ?? [:])")
+            }
+        }
+    }
+    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didHandleEvent event: String, metadata: [String : Any]?) {
+        NSLog("Link event: \(event)\nmetadata: \(metadata)")
+    }
+}
+
 class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var LabelCurrency: UILabel?
     @IBOutlet weak var LabelGroth: UILabel?
@@ -31,6 +55,15 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var m_user_id = user_id_mobile!
     var m_access_token = user_mobile_access_token!
     var plaid_public_token = ""
+    
+    var m_spare_change_accrued_percent_to_invest : Double = 0.0
+    var m_cap : Double = 0.0
+    var m_percent_to_invest : Double = 0.0
+    var m_how_often : Double = 0.0
+    var m_spare_change_accrued : Double = 0.0
+    var m_btc_to_invest : Double = 0.0
+    var m_invest_on : Double = 0.0
+    
     
     @IBAction func InvestmentRateSlider(_ sender: UISlider) {
         let rate: Float = SliderinvestmentRateDecider!.value
@@ -53,6 +86,13 @@ class MainViewController: UIViewController, UITableViewDataSource{
             sender.minimumTrackTintColor = green
         }
      */
+    }
+    
+    @IBAction func OnInvestmentRateSliderRelease(_ sender: Any) {
+        let Rate = SliderinvestmentRateDecider?.value
+        UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: String(describing: Rate))
+        //print("element Released")
+        
     }
     
     @IBAction func TestPlaid(_ sender: Any) {
@@ -356,7 +396,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     // MARK: Plaid Link setup with shared configuration from Info.plist
     func presentPlaidLinkWithSharedConfiguration() {
         let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(delegate: linkViewDelegate)
+        let linkViewController = PLKPlaidLinkViewController(delegate: linkViewDelegate as! PLKPlaidLinkViewDelegate)
         if (UI_USER_INTERFACE_IDIOM() == .pad) {
             linkViewController.modalPresentationStyle = .formSheet;
         }
@@ -368,7 +408,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .sandbox, product: .auth)
         linkConfiguration.clientName = "Link Demo"
         let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(configuration: linkConfiguration, delegate: linkViewDelegate)
+        let linkViewController = PLKPlaidLinkViewController(configuration: linkConfiguration, delegate: linkViewDelegate as! PLKPlaidLinkViewDelegate)
         if (UI_USER_INTERFACE_IDIOM() == .pad) {
             linkViewController.modalPresentationStyle = .formSheet;
         }
@@ -376,31 +416,5 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     }
     
-}
-
-
-
-//// Plaid
-extension MainViewController : PLKPlaidLinkViewDelegate
-{
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didSucceedWithPublicToken publicToken: String, metadata: [String : Any]?) {
-        dismiss(animated: true) {
-            NSLog("Successfully linked account!\npublicToken: \(publicToken)\nmetadata: \(metadata ?? [:])")
-            self.handleSuccessWithToken(publicToken, metadata: metadata)
-        }
-    }
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didExitWithError error: Error?, metadata: [String : Any]?) {
-        dismiss(animated: true) {
-            if let error = error {
-                NSLog("Failed to link account due to: \(error.localizedDescription)\nmetadata: \(metadata ?? [:])")
-            }
-            else {
-                NSLog("Plaid link exited with metadata: \(metadata ?? [:])")
-            }
-        }
-    }
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didHandleEvent event: String, metadata: [String : Any]?) {
-        NSLog("Link event: \(event)\nmetadata: \(metadata)")
-    }
 }
 
