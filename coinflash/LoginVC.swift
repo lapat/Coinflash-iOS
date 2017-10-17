@@ -44,7 +44,6 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             self.givenName = user.profile.givenName
             self.familyName = user.profile.familyName
             
-            
             // Perform any operations on signed in user here.
             //let userId = user.userID                  // For client-side use only!
             //print("User id is \(String(describing: String( userId!)))")
@@ -72,7 +71,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     // Finished disconnecting |user| from the app successfully if |error| is |nil|.
     public func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!)
     {
-        
+        print(error)
     }
     
     // Check Google info from server

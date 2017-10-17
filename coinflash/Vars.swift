@@ -27,7 +27,6 @@ enum OnBoardStatus{
     case linkedPlaidAndCoinbase
 }
 
-
 // MARK: - Settings Page Global Vars
 struct GlobalSettings{
     var investChange: Bool!
@@ -109,12 +108,18 @@ var coinbaseInfoObject: CoinbaseInfo = CoinbaseInfo()
 
 
 // MARK: - Plaid
+struct BankAccount{
+    var name: String!
+    var lastFourDigits: String!
+}
+
 struct PlaidInfo{
     var accessToken: String!
-    var loggedIn: String!
+    var loggedIn: Bool!
+    var playedAccounts: [BankAccount]!
     init(){
         accessToken = ""
-        loggedIn = "false"
+        loggedIn = false
     }
 }
 var plaidInfoObject: PlaidInfo = PlaidInfo()

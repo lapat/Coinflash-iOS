@@ -465,7 +465,7 @@
         <scene sceneID="rqY-JQ-GIE">
             <objects>
                 <tableViewController id="xam-tU-CdB" customClass="SettingsVC" customModule="coinflash" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="JHH-iO-81Y">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="60" id="JHH-iO-81Y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -494,9 +494,6 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZS5-gH-hXd">
                                     <rect key="frame" x="90" y="5" width="195" height="45"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="45" id="ad4-z3-GKC"/>
-                                    </constraints>
                                     <state key="normal" image="saveBtt"/>
                                 </button>
                             </subviews>
@@ -891,7 +888,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Im-Ya-8uW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2268" y="1194"/>
+            <point key="canvasLocation" x="-2268" y="1193.2533733133434"/>
         </scene>
         <!--v2 Login-->
         <scene sceneID="74p-EA-Ugf">
@@ -1407,7 +1404,7 @@
                                         <rect key="frame" x="119" y="205" width="105" height="34"/>
                                         <color key="backgroundColor" red="0.1860615611076355" green="0.65319794416427612" blue="0.12694603204727173" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="105" id="sfx-hA-ocJ"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="sfx-hA-ocJ"/>
                                         </constraints>
                                         <state key="normal" title="CONFIRM">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1423,9 +1420,9 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This will not reduce your spare change accrued" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLS-uf-THp">
-                                        <rect key="frame" x="67" y="152" width="208" height="49"/>
+                                        <rect key="frame" x="4.5" y="152" width="333" height="49"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="208" id="6lO-as-7Z2"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="208" id="6lO-as-7Z2"/>
                                             <constraint firstAttribute="height" constant="49" id="Q5b-9n-soH"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="15"/>
@@ -1548,12 +1545,12 @@
                                     <constraint firstAttribute="height" constant="0.5" id="Qxu-mP-x4S"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i8D-Kq-3Ee">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i8D-Kq-3Ee">
                                 <rect key="frame" x="8" y="278" width="359" height="231.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="normalCell" id="IHC-Im-yN9">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="normalCell" id="IHC-Im-yN9" customClass="PlaidBankCell" customModule="coinflash" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="359" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IHC-Im-yN9" id="mJj-Up-n1z">
@@ -1605,6 +1602,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="bankAccountNumber" destination="jPc-f7-QC5" id="PAN-oi-BV8"/>
+                                            <outlet property="bankNameLabel" destination="DGu-wp-2qQ" id="8HV-7i-FXs"/>
+                                            <outlet property="bankPicImageView" destination="baJ-Sm-Z22" id="tnh-qZ-1NE"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="disabledCell" id="v00-UN-SfU">
                                         <rect key="frame" x="0.0" y="72" width="359" height="44"/>
@@ -1730,6 +1732,7 @@
                         <viewLayoutGuide key="safeArea" id="biu-qR-UdG"/>
                     </view>
                     <connections>
+                        <outlet property="addCoinbaseButton" destination="ysH-wV-Qx0" id="b0D-qq-voh"/>
                         <outlet property="bankTable" destination="i8D-Kq-3Ee" id="RA7-Ot-8jh"/>
                         <outlet property="coinbaseLinkedLabel" destination="PlE-aS-C4e" id="mQb-fv-HDz"/>
                     </connections>
@@ -1747,10 +1750,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="jzD-OA-f9v">
-                                <rect key="frame" x="0.0" y="10" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="5" width="375" height="677"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DLh-QT-8QI">
-                                <rect key="frame" x="0.0" y="10" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="677"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoLogin2" translatesAutoresizingMaskIntoConstraints="NO" id="Grt-SB-zcR">
                                         <rect key="frame" x="112" y="45" width="150" height="150"/>
@@ -1778,16 +1781,16 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jzD-OA-f9v" firstAttribute="height" secondItem="B4l-sA-hWh" secondAttribute="height" id="1NM-lS-ETt"/>
-                            <constraint firstItem="DLh-QT-8QI" firstAttribute="height" secondItem="B4l-sA-hWh" secondAttribute="height" id="1sq-Oc-fOc"/>
+                            <constraint firstItem="DLh-QT-8QI" firstAttribute="height" secondItem="B4l-sA-hWh" secondAttribute="height" constant="10" id="1sq-Oc-fOc"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" id="Ejv-qs-59Z"/>
                             <constraint firstItem="aPe-3H-acc" firstAttribute="bottom" secondItem="Vut-ZC-G23" secondAttribute="bottom" constant="20" id="FyN-hm-pNT"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="jzD-OA-f9v" secondAttribute="centerX" id="HMe-Xx-ehf"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="DLh-QT-8QI" secondAttribute="centerX" id="Rez-NA-cKD"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="width" secondItem="B4l-sA-hWh" secondAttribute="width" id="UZA-Q1-nPA"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="aPe-3H-acc" secondAttribute="centerX" id="ahs-Wv-kjb"/>
-                            <constraint firstItem="DLh-QT-8QI" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" id="eXJ-cD-9Ko"/>
+                            <constraint firstItem="DLh-QT-8QI" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" constant="-5" id="eXJ-cD-9Ko"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="centerX" secondItem="aPe-3H-acc" secondAttribute="centerX" id="gXG-AT-ZwJ"/>
+                            <constraint firstItem="DLh-QT-8QI" firstAttribute="height" secondItem="jzD-OA-f9v" secondAttribute="height" id="hKQ-6h-G1s"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="width" secondItem="B4l-sA-hWh" secondAttribute="width" id="mw1-q1-AG0"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="B4l-sA-hWh" secondAttribute="centerX" id="rcS-ow-inK"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="centerX" secondItem="aPe-3H-acc" secondAttribute="centerX" id="wv5-ST-1qE"/>
@@ -1802,7 +1805,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZFr-fn-yz5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3140" y="117"/>
+            <point key="canvasLocation" x="-3140" y="116.49175412293854"/>
         </scene>
         <!--Pop Up View Graph Type Selector-->
         <scene sceneID="dk3-dn-QFy">
