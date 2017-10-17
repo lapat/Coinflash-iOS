@@ -22,6 +22,7 @@ extension MainViewController : PLKPlaidLinkViewDelegate
             self.handleSuccessWithToken(publicToken, metadata: metadata)
         }
     }
+    
     func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didExitWithError error: Error?, metadata: [String : Any]?) {
         dismiss(animated: true) {
             if let error = error {
@@ -32,6 +33,7 @@ extension MainViewController : PLKPlaidLinkViewDelegate
             }
         }
     }
+    
     func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didHandleEvent event: String, metadata: [String : Any]?) {
         NSLog("Link event: \(event)\nmetadata: \(metadata)")
     }
@@ -76,16 +78,26 @@ class MainViewController: UIViewController, UITableViewDataSource{
         print("Rate: \(rate) && btcIntensity : \(1.0 - rate/100.0) && intensity2: \(rate/100.0)")
         sender.thumbTintColor = color
         sender.minimumTrackTintColor = color
-        // Animation controls
-        /*
-        if rate < 50{
-            sender.thumbTintColor = UIColor.blend(color1: btcColor, intensity1: CGFloat((100-rate)/100), color2: ethColor, intensity2: rate/100)
-            sender.minimumTrackTintColor = blue
-        }else{
-            sender.thumbTintColor = green
-            sender.minimumTrackTintColor = green
-        }
-     */
+        sender.maximumTrackTintColor = color
+        
+        // Set the ether and bitcoin rate in the top label with respect to the percentage
+        let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(rate/100.0)
+        let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float((100 - rate)/100.0)
+        self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
+       
+        /// Set the mutable attributed string for the top label showing dollars
+        let prefixString: NSAttributedString = NSAttributedString(string: "$ ", attributes: [NSForegroundColorAttributeName : color])
+        let btcString: NSAttributedString = NSAttributedString(string: String(format: "%.2f", dollarToInvestInBTC), attributes: [NSForegroundColorAttributeName : btcColor])
+        let slashString: NSAttributedString = NSAttributedString(string: " / ", attributes: [NSForegroundColorAttributeName : color])
+        let suffixString: NSAttributedString = NSAttributedString(string: "$ ", attributes: [NSForegroundColorAttributeName : color])
+        let ethStirng: NSAttributedString = NSAttributedString(string: String(format: "%.2f", dollarToInvestETH), attributes: [NSForegroundColorAttributeName : ethColor])
+        let dollarLabelString : NSMutableAttributedString = NSMutableAttributedString()
+        dollarLabelString.append(prefixString)
+        dollarLabelString.append(btcString)
+        dollarLabelString.append(slashString)
+        dollarLabelString.append(suffixString)
+        dollarLabelString.append(ethStirng)
+        self.LabelChange?.attributedText = dollarLabelString
     }
     
     @IBAction func OnInvestmentRateSliderRelease(_ sender: Any) {
@@ -108,12 +120,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
             presentPlaidLinkWithSharedConfiguration()
         }
     }
+    
     func DelinkPlaid(alert: UIAlertAction!) {
         
         DlinkPlaid(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
     }
-
-   
     
     override func viewDidLoad() {
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
@@ -123,6 +134,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
     }
+    
     func updateViewInvestmentInformation(){
         self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% of Your Change Will Be Invested Every Monday"
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
@@ -137,7 +149,12 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.LabelBitcoinInvestmentRate?.text = String(Int(bitrate)) + "%"
         
         self.SliderinvestmentRateDecider?.value = Float(etherRate)
+        self.InvestmentRateSlider(self.SliderinvestmentRateDecider!)
         
+        // Set the ether and bitcoin rate in the top label with respect to the percentage
+        //let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(etherRate/100.0)
+        //let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float(bitrate/100.0)
+        //self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
         
         
     }
@@ -171,13 +188,14 @@ class MainViewController: UIViewController, UITableViewDataSource{
         ]
         SVProgressHUD.show()
         
-       Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-             let data = response.result.value as! [String: Any]
+        Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            let data = response.result.value as! [String: Any]
              if data["cc_transactions_array"] == nil
              {
                 SVProgressHUD.dismiss()
                 return
              }
+            
              let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
              let user_preferences = data["user_preferences"] as! [String: Any]
              if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
