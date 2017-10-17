@@ -35,11 +35,15 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     var EitherTransation = [TCryptoInfo]()
     var EitherTotal : Double = 0.0
     var EitherTotalPrice : Double = 0.0
+    var EitherCryptodates:[String]!
+    var EitherCryptoprices:[Double]!
     
     // Bitcoin Variables
     var BitcoinTransation = [TCryptoInfo]()
     var BitcoinTotal : Double = 0.0
     var BitcoinTotalPrice : Double = 0.0
+    var BitcoinCryptodates:[String]!
+    var BitcoinCryptoprices:[Double]!
     
     //Gain
     var coinbaseAmountSpentOnCrypto : Double = 0.0
@@ -52,6 +56,14 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         // Sample Dataset
         Cryptodates = ["9-10","9-10","9-10","9-10","9-10","9-10","9-10","9-10"]
         Cryptoprices = [3110.0,3210.0,3510.0,3410.0,3310.0,3210.0,3110.0,3210.0]
+        
+        
+        BitcoinCryptodates = []
+        BitcoinCryptoprices = []
+        
+        EitherCryptodates = []
+        EitherCryptoprices = []
+        
         
         //Set Chart Properties
         CryptoPriceGraph.chartDescription?.text = ""
@@ -82,8 +94,12 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         let type = ["ETH", "BIT"]
         let percentage = [20.0,80.0]
         self.setCryptoPieChart(dataPoints: type, values:percentage)
+        
         // Featch Data From Server
-        self.requestCoinFlashFeatchwallet(mobile_secret: "8dkkaiei20kdjkwoeo29ddkskalw82asD!", user_id_mobile: "1", mobile_access_token: "3f506ad810db4baba56493fcd25799")
+        self.requestCoinFlashFeatchwallet(mobile_secret: user_mobile_secret, user_id_mobile: user_id_mobile, mobile_access_token: user_mobile_access_token)
+        //user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token
+        self.requestCryptoRates(mobile_secret: user_mobile_secret, user_id_mobile: user_id_mobile, mobile_access_token: user_mobile_access_token)
+        
         self.LoadCryptoGraphCurrentPriceHistery()
     
     }
@@ -125,6 +141,11 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelCurrency?.text =  "$ " + String(self.EitherTotalPrice) + " Dollar"
         self.CurrencyRatePolixCode = "USDT_ETH"
         
+        self.Cryptodates = self.EitherCryptodates
+        self.Cryptoprices = self.EitherCryptoprices
+        setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
+        
+        
     }
     @IBAction func changThemeToBitCoin(for button: UIButton){
         btcBtn?.isEnabled  = false
@@ -142,6 +163,11 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelCoin?.text =  String(self.BitcoinTotal)
         self.LabelCurrency?.text =  "$ " + String(self.BitcoinTotalPrice) + " Dollar"
         self.CurrencyRatePolixCode = "USDT_BTC"
+        
+        self.Cryptodates = self.BitcoinCryptodates
+        self.Cryptoprices = self.BitcoinCryptoprices
+        setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
+        
         
     }
     func setCryptoPieChart(dataPoints: [String], values: [Double]){
@@ -234,6 +260,64 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         
     }
+    
+    func requestCryptoRates(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+        let now = NSDate()
+        
+        //let reducedTime = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)?.dateByAddingUnit(.W, value: -10, toDate: now, options: NSCalendarOptions())
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+            "after" : "2017-10-10"
+            ]
+        SVProgressHUD.show()
+        
+        
+        
+        
+        
+        Alamofire.request("https://coinflashapp.com/coinflashprice/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            self.BitcoinCryptodates.removeAll()
+            self.BitcoinCryptoprices.removeAll()
+            
+            self.EitherCryptodates.removeAll()
+            self.EitherCryptoprices.removeAll()
+            var count = 0
+            if let array = response.result.value as? NSDictionary {
+                if array == nil{
+                    return 
+                }
+                    let DataResponseBTC = array["BTC"] as! NSArray
+                    let DataResponseETH = array["ETH"] as! NSArray
+                    for index in 0...(DataResponseBTC.count - 1) {
+                        let DataDic = DataResponseBTC[index] as? NSDictionary
+                        let Date = DataDic!["date"] as! String
+                        let price = DataDic!["price"] as! Double
+                        self.BitcoinCryptodates.append(Date)
+                        self.BitcoinCryptoprices.append(price)
+                        
+                    }
+                for index in 0...(DataResponseETH.count - 1) {
+                    let DataDic = DataResponseETH[index] as? NSDictionary
+                    let Date = DataDic!["date"] as! String
+                    let price = DataDic!["price"] as! Double
+                    self.EitherCryptodates.append(Date)
+                    self.EitherCryptoprices.append(price)
+                    
+                }
+            
+            }
+            
+            //self.changThemeToBitCoin(for: self.btcBtn!)
+            SVProgressHUD.dismiss()
+        }
+    }
+    
     func requestCoinFlashFeatchwallet(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"

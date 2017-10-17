@@ -27,9 +27,9 @@ class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var ccTransationTableView: UITableView?
     
     var cctransations = [cctransaction_global]
-    var m_mobile_secret = "8dkkaiei20kdjkwoeo29ddkskalw82asD!"
-    var m_user_id = "425"
-    var m_access_token = "cc5ee533482541e7b38d5aa96844df"
+    var m_mobile_secret = user_mobile_secret!
+    var m_user_id = user_id_mobile!
+    var m_access_token = user_mobile_access_token!
     var plaid_public_token = ""
     
     @IBAction func InvestmentRateSlider(_ sender: UISlider) {
@@ -69,13 +69,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
     }
     func DelinkPlaid(alert: UIAlertAction!) {
+        
         DlinkPlaid(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
     }
 
-    @IBAction func TestPlidAction(_ sender: Any) {
-        //presentPlaidLinkWithSharedConfiguration()
-
-    }
+   
     
     override func viewDidLoad() {
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
@@ -85,8 +83,24 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
     }
-    
-    
+    func updateViewInvestmentInformation(){
+        self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% of Your Change Will Be Invested Every Monday"
+        self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
+        
+        //var RationBitCoint =
+        
+        var bitrate = ((m_btc_to_invest / m_spare_change_accrued ) * 100)
+        bitrate.round(.up)
+        let etherRate = 100 - bitrate
+        
+        self.LabelEtherInvestmentRate?.text = String(Int(etherRate)) + "%"
+        self.LabelBitcoinInvestmentRate?.text = String(Int(bitrate)) + "%"
+        
+        self.SliderinvestmentRateDecider?.value = Float(etherRate)
+        
+        
+        
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! ccTransationCellView
@@ -125,6 +139,31 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 return
              }
              let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
+             let user_preferences = data["user_preferences"] as! [String: Any]
+             if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
+                self.m_spare_change_accrued_percent_to_invest = Double(user_preferences["spare_change_accrued_percent_to_invest"] as! String)!
+                self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
+             }
+             if user_preferences["percent_to_invest"] != nil{
+               self.m_percent_to_invest = Double(user_preferences["percent_to_invest"] as! String)!
+                
+             }
+             if user_preferences["how_often"] != nil{
+                 self.m_how_often = Double(user_preferences["how_often"] as! String)!
+             }
+             if user_preferences["spare_change_accrued"] != nil{
+                 self.m_spare_change_accrued = Double(user_preferences["spare_change_accrued"] as! String)!
+             }
+             if user_preferences["btc_to_invest"] != nil{
+                 self.m_btc_to_invest = user_preferences["btc_to_invest"] as! Double
+                self.m_btc_to_invest = Double(round(100 * self.m_btc_to_invest)/100)
+                
+             }
+             if user_preferences["invest_on"] != nil{
+                 self.m_invest_on = Double(user_preferences["invest_on"] as! String)!
+             }
+        
+        
         
              self.cctransations.removeAll()
         /// Bound error occuring check
@@ -154,6 +193,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
             
         }
             self.ccTransationTableView?.reloadData()
+            self.updateViewInvestmentInformation()
             SVProgressHUD.dismiss()
         
         }
@@ -188,13 +228,13 @@ class MainViewController: UIViewController, UITableViewDataSource{
             {
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
-                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "true")
+                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
                 
             }
             else if AA != nil{
                 SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
-                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "true")
+                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Already Linked")
+                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
             }
             else
             {
@@ -255,6 +295,38 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.present(alert, animated: true, completion: nil)
         
     }
+    func UpdateSlideVaueToServer(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,SliderValue :String){
+        
+        let headers: HTTPHeaders = [
+        "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+        "mobile_secret" : mobile_secret,
+        "user_id_mobile" : user_id_mobile,
+        "mobile_access_token" : mobile_access_token,
+        "slider_value" : SliderValue
+        
+        ]
+        SVProgressHUD.show()
+        
+        Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+        
+        let data = response.result.value as? NSDictionary
+        
+        let SliderUpdated = data?.value(forKey: "success")
+        
+        //let data = response.result.value as! [String: String]
+        if SliderUpdated != nil
+        {
+        SVProgressHUD.dismiss()
+        }
+        
+        
+        
+        }
+    }
+        
+        
     
     ///////////////////////////////////// PLAID //////////////////////////////////////
     

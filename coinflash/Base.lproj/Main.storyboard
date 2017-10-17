@@ -201,8 +201,8 @@
                                             <constraint firstAttribute="width" secondItem="mTn-h5-dVu" secondAttribute="height" multiplier="347:311" id="dho-uK-OoJ"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1375.76" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3q-Di-Db0">
-                                        <rect key="frame" x="137" y="140" width="101.5" height="41"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3q-Di-Db0">
+                                        <rect key="frame" x="180" y="140" width="16" height="41"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="41" id="ulp-fR-eS7"/>
                                         </constraints>
@@ -223,7 +223,7 @@
                                             <constraint firstAttribute="width" constant="200" id="vC0-eC-3I5"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200% of your Change will Be invested  Every Monday" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dlh-8D-nlg">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0% of your Change will Be invested  Every Monday" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dlh-8D-nlg">
                                         <rect key="frame" x="69" y="189" width="237" height="52"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="52" id="rRR-rl-svV"/>
@@ -261,6 +261,7 @@
                                         <rect key="frame" x="6" y="376" width="363" height="31"/>
                                         <connections>
                                             <action selector="InvestmentRateSlider:" destination="Lae-RI-fL0" eventType="valueChanged" id="6EM-G7-Jl0"/>
+                                            <action selector="OnInvestmentRateSliderRelease:" destination="Lae-RI-fL0" eventType="touchUpInside" id="Ah6-4s-EWr"/>
                                         </connections>
                                     </slider>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="vEW-fz-OwK">
