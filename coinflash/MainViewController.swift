@@ -32,11 +32,27 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var m_access_token = "cc5ee533482541e7b38d5aa96844df"
     var plaid_public_token = ""
     
-    @IBAction func InvestmentRateSlider(_ sender: Any) {
-        let Rate = SliderinvestmentRateDecider?.value
-        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", Rate!) + "$"
-        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - Rate!)) + "$"
+    @IBAction func InvestmentRateSlider(_ sender: UISlider) {
+        let rate: Float = SliderinvestmentRateDecider!.value
+        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", rate) + "%"
+        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - rate)) + "%"
         
+        let btcColor = UIColor(red: 8/255.0, green: 79/255.0, blue: 159/255.0, alpha: 1.0)
+        let ethColor = UIColor(red: 110/255.0, green: 176/255.0, blue: 56/255.0, alpha: 1.0)
+        let color = UIColor.blend(color1: btcColor, intensity1: (CGFloat(1.0 - rate/100.0)), color2: ethColor, intensity2: CGFloat(rate/100.0))
+        print("Rate: \(rate) && btcIntensity : \(1.0 - rate/100.0) && intensity2: \(rate/100.0)")
+        sender.thumbTintColor = color
+        sender.minimumTrackTintColor = color
+        // Animation controls
+        /*
+        if rate < 50{
+            sender.thumbTintColor = UIColor.blend(color1: btcColor, intensity1: CGFloat((100-rate)/100), color2: ethColor, intensity2: rate/100)
+            sender.minimumTrackTintColor = blue
+        }else{
+            sender.thumbTintColor = green
+            sender.minimumTrackTintColor = green
+        }
+     */
     }
     
     @IBAction func TestPlaid(_ sender: Any) {
@@ -47,7 +63,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
             
             self.present(alert, animated: true, completion: nil)
             return
-            
         }
         else{
             presentPlaidLinkWithSharedConfiguration()
@@ -67,7 +82,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.default.menuDismissOnPush = true
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuParallaxStrength = 3
-        //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
     }
     
