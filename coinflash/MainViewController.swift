@@ -13,6 +13,32 @@ import Alamofire
 import SVProgressHUD
 import LinkKit
 
+//// Plaid
+extension MainViewController : PLKPlaidLinkViewDelegate
+{
+    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didSucceedWithPublicToken publicToken: String, metadata: [String : Any]?) {
+        dismiss(animated: true) {
+            NSLog("Successfully linked account!\npublicToken: \(publicToken)\nmetadata: \(metadata ?? [:])")
+            self.handleSuccessWithToken(publicToken, metadata: metadata)
+        }
+    }
+    
+    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didExitWithError error: Error?, metadata: [String : Any]?) {
+        dismiss(animated: true) {
+            if let error = error {
+                NSLog("Failed to link account due to: \(error.localizedDescription)\nmetadata: \(metadata ?? [:])")
+            }
+            else {
+                NSLog("Plaid link exited with metadata: \(metadata ?? [:])")
+            }
+        }
+    }
+    
+    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didHandleEvent event: String, metadata: [String : Any]?) {
+        NSLog("Link event: \(event)\nmetadata: \(metadata)")
+    }
+}
+
 class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var LabelCurrency: UILabel?
     @IBOutlet weak var LabelGroth: UILabel?
@@ -27,15 +53,57 @@ class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var ccTransationTableView: UITableView?
     
     var cctransations = [cctransaction_global]
-    var m_mobile_secret = "8dkkaiei20kdjkwoeo29ddkskalw82asD!"
-    var m_user_id = "425"
-    var m_access_token = "cc5ee533482541e7b38d5aa96844df"
+    var m_mobile_secret = user_mobile_secret!
+    var m_user_id = user_id_mobile!
+    var m_access_token = user_mobile_access_token!
     var plaid_public_token = ""
     
-    @IBAction func InvestmentRateSlider(_ sender: Any) {
+    var m_spare_change_accrued_percent_to_invest : Double = 0.0
+    var m_cap : Double = 0.0
+    var m_percent_to_invest : Double = 0.0
+    var m_how_often : Double = 0.0
+    var m_spare_change_accrued : Double = 0.0
+    var m_btc_to_invest : Double = 0.0
+    var m_invest_on : Double = 0.0
+    
+    
+    @IBAction func InvestmentRateSlider(_ sender: UISlider) {
+        let rate: Float = SliderinvestmentRateDecider!.value
+        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", rate) + "%"
+        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - rate)) + "%"
+        
+        let btcColor = UIColor(red: 8/255.0, green: 79/255.0, blue: 159/255.0, alpha: 1.0)
+        let ethColor = UIColor(red: 110/255.0, green: 176/255.0, blue: 56/255.0, alpha: 1.0)
+        let color = UIColor.blend(color1: btcColor, intensity1: (CGFloat(1.0 - rate/100.0)), color2: ethColor, intensity2: CGFloat(rate/100.0))
+        print("Rate: \(rate) && btcIntensity : \(1.0 - rate/100.0) && intensity2: \(rate/100.0)")
+        sender.thumbTintColor = color
+        sender.minimumTrackTintColor = color
+        sender.maximumTrackTintColor = color
+        
+        // Set the ether and bitcoin rate in the top label with respect to the percentage
+        let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(rate/100.0)
+        let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float((100 - rate)/100.0)
+        self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
+       
+        /// Set the mutable attributed string for the top label showing dollars
+        let prefixString: NSAttributedString = NSAttributedString(string: "$ ", attributes: [NSForegroundColorAttributeName : color])
+        let btcString: NSAttributedString = NSAttributedString(string: String(format: "%.2f", dollarToInvestInBTC), attributes: [NSForegroundColorAttributeName : btcColor])
+        let slashString: NSAttributedString = NSAttributedString(string: " / ", attributes: [NSForegroundColorAttributeName : color])
+        let suffixString: NSAttributedString = NSAttributedString(string: "$ ", attributes: [NSForegroundColorAttributeName : color])
+        let ethStirng: NSAttributedString = NSAttributedString(string: String(format: "%.2f", dollarToInvestETH), attributes: [NSForegroundColorAttributeName : ethColor])
+        let dollarLabelString : NSMutableAttributedString = NSMutableAttributedString()
+        dollarLabelString.append(prefixString)
+        dollarLabelString.append(btcString)
+        dollarLabelString.append(slashString)
+        dollarLabelString.append(suffixString)
+        dollarLabelString.append(ethStirng)
+        self.LabelChange?.attributedText = dollarLabelString
+    }
+    
+    @IBAction func OnInvestmentRateSliderRelease(_ sender: Any) {
         let Rate = SliderinvestmentRateDecider?.value
-        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", Rate!) + "$"
-        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - Rate!)) + "$"
+        UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: String(describing: Rate))
+        //print("element Released")
         
     }
     
@@ -47,19 +115,15 @@ class MainViewController: UIViewController, UITableViewDataSource{
             
             self.present(alert, animated: true, completion: nil)
             return
-            
         }
         else{
             presentPlaidLinkWithSharedConfiguration()
         }
     }
+    
     func DelinkPlaid(alert: UIAlertAction!) {
+        
         DlinkPlaid(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-    }
-
-    @IBAction func TestPlidAction(_ sender: Any) {
-        //presentPlaidLinkWithSharedConfiguration()
-
     }
     
     override func viewDidLoad() {
@@ -67,11 +131,33 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.default.menuDismissOnPush = true
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuParallaxStrength = 3
-        //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
     }
     
-    
+    func updateViewInvestmentInformation(){
+        self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% of Your Change Will Be Invested Every Monday"
+        self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
+        
+        //var RationBitCoint =
+        
+        var bitrate = ((m_btc_to_invest / m_spare_change_accrued ) * 100)
+        bitrate.round(.up)
+        let etherRate = 100 - bitrate
+        
+        self.LabelEtherInvestmentRate?.text = String(Int(etherRate)) + "%"
+        self.LabelBitcoinInvestmentRate?.text = String(Int(bitrate)) + "%"
+        
+        self.SliderinvestmentRateDecider?.value = Float(etherRate)
+        self.InvestmentRateSlider(self.SliderinvestmentRateDecider!)
+        
+        // Set the ether and bitcoin rate in the top label with respect to the percentage
+        //let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(etherRate/100.0)
+        //let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float(bitrate/100.0)
+        //self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
+        
+        
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! ccTransationCellView
@@ -102,14 +188,40 @@ class MainViewController: UIViewController, UITableViewDataSource{
         ]
         SVProgressHUD.show()
         
-       Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-             let data = response.result.value as! [String: Any]
+        Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            let data = response.result.value as! [String: Any]
              if data["cc_transactions_array"] == nil
              {
                 SVProgressHUD.dismiss()
                 return
              }
+            
              let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
+             let user_preferences = data["user_preferences"] as! [String: Any]
+             if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
+                self.m_spare_change_accrued_percent_to_invest = Double(user_preferences["spare_change_accrued_percent_to_invest"] as! String)!
+                self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
+             }
+             if user_preferences["percent_to_invest"] != nil{
+               self.m_percent_to_invest = Double(user_preferences["percent_to_invest"] as! String)!
+                
+             }
+             if user_preferences["how_often"] != nil{
+                 self.m_how_often = Double(user_preferences["how_often"] as! String)!
+             }
+             if user_preferences["spare_change_accrued"] != nil{
+                 self.m_spare_change_accrued = Double(user_preferences["spare_change_accrued"] as! String)!
+             }
+             if user_preferences["btc_to_invest"] != nil{
+                 self.m_btc_to_invest = user_preferences["btc_to_invest"] as! Double
+                self.m_btc_to_invest = Double(round(100 * self.m_btc_to_invest)/100)
+                
+             }
+             if user_preferences["invest_on"] != nil{
+                 self.m_invest_on = Double(user_preferences["invest_on"] as! String)!
+             }
+        
+        
         
              self.cctransations.removeAll()
         /// Bound error occuring check
@@ -139,6 +251,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
             
         }
             self.ccTransationTableView?.reloadData()
+            self.updateViewInvestmentInformation()
             SVProgressHUD.dismiss()
         
         }
@@ -173,13 +286,13 @@ class MainViewController: UIViewController, UITableViewDataSource{
             {
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
-                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "true")
+                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
                 
             }
             else if AA != nil{
                 SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
-                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "true")
+                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Already Linked")
+                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
             }
             else
             {
@@ -240,6 +353,38 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.present(alert, animated: true, completion: nil)
         
     }
+    func UpdateSlideVaueToServer(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,SliderValue :String){
+        
+        let headers: HTTPHeaders = [
+        "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+        "mobile_secret" : mobile_secret,
+        "user_id_mobile" : user_id_mobile,
+        "mobile_access_token" : mobile_access_token,
+        "slider_value" : SliderValue
+        
+        ]
+        SVProgressHUD.show()
+        
+        Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+        
+        let data = response.result.value as? NSDictionary
+        
+        let SliderUpdated = data?.value(forKey: "success")
+        
+        //let data = response.result.value as! [String: String]
+        if SliderUpdated != nil
+        {
+        SVProgressHUD.dismiss()
+        }
+        
+        
+        
+        }
+    }
+        
+        
     
     ///////////////////////////////////// PLAID //////////////////////////////////////
     
@@ -269,7 +414,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     // MARK: Plaid Link setup with shared configuration from Info.plist
     func presentPlaidLinkWithSharedConfiguration() {
         let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(delegate: linkViewDelegate)
+        let linkViewController = PLKPlaidLinkViewController(delegate: linkViewDelegate as! PLKPlaidLinkViewDelegate)
         if (UI_USER_INTERFACE_IDIOM() == .pad) {
             linkViewController.modalPresentationStyle = .formSheet;
         }
@@ -281,7 +426,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .sandbox, product: .auth)
         linkConfiguration.clientName = "Link Demo"
         let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(configuration: linkConfiguration, delegate: linkViewDelegate)
+        let linkViewController = PLKPlaidLinkViewController(configuration: linkConfiguration, delegate: linkViewDelegate as! PLKPlaidLinkViewDelegate)
         if (UI_USER_INTERFACE_IDIOM() == .pad) {
             linkViewController.modalPresentationStyle = .formSheet;
         }
@@ -289,31 +434,5 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     }
     
-}
-
-
-
-//// Plaid
-extension MainViewController : PLKPlaidLinkViewDelegate
-{
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didSucceedWithPublicToken publicToken: String, metadata: [String : Any]?) {
-        dismiss(animated: true) {
-            NSLog("Successfully linked account!\npublicToken: \(publicToken)\nmetadata: \(metadata ?? [:])")
-            self.handleSuccessWithToken(publicToken, metadata: metadata)
-        }
-    }
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didExitWithError error: Error?, metadata: [String : Any]?) {
-        dismiss(animated: true) {
-            if let error = error {
-                NSLog("Failed to link account due to: \(error.localizedDescription)\nmetadata: \(metadata ?? [:])")
-            }
-            else {
-                NSLog("Plaid link exited with metadata: \(metadata ?? [:])")
-            }
-        }
-    }
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didHandleEvent event: String, metadata: [String : Any]?) {
-        NSLog("Link event: \(event)\nmetadata: \(metadata)")
-    }
 }
 
