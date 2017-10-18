@@ -12,6 +12,7 @@ import SideMenu
 import Alamofire
 import SVProgressHUD
 import LinkKit
+import SwiftyJSON
 
 //// Plaid
 extension MainViewController : PLKPlaidLinkViewDelegate
@@ -65,6 +66,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var m_spare_change_accrued : Double = 0.0
     var m_btc_to_invest : Double = 0.0
     var m_invest_on : Double = 0.0
+    var m_btc_percentage: Double = 0.0
     
     
     @IBAction func InvestmentRateSlider(_ sender: UISlider) {
@@ -138,26 +140,25 @@ class MainViewController: UIViewController, UITableViewDataSource{
     func updateViewInvestmentInformation(){
         self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% of Your Change Will Be Invested Every Monday"
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
-        
+        var bitrate = Double(0)
         //var RationBitCoint =
-        
-        var bitrate = ((m_btc_to_invest / m_spare_change_accrued ) * 100)
-        bitrate.round(.up)
+       
+        bitrate = m_btc_percentage
         let etherRate = 100 - bitrate
         
         self.LabelEtherInvestmentRate?.text = String(Int(etherRate)) + "%"
         self.LabelBitcoinInvestmentRate?.text = String(Int(bitrate)) + "%"
-        
-        self.SliderinvestmentRateDecider?.value = Float(etherRate)
+        print()
+        print(bitrate)
+        self.SliderinvestmentRateDecider?.value = Float(bitrate)
         self.InvestmentRateSlider(self.SliderinvestmentRateDecider!)
         
         // Set the ether and bitcoin rate in the top label with respect to the percentage
         //let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(etherRate/100.0)
         //let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float(bitrate/100.0)
         //self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
-        
-        
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! ccTransationCellView
@@ -188,14 +189,15 @@ class MainViewController: UIViewController, UITableViewDataSource{
         ]
         SVProgressHUD.show()
         
-        Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+        Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers)
+            .responseJSON { response in
             let data = response.result.value as! [String: Any]
              if data["cc_transactions_array"] == nil
              {
                 SVProgressHUD.dismiss()
                 return
              }
-            
+            print(response)
              let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
              let user_preferences = data["user_preferences"] as! [String: Any]
              if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
@@ -220,36 +222,41 @@ class MainViewController: UIViewController, UITableViewDataSource{
              if user_preferences["invest_on"] != nil{
                  self.m_invest_on = Double(user_preferences["invest_on"] as! String)!
              }
-        
+            
+            if user_preferences["btc_percentage"] != nil{
+                self.m_btc_percentage = user_preferences["btc_percentage"] as! Double
+            }
         
         
              self.cctransations.removeAll()
         /// Bound error occuring check
-        
-        for index in 0...TransationArray.count - 1 {
-            let transation = TransationArray[index]
-             var singleTransation = cctransaction_global
-            if transation["cctransaction_name"] != nil{
-                singleTransation?.cctransaction_name = transation["cctransaction_name"] as! String
+            if TransationArray.count > 0{
+                for index in 0...TransationArray.count - 1 {
+                    let transation = TransationArray[index]
+                    var singleTransation = cctransaction_global
+                    if transation["cctransaction_name"] != nil{
+                        singleTransation?.cctransaction_name = transation["cctransaction_name"] as! String
+                    }
+                    if transation["cctransaction_date"] != nil{
+                        var date: String = transation["cctransaction_date"] as! String
+                        let truncated = String(date.characters.dropFirst(5))
+                        singleTransation?.cctransaction_date = truncated
+                    }
+                    if transation["cctransaction_amount"] != nil{
+                        singleTransation?.cctransaction_amount = transation["cctransaction_amount"] as! String!
+                    }
+                    if transation["coinbase_transaction_id"] != nil{
+                        singleTransation?.cctransaction_coinbase_transaction_id = transation["coinbase_transaction_id"] as! String
+                        singleTransation?.cctransaction_invested = "invested"
+                    }
+                    else{
+                        singleTransation?.cctransaction_invested = "Not invested"
+                    }
+                    self.cctransations.append(singleTransation)
+                    
+                }
             }
-            if transation["cctransaction_date"] != nil{
-                var date: String = transation["cctransaction_date"] as! String
-                let truncated = String(date.characters.dropFirst(5))
-                singleTransation?.cctransaction_date = truncated
-            }
-            if transation["cctransaction_amount"] != nil{
-                singleTransation?.cctransaction_amount = transation["cctransaction_amount"] as! String!
-            }
-            if transation["coinbase_transaction_id"] != nil{
-                singleTransation?.cctransaction_coinbase_transaction_id = transation["coinbase_transaction_id"] as! String
-                singleTransation?.cctransaction_invested = "invested"
-            }
-            else{
-                singleTransation?.cctransaction_invested = "Not invested"
-            }
-            self.cctransations.append(singleTransation)
-            
-        }
+
             self.ccTransationTableView?.reloadData()
             self.updateViewInvestmentInformation()
             SVProgressHUD.dismiss()
@@ -369,21 +376,18 @@ class MainViewController: UIViewController, UITableViewDataSource{
         
         Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
         
-        let data = response.result.value as? NSDictionary
-        
-        let SliderUpdated = data?.value(forKey: "success")
-        
-        //let data = response.result.value as! [String: String]
-        if SliderUpdated != nil
-        {
-        SVProgressHUD.dismiss()
-        }
-        
-        
-        
+            let data = response.result.value as? NSDictionary
+            let SliderUpdated = data?.value(forKey: "success")
+            print(response)
+            //let data = response.result.value as! [String: String]
+            if SliderUpdated != nil
+            {
+                SVProgressHUD.dismiss()
+            }
         }
     }
-        
+    
+    
         
     
     ///////////////////////////////////// PLAID //////////////////////////////////////
