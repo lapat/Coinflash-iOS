@@ -40,7 +40,7 @@ struct GlobalSettings{
         case monthly
         case weekly
     }
-    var percentOfChangeToInvest: Float!
+    var percentOfChangeToInvest: Int!
     var capOnInvestment: Int!
     var hasBitcoinWallet: Bool!
     var hasEtherWaleet: Bool!
@@ -49,7 +49,7 @@ struct GlobalSettings{
     init() {
         investHowOften = .monthly
         investChange = true
-        percentOfChangeToInvest = 100.0
+        percentOfChangeToInvest = 100
         capOnInvestment = 100
         hasBitcoinWallet = false
         hasEtherWaleet = false

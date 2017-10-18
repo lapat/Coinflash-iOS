@@ -13,6 +13,32 @@ import Alamofire
 import SVProgressHUD
 import LinkKit
 
+//// Plaid
+extension MainViewController : PLKPlaidLinkViewDelegate
+{
+    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didSucceedWithPublicToken publicToken: String, metadata: [String : Any]?) {
+        dismiss(animated: true) {
+            NSLog("Successfully linked account!\npublicToken: \(publicToken)\nmetadata: \(metadata ?? [:])")
+            self.handleSuccessWithToken(publicToken, metadata: metadata)
+        }
+    }
+    
+    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didExitWithError error: Error?, metadata: [String : Any]?) {
+        dismiss(animated: true) {
+            if let error = error {
+                NSLog("Failed to link account due to: \(error.localizedDescription)\nmetadata: \(metadata ?? [:])")
+            }
+            else {
+                NSLog("Plaid link exited with metadata: \(metadata ?? [:])")
+            }
+        }
+    }
+    
+    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didHandleEvent event: String, metadata: [String : Any]?) {
+        NSLog("Link event: \(event)\nmetadata: \(metadata)")
+    }
+}
+
 class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var LabelCurrency: UILabel?
     @IBOutlet weak var LabelGroth: UILabel?
@@ -41,13 +67,39 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var m_invest_on : Double = 0.0
     
     
-    @IBAction func InvestmentRateSlider(_ sender: Any) {
-        let Rate = SliderinvestmentRateDecider?.value
-        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", Rate!) + "%"
-        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", (100 - Rate!)) + "%"
+    @IBAction func InvestmentRateSlider(_ sender: UISlider) {
+        let rate: Float = SliderinvestmentRateDecider!.value
+        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", rate) + "%"
+        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - rate)) + "%"
         
+        let btcColor = UIColor(red: 8/255.0, green: 79/255.0, blue: 159/255.0, alpha: 1.0)
+        let ethColor = UIColor(red: 110/255.0, green: 176/255.0, blue: 56/255.0, alpha: 1.0)
+        let color = UIColor.blend(color1: btcColor, intensity1: (CGFloat(1.0 - rate/100.0)), color2: ethColor, intensity2: CGFloat(rate/100.0))
+        print("Rate: \(rate) && btcIntensity : \(1.0 - rate/100.0) && intensity2: \(rate/100.0)")
+        sender.thumbTintColor = color
+        sender.minimumTrackTintColor = color
+        sender.maximumTrackTintColor = color
         
+        // Set the ether and bitcoin rate in the top label with respect to the percentage
+        let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(rate/100.0)
+        let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float((100 - rate)/100.0)
+        self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
+       
+        /// Set the mutable attributed string for the top label showing dollars
+        let prefixString: NSAttributedString = NSAttributedString(string: "$ ", attributes: [NSForegroundColorAttributeName : color])
+        let btcString: NSAttributedString = NSAttributedString(string: String(format: "%.2f", dollarToInvestInBTC), attributes: [NSForegroundColorAttributeName : btcColor])
+        let slashString: NSAttributedString = NSAttributedString(string: " / ", attributes: [NSForegroundColorAttributeName : color])
+        let suffixString: NSAttributedString = NSAttributedString(string: "$ ", attributes: [NSForegroundColorAttributeName : color])
+        let ethStirng: NSAttributedString = NSAttributedString(string: String(format: "%.2f", dollarToInvestETH), attributes: [NSForegroundColorAttributeName : ethColor])
+        let dollarLabelString : NSMutableAttributedString = NSMutableAttributedString()
+        dollarLabelString.append(prefixString)
+        dollarLabelString.append(btcString)
+        dollarLabelString.append(slashString)
+        dollarLabelString.append(suffixString)
+        dollarLabelString.append(ethStirng)
+        self.LabelChange?.attributedText = dollarLabelString
     }
+    
     @IBAction func OnInvestmentRateSliderRelease(_ sender: Any) {
         let Rate = SliderinvestmentRateDecider?.value
         UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: String(describing: Rate))
@@ -63,27 +115,26 @@ class MainViewController: UIViewController, UITableViewDataSource{
             
             self.present(alert, animated: true, completion: nil)
             return
-            
         }
         else{
             presentPlaidLinkWithSharedConfiguration()
         }
     }
+    
     func DelinkPlaid(alert: UIAlertAction!) {
         
         DlinkPlaid(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
     }
-
-   
     
     override func viewDidLoad() {
-        SideMenuManager.menuWidth = UIScreen.main.bounds.size.width * 0.75
-        SideMenuManager.menuDismissOnPush = true
-        SideMenuManager.menuPresentMode = .menuSlideIn
-        SideMenuManager.menuParallaxStrength = 3
+        SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
+        SideMenuManager.default.menuDismissOnPush = true
+        SideMenuManager.default.menuPresentMode = .menuSlideIn
+        SideMenuManager.default.menuParallaxStrength = 3
         self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
     }
+    
     func updateViewInvestmentInformation(){
         self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% of Your Change Will Be Invested Every Monday"
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
@@ -98,7 +149,12 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.LabelBitcoinInvestmentRate?.text = String(Int(bitrate)) + "%"
         
         self.SliderinvestmentRateDecider?.value = Float(etherRate)
+        self.InvestmentRateSlider(self.SliderinvestmentRateDecider!)
         
+        // Set the ether and bitcoin rate in the top label with respect to the percentage
+        //let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(etherRate/100.0)
+        //let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float(bitrate/100.0)
+        //self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
         
         
     }
@@ -132,13 +188,14 @@ class MainViewController: UIViewController, UITableViewDataSource{
         ]
         SVProgressHUD.show()
         
-       Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-             let data = response.result.value as! [String: Any]
+        Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            let data = response.result.value as! [String: Any]
              if data["cc_transactions_array"] == nil
              {
                 SVProgressHUD.dismiss()
                 return
              }
+            
              let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
              let user_preferences = data["user_preferences"] as! [String: Any]
              if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
@@ -357,7 +414,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     // MARK: Plaid Link setup with shared configuration from Info.plist
     func presentPlaidLinkWithSharedConfiguration() {
         let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(delegate: linkViewDelegate)
+        let linkViewController = PLKPlaidLinkViewController(delegate: linkViewDelegate as! PLKPlaidLinkViewDelegate)
         if (UI_USER_INTERFACE_IDIOM() == .pad) {
             linkViewController.modalPresentationStyle = .formSheet;
         }
@@ -369,7 +426,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .sandbox, product: .auth)
         linkConfiguration.clientName = "Link Demo"
         let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(configuration: linkConfiguration, delegate: linkViewDelegate)
+        let linkViewController = PLKPlaidLinkViewController(configuration: linkConfiguration, delegate: linkViewDelegate as! PLKPlaidLinkViewDelegate)
         if (UI_USER_INTERFACE_IDIOM() == .pad) {
             linkViewController.modalPresentationStyle = .formSheet;
         }
@@ -377,31 +434,5 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     }
     
-}
-
-
-
-//// Plaid
-extension MainViewController : PLKPlaidLinkViewDelegate
-{
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didSucceedWithPublicToken publicToken: String, metadata: [String : Any]?) {
-        dismiss(animated: true) {
-            NSLog("Successfully linked account!\npublicToken: \(publicToken)\nmetadata: \(metadata ?? [:])")
-            self.handleSuccessWithToken(publicToken, metadata: metadata)
-        }
-    }
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didExitWithError error: Error?, metadata: [String : Any]?) {
-        dismiss(animated: true) {
-            if let error = error {
-                NSLog("Failed to link account due to: \(error.localizedDescription)\nmetadata: \(metadata ?? [:])")
-            }
-            else {
-                NSLog("Plaid link exited with metadata: \(metadata ?? [:])")
-            }
-        }
-    }
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didHandleEvent event: String, metadata: [String : Any]?) {
-        NSLog("Link event: \(event)\nmetadata: \(metadata)")
-    }
 }
 

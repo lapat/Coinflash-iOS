@@ -8,6 +8,9 @@
 
 import Foundation
 import UIKit
+import Alamofire
+import SVProgressHUD
+import SwiftyJSON
 
 class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFieldDelegate{
     
@@ -17,6 +20,9 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     @IBOutlet weak var changeToInvestSlider: UISlider!
     @IBOutlet weak var changeToInvestSliderValueLabel: UILabel!
     @IBOutlet weak var capOnInvestmentTextField: UITextField!
+    
+    var tempChangeCapValue: Int! // Holds the current uptodate change cap value
+    var tempCapOnInvestmentValue: Int! // Hols the current cap on investment value
     
     override func viewDidLoad() {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -48,30 +54,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     override func viewDidDisappear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
-
-    @IBAction func didTapBackButton(for button: UIButton){
-        print("button tapped")
-        self.navigationController?.popViewController(animated: true)
-    }
     
     // Nav pop with swipe recognizer
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
-    }
-    
-    // Settings Properties
-    func loadGlobalSettings(){
-        if globalSettings.investHowOften == .monthly{
-            monthlyButton?.isSelected = true
-            weeklyButton?.isSelected = false
-        }else{
-            monthlyButton?.isSelected = false
-            weeklyButton?.isSelected = true
-        }
-        
-        self.changeToInvestSlider.value = globalSettings.percentOfChangeToInvest
-        self.changeToInvestSliderValueLabel.text = "\(Int(globalSettings.percentOfChangeToInvest))%"
-        self.capOnInvestmentTextField.text = "$\(globalSettings.capOnInvestment!)"
     }
     
     //Setting taps actions
@@ -102,7 +88,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     
     //Slider chnages
     @IBAction func changeToInvestSliderChanged(sender: UISlider){
-        globalSettings.percentOfChangeToInvest = sender.value
+        self.tempChangeCapValue = Int(sender.value)
         self.changeToInvestSliderValueLabel.text = "\(Int(sender.value))%"
     }
     
@@ -133,8 +119,11 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         capOnInvestmentTextField.resignFirstResponder()
         var temp = capOnInvestmentTextField.text!
         temp.remove(at: temp.startIndex)
+        self.tempCapOnInvestmentValue = Int(temp)
+        /*
         globalSettings.capOnInvestment = Int(temp)
         print(globalSettings.capOnInvestment)
+         */
     }
     
     @IBAction func didTapOnBackButton(){
@@ -150,5 +139,84 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             return 120
         }
         return UITableViewAutomaticDimension
+    }
+    
+    //MARK: - Global settings functions
+    // LOAD SAVE GLOBAL SETTINGS
+    func loadGlobalSettings(){
+        if globalSettings.investHowOften == .monthly{
+            monthlyButton?.isSelected = true
+            weeklyButton?.isSelected = false
+        }else{
+            monthlyButton?.isSelected = false
+            weeklyButton?.isSelected = true
+        }
+        
+        self.changeToInvestSlider.value = Float(globalSettings.percentOfChangeToInvest)
+        self.changeToInvestSliderValueLabel.text = "\(Int(globalSettings.percentOfChangeToInvest))%"
+        self.capOnInvestmentTextField.text = "$\(globalSettings.capOnInvestment!)"
+        
+        self.tempCapOnInvestmentValue = globalSettings.capOnInvestment
+        self.tempChangeCapValue = globalSettings.percentOfChangeToInvest
+    }
+    
+    // Saves global settings
+    @IBAction func saveGlobalSettings(){
+        self.requestToUpdateUserSettings()
+    }
+    
+    //MARK: - API REQUESTS
+    func requestToUpdateUserSettings(){
+        var investChange: Int!
+        if investChangeControl.isOn == true{
+            investChange = 1
+        }else{
+            investChange = 0
+        }
+        let howOften: Int!
+        if monthlyButton?.isSelected == true{
+            howOften = 3
+        }else{
+            howOften = 2
+        }
+        
+        let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,
+                                     "update_preferences": "true", "invest_change": investChange, "percent_to_invest": self.tempChangeCapValue,
+                                     "how_often": howOften, "cap": self.tempCapOnInvestmentValue, "user_set_primary_coinbase_account_id": "",
+                                     "user_set_primary_coinbase_btc_account_id":"", "User_set_primary_coinbase_eth_account_id":"",
+                                     "user_set_primary_coinflash_debit_wallet_id":""]
+        SVProgressHUD.show(withStatus: "Updating Info")
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        Alamofire.request("\(baseUrl)coinflashuser3/", method: HTTPMethod.post, parameters: parameter)
+            .validate()
+            .responseJSON { (response) in
+                switch response.result{
+                case .success(let value):
+                    let json = JSON(value)
+                    print(json)
+                    // dismiss the progress hud
+                    SVProgressHUD.dismiss()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                    if self.monthlyButton?.isSelected == true{
+                        globalSettings.investHowOften = .monthly
+                    }else{
+                        globalSettings.investHowOften = .weekly
+                    }
+                    if self.investChangeControl.isOn == true{
+                        globalSettings.investChange = true
+                    }else{
+                        globalSettings.investChange = false
+                    }
+                    
+                    globalSettings.percentOfChangeToInvest = self.tempChangeCapValue
+                    globalSettings.capOnInvestment = self.tempCapOnInvestmentValue
+                case .failure:
+                    print(response.error as Any)
+                    SVProgressHUD.dismiss()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                    self.loadGlobalSettings()
+                }
+        }
+        
     }
 }
