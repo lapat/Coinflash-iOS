@@ -36,13 +36,13 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     
     // trensation
     
-    var m_mobile_secret = "8dkkaiei20kdjkwoeo29ddkskalw82asD!"
-    var m_user_id = "15"
-    var m_access_token = "fcfba398652f4521aaa878f2305662"
+    //var m_mobile_secret = "8dkkaiei20kdjkwoeo29ddkskalw82asD!"
+    //var m_user_id = "15"
+    //var m_access_token = "fcfba398652f4521aaa878f2305662"
     
-   // var m_mobile_secret = user_mobile_secret!
-   // var m_user_id = user_id_mobile!
-   // var m_access_token = user_mobile_access_token!
+    var m_mobile_secret = user_mobile_secret!
+    var m_user_id = user_id_mobile!
+    var m_access_token = user_mobile_access_token!
     
     
     
