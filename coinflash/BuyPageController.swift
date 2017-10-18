@@ -245,7 +245,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                         if let dict = obj as? NSDictionary {
                            
                             
-                            var DateDate  = dict.value(forKey: "date") as! String
+                            //var DateDate  = dict.value(forKey: "date") as! String
                         }
                     }
                 }
