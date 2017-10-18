@@ -14,6 +14,7 @@ target 'coinflash' do
   pod 'ChartsRealm', '3.0.3'
   pod 'Plaid'
   pod 'SwiftyJSON'
+  pod 'Toast-Swift', '~> 2.0.0'
   use_frameworks!
   
   target 'coinflashTests' do
