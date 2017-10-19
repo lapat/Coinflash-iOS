@@ -54,10 +54,6 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
     
         self.showAnimate()
         self.requestCoinFlashFeatchwallet(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-        
-        // Set the labels
-        etherToBuyLabel.text = String(format: "xxx ETH Worth $%.2f",etherToBuyValueInDollars!)
-        btcToBuyLabel.text = String(format: "xxx BTC Worth $%.2f",btcToBuyValueInDollars!)
     }
     
     func tapped(gestureRecognizer: UITapGestureRecognizer) {
@@ -114,7 +110,6 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
         
         Alamofire.request("https://coinflashapp.com/coinflashtransactions3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             
-            
             let datatransation = response.result.value as! NSDictionary
             
             
@@ -126,7 +121,9 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
                 self.m_price_right_now_btc = datatransation.value(forKey: "price_right_now_btc") as! Double
             }
             SVProgressHUD.dismiss()
-            
+            // Set the labels
+            self.etherToBuyLabel.text = String(format: "%.6f ETH Worth $%.2f", self.etherToBuyValueInDollars/self.m_price_right_now_eth, self.etherToBuyValueInDollars!)
+            self.btcToBuyLabel.text = String(format: "%.6f BTC Worth $%.2f",self.btcToBuyValueInDollars/self.m_price_right_now_btc, self.btcToBuyValueInDollars!)
             
         }
         
