@@ -56,6 +56,11 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var addCoinbaseButton: UIButton!
     var plaidAccounts: [JSON]!
     
+    var m_mobile_secret = user_mobile_secret!
+    var m_user_id = user_id_mobile!
+    var m_access_token = user_mobile_access_token!
+    var plaid_public_token : String = ""
+    
     override func viewDidLoad() {
         
         let nc =  NotificationCenter.default
