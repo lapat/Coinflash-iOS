@@ -118,7 +118,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.CrypotEitherBitPieChart.legend.enabled = false
         self.CrypotEitherBitPieChart.holeRadiusPercent = 0
         self.CrypotEitherBitPieChart.transparentCircleColor = UIColor.clear
-
+        
         
         let type = ["ETH", "BIT"]
         let percentage = [20.0,80.0]
@@ -128,8 +128,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.requestCoinFlashFeatchwallet(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         self.requestCryptoRates(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         
-       // self.LoadCryptoGraphCurrentPriceHistery()
-    
+        // self.LoadCryptoGraphCurrentPriceHistery()
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         if isGraphOptionSelected == true{
@@ -186,7 +186,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.Cryptoprices = self.EitherCryptoprices
         
         setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
-        
+        self.unhideLabels()
         
     }
     @IBAction func changThemeToBitCoin(for button: UIButton){
@@ -210,7 +210,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.Cryptodates = self.BitcoinCryptodates
         self.Cryptoprices = self.BitcoinCryptoprices
         setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
-        
+        self.unhideLabels()
         
     }
     func setCryptoPieChart(dataPoints: [String], values: [Double]){
@@ -233,7 +233,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         pieChartDataSet.colors = colors
         
         
-      
+        
         
         
         
@@ -249,7 +249,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             let DataEntry = ChartDataEntry(x: Double(i),y:prices[i])
             pricesDates.append(DataEntry)
             
-           }
+        }
         let chartDataSet = LineChartDataSet(values: pricesDates, label: nil)
         chartDataSet.drawValuesEnabled = false
         chartDataSet.drawCircleHoleEnabled = false
@@ -289,32 +289,34 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
             "after" : DateToString
-            ]
+        ]
         SVProgressHUD.show()
         
         
         Alamofire.request("https://coinflashapp.com/coinflashprice/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-            self.BitcoinCryptodates.removeAll()
-            self.BitcoinCryptoprices.removeAll()
-            
-            self.EitherCryptodates.removeAll()
-            self.EitherCryptoprices.removeAll()
-            let count = 0
-            if let array = response.result.value as? NSDictionary {
-                if array == nil{
-                     self.showErrorToast(message: "Check you internet connection")
-                    return 
-                }
-                let error = array["error"]
-                if error != nil{
-                    
-                   self.showErrorToast(message: "Check you internet connection")
-                    return
-                }
+            switch response.result{
+            case .success(let value):
+                self.BitcoinCryptodates.removeAll()
+                self.BitcoinCryptoprices.removeAll()
                 
+                self.EitherCryptodates.removeAll()
+                self.EitherCryptoprices.removeAll()
+                let count = 0
+                if let array = response.result.value as? NSDictionary {
+                    if array == nil{
+                        self.showErrorToast(message: "Check you internet connection")
+                        return
+                    }
+                    let error = array["error"]
+                    if error != nil{
+                        
+                        self.showErrorToast(message: "Check you internet connection")
+                        return
+                    }
+                    
                     let DataResponseBTC = array["BTC"] as! NSArray
                     let DataResponseETH = array["ETH"] as! NSArray
-                for index in stride(from: (DataResponseBTC.count - 1), to: 0, by: -1){//(DataResponseBTC.count - 1)...0 {
+                    for index in stride(from: (DataResponseBTC.count - 1), to: 0, by: -1){//(DataResponseBTC.count - 1)...0 {
                         let DataDic = DataResponseBTC[index] as? NSDictionary
                         var Date = DataDic!["date"] as! String
                         Date = String(Date.characters.dropFirst(5))
@@ -323,7 +325,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                         self.BitcoinCryptoprices.append(price)
                         
                     }
-                for index in stride(from: (DataResponseETH.count - 1), to: 0, by: -1){//(DataResponseETH.count - 1)...0 {
+                    for index in stride(from: (DataResponseETH.count - 1), to: 0, by: -1){//(DataResponseETH.count - 1)...0 {
                         let DataDic = DataResponseETH[index] as? NSDictionary
                         var Date = DataDic!["date"] as! String
                         Date = String(Date.characters.dropFirst(5))
@@ -332,11 +334,16 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                         self.EitherCryptoprices.append(price)
                         
                     }
-            
+                    
+                }
+                self.changThemeToBitCoin(for: self.btcBtn!)
+                //self.changThemeToBitCoin(for: self.btcBtn!)
+                SVProgressHUD.dismiss()
+            case .failure:
+                print(response.error as Any)
+                SVProgressHUD.dismiss()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
-            self.changThemeToBitCoin(for: self.btcBtn!)
-            //self.changThemeToBitCoin(for: self.btcBtn!)
-            SVProgressHUD.dismiss()
         }
     }
     
@@ -352,79 +359,86 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         SVProgressHUD.show()
         
         Alamofire.request("https://coinflashapp.com/coinflashtransactions3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-            self.BitcoinTransation.removeAll()
-            self.EitherTransation.removeAll()
-            
-            
-            let datatransation = response.result.value as! NSDictionary
-            
-            
-            if datatransation["price_right_now_eth"] != nil{
-                self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_eth") as! Double
-            }
-            if datatransation["total_amount_spent_on_btc"] != nil{
-                self.m_total_amount_spent_on_btc = datatransation.value(forKey: "total_amount_spent_on_btc") as! Double
-            }
-            if datatransation["amount_btc_owned"] != nil{
-                self.m_amount_btc_owned = datatransation.value(forKey: "amount_btc_owned") as! Double
-            }
-            if datatransation["price_right_now_btc"] != nil{
-                self.m_price_right_now_btc = datatransation.value(forKey: "price_right_now_btc") as! Double
-            }
-            if datatransation["amount_eth_owned"] != nil{
-                self.m_amount_eth_owned = datatransation.value(forKey: "amount_eth_owned") as! Double
-            }
-            if datatransation["total_amount_spent_on_eth"] != nil{
-                self.m_total_amount_spent_on_eth = datatransation.value(forKey: "total_amount_spent_on_eth") as! Double
-            }
-            
-            let transations = datatransation.value(forKey: "coinflash_transactions") as? NSArray
-            if (transations != nil) {
-                for obj in transations! {
-                    if let dict = obj as? NSDictionary {
-                        var singleTransation = TCryptoInfo_global
-                        
-                        singleTransation?.TCryptoInfo_crypto  = dict.value(forKey: "coinbase_crypto_amount") as! String
-                        singleTransation?.TCryptoInfo_price  = dict.value(forKey: "coinbase_total_amount_spent") as! String
-                        singleTransation?.TCryptoInfo_Value  = dict.value(forKey: "coinbase_amount_spent_on_crypto") as! String
-                        singleTransation?.TCryptoInfo_Date  = dict.value(forKey: "coinbase_time_transaction_will_payout") as! String
-                        singleTransation?.TCryptoInfo_type  = dict.value(forKey: "crypto_type") as! String
-                        
-                        
-                        if singleTransation?.TCryptoInfo_Date   != nil{
-                            var date: String = singleTransation!.TCryptoInfo_Date
-                            var truncated = String(date.characters.dropFirst(5))
-                            truncated = String(truncated.characters.dropLast(10))
-                            singleTransation?.TCryptoInfo_Date = truncated
-                        }
-                        if singleTransation?.TCryptoInfo_type != nil{
-                            let cryptoType = singleTransation?.TCryptoInfo_type
+            switch response.result{
+            case .success(let value):
+                self.BitcoinTransation.removeAll()
+                self.EitherTransation.removeAll()
+                
+                
+                let datatransation = response.result.value as! NSDictionary
+                
+                
+                if datatransation["price_right_now_eth"] != nil{
+                    self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_eth") as! Double
+                }
+                if datatransation["total_amount_spent_on_btc"] != nil{
+                    self.m_total_amount_spent_on_btc = datatransation.value(forKey: "total_amount_spent_on_btc") as! Double
+                }
+                if datatransation["amount_btc_owned"] != nil{
+                    self.m_amount_btc_owned = datatransation.value(forKey: "amount_btc_owned") as! Double
+                }
+                if datatransation["price_right_now_btc"] != nil{
+                    self.m_price_right_now_btc = datatransation.value(forKey: "price_right_now_btc") as! Double
+                }
+                if datatransation["amount_eth_owned"] != nil{
+                    self.m_amount_eth_owned = datatransation.value(forKey: "amount_eth_owned") as! Double
+                }
+                if datatransation["total_amount_spent_on_eth"] != nil{
+                    self.m_total_amount_spent_on_eth = datatransation.value(forKey: "total_amount_spent_on_eth") as! Double
+                }
+                
+                let transations = datatransation.value(forKey: "coinflash_transactions") as? NSArray
+                if (transations != nil) {
+                    for obj in transations! {
+                        if let dict = obj as? NSDictionary {
+                            var singleTransation = TCryptoInfo_global
                             
-                            if(cryptoType == "1")
-                            {
-                                singleTransation?.TCryptoInfo_type = "BTC"
-                                self.BitcoinTotal = self.BitcoinTotal + Double(singleTransation!.TCryptoInfo_crypto)!
-                                self.BitcoinTotalPrice = self.BitcoinTotalPrice + Double(singleTransation!.TCryptoInfo_price)!
-                                self.BitcoinTransation.append(singleTransation!)
+                            singleTransation?.TCryptoInfo_crypto  = dict.value(forKey: "coinbase_crypto_amount") as! String
+                            singleTransation?.TCryptoInfo_price  = dict.value(forKey: "coinbase_total_amount_spent") as! String
+                            singleTransation?.TCryptoInfo_Value  = dict.value(forKey: "coinbase_amount_spent_on_crypto") as! String
+                            singleTransation?.TCryptoInfo_Date  = dict.value(forKey: "coinbase_time_transaction_will_payout") as! String
+                            singleTransation?.TCryptoInfo_type  = dict.value(forKey: "crypto_type") as! String
+                            
+                            
+                            if singleTransation?.TCryptoInfo_Date   != nil{
+                                var date: String = singleTransation!.TCryptoInfo_Date
+                                var truncated = String(date.characters.dropFirst(5))
+                                truncated = String(truncated.characters.dropLast(10))
+                                singleTransation?.TCryptoInfo_Date = truncated
                             }
-                            else
-                            {
-                                singleTransation?.TCryptoInfo_type = "ETH"
-                                self.EitherTotal = self.EitherTotal + Double(singleTransation!.TCryptoInfo_crypto)!
-                                self.EitherTotalPrice = self.EitherTotalPrice + Double(singleTransation!.TCryptoInfo_price)!
-                                self.EitherTransation.append(singleTransation!)
+                            if singleTransation?.TCryptoInfo_type != nil{
+                                let cryptoType = singleTransation?.TCryptoInfo_type
+                                
+                                if(cryptoType == "1")
+                                {
+                                    singleTransation?.TCryptoInfo_type = "BTC"
+                                    self.BitcoinTotal = self.BitcoinTotal + Double(singleTransation!.TCryptoInfo_crypto)!
+                                    self.BitcoinTotalPrice = self.BitcoinTotalPrice + Double(singleTransation!.TCryptoInfo_price)!
+                                    self.BitcoinTransation.append(singleTransation!)
+                                }
+                                else
+                                {
+                                    singleTransation?.TCryptoInfo_type = "ETH"
+                                    self.EitherTotal = self.EitherTotal + Double(singleTransation!.TCryptoInfo_crypto)!
+                                    self.EitherTotalPrice = self.EitherTotalPrice + Double(singleTransation!.TCryptoInfo_price)!
+                                    self.EitherTransation.append(singleTransation!)
+                                }
                             }
+                            
+                            
+                            
                         }
-                        
-                        
-                       
                     }
                 }
+                // Loading the data in the Table
+                self.changThemeToBitCoin(for: self.btcBtn!)
+                self.loadPieChart()
+                SVProgressHUD.dismiss()
+            case .failure:
+                print(response.error as Any)
+                SVProgressHUD.dismiss()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
-            // Loading the data in the Table
-            self.changThemeToBitCoin(for: self.btcBtn!)
-            self.loadPieChart()
-            SVProgressHUD.dismiss()
         }
     }
     @IBAction func showPopup(_ sender: AnyObject) {
@@ -434,7 +448,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         popOverVC.view.frame = self.view.frame
         self.view.addSubview(popOverVC.view)
         popOverVC.didMove(toParentViewController: self)
- 
+        
     }
     func ShowBuyPopUp(){
         let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BuyPopUp") as! PopUpViewBuyNowSelector
@@ -504,6 +518,15 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         }
         
     }
+    func unhideLabels(){
+        
+        PriceTypeLabel.isHidden = false
+        LabelCoin?.isHidden = false
+        LabelCurrency?.isHidden = false
+        LabelGroth?.isHidden = false
+        LabelType?.isHidden = false
+        
+    }
     func round(num: Double, to places: Int) -> Double {
         let p = log10(abs(num))
         let f = pow(10, p.rounded() - Double(places) + 1)
@@ -512,6 +535,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         return rnum
     }
     
-   
+    
     
 }
