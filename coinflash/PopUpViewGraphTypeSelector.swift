@@ -35,6 +35,23 @@ class PopUpViewGraphTypeSelector:UIViewController , UIGestureRecognizerDelegate{
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func Option1(_ sender: AnyObject) {
+        self.removeAnimate()
+        GraphOptionSelected = 1
+        isGraphOptionSelected = true
+    }
+    @IBAction func Option2(_ sender: AnyObject) {
+        self.removeAnimate()
+        GraphOptionSelected = 2
+        isGraphOptionSelected = true
+    }
+    @IBAction func Option3(_ sender: AnyObject) {
+        self.removeAnimate()
+        GraphOptionSelected = 3
+        isGraphOptionSelected = true
+    }
+    
+    
     @IBAction func closePopUp(_ sender: AnyObject) {
         self.removeAnimate()
         //self.view.removeFromSuperview()

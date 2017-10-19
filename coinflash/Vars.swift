@@ -19,6 +19,11 @@ var user_onboard_status: OnBoardStatus!
 
 var googleUser: GIDGoogleUser!
 
+var GraphOptionSelected : Int = 0
+var isGraphOptionSelected : Bool = false
+
+
+
 enum OnBoardStatus{
     case didNotAcceptTOC
     case agreedTOCNoPlaidOrCoinbase
