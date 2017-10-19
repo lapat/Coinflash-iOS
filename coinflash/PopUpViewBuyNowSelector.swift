@@ -90,17 +90,19 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
     
     func requestServerToBuy(mobile_secret: String, user_id_mobile: String, mobile_access_token: String, dollars: Double){
         let parameters = ["mobile_secret": mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": mobile_access_token,
-                          "dollar_amount": dollars] as [String : Any]
+                          "dollar_amount": dollars, "execute": true] as [String : Any]
         SVProgressHUD.show(withStatus: "Buying coins for you!")
         Alamofire.request("\(baseUrl)coinflashbuy3/", method: HTTPMethod.post, parameters: parameters)
             .validate()
             .responseJSON { (response) in
+                SVProgressHUD.dismiss()
                 switch response.result{
                 case .success:
                     print(response)
                     self.removeAnimate()
                 case .failure:
                     HelperFunctions.showToast(withString: "Error connecting to server. Please retry!", onViewController: self)
+                
                 }
         }
     }

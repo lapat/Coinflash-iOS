@@ -176,6 +176,10 @@
                         <viewLayoutGuide key="safeArea" id="7xg-sp-eq8"/>
                     </view>
                     <navigationItem key="navigationItem" id="J0P-8e-jfc"/>
+                    <connections>
+                        <outlet property="nameLabel" destination="ZL6-sK-41j" id="P5G-96-qbc"/>
+                        <outlet property="userImageView" destination="MbZ-jR-YmH" id="kaT-LE-Z6h"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mvb-JV-Ks8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1942,6 +1946,6 @@
         <image name="settingIcons" width="34" height="34"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YG8-qu-gkh"/>
+        <segue reference="pdj-mW-GPu"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -25,8 +25,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var addCoinbaseButton: UIButton!
     var plaidAccounts: [JSON]!
     
-    
-    
     override func viewDidLoad() {
         
         let nc =  NotificationCenter.default

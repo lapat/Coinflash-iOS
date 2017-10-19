@@ -45,7 +45,6 @@ struct GlobalSettings{
     var hasBitcoinWallet: Bool!
     var hasEtherWaleet: Bool!
     var hasPaymentMethod: Bool!
-    
     init() {
         investHowOften = .monthly
         investChange = true

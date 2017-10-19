@@ -15,6 +15,7 @@ target 'coinflash' do
   pod 'Plaid'
   pod 'SwiftyJSON'
   pod 'Toast-Swift', '~> 2.0.0'
+  pod 'SDWebImage'
   use_frameworks!
   
   target 'coinflashTests' do
