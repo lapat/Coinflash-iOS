@@ -61,7 +61,7 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
     }
     @IBAction func ButtonTouch(_ sender: Any) {
         print("Stop")
-        removeAnimate()
+        self.requestServerToBuy(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, dollars: dollars)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -86,17 +86,25 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
     func removeAnimate()
     {
         self.presentingViewController?.dismiss(animated: true, completion: nil)
-        /*
-         UIView.animate(withDuration: 0.25, animations: {
-         self.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-         self.view.alpha = 0.0;
-         }, completion:{(finished : Bool)  in
-         if (finished)
-         {
-         }
-         });
-         */
     }
+    
+    func requestServerToBuy(mobile_secret: String, user_id_mobile: String, mobile_access_token: String, dollars: Double){
+        let parameters = ["mobile_secret": mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": mobile_access_token,
+                          "dollar_amount": dollars] as [String : Any]
+        SVProgressHUD.show(withStatus: "Buying coins for you!")
+        Alamofire.request("\(baseUrl)coinflashbuy3/", method: HTTPMethod.post, parameters: parameters)
+            .validate()
+            .responseJSON { (response) in
+                switch response.result{
+                case .success:
+                    print(response)
+                    self.removeAnimate()
+                case .failure:
+                    HelperFunctions.showToast(withString: "Error connecting to server. Please retry!", onViewController: self)
+                }
+        }
+    }
+    
     func requestCoinFlashFeatchwallet(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -126,10 +134,9 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
             self.btcToBuyLabel.text = String(format: "%.6f BTC Worth $%.2f",self.btcToBuyValueInDollars/self.m_price_right_now_btc, self.btcToBuyValueInDollars!)
             
         }
-        
-        
     }
-    
+        
+        
     
     
     

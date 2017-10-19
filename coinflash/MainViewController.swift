@@ -460,17 +460,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
     }
     
-    func requestServerToBuy(mobile_secret: String, user_id_mobile: String, mobile_access_token: String, dollars: Double){
-        let parameters = ["mobile_secret": mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": mobile_access_token,
-                          "dollar_amount": dollars] as [String : Any]
-        SVProgressHUD.show(withStatus: "")
-        Alamofire.request("\(baseUrl)coinflashbuy3/", method: HTTPMethod.post, parameters: parameters)
-            .validate()
-            .responseJSON { (response) in
-                print(response)
-        }
-    }
-    
     ///////////////////////////////////// PLAID //////////////////////////////////////
     
     func handleSuccessWithToken(_ publicToken: String, metadata: [String : Any]?) {
