@@ -40,6 +40,7 @@ extension MainViewController : PLKPlaidLinkViewDelegate
     }
 }
 
+// MainView Class
 class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var LabelCurrency: UILabel?
     @IBOutlet weak var LabelGroth: UILabel?
@@ -68,23 +69,30 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var m_invest_on : Double = 0.0
     var m_btc_percentage: Double = 0.0
     
+    var coinflashUser3ResponseObject: JSON!
+    var cctransaction2ResponseObject: JSON!
+    
     
     @IBAction func InvestmentRateSlider(_ sender: UISlider) {
         let rate: Float = SliderinvestmentRateDecider!.value
+        
+        let dollarsToInvest = m_spare_change_accrued * m_spare_change_accrued_percent_to_invest/100
+        
+        
         self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", rate) + "%"
         self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - rate)) + "%"
         
         let btcColor = UIColor(red: 8/255.0, green: 79/255.0, blue: 159/255.0, alpha: 1.0)
         let ethColor = UIColor(red: 110/255.0, green: 176/255.0, blue: 56/255.0, alpha: 1.0)
         let color = UIColor.blend(color1: btcColor, intensity1: (CGFloat(1.0 - rate/100.0)), color2: ethColor, intensity2: CGFloat(rate/100.0))
-        print("Rate: \(rate) && btcIntensity : \(1.0 - rate/100.0) && intensity2: \(rate/100.0)")
+        //print("Rate: \(rate) && btcIntensity : \(1.0 - rate/100.0) && intensity2: \(rate/100.0)")
         sender.thumbTintColor = color
         sender.minimumTrackTintColor = color
         sender.maximumTrackTintColor = color
         
         // Set the ether and bitcoin rate in the top label with respect to the percentage
-        let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(rate/100.0)
-        let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float((100 - rate)/100.0)
+        let dollarToInvestInBTC = Float(dollarsToInvest)*Float(rate/100.0)
+        let dollarToInvestETH = Float(dollarsToInvest)*Float((100 - rate)/100.0)
         self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
        
         /// Set the mutable attributed string for the top label showing dollars
@@ -106,7 +114,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         let Rate = SliderinvestmentRateDecider?.value
         UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: String(describing: Rate))
         //print("element Released")
-        
     }
     
     @IBAction func TestPlaid(_ sender: Any) {
@@ -133,7 +140,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.default.menuDismissOnPush = true
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuParallaxStrength = 3
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
     }
     
@@ -148,8 +159,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         
         self.LabelEtherInvestmentRate?.text = String(Int(etherRate)) + "%"
         self.LabelBitcoinInvestmentRate?.text = String(Int(bitrate)) + "%"
-        print()
-        print(bitrate)
         self.SliderinvestmentRateDecider?.value = Float(bitrate)
         self.InvestmentRateSlider(self.SliderinvestmentRateDecider!)
         
@@ -192,17 +201,17 @@ class MainViewController: UIViewController, UITableViewDataSource{
         Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers)
             .responseJSON { response in
             let data = response.result.value as! [String: Any]
+                
              if data["cc_transactions_array"] == nil
              {
                 SVProgressHUD.dismiss()
                 return
              }
-            print(response)
              let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
              let user_preferences = data["user_preferences"] as! [String: Any]
              if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
                 self.m_spare_change_accrued_percent_to_invest = Double(user_preferences["spare_change_accrued_percent_to_invest"] as! String)!
-                self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
+                //self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
              }
              if user_preferences["percent_to_invest"] != nil{
                self.m_percent_to_invest = Double(user_preferences["percent_to_invest"] as! String)!
@@ -354,12 +363,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     func showConfirmationDialogBox(title : String , Message : String)
     {
-        
         let alert = UIAlertController(title: title, message: Message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        
     }
+    
     func UpdateSlideVaueToServer(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,SliderValue :String){
         
         let headers: HTTPHeaders = [
@@ -378,7 +386,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         
             let data = response.result.value as? NSDictionary
             let SliderUpdated = data?.value(forKey: "success")
-            print(response)
             //let data = response.result.value as! [String: String]
             if SliderUpdated != nil
             {
@@ -387,8 +394,73 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
     }
     
-    
+    func requestCoinflashUser3Values(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+        ]
+        SVProgressHUD.show()
         
+        Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            let json = JSON(response.result.value)
+            self.coinflashUser3ResponseObject = json[0]
+            SVProgressHUD.dismiss()
+        }
+    }
+    
+    //MARK: - Buy Now implementation
+    @IBAction func didTapOnBuyNowButton(){
+        /// checking if there is a coinbase account with allow_buy = true
+        var allow_buy = false
+        if coinflashUser3ResponseObject["coinbase_accounts"].arrayValue != nil{
+            let accounts = coinflashUser3ResponseObject["coinbase_accounts"]
+            for (index,subJson):(String, JSON) in accounts {
+                if subJson["allow_buy"].bool == true{
+                    allow_buy = true
+                }
+            }
+        }else{
+            
+        }
+        
+        // if allow buy true then else show error
+        if allow_buy == true{
+            //HelperFunctions.showToast(withString: "Buying is allowed", onViewController: self)
+            let dollars = m_spare_change_accrued
+            if dollars < 3.5 {
+                HelperFunctions.showToast(withString: "You must have at least $3.5 to make a purchase", onViewController: self)
+            }else{
+                //self.requestServerToBuy(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, dollars: dollars)
+                let popUpView: PopUpViewBuyNowSelector = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BuyPopUpView") as! PopUpViewBuyNowSelector
+                // put the vars for showing the view
+                popUpView.dollars = m_spare_change_accrued
+                popUpView.btcToBuyValueInDollars = m_btc_to_invest
+                popUpView.etherToBuyValueInDollars = m_spare_change_accrued - m_btc_to_invest
+                
+                // Setting the transition settings
+                popUpView.modalPresentationStyle = .overCurrentContext
+                popUpView.modalTransitionStyle = .crossDissolve
+                self.present(popUpView, animated: true, completion: nil)
+            }
+        }else{
+            HelperFunctions.showToast(withString: "Configure your coinbase account in settings to buy items", onViewController: self)
+        }
+    }
+    
+    func requestServerToBuy(mobile_secret: String, user_id_mobile: String, mobile_access_token: String, dollars: Double){
+        let parameters = ["mobile_secret": mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": mobile_access_token,
+                          "dollar_amount": dollars] as [String : Any]
+        SVProgressHUD.show(withStatus: "")
+        Alamofire.request("\(baseUrl)coinflashbuy3/", method: HTTPMethod.post, parameters: parameters)
+            .validate()
+            .responseJSON { (response) in
+                print(response)
+        }
+    }
     
     ///////////////////////////////////// PLAID //////////////////////////////////////
     
@@ -435,8 +507,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
             linkViewController.modalPresentationStyle = .formSheet;
         }
         present(linkViewController, animated: true)
-    
     }
-    
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class HelperFunctions: NSObject {
 
@@ -124,6 +125,13 @@ class HelperFunctions: NSObject {
         plaidInfoObject.loggedIn = UserDefaults.standard.value(forKey: "bank_is_locked_in") as? Bool
         
     }
+    
+    
+    //MARK: - Toast
+    static func showToast(withString string: String, onViewController viewController: UIViewController){
+        
+        viewController.view.makeToast(string, duration: 3, position: .center)
+    }
 }
 
 extension UIColor {
@@ -142,3 +150,4 @@ extension UIColor {
         return UIColor(red: l1*r1 + l2*r2, green: l1*g1 + l2*g2, blue: l1*b1 + l2*b2, alpha: l1*a1 + l2*a2)
     }
 }
+
