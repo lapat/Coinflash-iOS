@@ -730,6 +730,7 @@
 			baseConfigurationReference = 2DD22795A95AC01C1CA2B39C /* Pods-coinflash.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_WARNINGS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DA8CC8669S;
@@ -737,6 +738,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods",
 				);
+				IBSC_ERRORS = NO;
+				IBSC_NOTICES = NO;
+				IBSC_WARNINGS = NO;
 				INFOPLIST_FILE = coinflash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tallal.coinflash;
@@ -753,6 +757,7 @@
 			baseConfigurationReference = 50405860F458963D2234B2F3 /* Pods-coinflash.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_WARNINGS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DA8CC8669S;
@@ -760,6 +765,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods",
 				);
+				IBSC_ERRORS = NO;
+				IBSC_NOTICES = NO;
+				IBSC_WARNINGS = NO;
 				INFOPLIST_FILE = coinflash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tallal.coinflash;

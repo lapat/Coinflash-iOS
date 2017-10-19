@@ -12,6 +12,7 @@ import SideMenu
 import Alamofire
 import SVProgressHUD
 import LinkKit
+import SwiftyJSON
 
 //// Plaid
 extension MainViewController : PLKPlaidLinkViewDelegate
@@ -39,6 +40,7 @@ extension MainViewController : PLKPlaidLinkViewDelegate
     }
 }
 
+// MainView Class
 class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var LabelCurrency: UILabel?
     @IBOutlet weak var LabelGroth: UILabel?
@@ -65,24 +67,33 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var m_spare_change_accrued : Double = 0.0
     var m_btc_to_invest : Double = 0.0
     var m_invest_on : Double = 0.0
+    var m_btc_percentage: Double = 0.0
+    
+    var coinflashUser3ResponseObject: JSON!
+    var cctransaction2ResponseObject: JSON!
     
     
     @IBAction func InvestmentRateSlider(_ sender: UISlider) {
         let rate: Float = SliderinvestmentRateDecider!.value
-        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", rate) + "%"
-        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - rate)) + "%"
+        
+        let dollarsToInvest = m_spare_change_accrued_percent_to_invest
+        let btcRate = 100 - rate
+        let ethRate = rate
+        
+        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", btcRate) + "%"
+        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (ethRate)) + "%"
         
         let btcColor = UIColor(red: 8/255.0, green: 79/255.0, blue: 159/255.0, alpha: 1.0)
         let ethColor = UIColor(red: 110/255.0, green: 176/255.0, blue: 56/255.0, alpha: 1.0)
         let color = UIColor.blend(color1: btcColor, intensity1: (CGFloat(1.0 - rate/100.0)), color2: ethColor, intensity2: CGFloat(rate/100.0))
-        print("Rate: \(rate) && btcIntensity : \(1.0 - rate/100.0) && intensity2: \(rate/100.0)")
+        //print("Rate: \(rate) && btcIntensity : \(1.0 - rate/100.0) && intensity2: \(rate/100.0)")
         sender.thumbTintColor = color
         sender.minimumTrackTintColor = color
         sender.maximumTrackTintColor = color
         
         // Set the ether and bitcoin rate in the top label with respect to the percentage
-        let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(rate/100.0)
-        let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float((100 - rate)/100.0)
+        let dollarToInvestInBTC = Float(dollarsToInvest)*Float(btcRate/100.0)
+        let dollarToInvestETH = Float(dollarsToInvest)*Float((ethRate)/100.0)
         self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
        
         /// Set the mutable attributed string for the top label showing dollars
@@ -102,9 +113,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     @IBAction func OnInvestmentRateSliderRelease(_ sender: Any) {
         let Rate = SliderinvestmentRateDecider?.value
-        UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: String(describing: Rate))
+        UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: Double(Rate!))
         //print("element Released")
-        
     }
     
     @IBAction func TestPlaid(_ sender: Any) {
@@ -131,33 +141,34 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.default.menuDismissOnPush = true
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuParallaxStrength = 3
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
     }
     
     func updateViewInvestmentInformation(){
         self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% of Your Change Will Be Invested Every Monday"
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
-        
+        var bitrate = Double(0)
         //var RationBitCoint =
-        
-        var bitrate = ((m_btc_to_invest / m_spare_change_accrued ) * 100)
-        bitrate.round(.up)
+       
+        bitrate = m_btc_percentage
         let etherRate = 100 - bitrate
         
         self.LabelEtherInvestmentRate?.text = String(Int(etherRate)) + "%"
         self.LabelBitcoinInvestmentRate?.text = String(Int(bitrate)) + "%"
-        
-        self.SliderinvestmentRateDecider?.value = Float(etherRate)
+        self.SliderinvestmentRateDecider?.value = Float(bitrate)
         self.InvestmentRateSlider(self.SliderinvestmentRateDecider!)
         
         // Set the ether and bitcoin rate in the top label with respect to the percentage
         //let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(etherRate/100.0)
         //let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float(bitrate/100.0)
         //self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
-        
-        
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! ccTransationCellView
@@ -188,19 +199,24 @@ class MainViewController: UIViewController, UITableViewDataSource{
         ]
         SVProgressHUD.show()
         
-        Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-            let data = response.result.value as! [String: Any]
+        Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers)
+            .responseJSON { response in
+            
+                if response.result.value == nil {
+                    HelperFunctions.showToast(withString: "Check Your Internet Connection", onViewController: self)
+                    SVProgressHUD.dismiss()
+                }
+             let data = response.result.value as! [String: Any]
              if data["cc_transactions_array"] == nil
              {
                 SVProgressHUD.dismiss()
                 return
              }
-            
              let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
              let user_preferences = data["user_preferences"] as! [String: Any]
              if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
                 self.m_spare_change_accrued_percent_to_invest = Double(user_preferences["spare_change_accrued_percent_to_invest"] as! String)!
-                self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
+                //self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
              }
              if user_preferences["percent_to_invest"] != nil{
                self.m_percent_to_invest = Double(user_preferences["percent_to_invest"] as! String)!
@@ -220,36 +236,41 @@ class MainViewController: UIViewController, UITableViewDataSource{
              if user_preferences["invest_on"] != nil{
                  self.m_invest_on = Double(user_preferences["invest_on"] as! String)!
              }
-        
+            
+            if user_preferences["btc_percentage"] != nil{
+                self.m_btc_percentage = user_preferences["btc_percentage"] as! Double
+            }
         
         
              self.cctransations.removeAll()
         /// Bound error occuring check
-        
-        for index in 0...TransationArray.count - 1 {
-            let transation = TransationArray[index]
-             var singleTransation = cctransaction_global
-            if transation["cctransaction_name"] != nil{
-                singleTransation?.cctransaction_name = transation["cctransaction_name"] as! String
+            if TransationArray.count > 0{
+                for index in 0...TransationArray.count - 1 {
+                    let transation = TransationArray[index]
+                    var singleTransation = cctransaction_global
+                    if transation["cctransaction_name"] != nil{
+                        singleTransation?.cctransaction_name = transation["cctransaction_name"] as! String
+                    }
+                    if transation["cctransaction_date"] != nil{
+                        var date: String = transation["cctransaction_date"] as! String
+                        let truncated = String(date.characters.dropFirst(5))
+                        singleTransation?.cctransaction_date = truncated
+                    }
+                    if transation["cctransaction_amount"] != nil{
+                        singleTransation?.cctransaction_amount = transation["cctransaction_amount"] as! String!
+                    }
+                    if transation["coinbase_transaction_id"] != nil{
+                        singleTransation?.cctransaction_coinbase_transaction_id = transation["coinbase_transaction_id"] as! String
+                        singleTransation?.cctransaction_invested = "invested"
+                    }
+                    else{
+                        singleTransation?.cctransaction_invested = "Not invested"
+                    }
+                    self.cctransations.append(singleTransation)
+                    
+                }
             }
-            if transation["cctransaction_date"] != nil{
-                var date: String = transation["cctransaction_date"] as! String
-                let truncated = String(date.characters.dropFirst(5))
-                singleTransation?.cctransaction_date = truncated
-            }
-            if transation["cctransaction_amount"] != nil{
-                singleTransation?.cctransaction_amount = transation["cctransaction_amount"] as! String!
-            }
-            if transation["coinbase_transaction_id"] != nil{
-                singleTransation?.cctransaction_coinbase_transaction_id = transation["coinbase_transaction_id"] as! String
-                singleTransation?.cctransaction_invested = "invested"
-            }
-            else{
-                singleTransation?.cctransaction_invested = "Not invested"
-            }
-            self.cctransations.append(singleTransation)
-            
-        }
+
             self.ccTransationTableView?.reloadData()
             self.updateViewInvestmentInformation()
             SVProgressHUD.dismiss()
@@ -347,13 +368,12 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     func showConfirmationDialogBox(title : String , Message : String)
     {
-        
         let alert = UIAlertController(title: title, message: Message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        
     }
-    func UpdateSlideVaueToServer(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,SliderValue :String){
+    
+    func UpdateSlideVaueToServer(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,SliderValue :Double){
         
         let headers: HTTPHeaders = [
         "Content-Type": "application/x-www-form-urlencoded"
@@ -362,29 +382,83 @@ class MainViewController: UIViewController, UITableViewDataSource{
         "mobile_secret" : mobile_secret,
         "user_id_mobile" : user_id_mobile,
         "mobile_access_token" : mobile_access_token,
-        "slider_value" : SliderValue
+        "slider_value" : "\(SliderValue)"
         
+        ]
+        SVProgressHUD.show(withStatus: "Updating Values")
+        
+        Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+        
+            let data = response.result.value as? NSDictionary
+            let SliderUpdated = data?.value(forKey: "success")
+            //let data = response.result.value as! [String: String]
+            if SliderUpdated != nil
+            {
+                // Update the global vars with respect to the change:
+                self.m_btc_percentage = SliderValue
+            }
+            SVProgressHUD.dismiss()
+        }
+    }
+    
+    func requestCoinflashUser3Values(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
         ]
         SVProgressHUD.show()
         
         Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-        
-        let data = response.result.value as? NSDictionary
-        
-        let SliderUpdated = data?.value(forKey: "success")
-        
-        //let data = response.result.value as! [String: String]
-        if SliderUpdated != nil
-        {
-        SVProgressHUD.dismiss()
-        }
-        
-        
-        
+            let json = JSON(response.result.value)
+            self.coinflashUser3ResponseObject = json[0]
+            SVProgressHUD.dismiss()
         }
     }
+    
+    //MARK: - Buy Now implementation
+    @IBAction func didTapOnBuyNowButton(){
+        /// checking if there is a coinbase account with allow_buy = true
+        var allow_buy = false
+        if coinflashUser3ResponseObject["coinbase_accounts"].arrayValue != nil{
+            let accounts = coinflashUser3ResponseObject["coinbase_accounts"]
+            for (index,subJson):(String, JSON) in accounts {
+                if subJson["allow_buy"].bool == true{
+                    allow_buy = true
+                }
+            }
+        }else{
+            
+        }
         
-        
+        // if allow buy true then else show error
+        if allow_buy == true{
+            //HelperFunctions.showToast(withString: "Buying is allowed", onViewController: self)
+            let dollars = m_spare_change_accrued_percent_to_invest
+            let dollarsToBuyBtc = m_spare_change_accrued_percent_to_invest * m_btc_percentage/100
+            let dollarsToBuyEther = m_spare_change_accrued_percent_to_invest - dollarsToBuyBtc
+            if dollarsToBuyEther < 3 || dollarsToBuyBtc < 3{
+                HelperFunctions.showToast(withString: "Minimum amount required to buy any cryptocurrency is $3. Kindly review!", onViewController: self)
+            }else{
+                //self.requestServerToBuy(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, dollars: dollars)
+                let popUpView: PopUpViewBuyNowSelector = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BuyPopUpView") as! PopUpViewBuyNowSelector
+                // put the vars for showing the view
+                popUpView.dollars = dollars
+                popUpView.btcToBuyValueInDollars = dollarsToBuyBtc
+                popUpView.etherToBuyValueInDollars = dollarsToBuyEther
+                
+                // Setting the transition settings
+                popUpView.modalPresentationStyle = .overCurrentContext
+                popUpView.modalTransitionStyle = .crossDissolve
+                self.present(popUpView, animated: true, completion: nil)
+            }
+        }else{
+            HelperFunctions.showToast(withString: "Configure your coinbase account in settings to buy items", onViewController: self)
+        }
+    }
     
     ///////////////////////////////////// PLAID //////////////////////////////////////
     
@@ -431,8 +505,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
             linkViewController.modalPresentationStyle = .formSheet;
         }
         present(linkViewController, animated: true)
-    
     }
-    
 }
 
