@@ -77,10 +77,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
         let rate: Float = SliderinvestmentRateDecider!.value
         
         let dollarsToInvest = m_spare_change_accrued * m_spare_change_accrued_percent_to_invest/100
+        let btcRate = 100 - rate
+        let ethRate = rate
         
-        
-        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", rate) + "%"
-        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (100 - rate)) + "%"
+        self.LabelBitcoinInvestmentRate?.text = String(format:"%.0f", 100 - rate) + "%"
+        self.LabelEtherInvestmentRate?.text = String(format:"%.0f", (rate)) + "%"
         
         let btcColor = UIColor(red: 8/255.0, green: 79/255.0, blue: 159/255.0, alpha: 1.0)
         let ethColor = UIColor(red: 110/255.0, green: 176/255.0, blue: 56/255.0, alpha: 1.0)
@@ -91,8 +92,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
         sender.maximumTrackTintColor = color
         
         // Set the ether and bitcoin rate in the top label with respect to the percentage
-        let dollarToInvestInBTC = Float(dollarsToInvest)*Float(rate/100.0)
-        let dollarToInvestETH = Float(dollarsToInvest)*Float((100 - rate)/100.0)
+        let dollarToInvestInBTC = Float(dollarsToInvest)*Float(btcRate/100.0)
+        let dollarToInvestETH = Float(dollarsToInvest)*Float((ethRate)/100.0)
         self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
        
         /// Set the mutable attributed string for the top label showing dollars
