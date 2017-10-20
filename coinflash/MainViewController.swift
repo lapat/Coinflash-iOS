@@ -307,6 +307,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
             case .success(let value):
                 let json = JSON(response.result.value)
                 self.coinflashUser3ResponseObject = json[0]
+                globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
                 SVProgressHUD.dismiss()
             case .failure:
                 print(response.error as Any)

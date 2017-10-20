@@ -47,9 +47,6 @@ extension AccountSettingsVC : PLKPlaidLinkViewDelegate
     }
 }
 
-
-
-
 class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var bankTable: UITableView!
     @IBOutlet weak var coinbaseLinkedLabel: UILabel!
@@ -138,6 +135,11 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         CoinbaseOAuth.startAuthentication(withClientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", scope: "wallet:buys:create", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: nil)
     }
     
+    //MARK: - PickerView For Coinflash Account
+    func didTapOnCoinbaseCreditCard(sender: Any){
+        
+    }
+    
     // MARK: - API
     func requestCoinbaseLinkAPIRequest(){
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,
@@ -165,7 +167,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         }
     }
     
-    //MARK: - parse the coinflashuser
     func getCoinFlashUserInfo(){
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token]
         SVProgressHUD.show(withStatus: "Loading Account info")
@@ -191,6 +192,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 }
         }
     }
+    
     @IBAction func AddAccount(_ sender: Any) {
         if plaidInfoObject.loggedIn == true{
             let alert = UIAlertController(title: "Bank Account Link", message: "Already Logged In Do You want to deLink ?", preferredStyle: UIAlertControllerStyle.alert)
