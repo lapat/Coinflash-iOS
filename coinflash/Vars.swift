@@ -110,6 +110,7 @@ struct CoinbaseInfo{
         loggedIn = false
     }
 }
+
 var coinbaseInfoObject: CoinbaseInfo = CoinbaseInfo()
 
 

@@ -121,7 +121,6 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
             
             let datatransation = response.result.value as! NSDictionary
             
-            
             if datatransation["price_right_now_eth"] != nil{
                 self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_eth") as! Double
             }
@@ -136,10 +135,4 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
             
         }
     }
-        
-        
-    
-    
-    
-    
 }
