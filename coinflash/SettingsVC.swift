@@ -433,7 +433,6 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             self.ethPrimaryWalletAccountID = ethWalletAccounts[row]["id"].string
             self.ethWalletLabel.text = ethWalletAccounts[row]["name"].string
         }
-        
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

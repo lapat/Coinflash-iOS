@@ -434,7 +434,7 @@
                                 <rect key="frame" x="343" y="28" width="24" height="24"/>
                                 <state key="normal" image="settingIconn"/>
                                 <connections>
-                                    <segue destination="xam-tU-CdB" kind="show" id="tn7-CS-QaY"/>
+                                    <segue destination="xam-tU-CdB" kind="show" identifier="generalSettingsSegue" id="tn7-CS-QaY"/>
                                 </connections>
                             </button>
                         </subviews>

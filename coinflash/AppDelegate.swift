@@ -10,6 +10,8 @@ import UIKit
 import SideMenu
 import coinbase_official
 import LinkKit
+import SVProgressHUD
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -35,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #else
             setupPlaidLinkWithSharedConfiguration()
         #endif
+        
+        SVProgressHUD.setDefaultMaskType(.clear)
         
        return true
     }

@@ -93,7 +93,6 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
                           "dollar_amount": dollars, "execute": true] as [String : Any]
         SVProgressHUD.show(withStatus: "Buying coins for you!")
         Alamofire.request("\(baseUrl)coinflashbuy3/", method: HTTPMethod.post, parameters: parameters)
-            .validate()
             .responseJSON { (response) in
                 SVProgressHUD.dismiss()
                 switch response.result{
