@@ -53,6 +53,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var addCoinbaseButton: UIButton!
     var plaidAccounts: [JSON]!
     
+    @IBOutlet weak var DlinkCoinBase: UIButton!
     var m_mobile_secret = user_mobile_secret!
     var m_user_id = user_id_mobile!
     var m_access_token = user_mobile_access_token!
@@ -68,9 +69,11 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         if coinbaseInfoObject.loggedIn == true{
             coinbaseLinkedLabel.text = "Coinbase Linked"
             self.addCoinbaseButton.isHidden = true
+            self.DlinkCoinBase.isHidden = false
         }else{
             coinbaseLinkedLabel.text = "Coinbase Not Linked"
             self.addCoinbaseButton.isHidden = false
+            self.DlinkCoinBase.isHidden = true
         }
     }
     
@@ -78,6 +81,11 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         self.getCoinFlashUserInfo()
     }
     
+    @IBAction func DlinkCoinbaseAction(_ sender: Any) {
+        
+        
+        self.DlinkCoinbase(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+    }
     func viewDidEnterForground(notificaiton: NSNotification){
         if (UIApplication.shared.delegate as! AppDelegate).processingBacklink == true{
             SVProgressHUD.show()
@@ -87,19 +95,23 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 UIApplication.shared.endIgnoringInteractionEvents()
                 if coinbaseInfoObject.loggedIn == true{
                     self.coinbaseLinkedLabel.text = "Coinbase Linked"
+                    self.DlinkCoinBase.isHidden = false
                     self.requestCoinbaseLinkAPIRequest()
                 }else{
                     self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
-                    self.addCoinbaseButton.isHidden = false
+                    self.addCoinbaseButton.isHidden = true
+                    self.DlinkCoinBase.isHidden = true
                 }
                 (UIApplication.shared.delegate as! AppDelegate).processingBacklink = false
             })
         }else{
             if coinbaseInfoObject.loggedIn == true{
                 coinbaseLinkedLabel.text = "Coinbase Linked"
+                self.DlinkCoinBase.isHidden = false
                 self.requestCoinbaseLinkAPIRequest()
             }else{
                 coinbaseLinkedLabel.text = "Coinbase Not Linked"
+                self.DlinkCoinBase.isHidden = true
                 self.addCoinbaseButton.isHidden = false
             }
         }
@@ -305,6 +317,54 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             
         }
     }
+    
+    
+    func DlinkCoinbase(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+            "revoke_coinbase_token" : "true"
+            
+        ]
+        SVProgressHUD.show()
+        
+        Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            switch response.result{
+            case .success(let value):
+            let data = response.result.value as? NSDictionary
+            
+            let DR = data?.value(forKey: "coinbase_authorization_success")
+            if DR != nil
+            {
+                
+                SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("CoinBase Link", message: " Dlinked")
+                
+                self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
+                self.addCoinbaseButton.isHidden = false
+                
+            }
+            else
+            {
+                SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("CoinBase Link", message: "DeLinking Fail : Retry")
+                
+            }
+            
+            SVProgressHUD.dismiss()
+            case .failure:
+                print(response.error as Any)
+                SVProgressHUD.dismiss()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+        }
+    }
+    
+    
     func DlinkPlaid(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -319,28 +379,34 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         SVProgressHUD.show()
         
         Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-            
-            let data = response.result.value as? NSDictionary
-            
-            let DR = data?.value(forKey: "disconnect_returned")
-            if DR != nil
-            {
+            switch response.result{
+            case .success:
+                let data = response.result.value as? NSDictionary
+                
+                let DR = data?.value(forKey: "disconnect_returned")
+                if DR != nil
+                {
+                    
+                    SVProgressHUD.dismiss()
+                    self.presentAlertViewWithTitle("Bank Account Link", message: "Account Dlinked")
+                    HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
+                    
+                    
+                    
+                }
+                else
+                {
+                    SVProgressHUD.dismiss()
+                    self.presentAlertViewWithTitle("Bank Account Link", message: "DeLinking Fail : Retry")
+                    
+                }
                 
                 SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Dlinked")
-                HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
-                
-                
-                
-            }
-            else
-            {
+            case .failure:
+                print(response.error as Any)
                 SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("Bank Account Link", message: "DeLinking Fail : Retry")
-                
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
-            
-            SVProgressHUD.dismiss()
         }
     }
     
