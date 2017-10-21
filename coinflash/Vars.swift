@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 // General user apis
 var baseUrl = "https://coinflashapp.com/"
@@ -18,6 +19,7 @@ var user_isLoggedIn: Bool!
 var user_onboard_status: OnBoardStatus!
 
 var googleUser: GIDGoogleUser!
+var globalCoinflashUser3ResponseValue: JSON!
 
 var GraphOptionSelected : Int = 0
 var isGraphOptionSelected : Bool = false
@@ -45,7 +47,6 @@ struct GlobalSettings{
     var hasBitcoinWallet: Bool!
     var hasEtherWaleet: Bool!
     var hasPaymentMethod: Bool!
-    
     init() {
         investHowOften = .monthly
         investChange = true
@@ -109,6 +110,7 @@ struct CoinbaseInfo{
         loggedIn = false
     }
 }
+
 var coinbaseInfoObject: CoinbaseInfo = CoinbaseInfo()
 
 

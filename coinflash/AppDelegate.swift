@@ -10,6 +10,8 @@ import UIKit
 import SideMenu
 import coinbase_official
 import LinkKit
+import SVProgressHUD
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -35,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #else
             setupPlaidLinkWithSharedConfiguration()
         #endif
+        
+        SVProgressHUD.setDefaultMaskType(.clear)
         
        return true
     }
@@ -114,8 +118,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setupPlaidWithCustomConfiguration() {
         // <!-- SMARTDOWN_SETUP_CUSTOM -->
         // With custom configuration
-        let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .development, product: .auth)
-        linkConfiguration.clientName = "Link Demo"
+        let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .production, product: .auth)
+        linkConfiguration.clientName = ""
         PLKPlaidLink.setup(with: linkConfiguration) { (success, error) in
             if (success) {
                 // Handle success here, e.g. by posting a notification

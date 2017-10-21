@@ -7,44 +7,28 @@
 //
 
 import UIKit
-import ReactiveSwift
-import Result
 import SVProgressHUD
 import Alamofire
+import SDWebImage
 
 class MenuVC: UIViewController {
 
-    // creating a reactiveswift channel
-    var sp : SignalProducer<String, NoError>?
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var userImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let a: (sig: Signal<Any?, NoError>, os: [Any]) = __sigs()
-        a.sig.observeValues { (things: Any?) in
-            print("work")
-        }
-        
-        //let o1 = a.os.first! as! Signal.Observer<String, NoError>
-        //let o2 = a.os[1] as! Signal.Observer<Any?, NoError>
-        
-        //o1.send(value: "ao")
-        //o2.send(value: "ao") // Just triggers the above to print "work"
-        //o2.send(value: "ao")
-        
     }
     
-    func __sigs() -> (sig: Signal<Any?, NoError>, os: [Any]) {
-        let (s1, o1) = Signal<String, NoError>.pipe() // In actual code I have 10+ signals in each method
-        let (s2, o2) = Signal<Any?, NoError>.pipe()
-        
-        let (s, o) = Signal<Any?, NoError>.pipe()
-        Signal.combineLatest(s1, s2).observeValues{ _ in
-            o.send(value: "anything") // gross hack
-        }
-        
-        return (sig: s, os: [o1, o2])
+    override func viewWillAppear(_ animated: Bool) {
+        self.userImageView.clipsToBounds = true
+        self.userImageView.layer.cornerRadius = self.userImageView.bounds.width/2
+        self.nameLabel.text = googleUser.profile.name
+        self.userImageView.sd_setShowActivityIndicatorView(true)
+        self.userImageView.sd_setIndicatorStyle(UIActivityIndicatorViewStyle.gray)
+        self.userImageView.sd_setImage(with: googleUser.profile.imageURL(withDimension: 200), completed: nil)
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

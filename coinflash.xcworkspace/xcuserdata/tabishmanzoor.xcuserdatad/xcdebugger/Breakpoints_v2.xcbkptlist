@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/BuyPageController.swift"
-            timestampString = "530037733.400386"
+            timestampString = "530132745.364907"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "162"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/BuyPageController.swift"
-            timestampString = "530037733.402728"
+            timestampString = "530132745.365013"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "175"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/BuyPageController.swift"
-            timestampString = "530037733.403601"
+            timestampString = "530132745.36514"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "166"
@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/BuyPageController.swift"
-            timestampString = "530037733.404296"
+            timestampString = "530132745.365238"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "192"
@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.421235"
+            timestampString = "530132745.365326"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "InvestmentRateSlider(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/BuyPageController.swift"
-            timestampString = "530037733.404863"
+            timestampString = "530132745.36543"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/BuyPageController.swift"
-            timestampString = "530037733.405647"
+            timestampString = "530132745.365519"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "407"
-            endingLineNumber = "407"
+            startingLineNumber = "416"
+            endingLineNumber = "416"
             landmarkName = "requestCoinFlashFeatchwallet(mobile_secret:user_id_mobile:mobile_access_token:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/BuyPageController.swift"
-            timestampString = "530037733.406358"
+            timestampString = "530132745.365601"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "398"
-            endingLineNumber = "398"
+            startingLineNumber = "407"
+            endingLineNumber = "407"
             landmarkName = "requestCoinFlashFeatchwallet(mobile_secret:user_id_mobile:mobile_access_token:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -153,222 +153,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.426336"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
-            landmarkName = "MainViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.426534"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "341"
-            endingLineNumber = "341"
-            landmarkName = "MainViewController"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "coinflash.MainViewController.handleSuccessWithToken(Swift.String, metadata: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; ()"
-                  moduleName = "coinflash"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tabishmanzoor/Documents/Coinflash-iOS/coinflash/MainViewController.swift"
-                  timestampString = "529598782.745423"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "133"
-                  endingLineNumber = "133"
-                  offsetFromSymbolStart = "89">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #1 : @autoclosure () throws -&gt; Swift.Dictionary&lt;Swift.String, Any&gt; in coinflash.MainViewController.handleSuccessWithToken(Swift.String, metadata: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; ()"
-                  moduleName = "coinflash"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tabishmanzoor/Documents/Coinflash-iOS/coinflash/MainViewController.swift"
-                  timestampString = "529598782.748616"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "133"
-                  endingLineNumber = "133"
-                  offsetFromSymbolStart = "4">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.426744"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "399"
-            endingLineNumber = "399"
-            landmarkName = "linkViewController(_:didExitWithError:metadata:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in coinflash.MainViewController.linkViewController(__ObjC.PLKPlaidLinkViewController, didExitWithError: Swift.Optional&lt;Swift.Error&gt;, metadata: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; ()"
-                  moduleName = "coinflash"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tabishmanzoor/Documents/Coinflash-iOS/coinflash/MainViewController.swift"
-                  timestampString = "529594190.537993"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "202"
-                  endingLineNumber = "202"
-                  offsetFromSymbolStart = "155">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #1 : @autoclosure () throws -&gt; Swift.Dictionary&lt;Swift.String, Any&gt; in closure #1 () -&gt; () in coinflash.MainViewController.linkViewController(__ObjC.PLKPlaidLinkViewController, didExitWithError: Swift.Optional&lt;Swift.Error&gt;, metadata: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; ()"
-                  moduleName = "coinflash"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tabishmanzoor/Documents/Coinflash-iOS/coinflash/MainViewController.swift"
-                  timestampString = "529594190.542293"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "202"
-                  endingLineNumber = "202"
-                  offsetFromSymbolStart = "4">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.427007"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
-            landmarkName = "linkViewController(_:didExitWithError:metadata:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in coinflash.MainViewController.linkViewController(__ObjC.PLKPlaidLinkViewController, didExitWithError: Swift.Optional&lt;Swift.Error&gt;, metadata: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; ()"
-                  moduleName = "coinflash"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tabishmanzoor/Documents/Coinflash-iOS/coinflash/MainViewController.swift"
-                  timestampString = "529736556.540655"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "342"
-                  endingLineNumber = "342"
-                  offsetFromSymbolStart = "1330">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #2 : @autoclosure () throws -&gt; Swift.Dictionary&lt;Swift.String, Any&gt; in closure #1 () -&gt; () in coinflash.MainViewController.linkViewController(__ObjC.PLKPlaidLinkViewController, didExitWithError: Swift.Optional&lt;Swift.Error&gt;, metadata: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; ()"
-                  moduleName = "coinflash"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tabishmanzoor/Documents/Coinflash-iOS/coinflash/MainViewController.swift"
-                  timestampString = "529736556.548435"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "342"
-                  endingLineNumber = "342"
-                  offsetFromSymbolStart = "4">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.427199"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
-            landmarkName = "linkViewController(_:didExitWithError:metadata:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "coinflash.MainViewController.linkViewController(__ObjC.PLKPlaidLinkViewController, didExitWithError: Swift.Optional&lt;Swift.Error&gt;, metadata: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; ()"
-                  moduleName = "coinflash"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tabishmanzoor/Documents/Coinflash-iOS/coinflash/MainViewController.swift"
-                  timestampString = "529594190.579841"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "200"
-                  endingLineNumber = "200"
-                  offsetFromSymbolStart = "40">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in coinflash.MainViewController.linkViewController(__ObjC.PLKPlaidLinkViewController, didExitWithError: Swift.Optional&lt;Swift.Error&gt;, metadata: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; ()"
-                  moduleName = "coinflash"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tabishmanzoor/Documents/Coinflash-iOS/coinflash/MainViewController.swift"
-                  timestampString = "529594190.582404"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "201"
-                  endingLineNumber = "201"
-                  offsetFromSymbolStart = "46">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "coinflash/HelperFunctions.swift"
             timestampString = "529921428.955717"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "77"
             endingLineNumber = "77"
-            landmarkName = "HelperFunctions"
-            landmarkType = "3">
+            landmarkName = "saveNSUserDefaults()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -378,12 +170,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.427493"
+            timestampString = "530132745.365746"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "requestCoinFlashFeatchccTransations(mobile_secret:user_id_mobile:mobile_access_token:)"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -394,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/BuyPageController.swift"
-            timestampString = "530037733.407926"
+            timestampString = "530132745.365829"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "requestCryptoRates(mobile_secret:user_id_mobile:mobile_access_token:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -410,12 +202,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.429014"
+            timestampString = "530132745.365897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "InvestmentRateSlider(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -426,12 +218,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.429257"
+            timestampString = "530132745.365974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
-            landmarkName = "requestCoinFlashFeatchccTransations(mobile_secret:user_id_mobile:mobile_access_token:)"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "MainViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "coinflash/MainViewController.swift"
+            timestampString = "530132745.366057"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -442,93 +250,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.429412"
+            timestampString = "530132745.366154"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
-            landmarkName = "requestCoinFlashFeatchccTransations(mobile_secret:user_id_mobile:mobile_access_token:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.429552"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "OnInvestmentRateSliderRelease(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.429657"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
-            landmarkName = "UpdateSlideVaueToServer(mobile_secret:user_id_mobile:mobile_access_token:SliderValue:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "coinflash/MainViewController.swift"
-            timestampString = "530036763.42975"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
-            landmarkName = "requestCoinFlashFeatchccTransations(mobile_secret:user_id_mobile:mobile_access_token:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "coinflash.MainViewController.requestCoinFlashFeatchccTransations(mobile_secret: Swift.String, user_id_mobile: Swift.String, mobile_access_token: Swift.String) -&gt; ()"
-                  moduleName = "coinflash"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tabishmanzoor/Documents/Coinflash-iOS/coinflash/MainViewController.swift"
-                  timestampString = "529925289.41544"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "135"
-                  endingLineNumber = "135"
-                  offsetFromSymbolStart = "812">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in coinflash.MainViewController.requestCoinFlashFeatchccTransations(mobile_secret: Swift.String, user_id_mobile: Swift.String, mobile_access_token: Swift.String) -&gt; ()"
-                  moduleName = "coinflash"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tabishmanzoor/Documents/Coinflash-iOS/coinflash/MainViewController.swift"
-                  timestampString = "529925289.418515"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "136"
-                  endingLineNumber = "136"
-                  offsetFromSymbolStart = "28">
-               </Location>
-            </Locations>
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "MainViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -538,7 +266,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/BuyPageController.swift"
-            timestampString = "530037733.409535"
+            timestampString = "530132745.366507"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "128"
@@ -554,12 +282,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/BuyPageController.swift"
-            timestampString = "530037733.409999"
+            timestampString = "530132745.366732"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "129"
             endingLineNumber = "129"
             landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "coinflash/AccountSettingVC.swift"
+            timestampString = "530132745.366876"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
+            landmarkName = "DlinkCoinbase(mobile_secret:user_id_mobile:mobile_access_token:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "coinflash/AccountSettingVC.swift"
+            timestampString = "530132745.368998"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
+            landmarkName = "DlinkCoinbase(mobile_secret:user_id_mobile:mobile_access_token:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "coinflash/AccountSettingVC.swift"
+            timestampString = "530132745.369901"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
+            landmarkName = "DlinkCoinbase(mobile_secret:user_id_mobile:mobile_access_token:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -11,34 +11,9 @@ import UIKit
 import SideMenu
 import Alamofire
 import SVProgressHUD
-import LinkKit
 import SwiftyJSON
 
-//// Plaid
-extension MainViewController : PLKPlaidLinkViewDelegate
-{
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didSucceedWithPublicToken publicToken: String, metadata: [String : Any]?) {
-        dismiss(animated: true) {
-            NSLog("Successfully linked account!\npublicToken: \(publicToken)\nmetadata: \(metadata ?? [:])")
-            self.handleSuccessWithToken(publicToken, metadata: metadata)
-        }
-    }
-    
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didExitWithError error: Error?, metadata: [String : Any]?) {
-        dismiss(animated: true) {
-            if let error = error {
-                NSLog("Failed to link account due to: \(error.localizedDescription)\nmetadata: \(metadata ?? [:])")
-            }
-            else {
-                NSLog("Plaid link exited with metadata: \(metadata ?? [:])")
-            }
-        }
-    }
-    
-    func linkViewController(_ linkViewController: PLKPlaidLinkViewController, didHandleEvent event: String, metadata: [String : Any]?) {
-        NSLog("Link event: \(event)\nmetadata: \(metadata)")
-    }
-}
+
 
 // MainView Class
 class MainViewController: UIViewController, UITableViewDataSource{
@@ -58,7 +33,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var m_mobile_secret = user_mobile_secret!
     var m_user_id = user_id_mobile!
     var m_access_token = user_mobile_access_token!
-    var plaid_public_token = ""
+    
     
     var m_spare_change_accrued_percent_to_invest : Double = 0.0
     var m_cap : Double = 0.0
@@ -95,7 +70,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         let dollarToInvestInBTC = Float(dollarsToInvest)*Float(btcRate/100.0)
         let dollarToInvestETH = Float(dollarsToInvest)*Float((ethRate)/100.0)
         self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
-       
+        
         /// Set the mutable attributed string for the top label showing dollars
         let prefixString: NSAttributedString = NSAttributedString(string: "$ ", attributes: [NSForegroundColorAttributeName : color])
         let btcString: NSAttributedString = NSAttributedString(string: String(format: "%.2f", dollarToInvestInBTC), attributes: [NSForegroundColorAttributeName : btcColor])
@@ -117,24 +92,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         //print("element Released")
     }
     
-    @IBAction func TestPlaid(_ sender: Any) {
-        if plaidInfoObject.loggedIn == true{
-            let alert = UIAlertController(title: "Bank Account Link", message: "Already Logged In Do You want to deLink ?", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: DelinkPlaid))
-            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-            
-            self.present(alert, animated: true, completion: nil)
-            return
-        }
-        else{
-            presentPlaidLinkWithSharedConfiguration()
-        }
-    }
     
-    func DelinkPlaid(alert: UIAlertAction!) {
-        
-        DlinkPlaid(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-    }
     
     override func viewDidLoad() {
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
@@ -154,7 +112,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
         var bitrate = Double(0)
         //var RationBitCoint =
-       
+        
         bitrate = m_btc_percentage
         let etherRate = 100 - bitrate
         
@@ -196,175 +154,102 @@ class MainViewController: UIViewController, UITableViewDataSource{
             "mobile_secret" : mobile_secret,
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
-        ]
-        SVProgressHUD.show()
-        
-        Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers)
-            .responseJSON { response in
-            
-                if response.result.value == nil {
-                    HelperFunctions.showToast(withString: "Check Your Internet Connection", onViewController: self)
-                    SVProgressHUD.dismiss()
-                }
-             let data = response.result.value as! [String: Any]
-             if data["cc_transactions_array"] == nil
-             {
-                SVProgressHUD.dismiss()
-                return
-             }
-             let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
-             let user_preferences = data["user_preferences"] as! [String: Any]
-             if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
-                self.m_spare_change_accrued_percent_to_invest = Double(user_preferences["spare_change_accrued_percent_to_invest"] as! String)!
-                //self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
-             }
-             if user_preferences["percent_to_invest"] != nil{
-               self.m_percent_to_invest = Double(user_preferences["percent_to_invest"] as! String)!
-                
-             }
-             if user_preferences["how_often"] != nil{
-                 self.m_how_often = Double(user_preferences["how_often"] as! String)!
-             }
-             if user_preferences["spare_change_accrued"] != nil{
-                 self.m_spare_change_accrued = Double(user_preferences["spare_change_accrued"] as! String)!
-             }
-             if user_preferences["btc_to_invest"] != nil{
-                 self.m_btc_to_invest = user_preferences["btc_to_invest"] as! Double
-                self.m_btc_to_invest = Double(round(100 * self.m_btc_to_invest)/100)
-                
-             }
-             if user_preferences["invest_on"] != nil{
-                 self.m_invest_on = Double(user_preferences["invest_on"] as! String)!
-             }
-            
-            if user_preferences["btc_percentage"] != nil{
-                self.m_btc_percentage = user_preferences["btc_percentage"] as! Double
-            }
-        
-        
-             self.cctransations.removeAll()
-        /// Bound error occuring check
-            if TransationArray.count > 0{
-                for index in 0...TransationArray.count - 1 {
-                    let transation = TransationArray[index]
-                    var singleTransation = cctransaction_global
-                    if transation["cctransaction_name"] != nil{
-                        singleTransation?.cctransaction_name = transation["cctransaction_name"] as! String
-                    }
-                    if transation["cctransaction_date"] != nil{
-                        var date: String = transation["cctransaction_date"] as! String
-                        let truncated = String(date.characters.dropFirst(5))
-                        singleTransation?.cctransaction_date = truncated
-                    }
-                    if transation["cctransaction_amount"] != nil{
-                        singleTransation?.cctransaction_amount = transation["cctransaction_amount"] as! String!
-                    }
-                    if transation["coinbase_transaction_id"] != nil{
-                        singleTransation?.cctransaction_coinbase_transaction_id = transation["coinbase_transaction_id"] as! String
-                        singleTransation?.cctransaction_invested = "invested"
-                    }
-                    else{
-                        singleTransation?.cctransaction_invested = "Not invested"
-                    }
-                    self.cctransations.append(singleTransation)
-                    
-                }
-            }
-
-            self.ccTransationTableView?.reloadData()
-            self.updateViewInvestmentInformation()
-            SVProgressHUD.dismiss()
-        
-        }
-       
-
-    }
-    
-    
-    func LinkPlaid(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,public_token :String){
-      
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-        let parameters: [String: String] = [
-            "mobile_secret" : mobile_secret,
-            "user_id_mobile" : user_id_mobile,
-            "mobile_access_token" : mobile_access_token,
-            "public_token" : public_token
-            
             ]
         SVProgressHUD.show()
         
-        Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-            
-            let data = response.result.value as? NSDictionary
-                
-            let PLD = data?.value(forKey: "plaid_authorization_success")
-            let AA = data?.value(forKey: "already_authorized")
-            
-            //let data = response.result.value as! [String: String]
-            if PLD != nil
-            {
-                SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
-                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
-                
-            }
-            else if AA != nil{
-                SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Already Linked")
-                HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
-            }
-            else
-            {
-                SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Link Fail : Retry")
-                
-            }
-            // Loading the data in the Table
-            
-            
-            
-        }
-    }
-    func DlinkPlaid(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-        let parameters: [String: String] = [
-            "mobile_secret" : mobile_secret,
-            "user_id_mobile" : user_id_mobile,
-            "mobile_access_token" : mobile_access_token,
-            "unlink_credit_card" : "true"
-            
-        ]
-        SVProgressHUD.show()
         
-        Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-            
-            let data = response.result.value as? NSDictionary
-            
-            let DR = data?.value(forKey: "disconnect_returned")
-            if DR != nil
-            {
-                
-                SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("Bank Account Link", message: "Account Dlinked")
-                HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
-                
-                
-            
-            }
-            else
-            {
-                SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("Bank Account Link", message: "DeLinking Fail : Retry")
-                
-            }
-            
-            SVProgressHUD.dismiss()
+        Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers)
+            .responseJSON { response in
+                switch response.result{
+                case .success(let value):
+                    do {
+                        if response.result.value == nil {
+                            HelperFunctions.showToast(withString: "Check Your Internet Connection", onViewController: self)
+                            SVProgressHUD.dismiss()
+                        }
+                        let data = response.result.value as! [String: Any]
+                        if data["cc_transactions_array"] == nil
+                        {
+                            SVProgressHUD.dismiss()
+                            return
+                        }
+                        let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
+                        let user_preferences = data["user_preferences"] as! [String: Any]
+                        if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
+                            self.m_spare_change_accrued_percent_to_invest = Double(user_preferences["spare_change_accrued_percent_to_invest"] as! String)!
+                            //self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
+                        }
+                        if user_preferences["percent_to_invest"] != nil{
+                            self.m_percent_to_invest = Double(user_preferences["percent_to_invest"] as! String)!
+                            
+                        }
+                        if user_preferences["how_often"] != nil{
+                            self.m_how_often = Double(user_preferences["how_often"] as! String)!
+                        }
+                        if user_preferences["spare_change_accrued"] != nil{
+                            self.m_spare_change_accrued = Double(user_preferences["spare_change_accrued"] as! String)!
+                        }
+                        if user_preferences["btc_to_invest"] != nil{
+                            self.m_btc_to_invest = user_preferences["btc_to_invest"] as! Double
+                            self.m_btc_to_invest = Double(round(100 * self.m_btc_to_invest)/100)
+                            
+                        }
+                        if user_preferences["invest_on"] != nil{
+                            self.m_invest_on = Double(user_preferences["invest_on"] as! String)!
+                        }
+                        
+                        if user_preferences["btc_percentage"] != nil{
+                            self.m_btc_percentage = user_preferences["btc_percentage"] as! Double
+                        }
+                        
+                        
+                        self.cctransations.removeAll()
+                        /// Bound error occuring check
+                        if TransationArray.count > 0{
+                            for index in 0...TransationArray.count - 1 {
+                                let transation = TransationArray[index]
+                                var singleTransation = cctransaction_global
+                                if transation["cctransaction_name"] != nil{
+                                    singleTransation?.cctransaction_name = transation["cctransaction_name"] as! String
+                                }
+                                if transation["cctransaction_date"] != nil{
+                                    var date: String = transation["cctransaction_date"] as! String
+                                    let truncated = String(date.characters.dropFirst(5))
+                                    singleTransation?.cctransaction_date = truncated
+                                }
+                                if transation["cctransaction_amount"] != nil{
+                                    singleTransation?.cctransaction_amount = transation["cctransaction_amount"] as! String!
+                                }
+                                if transation["coinbase_transaction_id"] != nil{
+                                    singleTransation?.cctransaction_coinbase_transaction_id = transation["coinbase_transaction_id"] as! String
+                                    singleTransation?.cctransaction_invested = "invested"
+                                }
+                                else{
+                                    singleTransation?.cctransaction_invested = "Not invested"
+                                }
+                                self.cctransations.append(singleTransation)
+                                
+                            }
+                        }
+                        
+                        self.ccTransationTableView?.reloadData()
+                        self.updateViewInvestmentInformation()
+                        SVProgressHUD.dismiss()
+                        
+                    }catch {
+                        
+                        SVProgressHUD.dismiss()
+                    }
+                case .failure:
+                    print(response.error as Any)
+                    SVProgressHUD.dismiss()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
         }
     }
+    
+    
+    
     
     func showConfirmationDialogBox(title : String , Message : String)
     {
@@ -376,28 +261,34 @@ class MainViewController: UIViewController, UITableViewDataSource{
     func UpdateSlideVaueToServer(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,SliderValue :Double){
         
         let headers: HTTPHeaders = [
-        "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/x-www-form-urlencoded"
         ]
         let parameters: [String: String] = [
-        "mobile_secret" : mobile_secret,
-        "user_id_mobile" : user_id_mobile,
-        "mobile_access_token" : mobile_access_token,
-        "slider_value" : "\(SliderValue)"
-        
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+            "slider_value" : "\(SliderValue)"
+            
         ]
         SVProgressHUD.show(withStatus: "Updating Values")
         
         Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-        
-            let data = response.result.value as? NSDictionary
-            let SliderUpdated = data?.value(forKey: "success")
-            //let data = response.result.value as! [String: String]
-            if SliderUpdated != nil
-            {
-                // Update the global vars with respect to the change:
-                self.m_btc_percentage = SliderValue
+            switch response.result{
+            case .success(let value):
+                let data = response.result.value as? NSDictionary
+                let SliderUpdated = data?.value(forKey: "success")
+                //let data = response.result.value as! [String: String]
+                if SliderUpdated != nil
+                {
+                    // Update the global vars with respect to the change:
+                    self.m_btc_percentage = SliderValue
+                }
+                SVProgressHUD.dismiss()
+            case .failure:
+                print(response.error as Any)
+                SVProgressHUD.dismiss()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
-            SVProgressHUD.dismiss()
         }
     }
     
@@ -409,13 +300,21 @@ class MainViewController: UIViewController, UITableViewDataSource{
             "mobile_secret" : mobile_secret,
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
-        ]
+            ]
         SVProgressHUD.show()
         
         Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-            let json = JSON(response.result.value)
-            self.coinflashUser3ResponseObject = json[0]
-            SVProgressHUD.dismiss()
+            switch response.result{
+            case .success(let value):
+                let json = JSON(response.result.value)
+                self.coinflashUser3ResponseObject = json[0]
+                globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
+                SVProgressHUD.dismiss()
+            case .failure:
+                print(response.error as Any)
+                SVProgressHUD.dismiss()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
         }
     }
     
@@ -460,51 +359,16 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
     }
     
-    ///////////////////////////////////// PLAID //////////////////////////////////////
-    
-    func handleSuccessWithToken(_ publicToken: String, metadata: [String : Any]?) {
-        self.plaid_public_token = publicToken
-        LinkPlaid(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, public_token: publicToken)
-        
-      //  presentAlertViewWithTitle("Success", message: "token: \(publicToken)\nmetadata: \(metadata ?? [:])")
-        
-    }
-    
-    func handleError(_ error: Error, metadata: [String : Any]?) {
-        presentAlertViewWithTitle("Failure", message: "error: \(error.localizedDescription)\nmetadata: \(metadata ?? [:])")
-    }
-    
-    func handleExitWithMetadata(_ metadata: [String : Any]?) {
-        presentAlertViewWithTitle("Exit", message: "metadata: \(metadata ?? [:])")
-    }
-    
-    func presentAlertViewWithTitle(_ title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    // MARK: Plaid Link setup with shared configuration from Info.plist
-    func presentPlaidLinkWithSharedConfiguration() {
-        let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(delegate: linkViewDelegate as! PLKPlaidLinkViewDelegate)
-        if (UI_USER_INTERFACE_IDIOM() == .pad) {
-            linkViewController.modalPresentationStyle = .formSheet;
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier  == "generalSettingsSegue"{
+            if globalCoinflashUser3ResponseValue == JSON.null{
+                self.requestCoinflashUser3Values(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+                HelperFunctions.showToast(withString: "Error! Trying to reload Data", onViewController: self)
+                return false
+            }
         }
-        present(linkViewController, animated: true)
+        return true
     }
     
-    // MARK: Plaid Link setup with custom configuration
-    func presentPlaidLinkWithCustomConfiguration() {
-        let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .sandbox, product: .auth)
-        linkConfiguration.clientName = "Link Demo"
-        let linkViewDelegate = self
-        let linkViewController = PLKPlaidLinkViewController(configuration: linkConfiguration, delegate: linkViewDelegate as! PLKPlaidLinkViewDelegate)
-        if (UI_USER_INTERFACE_IDIOM() == .pad) {
-            linkViewController.modalPresentationStyle = .formSheet;
-        }
-        present(linkViewController, animated: true)
-    }
 }
 

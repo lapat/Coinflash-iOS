@@ -132,6 +132,41 @@ class HelperFunctions: NSObject {
         
         viewController.view.makeToast(string, duration: 3, position: .center)
     }
+    
+    //MARK:- Coinbase and Plaid Integerations
+    static func isPlaidLoggedIn() -> Bool{
+        if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase || user_onboard_status == OnBoardStatus.linkedPlaidButNoCoinbase{
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    static func isCoinbaseLoggedIn() -> Bool{
+        if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase || user_onboard_status == OnBoardStatus.linkedCoinbaseButNoPlaid{
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    static func manageCoinbaseDelinking(){
+        if user_onboard_status == OnBoardStatus.linkedCoinbaseButNoPlaid{
+            user_onboard_status = OnBoardStatus.agreedTOCNoPlaidOrCoinbase
+        }
+        if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
+            user_onboard_status = OnBoardStatus.linkedPlaidButNoCoinbase
+        }
+    }
+    
+    static func manageCoinBaseLinking(){
+        if user_onboard_status == OnBoardStatus.agreedTOCNoPlaidOrCoinbase{
+            user_onboard_status = OnBoardStatus.linkedCoinbaseButNoPlaid
+        }
+        if user_onboard_status == OnBoardStatus.linkedPlaidButNoCoinbase{
+            user_onboard_status = OnBoardStatus.linkedPlaidAndCoinbase
+        }
+    }
 }
 
 extension UIColor {
