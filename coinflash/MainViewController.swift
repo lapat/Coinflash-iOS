@@ -49,8 +49,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     
     @IBAction func InvestmentRateSlider(_ sender: UISlider) {
-        let rate: Float = SliderinvestmentRateDecider!.value
-        
+        var rate: Float = SliderinvestmentRateDecider!.value
+        rate = Float(Int(rate))
         let dollarsToInvest = m_spare_change_accrued_percent_to_invest
         let btcRate = 100 - rate
         let ethRate = rate
@@ -87,8 +87,10 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     @IBAction func OnInvestmentRateSliderRelease(_ sender: Any) {
-        let Rate = SliderinvestmentRateDecider?.value
-        UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: Double(Rate!))
+        var rate: Float = SliderinvestmentRateDecider!.value
+        rate = Float(Int(rate))
+        let ethRate =  rate
+        UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: Int(ethRate))
         //print("element Released")
     }
     
@@ -111,14 +113,13 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% of Your Change Will Be Invested Every Monday"
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
         var bitrate = Double(0)
-        //var RationBitCoint =
         
         bitrate = m_btc_percentage
         let etherRate = 100 - bitrate
         
         self.LabelEtherInvestmentRate?.text = String(Int(etherRate)) + "%"
         self.LabelBitcoinInvestmentRate?.text = String(Int(bitrate)) + "%"
-        self.SliderinvestmentRateDecider?.value = Float(bitrate)
+        self.SliderinvestmentRateDecider?.value = Float(etherRate)
         self.InvestmentRateSlider(self.SliderinvestmentRateDecider!)
         
         // Set the ether and bitcoin rate in the top label with respect to the percentage
@@ -258,7 +259,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.present(alert, animated: true, completion: nil)
     }
     
-    func UpdateSlideVaueToServer(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,SliderValue :Double){
+    func UpdateSlideVaueToServer(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,SliderValue :Int){
         
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -281,7 +282,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 if SliderUpdated != nil
                 {
                     // Update the global vars with respect to the change:
-                    self.m_btc_percentage = SliderValue
+                    self.m_btc_percentage = Double(SliderValue)
                 }
                 SVProgressHUD.dismiss()
             case .failure:
