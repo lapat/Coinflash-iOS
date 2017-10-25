@@ -82,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             print(apiClient!)
                             print(result)
                         }
+                        
                     }
                     HelperFunctions.coinBaseSaveLoginInfo(info: result as! NSDictionary)
                     self.processingBacklink = false

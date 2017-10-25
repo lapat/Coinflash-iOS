@@ -69,7 +69,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         let nc =  NotificationCenter.default
         nc.addObserver(self, selector: #selector(viewDidEnterForground(notificaiton:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         // register for notifaction of coinbase api login being completed
-       // nc.addObserver(self, selector: #selector(coinBaseAuthenticationCompleted(withNotification:)), name: NSNotification., object: self)
+        nc.addObserver(self, selector: #selector(coinBaseAuthenticationCompleted(withNotification:)), name: NSNotification.Name.onCoinbaseLoginCompletion, object: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -398,8 +398,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             "mobile_secret" : mobile_secret,
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
-            "unlink_credit_card" : "true"
-        ]
+            "unlink_credit_card" : "true"]
         
         SVProgressHUD.show()
         

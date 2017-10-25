@@ -55,6 +55,7 @@ class HelperFunctions: NSObject {
         user_mobile_access_token = ""
         user_id_mobile = ""
         user_isLoggedIn = false
+        GIDSignIn.sharedInstance().signOut()
         //self.saveNSUserDefaults()
     }
     
