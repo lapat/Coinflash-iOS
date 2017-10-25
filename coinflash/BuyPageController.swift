@@ -267,49 +267,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             return date[Int(index)]
         })
     }
-<<<<<<< HEAD
-    func calculateGain(){
-        //var calculateGain = (sum(coinbase_crypto_amount)*(price of crypto today))-sum(coinbase_amount_spent_on_crypto)
-        
-    }
-    func LoadCryptoGraphCurrentPriceHistery(){
-        let EndDate = Date().timeIntervalSince1970
-        let StartDate = EndDate - 604800
-        
-        
-        print(StartDate)
-        print(EndDate)
-        let TimePhase = String(StartDate) + "&end=" + String(EndDate) + "&period=86400"
-        let url = "https://poloniex.com/public?command=returnChartData&currencyPair="+self.CurrencyRatePolixCode+"&start=" + TimePhase
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-        print(url)
-        Alamofire.request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: nil)
-            .responseJSON { response in
-                if let array = response.result.value as? NSArray {
-                    for obj in array {
-                        if let dict = obj as? NSDictionary {
-                           
-                            
-                            //var DateDate  = dict.value(forKey: "date") as! String
-                        }
-                    }
-                }
-        }
-       
-        print("-----------------------------")
-    }
-    func SelectGraphType(){
-        
-        
-        
-        
-        
-    }
-=======
->>>>>>> 16e2e2622d8e8be7cc39d73507cc288955e87408
-    
     func requestCryptoRates(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let now = NSDate()
         
