@@ -56,6 +56,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var coinbaseLinkedImageView: UIImageView!
     @IBOutlet weak var overallLinkedImageView: UIImageView!
     
+    @IBOutlet weak var AddBankLink: UIButton!
     var plaidAccounts: [JSON]!
     
     @IBOutlet weak var DlinkCoinBase: UIButton!
@@ -153,11 +154,19 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         var cell: UITableViewCell!
         if indexPath.row == 0 && plaidAccounts == nil || plaidAccounts.count < 1{
             cell = tableView.dequeueReusableCell(withIdentifier: "disabledCell")
+            plaidInfoObject.loggedIn = false
+            self.AddBankLink.setImage( UIImage.init(named: "addNwbanks"), for: .normal)
+            //self.AddBankLink.image.image = UIImage(named:"addNwbanks")!
+            
         }else{
             let plaidCell = tableView.dequeueReusableCell(withIdentifier: "normalCell") as! PlaidBankCell
             plaidCell.bankNameLabel.text = plaidAccounts[indexPath.row]["plaid_account_name"].string
             plaidCell.bankAccountNumber.text = ("**** **** ****\(plaidAccounts[indexPath.row]["last_four_digits"].string!)")
             cell = plaidCell
+            plaidInfoObject.loggedIn = true
+            self.AddBankLink.setImage( UIImage.init(named: "unlinkBank"), for: .normal)
+            
+            //self.AddBankLink.image = UIImage(named:"unlinkBank")!
         }
         return cell
     }
@@ -245,7 +254,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         if plaidInfoObject.loggedIn == true{
             let alert = UIAlertController(title: "Bank Account Link", message: "Already Logged In Do You want to deLink ?", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: DelinkPlaid))
-            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.default, handler: nil))
             
             self.present(alert, animated: true, completion: nil)
             return
@@ -334,8 +343,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
                 HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
-                
-            }
+                self.getCoinFlashUserInfo()
+                    self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
+            
+        }
             else if AA != nil{
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Already Linked")
@@ -381,6 +392,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 
                 self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
                 self.addCoinbaseButton.isHidden = false
+                
+                
                 HelperFunctions.manageCoinbaseDelinking()
             }
             else
@@ -425,7 +438,11 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     SVProgressHUD.dismiss()
                     self.presentAlertViewWithTitle("Bank Account Link", message: "Account Dlinked")
                     HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
-                    
+                    self.AddBankLink.setImage( UIImage.init(named: "addNwbanks"), for: .normal)
+                    plaidInfoObject.loggedIn = false
+                    self.plaidAccounts = []
+                    self.bankTable.reloadData()
+                    self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
                     
                     
                 }

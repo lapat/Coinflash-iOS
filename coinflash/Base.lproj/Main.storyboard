@@ -775,7 +775,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cap On Weekly/Monthly Investment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boh-YS-W2V">
-                                                    <rect key="frame" x="8" y="11" width="282.5" height="24"/>
+                                                    <rect key="frame" x="8" y="11" width="282.5" height="22"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                                                     <color key="textColor" red="0.42352941179999998" green="0.42352941179999998" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -786,20 +786,33 @@
                                                         <constraint firstAttribute="height" constant="0.5" id="8d2-P3-Fyl"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="$500" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ClT-Su-TpU">
-                                                    <rect key="frame" x="313" y="8" width="55" height="30"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="500" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ClT-Su-TpU">
+                                                    <rect key="frame" x="318" y="7" width="50" height="30"/>
                                                     <color key="textColor" red="0.43137254899999999" green="0.69019607839999997" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                 </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBf-Wi-jwo">
+                                                    <rect key="frame" x="305" y="11.5" width="11" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="5EV-f2-q38"/>
+                                                        <constraint firstAttribute="width" constant="11" id="nwf-YB-o4h"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.49958264827728271" green="0.73129361867904663" blue="0.28178384900093079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="1Ku-zu-ZL2" secondAttribute="trailing" constant="10" id="58V-l3-CRs"/>
                                                 <constraint firstItem="boh-YS-W2V" firstAttribute="top" secondItem="IOG-Du-h2E" secondAttribute="top" constant="11" id="A2g-nF-rHo"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="boh-YS-W2V" secondAttribute="trailing" constant="20" symbolic="YES" id="UhD-xh-EAd"/>
+                                                <constraint firstItem="ClT-Su-TpU" firstAttribute="centerY" secondItem="IOG-Du-h2E" secondAttribute="centerY" id="WMh-4R-1Je"/>
                                                 <constraint firstItem="boh-YS-W2V" firstAttribute="leading" secondItem="IOG-Du-h2E" secondAttribute="leading" constant="8" id="XFh-oH-X2f"/>
                                                 <constraint firstAttribute="bottom" secondItem="1Ku-zu-ZL2" secondAttribute="bottom" id="Z2E-gW-YHQ"/>
+                                                <constraint firstItem="LBf-Wi-jwo" firstAttribute="centerY" secondItem="IOG-Du-h2E" secondAttribute="centerY" id="b0v-Qk-b39"/>
+                                                <constraint firstItem="ClT-Su-TpU" firstAttribute="leading" secondItem="LBf-Wi-jwo" secondAttribute="trailing" constant="2" id="lI6-Xb-Et5"/>
                                                 <constraint firstAttribute="trailing" secondItem="ClT-Su-TpU" secondAttribute="trailing" constant="7" id="oR3-SN-zk1"/>
                                                 <constraint firstItem="1Ku-zu-ZL2" firstAttribute="leading" secondItem="IOG-Du-h2E" secondAttribute="leading" constant="10" id="v8O-KX-QkD"/>
                                                 <constraint firstItem="ClT-Su-TpU" firstAttribute="centerY" secondItem="boh-YS-W2V" secondAttribute="centerY" id="wWU-X7-oOs"/>
@@ -826,7 +839,7 @@
                                                         <constraint firstAttribute="height" constant="0.5" id="Wi3-Jh-bnI"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="**** **** **** 4567" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lqF-3p-B1v">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="**** **** **** 4567" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lqF-3p-B1v">
                                                     <rect key="frame" x="249" y="30.5" width="118" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
                                                     <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -873,7 +886,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="3qp-qR-3VB">
                                                     <rect key="frame" x="10" y="43" width="355" height="1"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Coinflash Bitcoin Wallet" textAlignment="right" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GC1-xt-K6G">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Coinflash Bitcoin Wallet" textAlignment="right" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GC1-xt-K6G">
                                                     <rect key="frame" x="218" y="12" width="149" height="20"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
                                                     <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -911,7 +924,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="wjs-VP-QKH">
                                                     <rect key="frame" x="10" y="43" width="355" height="1"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Coinflash Ether Wallet" textAlignment="right" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TmH-9H-XoS">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Coinflash Ether Wallet" textAlignment="right" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TmH-9H-XoS">
                                                     <rect key="frame" x="227.5" y="12" width="139.5" height="20"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
                                                     <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -1064,7 +1077,7 @@
                                         <color key="textColor" red="0.031372549019607843" green="0.30980392156862746" blue="0.62352941176470589" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="r3i-pe-kmq">
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="r3i-pe-kmq">
                                         <rect key="frame" x="8" y="404.5" width="359" height="0.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="7aj-UJ-lc7"/>
@@ -1708,6 +1721,7 @@
                         <viewLayoutGuide key="safeArea" id="biu-qR-UdG"/>
                     </view>
                     <connections>
+                        <outlet property="AddBankLink" destination="LHk-sl-Zq1" id="YFF-M0-f13"/>
                         <outlet property="DlinkCoinBase" destination="v4N-tD-3d3" id="nPh-Jy-6fa"/>
                         <outlet property="addCoinbaseButton" destination="ysH-wV-Qx0" id="b0D-qq-voh"/>
                         <outlet property="bankTable" destination="i8D-Kq-3Ee" id="RA7-Ot-8jh"/>

@@ -119,15 +119,18 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let str = (textField.text! + string)
-        if str.characters.count <= 4 {
+        var str = (textField.text! + string)
+        if str.characters.count <= 3 {
             return true
+        }
+        var check = Int(str)!
+        if check > 500{
+            str = "500"
         }
         
         
-        
         //textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
-        textField.text = str.substring(to: str.index(str.startIndex, offsetBy:4))
+        textField.text = str.substring(to: str.index(str.startIndex, offsetBy:3))
         
         
         return false
@@ -135,7 +138,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     
     func cancelNumberPad(){
         capOnInvestmentTextField.resignFirstResponder()
-        capOnInvestmentTextField.text = "$\(globalSettings.capOnInvestment!)"
+        capOnInvestmentTextField.text = "\(globalSettings.capOnInvestment!)"
     }
     
     func doneWithNumberPad(){
@@ -167,6 +170,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     //MARK: - Global settings functions
     // LOAD SAVE GLOBAL SETTINGS
     func loadGlobalSettings(){
+        hideParemeters()
         if globalSettings.investHowOften == .monthly{
             monthlyButton?.isSelected = true
             weeklyButton?.isSelected = false
@@ -177,7 +181,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         
         self.changeToInvestSlider.value = Float(globalSettings.percentOfChangeToInvest)
         self.changeToInvestSliderValueLabel.text = "\(Int(globalSettings.percentOfChangeToInvest))%"
-        self.capOnInvestmentTextField.text = "$\(globalSettings.capOnInvestment!)"
+        self.capOnInvestmentTextField.text = "\(globalSettings.capOnInvestment!)"
         
         self.tempCapOnInvestmentValue = globalSettings.capOnInvestment
         self.tempChangeCapValue = globalSettings.percentOfChangeToInvest
@@ -195,6 +199,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             }
             if globalCoinflashUser3ResponseValue["user_set_primary_coinbase_account_id"] == JSON.null{
                 if index == "0"{
+                    self.coinbasePaymentMethodLabel.isHidden = false
                     self.coinbasePaymentMethodLabel.text = subJson["name"].string
                     self.coinbasePrimaryAccountID = subJson["id"].string
                 }
@@ -229,6 +234,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         // Check the default eth wallet account and set the label in ui
         for json in ethWalletAccounts{
             if json["id"].string == self.ethPrimaryWalletAccountID{
+                self.ethWalletLabel.isHidden = false
                 ethWalletLabel.text = json["name"].string
             }
         }
@@ -236,6 +242,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         // Check the default btc wallet account and set the label in ui
         for json in btcWalletAccounts{
             if json["id"].string == self.btcPrimaryWalletAccountsID{
+                btcWalletLabel.isHidden = false
                 btcWalletLabel.text = json["name"].string
             }
         }
@@ -442,7 +449,13 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             self.ethWalletLabel.text = ethWalletAccounts[row]["name"].string
         }
     }
-    
+    func hideParemeters(){
+        
+        self.coinbasePaymentMethodLabel.isHidden  = true
+        self.ethWalletLabel.isHidden = true
+        self.btcWalletLabel.isHidden = true
+        
+    }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
