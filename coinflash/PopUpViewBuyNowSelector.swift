@@ -99,6 +99,7 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
                 case .success:
                     print(response)
                     self.removeAnimate()
+                    NotificationCenter.default.post(name: .onSuccessfulPurchaseOfCoins, object: nil)
                 case .failure:
                     HelperFunctions.showToast(withString: "Error connecting to server. Please retry!", onViewController: self)
                 

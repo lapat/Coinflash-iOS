@@ -56,6 +56,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var coinbaseLinkedImageView: UIImageView!
     @IBOutlet weak var overallLinkedImageView: UIImageView!
     
+    @IBOutlet weak var AddBankLink: UIButton!
     var plaidAccounts: [JSON]!
     
     @IBOutlet weak var DlinkCoinBase: UIButton!
@@ -68,9 +69,30 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         
         let nc =  NotificationCenter.default
         nc.addObserver(self, selector: #selector(viewDidEnterForground(notificaiton:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        // register for notifaction of coinbase api login being completed
+        nc.addObserver(self, selector: #selector(coinBaseAuthenticationCompleted(withNotification:)), name: NSNotification.Name.onCoinbaseLoginCompletion, object: nil)
+        self.getCoinFlashUserInfo()
+        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isCoinbaseLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
+            banner.show()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.updateViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
+    
+    func updateViews(){
         // Check for coing base linkage
         if HelperFunctions.isCoinbaseLoggedIn() == true{
             coinbaseLinkedLabel.text = "Coinbase Linked"
@@ -98,20 +120,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        self.getCoinFlashUserInfo()
-        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
-            banner.show()
-        }else if !HelperFunctions.isCoinbaseLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
-            banner.show()
-        }else if !HelperFunctions.isPlaidLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
-            banner.show()
-        }
-    }
-    
     @IBAction func DlinkCoinbaseAction(_ sender: Any) {
         
         self.DlinkCoinbase(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
@@ -119,23 +127,9 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     func viewDidEnterForground(notificaiton: NSNotification){
         if (UIApplication.shared.delegate as! AppDelegate).processingBacklink == true{
-            SVProgressHUD.show()
-            UIApplication.shared.beginIgnoringInteractionEvents()
-            Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
-                SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
-                if HelperFunctions.isCoinbaseLoggedIn() == true{
-                    //self.coinbaseLinkedLabel.text = "Coinbase Linked"
-                    //self.DlinkCoinBase.isHidden = false
-                    //self.addCoinbaseButton.isHidden = true
-                    self.requestCoinbaseLinkAPIRequest()
-                }else{
-                    self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
-                    self.addCoinbaseButton.isHidden = false
-                    self.DlinkCoinBase.isHidden = true
-                }
-                (UIApplication.shared.delegate as! AppDelegate).processingBacklink = false
-            })
+            SVProgressHUD.show(withStatus: "Processing Login")
+            //UIApplication.shared.beginIgnoringInteractionEvents()
+            
         }else{
             if HelperFunctions.isPlaidLoggedIn() == true{
                 //coinbaseLinkedLabel.text = "Coinbase Linked"
@@ -149,15 +143,39 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         }
     }
     
+    func coinBaseAuthenticationCompleted(withNotification notificaion: NSNotification){
+        SVProgressHUD.dismiss()
+        UIApplication.shared.endIgnoringInteractionEvents()
+        if HelperFunctions.isCoinbaseLoggedIn() == true{
+            //self.coinbaseLinkedLabel.text = "Coinbase Linked"
+            //self.DlinkCoinBase.isHidden = false
+            //self.addCoinbaseButton.isHidden = true
+            self.requestCoinbaseLinkAPIRequest()
+        }else{
+            self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
+            self.addCoinbaseButton.isHidden = false
+            self.DlinkCoinBase.isHidden = true
+        }
+        (UIApplication.shared.delegate as! AppDelegate).processingBacklink = false
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         if indexPath.row == 0 && plaidAccounts == nil || plaidAccounts.count < 1{
             cell = tableView.dequeueReusableCell(withIdentifier: "disabledCell")
+            plaidInfoObject.loggedIn = false
+            self.AddBankLink.setImage( UIImage.init(named: "addNwbanks"), for: .normal)
+            //self.AddBankLink.image.image = UIImage(named:"addNwbanks")!
+            
         }else{
             let plaidCell = tableView.dequeueReusableCell(withIdentifier: "normalCell") as! PlaidBankCell
             plaidCell.bankNameLabel.text = plaidAccounts[indexPath.row]["plaid_account_name"].string
             plaidCell.bankAccountNumber.text = ("**** **** ****\(plaidAccounts[indexPath.row]["last_four_digits"].string!)")
             cell = plaidCell
+            plaidInfoObject.loggedIn = true
+            self.AddBankLink.setImage( UIImage.init(named: "unlinkBank"), for: .normal)
+            
+            //self.AddBankLink.image = UIImage(named:"unlinkBank")!
         }
         return cell
     }
@@ -176,7 +194,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     @IBAction func didTapOnAddCoinbaseButton(sender: UIButton){
         (UIApplication.shared.delegate as! AppDelegate).processingBacklink = true
-        CoinbaseOAuth.startAuthentication(withClientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", scope: "wallet:user:read,wallet:buys:create,wallet:payment-methods:read,wallet:accounts:read,wallet:transactions:send:bypass-2fa", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: nil)
+        CoinbaseOAuth.startAuthentication(withClientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", scope: "wallet:user:read,wallet:buys:create,wallet:payment-methods:read,wallet:accounts:read,wallet:transactions:send,wallet:transactions:send:bypass-2fa", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: ["send_limit_amount": "5.00", " send_limit_currency": "USD", "send_limit_period": "week"])
     }
     
     //MARK: - PickerView For Coinflash Account
@@ -187,7 +205,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     // MARK: - API
     func requestCoinbaseLinkAPIRequest(){
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,
-                                     "code": coinbaseInfoObject.accessToken, "Redirect_url": "com.coinbasepermittedcoinflash.apps.coinflash-12345678"]
+                                     "code": coinbaseInfoObject.accessToken, "redirect_url": "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", "coinbase_refresh_access_token": coinbaseInfoObject.refreshToken]
         SVProgressHUD.show(withStatus: "Linking Coinbase")
         UIApplication.shared.beginIgnoringInteractionEvents()
         Alamofire.request("\(baseUrl)auththirdparty3/", method: HTTPMethod.post, parameters: parameter)
@@ -204,7 +222,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     self.addCoinbaseButton.isHidden = true
                     UIApplication.shared.endIgnoringInteractionEvents()
                     self.addCoinbaseButton.isHidden = true
-                    
+                    self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseGreen")
                     HelperFunctions.manageCoinBaseLinking()
                 case .failure:
                     print(response.error as Any)
@@ -245,7 +263,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         if plaidInfoObject.loggedIn == true{
             let alert = UIAlertController(title: "Bank Account Link", message: "Already Logged In Do You want to deLink ?", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: DelinkPlaid))
-            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.default, handler: nil))
             
             self.present(alert, animated: true, completion: nil)
             return
@@ -334,8 +352,12 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
                 HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
-                
-            }
+                self.getCoinFlashUserInfo()
+                    self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
+                HelperFunctions.managePlaidLinked()
+                self.updateViews()
+            
+        }
             else if AA != nil{
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Already Linked")
@@ -348,12 +370,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 
             }
             // Loading the data in the Table
-            
-            
-            
         }
     }
-    
     
     func DlinkCoinbase(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [
@@ -363,42 +381,33 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             "mobile_secret" : mobile_secret,
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
-            "revoke_coinbase_token" : "true"
-            
-        ]
+            "revoke_coinbase_token" : "true"]
+        
         SVProgressHUD.show()
         
         Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             switch response.result{
             case .success(let value):
-            let data = response.result.value as? NSDictionary
-            
-            let DR = data?.value(forKey: "coinbase_authorization_success")
-            if DR != nil
-            {
+                let data = response.result.value as? NSDictionary
+                print(response)
                 SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("CoinBase Link", message: " Dlinked")
-                
+                self.presentAlertViewWithTitle("CoinBase", message: " Account Delinked")
+                    
                 self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
                 self.addCoinbaseButton.isHidden = false
-                HelperFunctions.manageCoinbaseDelinking()
-            }
-            else
-            {
-                SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("CoinBase Link", message: "DeLinking Fail : Retry")
                 
-            }
-            
-            SVProgressHUD.dismiss()
+                
+                HelperFunctions.manageCoinbaseDelinking()
+                self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseTopGray")
+                
             case .failure:
                 print(response.error as Any)
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
+                self.presentAlertViewWithTitle("CoinBase", message: "DeLinking Fail : Retry")
             }
         }
     }
-    
     
     func DlinkPlaid(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [
@@ -408,9 +417,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             "mobile_secret" : mobile_secret,
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
-            "unlink_credit_card" : "true"
-            
-        ]
+            "unlink_credit_card" : "true"]
+        
         SVProgressHUD.show()
         
         Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
@@ -425,8 +433,13 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     SVProgressHUD.dismiss()
                     self.presentAlertViewWithTitle("Bank Account Link", message: "Account Dlinked")
                     HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
-                    
-                    
+                    self.AddBankLink.setImage( UIImage.init(named: "addNwbanks"), for: .normal)
+                    plaidInfoObject.loggedIn = false
+                    self.plaidAccounts = []
+                    self.bankTable.reloadData()
+                    self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
+                    HelperFunctions.managePlaidDelinking()
+                    self.updateViews()
                     
                 }
                 else
@@ -437,9 +450,12 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 }
                 
                 SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("Success", message: "Bank Accounts Delinked")
+                HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
             case .failure:
                 print(response.error as Any)
                 SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("Failure", message: "De Linking Failed : Retry")
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
         }

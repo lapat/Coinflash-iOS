@@ -97,8 +97,9 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         //Set Chart Properties
         CryptoPriceGraph.chartDescription?.text = ""
-        self.CryptoPriceGraph.rightAxis.drawLabelsEnabled = false
-        self.CryptoPriceGraph.leftAxis.labelTextColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
+        
+        self.CryptoPriceGraph.rightAxis.drawLabelsEnabled = true
+        self.CryptoPriceGraph.rightAxis.labelTextColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         self.CryptoPriceGraph.xAxis.labelTextColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         self.CryptoPriceGraph.legend.enabled = false
         self.CryptoPriceGraph.xAxis.gridColor = UIColor(red: 173/255, green: 194/255, blue: 218/255, alpha: 1)
@@ -110,6 +111,10 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.CryptoPriceGraph.noDataText = "Loading"
         
         self.CryptoPriceGraph.xAxis.labelPosition = XAxis.LabelPosition.bottom
+        
+        
+        self.CryptoPriceGraph.leftAxis.enabled = false
+        
         self.CryptoPriceGraph.minOffset = 0
         self.CryptoPriceGraph.xAxis.labelPosition = .bottom
         setCryptochartView(date: Cryptodates, prices: Cryptoprices)
@@ -131,14 +136,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         // self.LoadCryptoGraphCurrentPriceHistery()
         
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        if isGraphOptionSelected == true{
-            isGraphOptionSelected = false
-            
-            print(GraphOptionSelected)
-        }
-        
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
             banner.show()
@@ -148,6 +145,14 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         }else if !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
             banner.show()
+        }
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if isGraphOptionSelected == true{
+            isGraphOptionSelected = false
+            
+            print(GraphOptionSelected)
         }
     }
     
@@ -285,7 +290,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        let fromDate = Calendar.current.date(byAdding: .day, value: -10, to: Date())
+        let fromDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())
         let date = formatter.string(from: fromDate!)
         let dateFormate = formatter.date(from: date)
         let DateToString = formatter.string(from: dateFormate!)
@@ -326,7 +331,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                     
                     let DataResponseBTC = array["BTC"] as! NSArray
                     let DataResponseETH = array["ETH"] as! NSArray
-                    for index in stride(from: (DataResponseBTC.count - 1), to: 0, by: -1){//(DataResponseBTC.count - 1)...0 {
+                    for index in stride(from: 0, to: (DataResponseBTC.count - 1), by: 1){//(DataResponseBTC.count - 1)...0 {
                         let DataDic = DataResponseBTC[index] as? NSDictionary
                         var Date = DataDic!["date"] as! String
                         Date = String(Date.characters.dropFirst(5))
@@ -335,7 +340,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                         self.BitcoinCryptoprices.append(price)
                         
                     }
-                    for index in stride(from: (DataResponseETH.count - 1), to: 0, by: -1){//(DataResponseETH.count - 1)...0 {
+                    for index in stride(from: 0, to: (DataResponseETH.count - 1), by: 1){//(DataResponseETH.count - 1)...0 {
                         let DataDic = DataResponseETH[index] as? NSDictionary
                         var Date = DataDic!["date"] as! String
                         Date = String(Date.characters.dropFirst(5))
