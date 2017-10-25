@@ -88,7 +88,12 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
                 let data = response.result.value as! [String: Any]
                 HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
                 SVProgressHUD.dismiss()
-                self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+                if HelperFunctions.isTOCAccepted(){
+                    self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+                    //self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+                }else{
+                    self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+                }
             case .failure:
                 print(response.error)
                 SVProgressHUD.dismiss()

@@ -475,24 +475,49 @@
         <!--TOC View-->
         <scene sceneID="eyu-YL-tKi">
             <objects>
-                <viewController title="TOC View" id="Xuc-AV-kpA" sceneMemberID="viewController">
+                <viewController title="TOC View" id="Xuc-AV-kpA" customClass="TOCVC" customModule="coinflash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ET4-Cp-Tqh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M5i-MS-btN">
-                                <rect key="frame" x="16" y="20" width="343" height="513"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XVz-a7-YdO">
-                                <rect key="frame" x="164" y="617" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XVz-a7-YdO">
+                                <rect key="frame" x="140" y="617" width="94" height="30"/>
+                                <color key="backgroundColor" red="0.43137254899999999" green="0.69019607839999997" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="94" id="Mi7-Tt-oi2"/>
+                                </constraints>
+                                <state key="normal" title="Accept">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapOnAcceptTOCButtonWithSende:" destination="Xuc-AV-kpA" eventType="touchUpInside" id="Ksd-Ff-IWW"/>
+                                </connections>
                             </button>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DeP-2h-9Rp">
+                                <rect key="frame" x="16" y="20" width="343" height="581"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences" minimumFontSize="25"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="DeP-2h-9Rp" firstAttribute="leading" secondItem="yND-os-ugS" secondAttribute="leading" constant="16" id="Xpx-OB-TJO"/>
+                            <constraint firstItem="yND-os-ugS" firstAttribute="trailing" secondItem="DeP-2h-9Rp" secondAttribute="trailing" constant="16" id="a0L-ug-ml6"/>
+                            <constraint firstItem="yND-os-ugS" firstAttribute="bottom" secondItem="XVz-a7-YdO" secondAttribute="bottom" constant="20" id="b17-yx-Wlw"/>
+                            <constraint firstItem="XVz-a7-YdO" firstAttribute="centerX" secondItem="yND-os-ugS" secondAttribute="centerX" id="eLa-H8-3V6"/>
+                            <constraint firstItem="XVz-a7-YdO" firstAttribute="top" secondItem="DeP-2h-9Rp" secondAttribute="bottom" constant="16" id="gT7-Ir-F3D"/>
+                            <constraint firstItem="DeP-2h-9Rp" firstAttribute="top" secondItem="yND-os-ugS" secondAttribute="top" id="vFO-2b-GLw"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="yND-os-ugS"/>
                     </view>
+                    <connections>
+                        <outlet property="acceptButton" destination="XVz-a7-YdO" id="KlM-J7-aHI"/>
+                        <outlet property="webView" destination="DeP-2h-9Rp" id="0mf-rP-df6"/>
+                        <segue destination="qF3-WI-LvA" kind="show" identifier="mainPageSegue" id="0WS-hB-r4M"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SKr-1H-eIs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1756,6 +1781,7 @@
                     <connections>
                         <outlet property="signInButton" destination="Vut-ZC-G23" id="8GD-aS-9fB"/>
                         <segue destination="qF3-WI-LvA" kind="show" identifier="mainPageSegue" id="01D-cS-7Xy"/>
+                        <segue destination="Xuc-AV-kpA" kind="show" identifier="tocAcceptSegue" id="WVq-0v-IlK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZFr-fn-yz5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1891,5 +1917,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="pdj-mW-GPu"/>
+        <segue reference="0WS-hB-r4M"/>
     </inferredMetricsTieBreakers>
 </document>
