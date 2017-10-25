@@ -98,6 +98,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.default.menuDismissOnPush = true
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuParallaxStrength = 3
+        NotificationCenter.default.addObserver(self, selector: #selector(didSuccessfullyBuyCoins(handleNotification:)), name: NSNotification.Name.onSuccessfulPurchaseOfCoins, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -368,6 +369,12 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }else{
             HelperFunctions.showToast(withString: "Configure your coinbase account in settings to buy items", onViewController: self)
         }
+    }
+    
+    /// Handles the buy notification which is called when the buy is successfull
+    func didSuccessfullyBuyCoins(handleNotification notificaiton: NSNotification){
+        let banner = NotificationBanner(title: "Success", subtitle: "You successfully bought cyrptocurrency using your spare change.", style: .success)
+        banner.show()
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {

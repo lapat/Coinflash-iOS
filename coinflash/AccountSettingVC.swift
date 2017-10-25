@@ -69,7 +69,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         let nc =  NotificationCenter.default
         nc.addObserver(self, selector: #selector(viewDidEnterForground(notificaiton:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         // register for notifaction of coinbase api login being completed
-        nc.addObserver(self, selector: #selector(coinBaseAuthenticationCompleted(withNotification:)), name: NSNotification.Name.onCoinbaseLoginCompletion, object: self)
+        nc.addObserver(self, selector: #selector(coinBaseAuthenticationCompleted(withNotification:)), name: NSNotification.Name.onCoinbaseLoginCompletion, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,23 +121,9 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     func viewDidEnterForground(notificaiton: NSNotification){
         if (UIApplication.shared.delegate as! AppDelegate).processingBacklink == true{
-            SVProgressHUD.show()
-            UIApplication.shared.beginIgnoringInteractionEvents()
-            Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
-                SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
-                if HelperFunctions.isCoinbaseLoggedIn() == true{
-                    //self.coinbaseLinkedLabel.text = "Coinbase Linked"
-                    //self.DlinkCoinBase.isHidden = false
-                    //self.addCoinbaseButton.isHidden = true
-                    self.requestCoinbaseLinkAPIRequest()
-                }else{
-                    self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
-                    self.addCoinbaseButton.isHidden = false
-                    self.DlinkCoinBase.isHidden = true
-                }
-                (UIApplication.shared.delegate as! AppDelegate).processingBacklink = false
-            })
+            SVProgressHUD.show(withStatus: "Processing Login")
+            //UIApplication.shared.beginIgnoringInteractionEvents()
+            
         }else{
             if HelperFunctions.isPlaidLoggedIn() == true{
                 //coinbaseLinkedLabel.text = "Coinbase Linked"
@@ -152,7 +138,19 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     }
     
     func coinBaseAuthenticationCompleted(withNotification notificaion: NSNotification){
-        
+        SVProgressHUD.dismiss()
+        UIApplication.shared.endIgnoringInteractionEvents()
+        if HelperFunctions.isCoinbaseLoggedIn() == true{
+            //self.coinbaseLinkedLabel.text = "Coinbase Linked"
+            //self.DlinkCoinBase.isHidden = false
+            //self.addCoinbaseButton.isHidden = true
+            self.requestCoinbaseLinkAPIRequest()
+        }else{
+            self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
+            self.addCoinbaseButton.isHidden = false
+            self.DlinkCoinBase.isHidden = true
+        }
+        (UIApplication.shared.delegate as! AppDelegate).processingBacklink = false
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

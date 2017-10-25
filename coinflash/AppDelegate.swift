@@ -86,6 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                     HelperFunctions.coinBaseSaveLoginInfo(info: result as! NSDictionary)
                     self.processingBacklink = false
+                    NotificationCenter.default.post(name: .onCoinbaseLoginCompletion, object: nil)
                     // Note that you should also store 'expire_in' and refresh the token using CoinbaseOAuth.getOAuthTokensForRefreshToken() when it expires
                 }
             })
