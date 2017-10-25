@@ -357,7 +357,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         }
     }
     
-    
     func DlinkCoinbase(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -366,9 +365,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             "mobile_secret" : mobile_secret,
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
-            "revoke_coinbase_token" : "true"
-            
-        ]
+            "revoke_coinbase_token" : "true"]
+        
         SVProgressHUD.show()
         
         Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
@@ -392,7 +390,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         }
     }
     
-    
     func DlinkPlaid(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -402,37 +399,21 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
             "unlink_credit_card" : "true"
-            
         ]
+        
         SVProgressHUD.show()
         
         Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             switch response.result{
             case .success:
                 let data = response.result.value as? NSDictionary
-                
-                let DR = data?.value(forKey: "disconnect_returned")
-                if DR != nil
-                {
-                    
-                    SVProgressHUD.dismiss()
-                    self.presentAlertViewWithTitle("Bank Account Link", message: "Account Dlinked")
-                    HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
-                    
-                    
-                    
-                }
-                else
-                {
-                    SVProgressHUD.dismiss()
-                    self.presentAlertViewWithTitle("Bank Account Link", message: "DeLinking Fail : Retry")
-                    
-                }
-                
                 SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("Success", message: "Bank Accounts Delinked")
+                HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
             case .failure:
                 print(response.error as Any)
                 SVProgressHUD.dismiss()
+                self.presentAlertViewWithTitle("Failure", message: "De Linking Failed : Retry")
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
