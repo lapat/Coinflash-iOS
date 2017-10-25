@@ -13,6 +13,7 @@ import SVProgressHUD
 import Alamofire
 import SwiftyJSON
 import LinkKit
+import NotificationBannerSwift
 
 
 class PlaidBankCell: UITableViewCell{
@@ -51,6 +52,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var bankTable: UITableView!
     @IBOutlet weak var coinbaseLinkedLabel: UILabel!
     @IBOutlet weak var addCoinbaseButton: UIButton!
+    @IBOutlet weak var plaidLinkedImageView: UIImageView!
+    @IBOutlet weak var coinbaseLinkedImageView: UIImageView!
+    @IBOutlet weak var overallLinkedImageView: UIImageView!
+    
     var plaidAccounts: [JSON]!
     
     @IBOutlet weak var DlinkCoinBase: UIButton!
@@ -66,25 +71,45 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // Check for coing base linkage
         if HelperFunctions.isCoinbaseLoggedIn() == true{
             coinbaseLinkedLabel.text = "Coinbase Linked"
             self.addCoinbaseButton.isHidden = true
             self.DlinkCoinBase.isHidden = false
+            self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseGreen")
         }else{
             coinbaseLinkedLabel.text = "Coinbase Not Linked"
             self.addCoinbaseButton.isHidden = false
             self.DlinkCoinBase.isHidden = true
+            self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseTopGray")
         }
         
+        // Check for plaid linkage
         if HelperFunctions.isPlaidLoggedIn() == true{
-            
+            self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
         }else{
-            
+            self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
+        }
+        
+        if HelperFunctions.isPlaidLoggedIn() && HelperFunctions.isCoinbaseLoggedIn() {
+            self.overallLinkedImageView.image = UIImage(imageLiteralResourceName: "linkedIcon")
+        }else{
+            self.overallLinkedImageView.image = UIImage(imageLiteralResourceName: "notLinked")
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.getCoinFlashUserInfo()
+        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isCoinbaseLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
+            banner.show()
+        }
     }
     
     @IBAction func DlinkCoinbaseAction(_ sender: Any) {
@@ -100,25 +125,26 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 if HelperFunctions.isCoinbaseLoggedIn() == true{
-                    self.coinbaseLinkedLabel.text = "Coinbase Linked"
-                    self.DlinkCoinBase.isHidden = false
+                    //self.coinbaseLinkedLabel.text = "Coinbase Linked"
+                    //self.DlinkCoinBase.isHidden = false
+                    //self.addCoinbaseButton.isHidden = true
                     self.requestCoinbaseLinkAPIRequest()
                 }else{
                     self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
-                    self.addCoinbaseButton.isHidden = true
+                    self.addCoinbaseButton.isHidden = false
                     self.DlinkCoinBase.isHidden = true
                 }
                 (UIApplication.shared.delegate as! AppDelegate).processingBacklink = false
             })
         }else{
             if HelperFunctions.isPlaidLoggedIn() == true{
-                coinbaseLinkedLabel.text = "Coinbase Linked"
-                self.DlinkCoinBase.isHidden = false
-                self.requestCoinbaseLinkAPIRequest()
+                //coinbaseLinkedLabel.text = "Coinbase Linked"
+                //self.DlinkCoinBase.isHidden = true
+                //self.requestCoinbaseLinkAPIRequest()
             }else{
-                coinbaseLinkedLabel.text = "Coinbase Not Linked"
-                self.DlinkCoinBase.isHidden = true
-                self.addCoinbaseButton.isHidden = false
+                //coinbaseLinkedLabel.text = "Coinbase Not Linked"
+                //self.DlinkCoinBase.isHidden = false
+                //self.addCoinbaseButton.isHidden = false
             }
         }
     }
@@ -150,7 +176,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     @IBAction func didTapOnAddCoinbaseButton(sender: UIButton){
         (UIApplication.shared.delegate as! AppDelegate).processingBacklink = true
-        CoinbaseOAuth.startAuthentication(withClientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", scope: "wallet:buys:create", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: nil)
+        CoinbaseOAuth.startAuthentication(withClientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", scope: "wallet:user:read,wallet:buys:create,wallet:payment-methods:read,wallet:accounts:read,wallet:transactions:send:bypass-2fa", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: nil)
     }
     
     //MARK: - PickerView For Coinflash Account
@@ -161,21 +187,24 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     // MARK: - API
     func requestCoinbaseLinkAPIRequest(){
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,
-                                     "code": coinbaseInfoObject.accessToken]
+                                     "code": coinbaseInfoObject.accessToken, "Redirect_url": "com.coinbasepermittedcoinflash.apps.coinflash-12345678"]
         SVProgressHUD.show(withStatus: "Linking Coinbase")
         UIApplication.shared.beginIgnoringInteractionEvents()
         Alamofire.request("\(baseUrl)auththirdparty3/", method: HTTPMethod.post, parameters: parameter)
-            .validate()
             .responseJSON { (response) in
                 switch response.result{
                 case .success:
                     let data = response.result.value as! [String: Any]
-                    //print(data)
+                    print(response)
                     // Dismiss all views and load the login view
                     
                     SVProgressHUD.dismiss()
+                    self.coinbaseLinkedLabel.text = "Coinbase Linked"
+                    self.DlinkCoinBase.isHidden = false
+                    self.addCoinbaseButton.isHidden = true
                     UIApplication.shared.endIgnoringInteractionEvents()
                     self.addCoinbaseButton.isHidden = true
+                    
                     HelperFunctions.manageCoinBaseLinking()
                 case .failure:
                     print(response.error as Any)

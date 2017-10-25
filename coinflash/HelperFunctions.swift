@@ -53,6 +53,19 @@ class HelperFunctions: NSObject {
         //self.saveNSUserDefaults()
     }
     
+    static func userAcceptedTOC(){
+        if OnBoardStatus.didNotAcceptTOC == user_onboard_status{
+           user_onboard_status =  OnBoardStatus.agreedTOCNoPlaidOrCoinbase
+        }
+    }
+    
+    static func isTOCAccepted() -> Bool{
+        if user_onboard_status == OnBoardStatus.didNotAcceptTOC{
+            return false
+        }else{
+            return true
+        }
+    }
     
     // MARK: - Coin base Helpers
     static func coinBaseSaveLoginInfo(info: NSDictionary){
@@ -64,7 +77,34 @@ class HelperFunctions: NSObject {
         coinbaseInfoObject.scope = info.value(forKey: "scope") as! String
         coinbaseInfoObject.tokenType = info.value(forKey: "token_type") as! String
         coinbaseInfoObject.loggedIn = true
+        self.manageCoinBaseLinking()
         print("number \(coinbaseInfoObject.expiresIn)")
+    }
+    
+    static func isCoinbaseLoggedIn() -> Bool{
+        if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase || user_onboard_status == OnBoardStatus.linkedCoinbaseButNoPlaid{
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    static func manageCoinbaseDelinking(){
+        if user_onboard_status == OnBoardStatus.linkedCoinbaseButNoPlaid{
+            user_onboard_status = OnBoardStatus.agreedTOCNoPlaidOrCoinbase
+        }
+        if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
+            user_onboard_status = OnBoardStatus.linkedPlaidButNoCoinbase
+        }
+    }
+    
+    static func manageCoinBaseLinking(){
+        if user_onboard_status == OnBoardStatus.agreedTOCNoPlaidOrCoinbase{
+            user_onboard_status = OnBoardStatus.linkedCoinbaseButNoPlaid
+        }
+        if user_onboard_status == OnBoardStatus.linkedPlaidButNoCoinbase{
+            user_onboard_status = OnBoardStatus.linkedPlaidAndCoinbase
+        }
     }
     
     // MARK: - Defaults
@@ -142,31 +182,6 @@ class HelperFunctions: NSObject {
         }
     }
     
-    static func isCoinbaseLoggedIn() -> Bool{
-        if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase || user_onboard_status == OnBoardStatus.linkedCoinbaseButNoPlaid{
-            return true
-        }else{
-            return false
-        }
-    }
-    
-    static func manageCoinbaseDelinking(){
-        if user_onboard_status == OnBoardStatus.linkedCoinbaseButNoPlaid{
-            user_onboard_status = OnBoardStatus.agreedTOCNoPlaidOrCoinbase
-        }
-        if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
-            user_onboard_status = OnBoardStatus.linkedPlaidButNoCoinbase
-        }
-    }
-    
-    static func manageCoinBaseLinking(){
-        if user_onboard_status == OnBoardStatus.agreedTOCNoPlaidOrCoinbase{
-            user_onboard_status = OnBoardStatus.linkedCoinbaseButNoPlaid
-        }
-        if user_onboard_status == OnBoardStatus.linkedPlaidButNoCoinbase{
-            user_onboard_status = OnBoardStatus.linkedPlaidAndCoinbase
-        }
-    }
 }
 
 extension UIColor {

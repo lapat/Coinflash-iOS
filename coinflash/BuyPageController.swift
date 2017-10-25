@@ -13,6 +13,7 @@ import SideMenu
 import Alamofire
 import SVProgressHUD
 import Toast_Swift
+import NotificationBannerSwift
 
 class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDelegate{
     @IBOutlet weak var btcBtn: UIButton?
@@ -136,10 +137,24 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             isGraphOptionSelected = false
             
             print(GraphOptionSelected)
-            
-            
+        }
+        
+        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isCoinbaseLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
+            banner.show()
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! CryptoTransationCellView
@@ -169,7 +184,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelGroth?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         LabelType?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         boundryCricleImage?.image = UIImage(named: "circleGreen")
-        self.PriceTypeLabel.text = "ETH price"
+        self.PriceTypeLabel.text = "Ethereum price"
         // Value assignement
         self.DataToBeLoaded = self.EitherTransation
         self.DataToBeLoadedwithColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
@@ -177,15 +192,11 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelCoin?.text =  String(self.m_amount_eth_owned)
         self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_eth) + " Dollar"
         self.CurrencyRatePolixCode = "USDT_ETH"
-        self.loadNetGainEther()
-        
-        
-        
-        
+        self.LabelType?.text = "ETH"
         self.Cryptodates = self.EitherCryptodates
         self.Cryptoprices = self.EitherCryptoprices
-        
         setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
+        self.loadNetGainEther()
         self.unhideLabels()
         
     }
@@ -197,7 +208,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelGroth?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         LabelType?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         boundryCricleImage?.image = UIImage(named: "circleBlue")
-        self.PriceTypeLabel.text = "BTC price"
+        self.PriceTypeLabel.text = "Bitcoin price"
         // Value assignement
         self.DataToBeLoaded = self.BitcoinTransation
         self.DataToBeLoadedwithColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
@@ -205,11 +216,11 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelCoin?.text =  String(self.m_amount_btc_owned)
         self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_btc) + " Dollar"
         self.CurrencyRatePolixCode = "USDT_BTC"
-        
-        self.loadNetGainBitcoin()
+        self.LabelType?.text = "BTC"
         self.Cryptodates = self.BitcoinCryptodates
         self.Cryptoprices = self.BitcoinCryptoprices
         setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
+        self.loadNetGainBitcoin()
         self.unhideLabels()
         
     }
@@ -470,7 +481,18 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     }
     func loadNetGainEther(){
         var GainLoss = m_total_amount_spent_on_eth - m_amount_eth_owned * m_price_right_now_eth
+        if GainLoss == 0{
+            self.LabelGroth?.isHidden = true
+            self.ImageArrow?.isHidden = true
+        }
+        else{
+            self.LabelGroth?.isHidden = false
+            self.ImageArrow?.isHidden = false
+        }
+        
+        
         GainLoss = round(num: GainLoss, to: 2)
+        
         if GainLoss > 0{
             self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Gain"
             self.ImageArrow?.image = UIImage(named:"gainUp")!
@@ -484,6 +506,15 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     func loadNetGainBitcoin(){
         
         var GainLoss = m_total_amount_spent_on_btc - m_amount_btc_owned * m_price_right_now_btc
+        if GainLoss == 0{
+            self.LabelGroth?.isHidden = true
+            self.ImageArrow?.isHidden = true
+        }
+        else{
+            self.LabelGroth?.isHidden = false
+            self.ImageArrow?.isHidden = false
+        }
+        
         GainLoss = round(num: GainLoss, to: 2)
         if GainLoss > 0{
             self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Gain"
@@ -504,6 +535,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             let ratio_btc = (price_btc / (price_btc + price_eth)) * 100
             let ratio_eth = (price_eth / (price_btc + price_eth)) * 100
             let type = ["ETH", "BIT"]
+            
+            self.CrypotEitherBitPieChart.isHidden = false
             let percentage = [ratio_eth,ratio_btc]
             self.setCryptoPieChart(dataPoints: type, values:percentage)
             
@@ -511,6 +544,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         else
         {
             let type = ["none"]
+            self.CrypotEitherBitPieChart.isHidden = true
             let percentage = [100.0]
             self.setCryptoPieChart(dataPoints: type, values:percentage)
             
@@ -522,7 +556,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         PriceTypeLabel.isHidden = false
         LabelCoin?.isHidden = false
         LabelCurrency?.isHidden = false
-        LabelGroth?.isHidden = false
+        //LabelGroth?.isHidden = false
         LabelType?.isHidden = false
         
     }
