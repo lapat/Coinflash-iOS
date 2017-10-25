@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -481,12 +481,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XVz-a7-YdO">
-                                <rect key="frame" x="140" y="617" width="94" height="30"/>
+                                <rect key="frame" x="97" y="617" width="180" height="30"/>
                                 <color key="backgroundColor" red="0.43137254899999999" green="0.69019607839999997" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="94" id="Mi7-Tt-oi2"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="Mi7-Tt-oi2"/>
                                 </constraints>
-                                <state key="normal" title="Accept">
+                                <state key="normal" title="Accept Term of Service">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -1624,8 +1624,8 @@
                                     <constraint firstAttribute="width" constant="48" id="SC5-8D-NN1"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coinbase Not Linked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PlE-aS-C4e">
-                                <rect key="frame" x="80" y="573" width="161" height="23.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coinbase Not Linked" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PlE-aS-C4e">
+                                <rect key="frame" x="80" y="573" width="226" height="23.5"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1689,7 +1689,7 @@
                             <constraint firstItem="V8D-Si-3ec" firstAttribute="centerX" secondItem="5rS-uU-nfj" secondAttribute="leading" id="hFL-eG-vVG"/>
                             <constraint firstItem="biu-qR-UdG" firstAttribute="top" secondItem="hRE-X9-uJS" secondAttribute="top" id="i26-b7-uR9"/>
                             <constraint firstItem="ysO-Ic-2rS" firstAttribute="leading" secondItem="biu-qR-UdG" secondAttribute="leading" id="j5i-xe-Ebp"/>
-                            <constraint firstItem="v4N-tD-3d3" firstAttribute="leading" secondItem="PlE-aS-C4e" secondAttribute="trailing" constant="73" id="jSc-4J-ZlE"/>
+                            <constraint firstItem="v4N-tD-3d3" firstAttribute="leading" relation="lessThanOrEqual" secondItem="PlE-aS-C4e" secondAttribute="trailing" constant="8" id="jSc-4J-ZlE"/>
                             <constraint firstItem="PlE-aS-C4e" firstAttribute="centerY" secondItem="G9M-M5-B2B" secondAttribute="centerY" id="jtr-gt-Waf"/>
                             <constraint firstItem="hRq-bz-VJn" firstAttribute="leading" secondItem="biu-qR-UdG" secondAttribute="leading" id="k4H-X9-he2"/>
                             <constraint firstItem="ysO-Ic-2rS" firstAttribute="top" secondItem="FYU-8W-m6Q" secondAttribute="bottom" constant="2.5" id="kee-EW-y8X"/>
