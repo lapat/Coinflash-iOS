@@ -350,6 +350,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
                 self.getCoinFlashUserInfo()
                     self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
+                HelperFunctions.managePlaidLinked()
+                
             
         }
             else if AA != nil{
@@ -432,6 +434,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     self.plaidAccounts = []
                     self.bankTable.reloadData()
                     self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
+                    HelperFunctions.managePlaidDelinking()
+                    
                     
                     
                 }
