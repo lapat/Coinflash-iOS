@@ -193,15 +193,10 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_eth) + " Dollar"
         self.CurrencyRatePolixCode = "USDT_ETH"
         self.LabelType?.text = "ETH"
-        self.loadNetGainEther()
-        
-        
-        
-        
         self.Cryptodates = self.EitherCryptodates
         self.Cryptoprices = self.EitherCryptoprices
-        
         setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
+        self.loadNetGainEther()
         self.unhideLabels()
         
     }
@@ -222,10 +217,10 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_btc) + " Dollar"
         self.CurrencyRatePolixCode = "USDT_BTC"
         self.LabelType?.text = "BTC"
-        self.loadNetGainBitcoin()
         self.Cryptodates = self.BitcoinCryptodates
         self.Cryptoprices = self.BitcoinCryptoprices
         setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
+        self.loadNetGainBitcoin()
         self.unhideLabels()
         
     }
@@ -487,7 +482,18 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     }
     func loadNetGainEther(){
         var GainLoss = m_total_amount_spent_on_eth - m_amount_eth_owned * m_price_right_now_eth
+        if GainLoss == 0{
+            self.LabelGroth?.isHidden = true
+            self.ImageArrow?.isHidden = true
+        }
+        else{
+            self.LabelGroth?.isHidden = false
+            self.ImageArrow?.isHidden = false
+        }
+        
+        
         GainLoss = round(num: GainLoss, to: 2)
+        
         if GainLoss > 0{
             self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Gain"
             self.ImageArrow?.image = UIImage(named:"gainUp")!
@@ -501,6 +507,15 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     func loadNetGainBitcoin(){
         
         var GainLoss = m_total_amount_spent_on_btc - m_amount_btc_owned * m_price_right_now_btc
+        if GainLoss == 0{
+            self.LabelGroth?.isHidden = true
+            self.ImageArrow?.isHidden = true
+        }
+        else{
+            self.LabelGroth?.isHidden = false
+            self.ImageArrow?.isHidden = false
+        }
+        
         GainLoss = round(num: GainLoss, to: 2)
         if GainLoss > 0{
             self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Gain"
@@ -521,6 +536,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             let ratio_btc = (price_btc / (price_btc + price_eth)) * 100
             let ratio_eth = (price_eth / (price_btc + price_eth)) * 100
             let type = ["ETH", "BIT"]
+            
+            self.CrypotEitherBitPieChart.isHidden = false
             let percentage = [ratio_eth,ratio_btc]
             self.setCryptoPieChart(dataPoints: type, values:percentage)
             
@@ -528,6 +545,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         else
         {
             let type = ["none"]
+            self.CrypotEitherBitPieChart.isHidden = true
             let percentage = [100.0]
             self.setCryptoPieChart(dataPoints: type, values:percentage)
             
@@ -539,7 +557,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         PriceTypeLabel.isHidden = false
         LabelCoin?.isHidden = false
         LabelCurrency?.isHidden = false
-        LabelGroth?.isHidden = false
+        //LabelGroth?.isHidden = false
         LabelType?.isHidden = false
         
     }

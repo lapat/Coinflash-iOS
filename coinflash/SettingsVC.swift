@@ -123,7 +123,13 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         if str.characters.count <= 4 {
             return true
         }
-        textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+        
+        
+        
+        //textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+        textField.text = str.substring(to: str.index(str.startIndex, offsetBy:4))
+        
+        
         return false
     }
     
@@ -392,14 +398,16 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         
         /// set the labels and values based on the selected row
         let row = generalPickerView.selectedRow(inComponent: 0)
-        if showingPickerWithDataSource == 1{
-            print(coinbaseAccounts[row]["id"].string)
+        
+        if showingPickerWithDataSource == 1 && coinbaseAccounts.count != 0{
+            //print(coinbaseAccounts[row]["id"].string)
             self.coinbasePrimaryAccountID = coinbaseAccounts[row]["id"].string
             self.coinbasePaymentMethodLabel.text = coinbaseAccounts[row]["name"].string
-        }else if showingPickerWithDataSource == 2{
+        }else if showingPickerWithDataSource == 2 && btcWalletAccounts.count != 0 {
+            
             self.btcPrimaryWalletAccountsID = btcWalletAccounts[row]["id"].string
             self.btcWalletLabel.text = btcWalletAccounts[row]["name"].string
-        }else if showingPickerWithDataSource == 3{
+        }else if showingPickerWithDataSource == 3 && ethWalletAccounts.count != 0{
             self.ethPrimaryWalletAccountID = ethWalletAccounts[row]["id"].string
             self.ethWalletLabel.text = ethWalletAccounts[row]["name"].string
         }
