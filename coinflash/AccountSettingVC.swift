@@ -70,6 +70,17 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         nc.addObserver(self, selector: #selector(viewDidEnterForground(notificaiton:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         // register for notifaction of coinbase api login being completed
         nc.addObserver(self, selector: #selector(coinBaseAuthenticationCompleted(withNotification:)), name: NSNotification.Name.onCoinbaseLoginCompletion, object: nil)
+        self.getCoinFlashUserInfo()
+        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isCoinbaseLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
+            banner.show()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,17 +112,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.getCoinFlashUserInfo()
-        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
-            banner.show()
-        }else if !HelperFunctions.isCoinbaseLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
-            banner.show()
-        }else if !HelperFunctions.isPlaidLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
-            banner.show()
-        }
+        
     }
     
     @IBAction func DlinkCoinbaseAction(_ sender: Any) {

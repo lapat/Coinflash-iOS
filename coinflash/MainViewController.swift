@@ -99,15 +99,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuParallaxStrength = 3
         NotificationCenter.default.addObserver(self, selector: #selector(didSuccessfullyBuyCoins(handleNotification:)), name: NSNotification.Name.onSuccessfulPurchaseOfCoins, object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-        self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-        HelperFunctions.LoadBankInfo()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
+        
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
             banner.show()
@@ -118,6 +110,16 @@ class MainViewController: UIViewController, UITableViewDataSource{
             let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
             banner.show()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        HelperFunctions.LoadBankInfo()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
     }
     
     func updateViewInvestmentInformation(){
