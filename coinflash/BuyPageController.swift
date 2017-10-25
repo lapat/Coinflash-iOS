@@ -136,7 +136,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         // self.LoadCryptoGraphCurrentPriceHistery()
         
-        self.getCoinFlashUserInfo()
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
             banner.show()
