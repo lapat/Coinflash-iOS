@@ -53,6 +53,19 @@ class HelperFunctions: NSObject {
         //self.saveNSUserDefaults()
     }
     
+    static func userAcceptedTOC(){
+        if OnBoardStatus.didNotAcceptTOC == user_onboard_status{
+           user_onboard_status =  OnBoardStatus.agreedTOCNoPlaidOrCoinbase
+        }
+    }
+    
+    static func isTOCAccepted() -> Bool{
+        if user_onboard_status == OnBoardStatus.didNotAcceptTOC{
+            return false
+        }else{
+            return true
+        }
+    }
     
     // MARK: - Coin base Helpers
     static func coinBaseSaveLoginInfo(info: NSDictionary){
