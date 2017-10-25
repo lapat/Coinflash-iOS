@@ -95,8 +95,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         //print("element Released")
     }
     
-    
-    
     override func viewDidLoad() {
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
         SideMenuManager.default.menuDismissOnPush = true

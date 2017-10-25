@@ -44,10 +44,10 @@ class MenuVC: UIViewController {
             return
         }
         nvController?.popViewController(animated: false)
-        dismiss(animated: true, completion: nil)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyboard.instantiateViewController(withIdentifier: "account-settings-view")
         nvController?.pushViewController(newViewController, animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func didTapOnPortFolioButton(sender: UIButton){
@@ -58,10 +58,10 @@ class MenuVC: UIViewController {
             return
         }
         nvController?.popViewController(animated: false)
-        dismiss(animated: true, completion: nil)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyboard.instantiateViewController(withIdentifier: "buypage-view")
         nvController?.pushViewController(newViewController, animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func didTapOnManageChangeButton(sender: UIButton){
@@ -72,10 +72,10 @@ class MenuVC: UIViewController {
             return
         }
         nvController?.popViewController(animated: false)
-        dismiss(animated: true, completion: nil)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyboard.instantiateViewController(withIdentifier: "mainpage-view")
         nvController?.pushViewController(newViewController, animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     func sendSignal(withMessage message: String)  {
