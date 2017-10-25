@@ -85,6 +85,14 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.updateViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
+    
+    func updateViews(){
         // Check for coing base linkage
         if HelperFunctions.isCoinbaseLoggedIn() == true{
             coinbaseLinkedLabel.text = "Coinbase Linked"
@@ -110,10 +118,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         }else{
             self.overallLinkedImageView.image = UIImage(imageLiteralResourceName: "notLinked")
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
     }
     
     @IBAction func DlinkCoinbaseAction(_ sender: Any) {
@@ -351,7 +355,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 self.getCoinFlashUserInfo()
                     self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
                 HelperFunctions.managePlaidLinked()
-                
+                self.updateViews()
             
         }
             else if AA != nil{
@@ -435,8 +439,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     self.bankTable.reloadData()
                     self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
                     HelperFunctions.managePlaidDelinking()
-                    
-                    
+                    self.updateViews()
                     
                 }
                 else
