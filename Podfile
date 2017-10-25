@@ -8,7 +8,6 @@ target 'coinflash' do
   pod 'Google/SignIn'
   pod 'coinbase-official'
   pod 'SideMenu'
-  pod 'ReactiveCocoa'
   pod 'Alamofire'
   pod 'SVProgressHUD'
   pod 'ChartsRealm', '3.0.3'
@@ -16,6 +15,7 @@ target 'coinflash' do
   pod 'SwiftyJSON'
   pod 'Toast-Swift', '~> 2.0.0'
   pod 'SDWebImage'
+  pod 'NotificationBannerSwift', '~> 1.4.4'
   use_frameworks!
   
   target 'coinflashTests' do

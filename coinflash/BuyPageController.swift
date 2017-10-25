@@ -13,6 +13,7 @@ import SideMenu
 import Alamofire
 import SVProgressHUD
 import Toast_Swift
+import NotificationBannerSwift
 
 class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDelegate{
     @IBOutlet weak var btcBtn: UIButton?
@@ -136,10 +137,24 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             isGraphOptionSelected = false
             
             print(GraphOptionSelected)
-            
-            
+        }
+        
+        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isCoinbaseLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
+            banner.show()
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! CryptoTransationCellView

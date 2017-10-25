@@ -13,6 +13,7 @@ import SVProgressHUD
 import Alamofire
 import SwiftyJSON
 import LinkKit
+import NotificationBannerSwift
 
 
 class PlaidBankCell: UITableViewCell{
@@ -99,6 +100,16 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     override func viewDidAppear(_ animated: Bool) {
         self.getCoinFlashUserInfo()
+        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isCoinbaseLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
+            banner.show()
+        }
     }
     
     @IBAction func DlinkCoinbaseAction(_ sender: Any) {
@@ -114,25 +125,26 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 if HelperFunctions.isCoinbaseLoggedIn() == true{
-                    self.coinbaseLinkedLabel.text = "Coinbase Linked"
-                    self.DlinkCoinBase.isHidden = false
+                    //self.coinbaseLinkedLabel.text = "Coinbase Linked"
+                    //self.DlinkCoinBase.isHidden = false
+                    //self.addCoinbaseButton.isHidden = true
                     self.requestCoinbaseLinkAPIRequest()
                 }else{
                     self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
-                    self.addCoinbaseButton.isHidden = true
+                    self.addCoinbaseButton.isHidden = false
                     self.DlinkCoinBase.isHidden = true
                 }
                 (UIApplication.shared.delegate as! AppDelegate).processingBacklink = false
             })
         }else{
             if HelperFunctions.isPlaidLoggedIn() == true{
-                coinbaseLinkedLabel.text = "Coinbase Linked"
-                self.DlinkCoinBase.isHidden = false
-                self.requestCoinbaseLinkAPIRequest()
+                //coinbaseLinkedLabel.text = "Coinbase Linked"
+                //self.DlinkCoinBase.isHidden = true
+                //self.requestCoinbaseLinkAPIRequest()
             }else{
-                coinbaseLinkedLabel.text = "Coinbase Not Linked"
-                self.DlinkCoinBase.isHidden = true
-                self.addCoinbaseButton.isHidden = false
+                //coinbaseLinkedLabel.text = "Coinbase Not Linked"
+                //self.DlinkCoinBase.isHidden = false
+                //self.addCoinbaseButton.isHidden = false
             }
         }
     }
@@ -175,21 +187,24 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     // MARK: - API
     func requestCoinbaseLinkAPIRequest(){
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,
-                                     "code": coinbaseInfoObject.accessToken]
+                                     "code": coinbaseInfoObject.accessToken, "Redirect_url": "com.coinbasepermittedcoinflash.apps.coinflash-12345678"]
         SVProgressHUD.show(withStatus: "Linking Coinbase")
         UIApplication.shared.beginIgnoringInteractionEvents()
         Alamofire.request("\(baseUrl)auththirdparty3/", method: HTTPMethod.post, parameters: parameter)
-            .validate()
             .responseJSON { (response) in
                 switch response.result{
                 case .success:
                     let data = response.result.value as! [String: Any]
-                    //print(data)
+                    print(response)
                     // Dismiss all views and load the login view
                     
                     SVProgressHUD.dismiss()
+                    self.coinbaseLinkedLabel.text = "Coinbase Linked"
+                    self.DlinkCoinBase.isHidden = false
+                    self.addCoinbaseButton.isHidden = true
                     UIApplication.shared.endIgnoringInteractionEvents()
                     self.addCoinbaseButton.isHidden = true
+                    
                     HelperFunctions.manageCoinBaseLinking()
                 case .failure:
                     print(response.error as Any)

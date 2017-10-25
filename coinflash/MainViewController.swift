@@ -12,6 +12,7 @@ import SideMenu
 import Alamofire
 import SVProgressHUD
 import SwiftyJSON
+import NotificationBannerSwift
 
 
 
@@ -107,6 +108,19 @@ class MainViewController: UIViewController, UITableViewDataSource{
         self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isCoinbaseLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
+            banner.show()
+        }
     }
     
     func updateViewInvestmentInformation(){
