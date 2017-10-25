@@ -9,6 +9,11 @@
 import UIKit
 import Toast_Swift
 
+extension Notification.Name {
+    
+    static let onCoinbaseLoginCompletion = Notification.Name("onCoinbaseLoginCompletion")
+}
+
 class HelperFunctions: NSObject {
 
     static func saveLoginInfo(user: GIDGoogleUser, userIdMobile: String!, mobileAccessToken: String!, onboardStatus: String!){

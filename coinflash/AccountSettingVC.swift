@@ -68,6 +68,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         
         let nc =  NotificationCenter.default
         nc.addObserver(self, selector: #selector(viewDidEnterForground(notificaiton:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        // register for notifaction of coinbase api login being completed
+       // nc.addObserver(self, selector: #selector(coinBaseAuthenticationCompleted(withNotification:)), name: NSNotification., object: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -149,6 +151,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         }
     }
     
+    func coinBaseAuthenticationCompleted(withNotification notificaion: NSNotification){
+        
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         if indexPath.row == 0 && plaidAccounts == nil || plaidAccounts.count < 1{
@@ -176,7 +182,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     @IBAction func didTapOnAddCoinbaseButton(sender: UIButton){
         (UIApplication.shared.delegate as! AppDelegate).processingBacklink = true
-        CoinbaseOAuth.startAuthentication(withClientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", scope: "wallet:user:read,wallet:buys:create,wallet:payment-methods:read,wallet:accounts:read,wallet:transactions:send:bypass-2fa", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: nil)
+        CoinbaseOAuth.startAuthentication(withClientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", scope: "wallet:user:read,wallet:buys:create,wallet:payment-methods:read,wallet:accounts:read,wallet:transactions:send,wallet:transactions:send:bypass-2fa", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: ["send_limit_amount": "5.00", " send_limit_currency": "USD", "send_limit_period": "week"])
     }
     
     //MARK: - PickerView For Coinflash Account
@@ -187,7 +193,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     // MARK: - API
     func requestCoinbaseLinkAPIRequest(){
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,
-                                     "code": coinbaseInfoObject.accessToken, "Redirect_url": "com.coinbasepermittedcoinflash.apps.coinflash-12345678"]
+                                     "code": coinbaseInfoObject.accessToken, "redirect_url": "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", "coinbase_refresh_access_token": coinbaseInfoObject.refreshToken]
         SVProgressHUD.show(withStatus: "Linking Coinbase")
         UIApplication.shared.beginIgnoringInteractionEvents()
         Alamofire.request("\(baseUrl)auththirdparty3/", method: HTTPMethod.post, parameters: parameter)
@@ -348,9 +354,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 
             }
             // Loading the data in the Table
-            
-            
-            
         }
     }
     
@@ -371,30 +374,20 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             switch response.result{
             case .success(let value):
-            let data = response.result.value as? NSDictionary
-            
-            let DR = data?.value(forKey: "coinbase_authorization_success")
-            if DR != nil
-            {
+                let data = response.result.value as? NSDictionary
+                print(response)
                 SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("CoinBase Link", message: " Dlinked")
-                
+                self.presentAlertViewWithTitle("CoinBase", message: " Account Delinked")
+                    
                 self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
                 self.addCoinbaseButton.isHidden = false
                 HelperFunctions.manageCoinbaseDelinking()
-            }
-            else
-            {
-                SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("CoinBase Link", message: "DeLinking Fail : Retry")
                 
-            }
-            
-            SVProgressHUD.dismiss()
             case .failure:
                 print(response.error as Any)
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
+                self.presentAlertViewWithTitle("CoinBase", message: "DeLinking Fail : Retry")
             }
         }
     }

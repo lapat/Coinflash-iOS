@@ -14,8 +14,6 @@ import SVProgressHUD
 import SwiftyJSON
 import NotificationBannerSwift
 
-
-
 // MainView Class
 class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var LabelCurrency: UILabel?
