@@ -14,8 +14,6 @@ import SVProgressHUD
 import SwiftyJSON
 import NotificationBannerSwift
 
-
-
 // MainView Class
 class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var LabelCurrency: UILabel?
@@ -100,15 +98,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.default.menuDismissOnPush = true
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuParallaxStrength = 3
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-        self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-        HelperFunctions.LoadBankInfo()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(didSuccessfullyBuyCoins(handleNotification:)), name: NSNotification.Name.onSuccessfulPurchaseOfCoins, object: nil)
+        
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
             banner.show()
@@ -119,6 +110,16 @@ class MainViewController: UIViewController, UITableViewDataSource{
             let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
             banner.show()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        HelperFunctions.LoadBankInfo()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
     }
     
     func updateViewInvestmentInformation(){
@@ -368,8 +369,25 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 self.present(popUpView, animated: true, completion: nil)
             }
         }else{
-            HelperFunctions.showToast(withString: "Configure your coinbase account in settings to buy items", onViewController: self)
+            let alert = UIAlertController(title: "Payment Configuration Issue", message: "We found no Coinbase payment methods, you will not be able to buy cryptocurrency", preferredStyle: UIAlertControllerStyle.alert)
+            let dismissAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction) in
+                //self.dismiss(animated: true, completion: nil)
+            })
+            let viewHelp = UIAlertAction(title: "View Help", style: UIAlertActionStyle.default, handler: { (alert: UIAlertAction) in
+                UIApplication.shared.open(NSURL(string:"https://coinflashapp.com/support.html") as! URL, options: [:], completionHandler: nil)
+            })
+            
+            alert.addAction(dismissAction)
+            alert.addAction(viewHelp)
+            //HelperFunctions.showToast(withString: "Configure your coinbase account in settings to buy items", onViewController: self)
+            self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    /// Handles the buy notification which is called when the buy is successfull
+    func didSuccessfullyBuyCoins(handleNotification notificaiton: NSNotification){
+        let banner = NotificationBanner(title: "Success", subtitle: "You successfully bought cyrptocurrency using your spare change.", style: .success)
+        banner.show()
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {

@@ -136,14 +136,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         // self.LoadCryptoGraphCurrentPriceHistery()
         
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        if isGraphOptionSelected == true{
-            isGraphOptionSelected = false
-            
-            print(GraphOptionSelected)
-        }
-        
+        self.getCoinFlashUserInfo()
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
             banner.show()
@@ -153,6 +146,14 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         }else if !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
             banner.show()
+        }
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if isGraphOptionSelected == true{
+            isGraphOptionSelected = false
+            
+            print(GraphOptionSelected)
         }
     }
     
