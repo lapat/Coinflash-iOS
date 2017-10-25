@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -1661,7 +1661,10 @@
                         <outlet property="DlinkCoinBase" destination="v4N-tD-3d3" id="nPh-Jy-6fa"/>
                         <outlet property="addCoinbaseButton" destination="ysH-wV-Qx0" id="b0D-qq-voh"/>
                         <outlet property="bankTable" destination="i8D-Kq-3Ee" id="RA7-Ot-8jh"/>
+                        <outlet property="coinbaseLinkedImageView" destination="xc8-dN-Bl0" id="zi0-gY-L5w"/>
                         <outlet property="coinbaseLinkedLabel" destination="PlE-aS-C4e" id="mQb-fv-HDz"/>
+                        <outlet property="overallLinkedImageView" destination="5rS-uU-nfj" id="pzY-Db-xpA"/>
+                        <outlet property="plaidLinkedImageView" destination="V8D-Si-3ec" id="HZM-Hy-SYB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0En-jd-fws" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1862,6 +1865,6 @@
         <image name="settingIcons" width="34" height="34"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="I5M-EP-JW7"/>
+        <segue reference="pdj-mW-GPu"/>
     </inferredMetricsTieBreakers>
 </document>

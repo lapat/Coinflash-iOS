@@ -51,6 +51,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var bankTable: UITableView!
     @IBOutlet weak var coinbaseLinkedLabel: UILabel!
     @IBOutlet weak var addCoinbaseButton: UIButton!
+    @IBOutlet weak var plaidLinkedImageView: UIImageView!
+    @IBOutlet weak var coinbaseLinkedImageView: UIImageView!
+    @IBOutlet weak var overallLinkedImageView: UIImageView!
+    
     var plaidAccounts: [JSON]!
     
     @IBOutlet weak var DlinkCoinBase: UIButton!
@@ -66,20 +70,30 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // Check for coing base linkage
         if HelperFunctions.isCoinbaseLoggedIn() == true{
             coinbaseLinkedLabel.text = "Coinbase Linked"
             self.addCoinbaseButton.isHidden = true
             self.DlinkCoinBase.isHidden = false
+            self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseGreen")
         }else{
             coinbaseLinkedLabel.text = "Coinbase Not Linked"
             self.addCoinbaseButton.isHidden = false
             self.DlinkCoinBase.isHidden = true
+            self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseTopGray")
         }
         
+        // Check for plaid linkage
         if HelperFunctions.isPlaidLoggedIn() == true{
-            
+            self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
         }else{
-            
+            self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
+        }
+        
+        if HelperFunctions.isPlaidLoggedIn() && HelperFunctions.isCoinbaseLoggedIn() {
+            self.overallLinkedImageView.image = UIImage(imageLiteralResourceName: "linkedIcon")
+        }else{
+            self.overallLinkedImageView.image = UIImage(imageLiteralResourceName: "notLinked")
         }
     }
     
