@@ -261,7 +261,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     @IBAction func AddAccount(_ sender: Any) {
         if plaidInfoObject.loggedIn == true{
-            let alert = UIAlertController(title: "Bank Account Link", message: "Already Logged In Do You want to deLink ?", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Warning", message: "Are you sure you want to unlink your bank?", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: DelinkPlaid))
             alert.addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.default, handler: nil))
             
@@ -391,7 +391,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 let data = response.result.value as? NSDictionary
                 print(response)
                 SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("CoinBase", message: " Account Delinked")
+                self.presentAlertViewWithTitle("Coinbase", message: " Your Coinbase account was unlinked")
                     
                 self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
                 self.addCoinbaseButton.isHidden = false
@@ -405,6 +405,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 self.presentAlertViewWithTitle("CoinBase", message: "DeLinking Fail : Retry")
+                self.presentAlertViewWithTitle("Coinbase", message: " Your Coinbase account dLink Failed: Please Retry ")
+                
             }
         }
     }
