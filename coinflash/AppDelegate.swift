@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             setupPlaidLinkWithSharedConfiguration()
         #endif
         
-        SVProgressHUD.setDefaultMaskType(.clear)
+        SVProgressHUD.setDefaultMaskType(.black)
         
        return true
     }

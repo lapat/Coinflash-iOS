@@ -367,7 +367,18 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 self.present(popUpView, animated: true, completion: nil)
             }
         }else{
-            HelperFunctions.showToast(withString: "Configure your coinbase account in settings to buy items", onViewController: self)
+            let alert = UIAlertController(title: "Payment Configuration Issue", message: "We found no Coinbase payment methods, you will not be able to buy cryptocurrency", preferredStyle: UIAlertControllerStyle.alert)
+            let dismissAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction) in
+                //self.dismiss(animated: true, completion: nil)
+            })
+            let viewHelp = UIAlertAction(title: "View Help", style: UIAlertActionStyle.default, handler: { (alert: UIAlertAction) in
+                UIApplication.shared.open(NSURL(string:"https://coinflashapp.com/support.html") as! URL, options: [:], completionHandler: nil)
+            })
+            
+            alert.addAction(dismissAction)
+            alert.addAction(viewHelp)
+            //HelperFunctions.showToast(withString: "Configure your coinbase account in settings to buy items", onViewController: self)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

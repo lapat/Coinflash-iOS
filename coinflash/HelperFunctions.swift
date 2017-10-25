@@ -48,7 +48,9 @@ class HelperFunctions: NSObject {
             coinbaseInfoObject.loggedIn = true
             plaidInfoObject.loggedIn = true
         }
+        user_onboard_status = OnBoardStatus.didNotAcceptTOC
         self.saveNSUserDefaults()
+        
     }
     
     static func updateVariablesForUserLoggingOut(){
