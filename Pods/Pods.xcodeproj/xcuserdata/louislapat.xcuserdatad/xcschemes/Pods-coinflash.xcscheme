@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "21E54AE8FFC48D631D8D3C9FB9FB9344"
+               BlueprintIdentifier = "9677E3DFC3F134B46434C44DFCF629DA"
                BuildableName = "Pods_coinflash.framework"
                BlueprintName = "Pods-coinflash"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "21E54AE8FFC48D631D8D3C9FB9FB9344"
+            BlueprintIdentifier = "9677E3DFC3F134B46434C44DFCF629DA"
             BuildableName = "Pods_coinflash.framework"
             BlueprintName = "Pods-coinflash"
             ReferencedContainer = "container:Pods.xcodeproj">

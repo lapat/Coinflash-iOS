@@ -104,6 +104,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     @IBOutlet weak var signInButton: GIDSignInButton!
     
     override func viewDidLoad() {
+        print("viewDidLoad Login")
         super.viewDidLoad()
         
         // set delegates
