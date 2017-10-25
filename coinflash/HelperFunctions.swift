@@ -48,7 +48,7 @@ class HelperFunctions: NSObject {
             coinbaseInfoObject.loggedIn = true
             plaidInfoObject.loggedIn = true
         }
-        user_onboard_status = OnBoardStatus.didNotAcceptTOC
+        //user_onboard_status = OnBoardStatus.didNotAcceptTOC
         self.saveNSUserDefaults()
         
     }
@@ -182,12 +182,30 @@ class HelperFunctions: NSObject {
         viewController.view.makeToast(string, duration: 3, position: .center)
     }
     
-    //MARK:- Coinbase and Plaid Integerations
+    //MARK:- Plaid Integerations
     static func isPlaidLoggedIn() -> Bool{
         if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase || user_onboard_status == OnBoardStatus.linkedPlaidButNoCoinbase{
             return true
         }else{
             return false
+        }
+    }
+    
+    static func managePlaidLinked(){
+        if user_onboard_status == OnBoardStatus.agreedTOCNoPlaidOrCoinbase{
+            user_onboard_status = OnBoardStatus.linkedPlaidButNoCoinbase
+        }
+        if user_onboard_status == OnBoardStatus.linkedCoinbaseButNoPlaid{
+            user_onboard_status = OnBoardStatus.linkedPlaidAndCoinbase
+        }
+    }
+    
+    static func managePlaidDelinking(){
+        if user_onboard_status == OnBoardStatus.linkedPlaidButNoCoinbase{
+            user_onboard_status = OnBoardStatus.agreedTOCNoPlaidOrCoinbase
+        }
+        if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
+            user_onboard_status = OnBoardStatus.linkedCoinbaseButNoPlaid
         }
     }
     

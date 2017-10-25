@@ -208,7 +208,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     self.addCoinbaseButton.isHidden = true
                     UIApplication.shared.endIgnoringInteractionEvents()
                     self.addCoinbaseButton.isHidden = true
-                    
+                    self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseGreen")
                     HelperFunctions.manageCoinBaseLinking()
                 case .failure:
                     print(response.error as Any)
@@ -378,6 +378,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
                 self.addCoinbaseButton.isHidden = false
                 HelperFunctions.manageCoinbaseDelinking()
+                self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseTopGray")
                 
             case .failure:
                 print(response.error as Any)
