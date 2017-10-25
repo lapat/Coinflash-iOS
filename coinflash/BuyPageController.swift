@@ -184,7 +184,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelGroth?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         LabelType?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         boundryCricleImage?.image = UIImage(named: "circleGreen")
-        self.PriceTypeLabel.text = "ETH price"
+        self.PriceTypeLabel.text = "Ethereum price"
         // Value assignement
         self.DataToBeLoaded = self.EitherTransation
         self.DataToBeLoadedwithColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
@@ -192,6 +192,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelCoin?.text =  String(self.m_amount_eth_owned)
         self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_eth) + " Dollar"
         self.CurrencyRatePolixCode = "USDT_ETH"
+        self.LabelType?.text = "ETH"
         self.loadNetGainEther()
         
         
@@ -212,7 +213,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelGroth?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         LabelType?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         boundryCricleImage?.image = UIImage(named: "circleBlue")
-        self.PriceTypeLabel.text = "BTC price"
+        self.PriceTypeLabel.text = "Bitcoin price"
         // Value assignement
         self.DataToBeLoaded = self.BitcoinTransation
         self.DataToBeLoadedwithColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
@@ -220,7 +221,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelCoin?.text =  String(self.m_amount_btc_owned)
         self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_btc) + " Dollar"
         self.CurrencyRatePolixCode = "USDT_BTC"
-        
+        self.LabelType?.text = "BTC"
         self.loadNetGainBitcoin()
         self.Cryptodates = self.BitcoinCryptodates
         self.Cryptoprices = self.BitcoinCryptoprices
