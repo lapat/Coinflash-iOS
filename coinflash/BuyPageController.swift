@@ -283,6 +283,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             return date[Int(index)]
         })
     }
+    
     func requestCryptoRates(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let now = NSDate()
         
