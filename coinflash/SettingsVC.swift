@@ -218,6 +218,11 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         self.tempCapOnInvestmentValue = globalSettings.capOnInvestment
         self.tempChangeCapValue = globalSettings.percentOfChangeToInvest
         
+        
+        TableCellViewCard.isHidden = true
+        TableCellViewBTC.isHidden = true
+        TableCellViewETH.isHidden = true
+        
         // load the accounts
         // loading coinbase accounts
         self.coinbaseAccounts = globalCoinflashUser3ResponseValue["coinbase_accounts"]
@@ -234,12 +239,14 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                     self.coinbasePaymentMethodLabel.isHidden = false
                     self.coinbasePaymentMethodLabel.text = subJson["name"].string
                     self.coinbasePrimaryAccountID = subJson["id"].string
+                    
                 }
             }else{
                 // find the coinbase wallet account and set its title in view
                 self.coinbasePrimaryAccountID = globalCoinflashUser3ResponseValue["user_set_primary_coinbase_account_id"].string
                 for (_, subJson):(String, JSON) in coinbaseAccounts{
                     //print(subJson["id"].string)
+                    TableCellViewCard.isHidden = false
                     if subJson["id"] == globalCoinflashUser3ResponseValue["user_set_primary_coinbase_account_id"]{
                         self.coinbasePaymentMethodLabel.text = subJson["name"].string
                     }
@@ -254,9 +261,6 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         ethWalletAccounts = [JSON]()
         btcWalletAccounts = [JSON]()
         
-        TableCellViewCard.isHidden = true
-        TableCellViewBTC.isHidden = true
-        TableCellViewETH.isHidden = true
         
         for (index, subJson):(String, JSON) in wallets{
             
