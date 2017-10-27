@@ -40,7 +40,6 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
                 self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
             }
         }
-        
     }
     
     func sign(inWillDispatch signIn: GIDSignIn!, error: Error!) {

@@ -123,6 +123,16 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     func updateViewInvestmentInformation(){
         self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested Every Monday"
+        // check to see the label
+        if globalSettings.investHowOften == .monthly{
+            // detect how far it is till next months 1st.
+            let currentDate = Date()
+            let cal = Calendar(identifier: Calendar.Identifier.gregorian)
+            let days = cal.range(of: Calendar.Component.day, in: Calendar.Component.month, for: currentDate)
+            let daysTillNextMonth = (days?.count)! - cal.component(Calendar.Component.day, from: currentDate)
+            
+            self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested In \(daysTillNextMonth + 1) days"
+        }
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
         var bitrate = Double(0)
         
