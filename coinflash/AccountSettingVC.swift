@@ -224,11 +224,13 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     self.addCoinbaseButton.isHidden = true
                     self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseGreen")
                     HelperFunctions.manageCoinBaseLinking()
+                    self.updateViews()
                 case .failure:
                     print(response.error as Any)
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
                     self.addCoinbaseButton.isHidden = false
+                    self.updateViews()
                 }
         }
     }
@@ -251,6 +253,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     // dismiss the progress hud
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
+                    self.updateViews()
                 case .failure:
                     print(response.error as Any)
                     SVProgressHUD.dismiss()
@@ -369,6 +372,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Link Fail : Retry")
                 
             }
+            self.updateViews()
             // Loading the data in the Table
         }
     }
@@ -399,6 +403,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 
                 HelperFunctions.manageCoinbaseDelinking()
                 self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseTopGray")
+                self.updateViews()
                 
             case .failure:
                 print(response.error as Any)
@@ -454,6 +459,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Success", message: "Bank Accounts Delinked")
                 HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
+                self.updateViews()
+                
             case .failure:
                 print(response.error as Any)
                 SVProgressHUD.dismiss()

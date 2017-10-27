@@ -246,6 +246,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 btcWalletLabel.text = json["name"].string
             }
         }
+        
+        
+        
+        
     }
     
     // Saves global settings
