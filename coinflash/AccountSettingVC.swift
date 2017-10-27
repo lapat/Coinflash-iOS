@@ -15,7 +15,6 @@ import SwiftyJSON
 import LinkKit
 import NotificationBannerSwift
 
-
 class PlaidBankCell: UITableViewCell{
     @IBOutlet weak var bankPicImageView: UIImageView!
     @IBOutlet weak var bankNameLabel: UILabel!

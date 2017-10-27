@@ -20,6 +20,27 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     var familyName: String = ""
     var email: String = ""
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // set delegates
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        HelperFunctions.loadNSUserDefaults()
+        
+        if user_isLoggedIn == true{
+            if HelperFunctions.isTOCAccepted(){
+                self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+                //self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+            }else{
+                self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+            }
+        }
+    }
     
     func sign(inWillDispatch signIn: GIDSignIn!, error: Error!) {
         
@@ -101,18 +122,6 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     }
     
     @IBOutlet weak var signInButton: GIDSignInButton!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // set delegates
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance().uiDelegate = self
-        
-        if user_isLoggedIn == true{
-            self.performSegue(withIdentifier: "mainPageSegue", sender: self)
-        }
-    }
     
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
                 withError error: NSError!) {
