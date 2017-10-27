@@ -107,7 +107,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.CryptoPriceGraph.rightAxis.gridColor = UIColor(red: 173/255, green: 194/255, blue: 218/255, alpha: 1)
         self.CryptoPriceGraph.xAxis.axisLineWidth = 1
         self.CryptoPriceGraph.leftAxis.axisLineWidth = 1
-        self.CryptoPriceGraph.rightAxis.axisLineWidth = 1
         self.CryptoPriceGraph.noDataText = "Loading"
         
         self.CryptoPriceGraph.xAxis.labelPosition = XAxis.LabelPosition.bottom
@@ -115,7 +114,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         self.CryptoPriceGraph.leftAxis.enabled = false
         
-        self.CryptoPriceGraph.minOffset = 0
+        self.CryptoPriceGraph.minOffset = 17
         self.CryptoPriceGraph.xAxis.labelPosition = .bottom
         setCryptochartView(date: Cryptodates, prices: Cryptoprices)
         

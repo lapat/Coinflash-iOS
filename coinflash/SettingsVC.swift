@@ -85,10 +85,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 weeklyButton?.isSelected = false
                 
             }
-           // else if sender.isSelected == true{
-           //     sender.isSelected = false
-           //     weeklyButton?.isSelected = true
-           // }
+            // else if sender.isSelected == true{
+            //     sender.isSelected = false
+            //     weeklyButton?.isSelected = true
+            // }
         }
         
         if sender == weeklyButton{
@@ -96,10 +96,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 sender.isSelected = true
                 monthlyButton?.isSelected = false
             }
-           // else if sender.isSelected == true{
-           //     sender.isSelected = false
-           //     monthlyButton?.isSelected = true
-           // }
+            // else if sender.isSelected == true{
+            //     sender.isSelected = false
+            //     monthlyButton?.isSelected = true
+            // }
         }
     }
     
@@ -119,18 +119,33 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    
+            
+        
         var str = (textField.text! + string)
-        if str.characters.count <= 3 {
-            return true
+        
+        
+        if Int(str) == nil{
+            str = "100"
+            textField.text = str
+            
+            return false
         }
         var check = Int(str)!
         if check > 500{
             str = "500"
+            textField.text = str
+            return false
         }
-        
+        if str.characters.count <= 3 {
+            return true
+        }
         
         //textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
         textField.text = str.substring(to: str.index(str.startIndex, offsetBy:3))
+            //textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+        
+        
         
         
         return false
@@ -147,8 +162,8 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         temp.remove(at: temp.startIndex)
         self.tempCapOnInvestmentValue = Int(temp)
         /*
-        globalSettings.capOnInvestment = Int(temp)
-        print(globalSettings.capOnInvestment)
+         globalSettings.capOnInvestment = Int(temp)
+         print(globalSettings.capOnInvestment)
          */
     }
     
@@ -188,6 +203,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         
         // load the accounts
         // loading coinbase accounts
+        // error occuring here ..... globalCoinflashUser3ResponseValue found nil
         self.coinbaseAccounts = globalCoinflashUser3ResponseValue["coinbase_accounts"]
         let wallets = globalCoinflashUser3ResponseValue["wallets"]
         for (index,subJson):(String, JSON) in self.coinbaseAccounts {
