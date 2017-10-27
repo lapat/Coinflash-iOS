@@ -24,6 +24,9 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     @IBOutlet weak var coinbasePaymentMethodLabel: UILabel!
     @IBOutlet weak var ethWalletLabel: UILabel!
     @IBOutlet weak var btcWalletLabel: UILabel!
+    @IBOutlet weak var TableCellViewCard: UITableViewCell!
+    @IBOutlet weak var TableCellViewBTC: UITableViewCell!
+    @IBOutlet weak var TableCellViewETH: UITableViewCell!
     var generalPickerView: UIPickerView!
     var pickerViewSupportingBackgroundView: UIView! // used to ensure user is not able to tap on tableview when pickerview is visible.
     var pickerViewSupportingGestureRecognizer: UITapGestureRecognizer! // used to dismiss pickerview when a user taps on pickerviewsupportingbackgroundview
@@ -120,17 +123,29 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         var str = (textField.text! + string)
-        if str.characters.count <= 3 {
-            return true
+        
+        
+        if Int(str) == nil{
+            str = "100"
+            textField.text = str
+            
+            return false
         }
         var check = Int(str)!
         if check > 500{
             str = "500"
+            textField.text = str
+            return false
         }
-        
+        if str.characters.count <= 3 {
+            return true
+        }
         
         //textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
         textField.text = str.substring(to: str.index(str.startIndex, offsetBy:3))
+        //textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+        
+        
         
         
         return false
@@ -164,6 +179,23 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         if indexPath.row == 2{
             return 120
         }
+        if indexPath.row == 4{
+            if TableCellViewCard.isHidden == true{
+                return 0
+            }
+            
+        }
+        if indexPath.row == 5{
+            if TableCellViewBTC.isHidden == true{
+                return 0
+            }
+        }
+        if indexPath.row == 6{
+            if TableCellViewETH.isHidden == true{
+                return 0
+            }
+        }
+        
         return UITableViewAutomaticDimension
     }
     
@@ -221,13 +253,20 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         // Populate BTC and ETH wallets from globalCoinflashUser3ResponseValue
         ethWalletAccounts = [JSON]()
         btcWalletAccounts = [JSON]()
+        
+        TableCellViewCard.isHidden = true
+        TableCellViewBTC.isHidden = true
+        TableCellViewETH.isHidden = true
+        
         for (index, subJson):(String, JSON) in wallets{
             
             if subJson["currency"]["code"] == "ETH" && subJson["type"] == "wallet"{
                 ethWalletAccounts.append(subJson)
+                
             }
             if subJson["currency"]["code"] == "BTC" && subJson["type"] == "wallet"{
                 btcWalletAccounts.append(subJson)
+                
             }
         }
         
@@ -236,6 +275,8 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             if json["id"].string == self.ethPrimaryWalletAccountID{
                 self.ethWalletLabel.isHidden = false
                 ethWalletLabel.text = json["name"].string
+                TableCellViewBTC.isHidden = false
+                
             }
         }
         
@@ -244,6 +285,8 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             if json["id"].string == self.btcPrimaryWalletAccountsID{
                 btcWalletLabel.isHidden = false
                 btcWalletLabel.text = json["name"].string
+                TableCellViewBTC.isHidden = false
+                
             }
         }
         

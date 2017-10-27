@@ -115,7 +115,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         self.CryptoPriceGraph.leftAxis.enabled = false
         
-        self.CryptoPriceGraph.minOffset = 0
+        self.CryptoPriceGraph.minOffset = 17
         self.CryptoPriceGraph.xAxis.labelPosition = .bottom
         setCryptochartView(date: Cryptodates, prices: Cryptoprices)
         
@@ -189,13 +189,13 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelGroth?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         LabelType?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         boundryCricleImage?.image = UIImage(named: "circleGreen")
-        self.PriceTypeLabel.text = "Ethereum price"
+        self.PriceTypeLabel.text = "Ethereum Price"
         // Value assignement
         self.DataToBeLoaded = self.EitherTransation
         self.DataToBeLoadedwithColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         self.CryptoTransationTableView.reloadData()
         self.LabelCoin?.text =  String(self.m_amount_eth_owned)
-        self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_eth) + " Dollar"
+        self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_eth) //+ " Dollar"
         self.CurrencyRatePolixCode = "USDT_ETH"
         self.LabelType?.text = "ETH"
         self.Cryptodates = self.EitherCryptodates
@@ -213,13 +213,13 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelGroth?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         LabelType?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         boundryCricleImage?.image = UIImage(named: "circleBlue")
-        self.PriceTypeLabel.text = "Bitcoin price"
+        self.PriceTypeLabel.text = "Bitcoin Price"
         // Value assignement
         self.DataToBeLoaded = self.BitcoinTransation
         self.DataToBeLoadedwithColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         self.CryptoTransationTableView.reloadData()
         self.LabelCoin?.text =  String(self.m_amount_btc_owned)
-        self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_btc) + " Dollar"
+        self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_btc) //+ " Dollar"
         self.CurrencyRatePolixCode = "USDT_BTC"
         self.LabelType?.text = "BTC"
         self.Cryptodates = self.BitcoinCryptodates
