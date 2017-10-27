@@ -100,6 +100,15 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.default.menuParallaxStrength = 3
         NotificationCenter.default.addObserver(self, selector: #selector(didSuccessfullyBuyCoins(handleNotification:)), name: NSNotification.Name.onSuccessfulPurchaseOfCoins, object: nil)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        HelperFunctions.LoadBankInfo()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
             banner.show()
@@ -112,18 +121,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-        self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-        HelperFunctions.LoadBankInfo()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-    }
-    
     func updateViewInvestmentInformation(){
-        self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% of Your Change Will Be Invested Every Monday"
+        self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested Every Monday"
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
         var bitrate = Double(0)
         

@@ -194,7 +194,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     @IBAction func didTapOnAddCoinbaseButton(sender: UIButton){
         (UIApplication.shared.delegate as! AppDelegate).processingBacklink = true
-        CoinbaseOAuth.startAuthentication(withClientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", scope: "wallet:user:read,wallet:buys:create,wallet:payment-methods:read,wallet:accounts:read,wallet:transactions:send,wallet:transactions:send:bypass-2fa", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: ["send_limit_amount": "5.00", " send_limit_currency": "USD", "send_limit_period": "week"])
+        CoinbaseOAuth.startAuthentication(withClientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", scope: "wallet:user:read,wallet:buys:create,wallet:payment-methods:read,wallet:accounts:read,wallet:transactions:send,wallet:addresses:read,wallet:transactions:send:bypass-2fa", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: ["send_limit_amount": "5.00", " send_limit_currency": "USD", "send_limit_period": "week"])
     }
     
     //MARK: - PickerView For Coinflash Account
@@ -391,7 +391,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 let data = response.result.value as? NSDictionary
                 print(response)
                 SVProgressHUD.dismiss()
-                self.presentAlertViewWithTitle("Coinbase", message: " Your Coinbase account was unlinked")
+                self.presentAlertViewWithTitle("Coinbase", message: " Your Coinbase account was unlinked.")
                     
                 self.coinbaseLinkedLabel.text = "Coinbase Not Linked"
                 self.addCoinbaseButton.isHidden = false
@@ -433,7 +433,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 {
                     
                     SVProgressHUD.dismiss()
-                    self.presentAlertViewWithTitle("Bank Account Link", message: "Account Dlinked")
+                    self.presentAlertViewWithTitle("Success", message: "Your bank account was unlinked..")
                     HelperFunctions.SaveBankInfo(m_token_id: "none", m_logged_in: "false")
                     self.AddBankLink.setImage( UIImage.init(named: "addNwbanks"), for: .normal)
                     plaidInfoObject.loggedIn = false
