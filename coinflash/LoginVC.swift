@@ -26,6 +26,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         // set delegates
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().clientID = "678747170744-6o53mljo3a5q9o9avn6jvbm1r7vsjtv9.apps.googleusercontent.com"
         
     }
     
@@ -51,6 +52,24 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         }
         
         print("Successful Redirection")
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL,
+                     sourceApplication: String?, annotation: AnyObject) -> Bool
+    {
+        
+        let googleDidHandle = GIDSignIn.sharedInstance().handle(url as URL!, sourceApplication: sourceApplication,
+                                                                   annotation: annotation)
+        return googleDidHandle
+    }
+    
+    //MARK: - GID UI SignIn Delegate
+    func sign(_ signIn: GIDSignIn!, present viewController: UIViewController!) {
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
+    func sign(_ signIn: GIDSignIn!, dismiss viewController: UIViewController!) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: GIDSignIn Delegate
@@ -132,4 +151,6 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             print("\(error.localizedDescription)")
         }
     }
+    
+    
 }

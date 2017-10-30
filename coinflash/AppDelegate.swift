@@ -92,6 +92,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
+        if url.scheme == "com.googleusercontent.apps.678747170744-6o53mljo3a5q9o9avn6jvbm1r7vsjtv9"{
+            return GIDSignIn.sharedInstance().handle(url,
+                                                     sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                     annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        }
+        
         print("outside if \(url.scheme)")
         return true
     }
