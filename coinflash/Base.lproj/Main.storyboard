@@ -4,7 +4,8 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -458,6 +459,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="kKU-zU-J6E"/>
                     <connections>
+                        <outlet property="BuyNowButton" destination="sob-jZ-TVk" id="GbF-ta-x4V"/>
                         <outlet property="LabelBitcoinInvestmentRate" destination="nyv-gv-yRd" id="0Oi-Xt-CGm"/>
                         <outlet property="LabelChange" destination="e3q-Di-Db0" id="cAu-nT-Owj"/>
                         <outlet property="LabelChangeTip" destination="Dlh-8D-nlg" id="bLD-4P-h2a"/>
@@ -491,6 +493,7 @@
                                 </state>
                                 <connections>
                                     <action selector="didTapOnAcceptTOCButtonWithSende:" destination="Xuc-AV-kpA" eventType="touchUpInside" id="Ksd-Ff-IWW"/>
+                                    <segue destination="Eui-HA-vkX" kind="show" identifier="mainPageSegue" id="ZCg-q1-5b6"/>
                                 </connections>
                             </button>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DeP-2h-9Rp">
@@ -516,12 +519,67 @@
                     <connections>
                         <outlet property="acceptButton" destination="XVz-a7-YdO" id="KlM-J7-aHI"/>
                         <outlet property="webView" destination="DeP-2h-9Rp" id="0mf-rP-df6"/>
-                        <segue destination="qF3-WI-LvA" kind="show" identifier="mainPageSegue" id="0WS-hB-r4M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SKr-1H-eIs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3140" y="823.53823088455783"/>
+        </scene>
+        <!--Link Account PageVC-->
+        <scene sceneID="Dfu-mq-waW">
+            <objects>
+                <viewController id="Eui-HA-vkX" customClass="LinkAccountPageVC" customModule="coinflash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eUC-9q-aJ4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WQK-qO-nsl">
+                                <rect key="frame" x="117" y="616" width="141" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="9Uc-tL-uLh"/>
+                                    <constraint firstAttribute="width" constant="141" id="H9C-Pk-d2Y"/>
+                                </constraints>
+                                <state key="normal" image="linkBankAndCb"/>
+                                <connections>
+                                    <action selector="AddAccount:" destination="1mL-Jc-yYf" eventType="touchUpInside" id="476-S5-f8H"/>
+                                    <segue destination="xam-tU-CdB" kind="show" id="Wz9-SI-PtV"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link your bank account and your coinbase account to start investing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihK-QZ-ZTI">
+                                <rect key="frame" x="16" y="20" width="343" height="67"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="67" id="HYY-ph-Uo6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" red="0.40266746282577515" green="0.59298241138458252" blue="0.22872918844223022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coffeeImage" translatesAutoresizingMaskIntoConstraints="NO" id="61W-w6-JCH">
+                                <rect key="frame" x="16" y="95" width="343" height="164"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="164" id="WJ3-xF-sd4"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.91362601518630981" green="0.91378277540206909" blue="0.91361618041992188" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ihK-QZ-ZTI" firstAttribute="top" secondItem="E3h-BJ-FfG" secondAttribute="top" id="9VG-Pk-uKg"/>
+                            <constraint firstItem="ihK-QZ-ZTI" firstAttribute="centerX" secondItem="E3h-BJ-FfG" secondAttribute="centerX" id="CxA-cw-Jn1"/>
+                            <constraint firstItem="61W-w6-JCH" firstAttribute="centerX" secondItem="E3h-BJ-FfG" secondAttribute="centerX" id="H91-el-eWu"/>
+                            <constraint firstItem="E3h-BJ-FfG" firstAttribute="bottom" secondItem="WQK-qO-nsl" secondAttribute="bottom" constant="20" id="QdF-NJ-QD1"/>
+                            <constraint firstItem="WQK-qO-nsl" firstAttribute="centerX" secondItem="E3h-BJ-FfG" secondAttribute="centerX" id="Seb-6H-EiJ"/>
+                            <constraint firstItem="61W-w6-JCH" firstAttribute="top" secondItem="ihK-QZ-ZTI" secondAttribute="bottom" constant="8" id="UYX-M0-PvR"/>
+                            <constraint firstItem="E3h-BJ-FfG" firstAttribute="trailing" secondItem="61W-w6-JCH" secondAttribute="trailing" constant="16" id="c6a-dV-rPT"/>
+                            <constraint firstItem="E3h-BJ-FfG" firstAttribute="trailing" secondItem="ihK-QZ-ZTI" secondAttribute="trailing" constant="16" id="d1Y-QU-qEK"/>
+                            <constraint firstItem="ihK-QZ-ZTI" firstAttribute="leading" secondItem="E3h-BJ-FfG" secondAttribute="leading" constant="16" id="tfc-Iv-W0m"/>
+                            <constraint firstItem="61W-w6-JCH" firstAttribute="leading" secondItem="E3h-BJ-FfG" secondAttribute="leading" constant="16" id="zkU-u7-Tmg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="E3h-BJ-FfG"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1HL-Mj-CPN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3140" y="1625"/>
         </scene>
         <!--SettingsVC-->
         <scene sceneID="rqY-JQ-GIE">
@@ -974,7 +1032,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Im-Ya-8uW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2266.4000000000001" y="1193.2533733133434"/>
+            <point key="canvasLocation" x="-2236" y="1486"/>
         </scene>
         <!--Buy Page Controller-->
         <scene sceneID="UqS-Va-ZzO">
@@ -1917,6 +1975,7 @@
         <image name="btcBtt" width="40" height="40"/>
         <image name="buynowBt" width="134" height="52"/>
         <image name="circleBlue" width="347" height="315"/>
+        <image name="coffeeImage" width="2030" height="880"/>
         <image name="coinbaseBlue" width="48" height="57"/>
         <image name="coinbaseTopGray" width="48" height="57"/>
         <image name="ethBtt" width="40" height="40"/>
@@ -1924,6 +1983,7 @@
         <image name="itemOffIcon" width="25" height="25"/>
         <image name="itemOnIcon" width="25" height="25"/>
         <image name="line" width="1" height="1"/>
+        <image name="linkBankAndCb" width="141" height="31"/>
         <image name="linkedIcon" width="286" height="93"/>
         <image name="list" width="10" height="9"/>
         <image name="logoLogin2" width="161" height="164"/>
@@ -1936,7 +1996,7 @@
         <image name="settingIcons" width="34" height="34"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YG8-qu-gkh"/>
-        <segue reference="01D-cS-7Xy"/>
+        <segue reference="tn7-CS-QaY"/>
+        <segue reference="I5M-EP-JW7"/>
     </inferredMetricsTieBreakers>
 </document>

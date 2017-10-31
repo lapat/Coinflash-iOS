@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "buynowBt.png",
+      "filename" : "linkBankAndCb.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "buynowBt@2x.png",
+      "filename" : "linkBankAndCb@2x_preview.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "buynowBt@3x.png",
+      "filename" : "linkBankAndCb@3x_preview.png",
       "scale" : "3x"
     }
   ],

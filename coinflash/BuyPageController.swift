@@ -39,6 +39,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     
     //var m_mobile_secret = "8dkkaiei20kdjkwoeo29ddkskalw82asD!"
     //var m_user_id = "15"
+
     //var m_access_token = "fcfba398652f4521aaa878f2305662"
     
     var m_mobile_secret = user_mobile_secret!
@@ -137,13 +138,13 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         // self.LoadCryptoGraphCurrentPriceHistery()
         
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
+            let banner = NotificationBanner(title: "", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
             banner.show()
         }else if !HelperFunctions.isCoinbaseLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
+            let banner = NotificationBanner(title: "", subtitle: "Connect your coinbase account to start investing.", style: .danger)
             banner.show()
         }else if !HelperFunctions.isPlaidLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
+            let banner = NotificationBanner(title: "", subtitle: " Connect your bank to start investing.", style: .danger)
             banner.show()
         }
         

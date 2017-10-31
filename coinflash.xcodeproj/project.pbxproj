@@ -11,6 +11,7 @@
 		3F012E331F84D2550026EFC0 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F012E321F84D2550026EFC0 /* MenuVC.swift */; };
 		3F2079371F8D4B19006DFD6E /* CryptoTransationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2079361F8D4B19006DFD6E /* CryptoTransationCellView.swift */; };
 		3F5BBF131F8AC68A00BCA472 /* ccTransationCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BBF121F8AC68A00BCA472 /* ccTransationCellView.swift */; };
+		3F607D0C1FA8A56000D8F722 /* LinkAccountPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F607D0B1FA8A56000D8F722 /* LinkAccountPageVC.swift */; };
 		3FAAB76A1F90355700DF423B /* PopUpViewGraphTypeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAAB7691F90355700DF423B /* PopUpViewGraphTypeSelector.swift */; };
 		3FAAB76C1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAAB76B1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift */; };
 		3FAAB7731F90F39100DF423B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */; };
@@ -72,6 +73,7 @@
 		3F012E321F84D2550026EFC0 /* MenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		3F2079361F8D4B19006DFD6E /* CryptoTransationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoTransationCellView.swift; sourceTree = "<group>"; };
 		3F5BBF121F8AC68A00BCA472 /* ccTransationCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ccTransationCellView.swift; sourceTree = "<group>"; };
+		3F607D0B1FA8A56000D8F722 /* LinkAccountPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAccountPageVC.swift; sourceTree = "<group>"; };
 		3FAAB7691F90355700DF423B /* PopUpViewGraphTypeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewGraphTypeSelector.swift; sourceTree = "<group>"; };
 		3FAAB76B1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewBuyNowSelector.swift; sourceTree = "<group>"; };
 		3FCC02381F78F16700DD6558 /* coinflash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coinflash.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,6 +182,7 @@
 				3F2079361F8D4B19006DFD6E /* CryptoTransationCellView.swift */,
 				3FAAB7691F90355700DF423B /* PopUpViewGraphTypeSelector.swift */,
 				3FAAB76B1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift */,
+				3F607D0B1FA8A56000D8F722 /* LinkAccountPageVC.swift */,
 			);
 			path = coinflash;
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 				3FAAB7731F90F39100DF423B /* MainViewController.swift in Sources */,
 				3F2079371F8D4B19006DFD6E /* CryptoTransationCellView.swift in Sources */,
 				3FCC023E1F78F16700DD6558 /* NavViewController.swift in Sources */,
+				3F607D0C1FA8A56000D8F722 /* LinkAccountPageVC.swift in Sources */,
 				3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */,
 				ACA3DA9C1F7FF4F400185245 /* LoginVC.swift in Sources */,
 				7787AF2D1FA0C39A00082093 /* TOCVC.swift in Sources */,

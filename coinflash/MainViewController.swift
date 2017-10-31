@@ -28,6 +28,9 @@ class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var SliderinvestmentRateDecider: UISlider?
     @IBOutlet weak var ccTransationTableView: UITableView?
     
+   
+    @IBOutlet weak var BuyNowButton: UIButton!
+    
     var cctransations = [cctransaction_global]
     var m_mobile_secret = user_mobile_secret!
     var m_user_id = user_id_mobile!
@@ -110,13 +113,16 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     override func viewDidAppear(_ animated: Bool) {
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
+            let banner = NotificationBanner(title: "", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
             banner.show()
+            
+            self.BuyNowButton.isEnabled = false
         }else if !HelperFunctions.isCoinbaseLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
-            banner.show()
+           // let banner = NotificationBanner(title: "", subtitle: "Connect your coinbase account to start investing.", style: .danger)
+           // banner.show()
+            self.BuyNowButton.isEnabled = false
         }else if !HelperFunctions.isPlaidLoggedIn(){
-            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
+            let banner = NotificationBanner(title: "", subtitle: " Connect your bank to start investing.", style: .danger)
             banner.show()
         }
     }
