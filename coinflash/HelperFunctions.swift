@@ -123,7 +123,11 @@ class HelperFunctions: NSObject {
         UserDefaults.standard.set(user_id_mobile, forKey: "user_id_mobile")
         UserDefaults.standard.set(user_mobile_access_token, forKey: "user_mobile_access_token")
         UserDefaults.standard.set(user_isLoggedIn, forKey: "user_isLoggedIn")
-        UserDefaults.standard.set(user_onboard_status.rawValue, forKey: "user_onboard_status")
+        if user_onboard_status != nil{
+            UserDefaults.standard.set(user_onboard_status.rawValue, forKey: "user_onboard_status")
+        }else{
+            UserDefaults.standard.set(OnBoardStatus(rawValue: 0)?.rawValue, forKey: "user_onboard_status")
+        }
         
         // save google user
         if googleUser != nil{

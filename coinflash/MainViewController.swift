@@ -337,11 +337,32 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 self.coinflashUser3ResponseObject = json[0]
                 globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
                 SVProgressHUD.dismiss()
-                if globalCoinflashUser3ResponseValue["plaid_error_code"] != nil{
+                
+                // check if plaid needs relinking
+                var plaidNeedsRelinking = false
+                if globalCoinflashUser3ResponseValue["plaid_error_code"] != JSON.null{
                     if globalCoinflashUser3ResponseValue["plaid_error_code"].int == 2{
-                     
-                        self.showConfirmationDialogBox(title: "Error", Message: "There is an error connecting with your bank.  Please unlink and relink your bank to resolve this issue.")
+                        
+                        plaidNeedsRelinking = true
                     }
+                }
+                
+                // check if coinbase needs relinking
+                var coinbaseNeedsRelinking = false
+                if globalCoinflashUser3ResponseValue["wallets"].array?.count == 1{
+                    let wallets = globalCoinflashUser3ResponseValue["wallets"].array!
+                    if wallets[0].string != nil{
+                        coinbaseNeedsRelinking = true
+                    }
+                }
+                
+                if coinbaseNeedsRelinking == true && plaidNeedsRelinking == true{
+                    
+                        self.showConfirmationDialogBox(title: "Error", Message: "Error connecting with Coinbase and Bank account.  Please unlink and relink your bank and coinbase to resolve this issue.")
+                }else if coinbaseNeedsRelinking == true{
+                    self.showConfirmationDialogBox(title: "Error", Message: "Error connecting with Coinbase account.  Please unlink and relink your Coinbase account to resolve this issue.")
+                }else if plaidNeedsRelinking == true{
+                    self.showConfirmationDialogBox(title: "Error", Message: "Error connecting with Bank account.  Please unlink and relink your bank to resolve this issue.")
                 }
             
             case .failure:
