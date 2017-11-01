@@ -22,7 +22,12 @@ class HelperFunctions: NSObject {
         user_mobile_access_token = mobileAccessToken
         user_id_mobile = userIdMobile
         user_isLoggedIn = true
-        let status = Int(onboardStatus)
+        let status: Int!
+        if onboardStatus == ""{
+            status = 0
+        }else{
+            status = Int(onboardStatus)
+        }
         if status == 0{
             user_onboard_status = OnBoardStatus.didNotAcceptTOC
             coinbaseInfoObject.loggedIn = false

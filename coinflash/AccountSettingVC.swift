@@ -73,13 +73,13 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         self.getCoinFlashUserInfo()
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
-            banner.show()
+            //banner.show()
         }else if !HelperFunctions.isCoinbaseLoggedIn(){
             let banner = NotificationBanner(title: "", subtitle: "Connect your coinbase account to start investing.", style: .danger)
-            banner.show()
+            //banner.show()
         }else if !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "", subtitle: " Connect your bank to start investing.", style: .danger)
-            banner.show()
+            //banner.show()
         }
     }
     
