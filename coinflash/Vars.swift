@@ -26,7 +26,7 @@ var isGraphOptionSelected : Bool = false
 
 
 
-enum OnBoardStatus{
+enum OnBoardStatus: Int{
     case didNotAcceptTOC
     case agreedTOCNoPlaidOrCoinbase
     case linkedPlaidButNoCoinbase

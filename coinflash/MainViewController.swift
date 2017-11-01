@@ -49,6 +49,13 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var coinflashUser3ResponseObject: JSON!
     var cctransaction2ResponseObject: JSON!
     
+    override func viewDidLoad() {
+        SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
+        SideMenuManager.default.menuDismissOnPush = true
+        SideMenuManager.default.menuPresentMode = .menuSlideIn
+        SideMenuManager.default.menuParallaxStrength = 3
+        NotificationCenter.default.addObserver(self, selector: #selector(didSuccessfullyBuyCoins(handleNotification:)), name: NSNotification.Name.onSuccessfulPurchaseOfCoins, object: nil)
+    }
     
     @IBAction func InvestmentRateSlider(_ sender: UISlider) {
         var rate: Float = SliderinvestmentRateDecider!.value
@@ -94,17 +101,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         let ethRate =  rate
         UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: Int(ethRate))
         //print("element Released")
-    }
-    
-    override func viewDidLoad() {
-        SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
-        SideMenuManager.default.menuDismissOnPush = true
-        SideMenuManager.default.menuPresentMode = .menuSlideIn
-        SideMenuManager.default.menuParallaxStrength = 3
-        NotificationCenter.default.addObserver(self, selector: #selector(didSuccessfullyBuyCoins(handleNotification:)), name: NSNotification.Name.onSuccessfulPurchaseOfCoins, object: nil)
-
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

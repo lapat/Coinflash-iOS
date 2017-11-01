@@ -117,27 +117,36 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     func requestServerForLoginConfirmation(googleUser user: GIDGoogleUser){
         let header: HTTPHeaders = ["content-type": "application/x-www-form-urlencoded"]
         let parameter: Parameters = ["id_token": user.authentication.idToken, "mobile_secret": user_mobile_secret]
-        print(user.authentication.idToken)
         SVProgressHUD.show()
         Alamofire.request("\(baseUrl)login2/", method: HTTPMethod.post, parameters: parameter, headers: header)
-            .validate()
             .responseJSON { (response) in
             switch response.result{
             case .success:
-                let data = response.result.value as! [String: Any]
-                HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
                 SVProgressHUD.dismiss()
+                let data = response.result.value as! [String: Any]
+                print(response)
+                HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
                 if HelperFunctions.isTOCAccepted(){
-                    self.performSegue(withIdentifier: "mainPageSegue", sender: self)
-                    //self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+                    OperationQueue.main.addOperation
+                    {
+                        [weak self] in
+                        self?.performSegue(withIdentifier: "mainPageSegue", sender: self)
+                    }
                 }else{
-                    self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+                    OperationQueue.main.addOperation {
+                        [weak self] in
+                        self?.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+                    }
                 }
             case .failure:
                 print(response.error)
                 SVProgressHUD.dismiss()
             }
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print(segue.identifier)
     }
     
     @IBOutlet weak var signInButton: GIDSignInButton!
@@ -150,7 +159,5 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         } else {
             print("\(error.localizedDescription)")
         }
-    }
-    
-    
+    }    
 }

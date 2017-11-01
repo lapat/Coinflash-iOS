@@ -48,7 +48,7 @@ class HelperFunctions: NSObject {
             coinbaseInfoObject.loggedIn = true
             plaidInfoObject.loggedIn = true
         }
-        user_onboard_status = OnBoardStatus.didNotAcceptTOC
+        //user_onboard_status = OnBoardStatus.didNotAcceptTOC
         self.saveNSUserDefaults()
         
     }
@@ -123,6 +123,7 @@ class HelperFunctions: NSObject {
         UserDefaults.standard.set(user_id_mobile, forKey: "user_id_mobile")
         UserDefaults.standard.set(user_mobile_access_token, forKey: "user_mobile_access_token")
         UserDefaults.standard.set(user_isLoggedIn, forKey: "user_isLoggedIn")
+        UserDefaults.standard.set(user_onboard_status.rawValue, forKey: "user_onboard_status")
         
         // save google user
         if googleUser != nil{
@@ -142,11 +143,13 @@ class HelperFunctions: NSObject {
         user_id_mobile = UserDefaults.standard.value(forKey: "user_id_mobile") as? String
         user_mobile_access_token = UserDefaults.standard.value(forKey: "user_mobile_access_token") as? String
         user_isLoggedIn = UserDefaults.standard.value(forKey: "user_isLoggedIn") as? Bool
-        
+        if UserDefaults.standard.value(forKey: "user_onboard_status") != nil{
+            user_onboard_status = OnBoardStatus(rawValue: UserDefaults.standard.value(forKey: "user_onboard_status") as! Int)   
+        }
         
         if let loadedData = UserDefaults.standard.value(forKey: "googleUser"){
             if let user = NSKeyedUnarchiver.unarchiveObject(with: loadedData as! Data) as? GIDGoogleUser{
-                googleUser = user as! GIDGoogleUser
+                googleUser = user
             }
         }
         /*
