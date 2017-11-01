@@ -12,6 +12,7 @@ import Toast_Swift
 extension Notification.Name {
     
     static let onCoinbaseLoginCompletion = Notification.Name("onCoinbaseLoginCompletion")
+    static let onCoinbaseLoginStart = Notification.Name("onCoinbaseLoginStart")
     static let onSuccessfulPurchaseOfCoins = Notification.Name("onSuccessfulPurchaseOfCoins")
 }
 

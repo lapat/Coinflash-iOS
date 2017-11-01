@@ -14,7 +14,7 @@ class PopUpViewGraphTypeSelector:UIViewController , UIGestureRecognizerDelegate{
     override func viewDidLoad() {
        
         super.viewDidLoad()
-       
+        
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped(gestureRecognizer:)))
         self.view.addGestureRecognizer(tapRecognizer)

@@ -8,6 +8,8 @@
 
 import UIKit
 import WebKit
+import Alamofire
+import SVProgressHUD
 
 class TOCVC: UIViewController {
 
@@ -35,7 +37,29 @@ class TOCVC: UIViewController {
     
     @IBAction func didTapOnAcceptTOCButton(sende: UIButton){
         HelperFunctions.userAcceptedTOC()
-        self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : user_mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : user_mobile_access_token,
+            "accept_tos" : "true"
+            
+        ]
+        SVProgressHUD.show(withStatus: "Updating Values")
+        
+        Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            SVProgressHUD.dismiss()
+            switch response.result{
+            case .success(let value):
+                self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+            case .failure:
+                let alert = UIAlertController(title: "Error", message: "Check your network connection and retry", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {

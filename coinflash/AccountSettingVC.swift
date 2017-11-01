@@ -70,6 +70,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         nc.addObserver(self, selector: #selector(viewDidEnterForground(notificaiton:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         // register for notifaction of coinbase api login being completed
         nc.addObserver(self, selector: #selector(coinBaseAuthenticationCompleted(withNotification:)), name: NSNotification.Name.onCoinbaseLoginCompletion, object: nil)
+        nc.addObserver(self, selector: #selector(coinBaseAuthenticationStarting(withNotification:)), name: NSNotification.Name.onCoinbaseLoginStart, object: nil)
+        
         self.getCoinFlashUserInfo()
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
@@ -126,7 +128,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     func viewDidEnterForground(notificaiton: NSNotification){
         if (UIApplication.shared.delegate as! AppDelegate).processingBacklink == true{
-            SVProgressHUD.show(withStatus: "Processing Login")
+            //SVProgressHUD.show(withStatus: "Processing Login")
             //UIApplication.shared.beginIgnoringInteractionEvents()
             
         }else{
@@ -156,6 +158,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             self.DlinkCoinBase.isHidden = true
         }
         (UIApplication.shared.delegate as! AppDelegate).processingBacklink = false
+    }
+    
+    func coinBaseAuthenticationStarting(withNotification notification: NSNotification){
+        SVProgressHUD.show()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
