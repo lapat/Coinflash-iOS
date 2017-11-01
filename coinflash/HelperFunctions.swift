@@ -71,6 +71,7 @@ class HelperFunctions: NSObject {
         if OnBoardStatus.didNotAcceptTOC == user_onboard_status{
            user_onboard_status =  OnBoardStatus.agreedTOCNoPlaidOrCoinbase
         }
+        self.saveNSUserDefaults()
     }
     
     static func isTOCAccepted() -> Bool{
