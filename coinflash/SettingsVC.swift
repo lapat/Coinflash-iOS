@@ -183,16 +183,22 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             if TableCellViewCard.isHidden == true{
                 return 0
             }
-            
         }
         if indexPath.row == 5{
-            if TableCellViewBTC.isHidden == true{
+            // check whether to show eth and btc wallets or not
+            if btcWalletAccounts.count < 0{
                 return 0
+            }
+            if TableCellViewBTC.isHidden == true{
+                //return 0
             }
         }
         if indexPath.row == 6{
-            if TableCellViewETH.isHidden == true{
+            if ethWalletAccounts.count < 0{
                 return 0
+            }
+            if TableCellViewETH.isHidden == true{
+                //return 0
             }
         }
         
@@ -235,11 +241,12 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 print("not primary")
             }
             if globalCoinflashUser3ResponseValue["user_set_primary_coinbase_account_id"] == JSON.null{
+                // get the first account and set it to primary coinbase account
                 if index == "0"{
                     self.coinbasePaymentMethodLabel.isHidden = false
                     self.coinbasePaymentMethodLabel.text = subJson["name"].string
                     self.coinbasePrimaryAccountID = subJson["id"].string
-                    
+                    TableCellViewCard.isHidden = false
                 }
             }else{
                 // find the coinbase wallet account and set its title in view
@@ -267,37 +274,46 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             
             if subJson["currency"]["code"] == "ETH" && subJson["type"] == "wallet"{
                 ethWalletAccounts.append(subJson)
-                
             }
             if subJson["currency"]["code"] == "BTC" && subJson["type"] == "wallet"{
                 btcWalletAccounts.append(subJson)
-                
             }
         }
         
         // Check the default eth wallet account and set the label in ui
         for json in ethWalletAccounts{
             if json["id"].string == self.ethPrimaryWalletAccountID{
-                self.ethWalletLabel.isHidden = false
                 ethWalletLabel.text = json["name"].string
-                TableCellViewBTC.isHidden = false
-                
             }
+            TableCellViewETH.isHidden = false
+            self.ethWalletLabel.isHidden = false
         }
         
         // Check the default btc wallet account and set the label in ui
         for json in btcWalletAccounts{
             if json["id"].string == self.btcPrimaryWalletAccountsID{
-                btcWalletLabel.isHidden = false
                 btcWalletLabel.text = json["name"].string
-                TableCellViewBTC.isHidden = false
-                
+            }
+            TableCellViewBTC.isHidden = false
+            btcWalletLabel.isHidden = false
+        }
+        
+        // if no default eth primary wallet set then get the first one and make it primary
+        print(globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string)
+        if globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"] == JSON.null || globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string == ""{
+            if ethWalletAccounts.count > 0{
+                ethWalletLabel.text = ethWalletAccounts[0]["name"].string
+                self.ethPrimaryWalletAccountID = ethWalletAccounts[0]["id"].string
             }
         }
         
-        
-        
-        
+        // if no default btc primary wallet set.. then get the first one and make it primary
+        if globalCoinflashUser3ResponseValue["user_set_primary_coinbase_btc_account_id"] == JSON.null || globalCoinflashUser3ResponseValue["user_set_primary_coinbase_btc_account_id"].string == ""{
+            if btcWalletAccounts.count > 0{
+                btcWalletLabel.text = btcWalletAccounts[0]["name"].string
+                self.btcPrimaryWalletAccountsID = btcWalletAccounts[0]["id"].string
+            }
+        }
     }
     
     // Saves global settings
@@ -503,9 +519,9 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     }
     func hideParemeters(){
         
-        self.coinbasePaymentMethodLabel.isHidden  = true
-        self.ethWalletLabel.isHidden = true
-        self.btcWalletLabel.isHidden = true
+        self.coinbasePaymentMethodLabel.isHidden  = false
+        self.ethWalletLabel.isHidden = false
+        self.btcWalletLabel.isHidden = false
         
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

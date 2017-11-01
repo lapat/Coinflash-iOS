@@ -433,7 +433,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier  == "generalSettingsSegue"{
-            if globalCoinflashUser3ResponseValue == JSON.null{
+            if globalCoinflashUser3ResponseValue == nil{
                 self.requestCoinflashUser3Values(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
                 HelperFunctions.showToast(withString: "Error! Trying to reload Data", onViewController: self)
                 return false
