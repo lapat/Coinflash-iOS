@@ -40,7 +40,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     var ethPrimaryWalletAccountID: String! // the primary id of ether wallet set by user
     var btcWalletAccounts: [JSON]! // btc wallet accounts
     var btcPrimaryWalletAccountsID: String! // the primary id of btc wallet set by user
-    
+    var plaid_error_code : Int!
     var pickerViewData: [String]!
     
     override func viewDidLoad() {
@@ -256,8 +256,9 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         
         self.ethPrimaryWalletAccountID = globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string
         self.btcPrimaryWalletAccountsID = globalCoinflashUser3ResponseValue["user_set_primary_coinbase_btc_account_id"].string
+        self.plaid_error_code = globalCoinflashUser3ResponseValue["plaid_error_code"].int
         
-        // Populate BTC and ETH wallets from globalCoinflashUser3ResponseValue
+        
         ethWalletAccounts = [JSON]()
         btcWalletAccounts = [JSON]()
         

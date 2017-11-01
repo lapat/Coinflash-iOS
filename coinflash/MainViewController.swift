@@ -102,6 +102,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
         SideMenuManager.default.menuPresentMode = .menuSlideIn
         SideMenuManager.default.menuParallaxStrength = 3
         NotificationCenter.default.addObserver(self, selector: #selector(didSuccessfullyBuyCoins(handleNotification:)), name: NSNotification.Name.onSuccessfulPurchaseOfCoins, object: nil)
+
+        
         
     }
     
@@ -339,6 +341,13 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 self.coinflashUser3ResponseObject = json[0]
                 globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
                 SVProgressHUD.dismiss()
+                if globalCoinflashUser3ResponseValue["plaid_error_code"] != nil{
+                    if globalCoinflashUser3ResponseValue["plaid_error_code"].int == 2{
+                     
+                        self.showConfirmationDialogBox(title: "Error", Message: "There is an error connecting with your bank.  Please unlink and relink your bank to resolve this issue.")
+                    }
+                }
+            
             case .failure:
                 print(response.error as Any)
                 SVProgressHUD.dismiss()

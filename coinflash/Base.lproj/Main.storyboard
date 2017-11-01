@@ -493,7 +493,6 @@
                                 </state>
                                 <connections>
                                     <action selector="didTapOnAcceptTOCButtonWithSende:" destination="Xuc-AV-kpA" eventType="touchUpInside" id="Ksd-Ff-IWW"/>
-                                    <segue destination="Eui-HA-vkX" kind="show" identifier="mainPageSegue" id="ZCg-q1-5b6"/>
                                 </connections>
                             </button>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DeP-2h-9Rp">
@@ -519,6 +518,7 @@
                     <connections>
                         <outlet property="acceptButton" destination="XVz-a7-YdO" id="KlM-J7-aHI"/>
                         <outlet property="webView" destination="DeP-2h-9Rp" id="0mf-rP-df6"/>
+                        <segue destination="Eui-HA-vkX" kind="show" identifier="mainPageSegue" id="g8x-HE-c3n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SKr-1H-eIs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -542,7 +542,7 @@
                                 <state key="normal" image="linkBankAndCb"/>
                                 <connections>
                                     <action selector="AddAccount:" destination="1mL-Jc-yYf" eventType="touchUpInside" id="476-S5-f8H"/>
-                                    <segue destination="xam-tU-CdB" kind="show" id="Wz9-SI-PtV"/>
+                                    <segue destination="Y68-ry-sgV" kind="show" id="q4w-LN-3U8"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link your bank account and your coinbase account to start investing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihK-QZ-ZTI">
@@ -579,7 +579,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1HL-Mj-CPN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3140" y="1625"/>
+            <point key="canvasLocation" x="-3140" y="1514"/>
         </scene>
         <!--SettingsVC-->
         <scene sceneID="rqY-JQ-GIE">
@@ -1784,6 +1784,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="biu-qR-UdG"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Kkl-dR-Qwz"/>
                     <connections>
                         <outlet property="AddBankLink" destination="LHk-sl-Zq1" id="YFF-M0-f13"/>
                         <outlet property="DlinkCoinBase" destination="v4N-tD-3d3" id="nPh-Jy-6fa"/>
@@ -1797,7 +1798,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0En-jd-fws" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-612" y="1192.3538230884558"/>
+            <point key="canvasLocation" x="-2236" y="2382"/>
+        </scene>
+        <!--Nav View Controller-->
+        <scene sceneID="obb-R0-mfg">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hSH-lg-W0q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController navigationBarHidden="YES" id="Y68-ry-sgV" customClass="NavViewController" customModule="coinflash" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fbg-KS-BQH">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="1mL-Jc-yYf" kind="relationship" relationship="rootViewController" id="4py-oJ-qcW"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-3140" y="2383"/>
         </scene>
         <!--Login-->
         <scene sceneID="Ibr-cn-NF7">
@@ -1996,7 +2012,6 @@
         <image name="settingIcons" width="34" height="34"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tn7-CS-QaY"/>
-        <segue reference="I5M-EP-JW7"/>
+        <segue reference="pdj-mW-GPu"/>
     </inferredMetricsTieBreakers>
 </document>
