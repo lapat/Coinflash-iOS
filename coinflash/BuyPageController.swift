@@ -333,7 +333,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                     
                     let DataResponseBTC = array["BTC"] as! NSArray
                     let DataResponseETH = array["ETH"] as! NSArray
-                    for index in stride(from: 0, to: (DataResponseBTC.count - 1), by: 1){//(DataResponseBTC.count - 1)...0 {
+                    for index in stride(from: 0, to: (DataResponseBTC.count), by: 1){//(DataResponseBTC.count - 1)...0 {
                         let DataDic = DataResponseBTC[index] as? NSDictionary
                         var Date = DataDic!["date"] as! String
                         Date = String(Date.characters.dropFirst(5))
@@ -342,7 +342,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                         self.BitcoinCryptoprices.append(price)
                         
                     }
-                    for index in stride(from: 0, to: (DataResponseETH.count - 1), by: 1){//(DataResponseETH.count - 1)...0 {
+                    for index in stride(from: 0, to: (DataResponseETH.count), by: 1){//(DataResponseETH.count - 1)...0 {
                         let DataDic = DataResponseETH[index] as? NSDictionary
                         var Date = DataDic!["date"] as! String
                         Date = String(Date.characters.dropFirst(5))
