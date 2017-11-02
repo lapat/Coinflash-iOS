@@ -216,7 +216,13 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             monthlyButton?.isSelected = false
             weeklyButton?.isSelected = true
         }
-        
+        if globalSettings.investChange == true{
+            
+            self.investChangeControl.isOn = true
+        }
+        else{
+            self.investChangeControl.isOn = false
+        }
         self.changeToInvestSlider.value = Float(globalSettings.percentOfChangeToInvest)
         self.changeToInvestSliderValueLabel.text = "\(Int(globalSettings.percentOfChangeToInvest))%"
         self.capOnInvestmentTextField.text = "\(globalSettings.capOnInvestment!)"
