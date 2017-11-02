@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.871091"
+            timestampString = "531335410.871595"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "InvestmentRateSlider(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.872632"
+            timestampString = "531335410.873235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
             landmarkName = "updateViewInvestmentInformation()"
             landmarkType = "7">
          </BreakpointContent>
@@ -186,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.874186"
+            timestampString = "531335410.874637"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "63"
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.875908"
+            timestampString = "531335410.876118"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "MainViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.877342"
+            timestampString = "531335410.877502"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "updateViewInvestmentInformation()"
             landmarkType = "7">
          </BreakpointContent>
@@ -234,7 +234,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.878512"
+            timestampString = "531335410.878701"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "29"
@@ -346,12 +346,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.879954"
+            timestampString = "531335410.879959"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
-            landmarkName = "showConfirmationDialogBox(title:Message:)"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
+            landmarkName = "requestCoinFlashFeatchccTransations(mobile_secret:user_id_mobile:mobile_access_token:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -378,11 +378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.882266"
+            timestampString = "531335410.881264"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "OnInvestmentRateSliderRelease(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -394,7 +394,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/SettingsVC.swift"
-            timestampString = "531329329.883958"
+            timestampString = "531335410.882579"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "486"
@@ -458,7 +458,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/SettingsVC.swift"
-            timestampString = "531329329.884195"
+            timestampString = "531335410.882756"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "261"
@@ -474,7 +474,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/SettingsVC.swift"
-            timestampString = "531329329.884309"
+            timestampString = "531335410.882834"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "394"
@@ -490,7 +490,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/SettingsVC.swift"
-            timestampString = "531329329.884424"
+            timestampString = "531335410.882905"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "395"
@@ -506,11 +506,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.884644"
+            timestampString = "531335410.882979"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -522,11 +522,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.887805"
+            timestampString = "531335410.88434"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -538,7 +538,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/SettingsVC.swift"
-            timestampString = "531329329.889377"
+            timestampString = "531335410.885629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "268"
@@ -646,11 +646,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/SettingsVC.swift"
-            timestampString = "531329329.889659"
+            timestampString = "531335410.885894"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "400"
@@ -662,16 +662,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/MainViewController.swift"
-            timestampString = "531329329.88977"
+            timestampString = "531335410.885983"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "313"
-            endingLineNumber = "313"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
             landmarkName = "UpdateSlideVaueToServer(mobile_secret:user_id_mobile:mobile_access_token:SliderValue:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "coinflash/MainViewController.swift"
+            timestampString = "531335410.887611"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "InvestmentRateSlider(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "coinflash/MainViewController.swift"
+            timestampString = "531335410.889519"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "requestCoinFlashFeatchccTransations(mobile_secret:user_id_mobile:mobile_access_token:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

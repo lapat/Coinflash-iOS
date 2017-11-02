@@ -40,7 +40,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var m_spare_change_accrued_percent_to_invest : Double = 0.0
     var m_cap : Double = 0.0
     var m_percent_to_invest : Double = 0.0
-    var m_how_often : Double = 0.0
+    var m_how_often : Int = 0
     var m_spare_change_accrued : Double = 0.0
     var m_btc_to_invest : Double = 0.0
     var m_invest_on : Double = 0.0
@@ -78,6 +78,10 @@ class MainViewController: UIViewController, UITableViewDataSource{
         // Set the ether and bitcoin rate in the top label with respect to the percentage
         let dollarToInvestInBTC = Float(dollarsToInvest)*Float(btcRate/100.0)
         let dollarToInvestETH = Float(dollarsToInvest)*Float((ethRate)/100.0)
+        if globalSettings.investChange == false{
+            self.LabelChange?.text = String(format: "$ %.2f / %.2f", 0.0,0.0)
+            return
+        }
         self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
         
         /// Set the mutable attributed string for the top label showing dollars
@@ -213,7 +217,17 @@ class MainViewController: UIViewController, UITableViewDataSource{
                             
                         }
                         if user_preferences["how_often"] != nil{
-                            self.m_how_often = Double(user_preferences["how_often"] as! String)!
+                            self.m_how_often = Int(user_preferences["how_often"] as! String)!
+                            if self.m_how_often == 1{
+                                globalSettings.investHowOften = .daily
+                            }
+                            else if self.m_how_often == 2{
+                                globalSettings.investHowOften = .weekly
+                            }
+                            else{
+                                globalSettings.investHowOften = .monthly
+                            }
+                            
                         }
                         if user_preferences["spare_change_accrued"] != nil{
                             self.m_spare_change_accrued = Double(user_preferences["spare_change_accrued"] as! String)!

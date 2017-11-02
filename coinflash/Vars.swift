@@ -41,6 +41,7 @@ struct GlobalSettings{
     enum InvestChangeHowOften{
         case monthly
         case weekly
+        case daily
     }
     var percentOfChangeToInvest: Int!
     var capOnInvestment: Int!
