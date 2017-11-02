@@ -131,7 +131,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     func updateViewInvestmentInformation(){
         self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested Every Monday"
-         self.LabelSinceChange?.text = "Spare Change Accrued since Monday"
+         self.LabelSinceChange?.text = "Spare Change accrued since Monday"
         // check to see the label
         
         if globalSettings.investHowOften == .monthly{
@@ -142,7 +142,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
             let daysTillNextMonth = (days?.count)! - cal.component(Calendar.Component.day, from: currentDate)
             
             self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested In \(daysTillNextMonth + 1) days"
-           self.LabelSinceChange?.text = "Spare Change Accrued This Month"
+           self.LabelSinceChange?.text = "Spare Change accrued This Month"
         }
         
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
