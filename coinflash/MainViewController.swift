@@ -130,7 +130,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     func updateViewInvestmentInformation(){
-        self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested Everyday"
+        self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested Every Monday"
         // check to see the label
         
         if globalSettings.investHowOften == .monthly{
