@@ -556,6 +556,15 @@
                                     <constraint firstAttribute="height" constant="164" id="WJ3-xF-sd4"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coinflash charges $1 a month in cryptocurrency" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sqZ-vl-6AV">
+                                <rect key="frame" x="16" y="267" width="343" height="67"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="67" id="ZYd-Mh-MhG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" red="0.40266746279999999" green="0.59298241139999996" blue="0.22872918840000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.91362601518630981" green="0.91378277540206909" blue="0.91361618041992188" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -564,10 +573,13 @@
                             <constraint firstItem="61W-w6-JCH" firstAttribute="centerX" secondItem="E3h-BJ-FfG" secondAttribute="centerX" id="H91-el-eWu"/>
                             <constraint firstItem="E3h-BJ-FfG" firstAttribute="bottom" secondItem="WQK-qO-nsl" secondAttribute="bottom" constant="20" id="QdF-NJ-QD1"/>
                             <constraint firstItem="WQK-qO-nsl" firstAttribute="centerX" secondItem="E3h-BJ-FfG" secondAttribute="centerX" id="Seb-6H-EiJ"/>
+                            <constraint firstItem="sqZ-vl-6AV" firstAttribute="top" secondItem="61W-w6-JCH" secondAttribute="bottom" constant="8" id="U3G-ux-rYe"/>
                             <constraint firstItem="61W-w6-JCH" firstAttribute="top" secondItem="ihK-QZ-ZTI" secondAttribute="bottom" constant="8" id="UYX-M0-PvR"/>
                             <constraint firstItem="E3h-BJ-FfG" firstAttribute="trailing" secondItem="61W-w6-JCH" secondAttribute="trailing" constant="16" id="c6a-dV-rPT"/>
                             <constraint firstItem="E3h-BJ-FfG" firstAttribute="trailing" secondItem="ihK-QZ-ZTI" secondAttribute="trailing" constant="16" id="d1Y-QU-qEK"/>
+                            <constraint firstItem="E3h-BJ-FfG" firstAttribute="trailing" secondItem="sqZ-vl-6AV" secondAttribute="trailing" constant="16" id="q8d-PI-sIf"/>
                             <constraint firstItem="ihK-QZ-ZTI" firstAttribute="leading" secondItem="E3h-BJ-FfG" secondAttribute="leading" constant="16" id="tfc-Iv-W0m"/>
+                            <constraint firstItem="E3h-BJ-FfG" firstAttribute="leading" secondItem="sqZ-vl-6AV" secondAttribute="leading" constant="-16" id="wgJ-BP-nR4"/>
                             <constraint firstItem="61W-w6-JCH" firstAttribute="leading" secondItem="E3h-BJ-FfG" secondAttribute="leading" constant="16" id="zkU-u7-Tmg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="E3h-BJ-FfG"/>
@@ -575,7 +587,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1HL-Mj-CPN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3140" y="1550"/>
+            <point key="canvasLocation" x="-3140" y="1549.4752623688157"/>
         </scene>
         <!--SettingsVC-->
         <scene sceneID="rqY-JQ-GIE">
