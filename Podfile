@@ -16,6 +16,7 @@ target 'coinflash' do
   pod 'Toast-Swift', '~> 2.0.0'
   pod 'SDWebImage'
   pod 'NotificationBannerSwift', '~> 1.4.4'
+  pod 'SwiftyStoreKit'
   use_frameworks!
   
   target 'coinflashTests' do
