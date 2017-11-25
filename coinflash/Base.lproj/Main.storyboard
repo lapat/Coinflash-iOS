@@ -1670,14 +1670,26 @@
                                         <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dlink Account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJR-oQ-A8b">
+                                        <rect key="frame" x="301" y="9" width="66" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="66" id="Xnv-ci-fca"/>
+                                            <constraint firstAttribute="height" constant="34" id="lOf-9c-siJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <color key="textColor" red="0.037576213479042053" green="0.32436734437942505" blue="0.65679758787155151" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="gAX-wX-sbg" firstAttribute="centerY" secondItem="hRE-X9-uJS" secondAttribute="centerY" id="8mj-In-ZB5"/>
+                                    <constraint firstAttribute="trailing" secondItem="bJR-oQ-A8b" secondAttribute="trailing" constant="8" id="KEH-Pa-lpm"/>
                                     <constraint firstItem="gAX-wX-sbg" firstAttribute="top" secondItem="hRE-X9-uJS" secondAttribute="top" constant="8" id="bbk-M2-1Kt"/>
                                     <constraint firstItem="gAX-wX-sbg" firstAttribute="leading" secondItem="hRE-X9-uJS" secondAttribute="leading" constant="8" id="bnp-DD-SCa"/>
                                     <constraint firstItem="C6B-aL-Ha1" firstAttribute="centerY" secondItem="hRE-X9-uJS" secondAttribute="centerY" id="feh-CK-uW2"/>
                                     <constraint firstItem="C6B-aL-Ha1" firstAttribute="centerX" secondItem="hRE-X9-uJS" secondAttribute="centerX" id="h9r-jo-xoR"/>
+                                    <constraint firstItem="bJR-oQ-A8b" firstAttribute="top" secondItem="hRE-X9-uJS" secondAttribute="top" constant="9" id="r4x-09-Ba7"/>
                                     <constraint firstAttribute="height" constant="52" id="vx2-0Q-Ukd"/>
                                 </constraints>
                             </view>
@@ -1862,7 +1874,7 @@
                                     <action selector="didTapOnAddCoinbaseButtonWithSender:" destination="1mL-Jc-yYf" eventType="touchUpInside" id="uJQ-nU-ua8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4N-tD-3d3">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4N-tD-3d3">
                                 <rect key="frame" x="314" y="568" width="35" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="SrR-L9-KLE"/>
@@ -1928,6 +1940,7 @@
                     <navigationItem key="navigationItem" id="Kkl-dR-Qwz"/>
                     <connections>
                         <outlet property="AddBankLink" destination="LHk-sl-Zq1" id="YFF-M0-f13"/>
+                        <outlet property="DlinkAccounts" destination="bJR-oQ-A8b" id="6C1-SQ-ith"/>
                         <outlet property="DlinkCoinBase" destination="v4N-tD-3d3" id="nPh-Jy-6fa"/>
                         <outlet property="addCoinbaseButton" destination="ysH-wV-Qx0" id="b0D-qq-voh"/>
                         <outlet property="bankTable" destination="i8D-Kq-3Ee" id="RA7-Ot-8jh"/>
@@ -1939,7 +1952,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0En-jd-fws" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2236" y="2382"/>
+            <point key="canvasLocation" x="-2358" y="2310"/>
         </scene>
         <!--Nav View Controller-->
         <scene sceneID="obb-R0-mfg">
