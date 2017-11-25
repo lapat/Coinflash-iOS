@@ -393,6 +393,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     //MARK: - Buy Now implementation
     @IBAction func didTapOnBuyNowButton(){
+        self.performSegue(withIdentifier: "in-app-purchase-segue", sender: self)
+        return
         /// checking if there is a coinbase account with allow_buy = true
         var allow_buy = false
         if coinflashUser3ResponseObject["coinbase_accounts"].arrayValue != nil{

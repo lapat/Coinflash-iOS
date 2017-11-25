@@ -114,7 +114,6 @@ struct CoinbaseInfo{
 
 var coinbaseInfoObject: CoinbaseInfo = CoinbaseInfo()
 
-
 // MARK: - Plaid
 struct BankAccount{
     var name: String!
@@ -131,3 +130,4 @@ struct PlaidInfo{
     }
 }
 var plaidInfoObject: PlaidInfo = PlaidInfo()
+

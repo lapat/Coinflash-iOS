@@ -11,6 +11,7 @@ import SideMenu
 import coinbase_official
 import LinkKit
 import SVProgressHUD
+import SwiftyStoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,7 +41,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         SVProgressHUD.setDefaultMaskType(.black)
         
-       return true
+        /// Swfit store key
+        SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
+            for purchase in purchases {
+                if purchase.transaction.transactionState == .purchased || purchase.transaction.transactionState == .restored {
+                    if purchase.needsFinishTransaction {
+                        // Deliver content from server, then:
+                        SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    }
+                    print("purchased: \(purchase)")
+                }
+            }
+        }
+        
+        return true
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

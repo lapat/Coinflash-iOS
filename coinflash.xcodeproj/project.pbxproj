@@ -28,6 +28,8 @@
 		7708387B1F89AA12009306B1 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7708387A1F89AA12009306B1 /* HelperFunctions.swift */; };
 		77182A001F8997CD0098F501 /* Vars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771829FF1F8997CD0098F501 /* Vars.swift */; };
 		777CBC001F89B80A00724DC5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */; };
+		777F3D011FC614F400EA890B /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777F3D001FC614F400EA890B /* StoreKitHelper.swift */; };
+		777F3D031FC7257600EA890B /* InAppPurchaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777F3D021FC7257600EA890B /* InAppPurchaseVC.swift */; };
 		7787AF2B1FA0C2DF00082093 /* TOC.html in Resources */ = {isa = PBXBuildFile; fileRef = 7787AF2A1FA0C2DE00082093 /* TOC.html */; };
 		7787AF2D1FA0C39A00082093 /* TOCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7787AF2C1FA0C39A00082093 /* TOCVC.swift */; };
 		8AA2F2093DD96E4F4CCB42D7 /* Pods_coinflash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA844273D1373ADDF75EEE2F /* Pods_coinflash.framework */; };
@@ -97,6 +99,8 @@
 		7708387A1F89AA12009306B1 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		771829FF1F8997CD0098F501 /* Vars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vars.swift; sourceTree = "<group>"; };
 		777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		777F3D001FC614F400EA890B /* StoreKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
+		777F3D021FC7257600EA890B /* InAppPurchaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseVC.swift; sourceTree = "<group>"; };
 		7787AF2A1FA0C2DE00082093 /* TOC.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = TOC.html; sourceTree = "<group>"; };
 		7787AF2C1FA0C39A00082093 /* TOCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOCVC.swift; sourceTree = "<group>"; };
 		A7C2B8AE755AA69688FE88C6 /* Pods-coinflashTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -172,11 +176,13 @@
 				ACA3DA9B1F7FF4F400185245 /* LoginVC.swift */,
 				3F012E321F84D2550026EFC0 /* MenuVC.swift */,
 				7787AF2C1FA0C39A00082093 /* TOCVC.swift */,
+				777F3D021FC7257600EA890B /* InAppPurchaseVC.swift */,
 				3FCC023F1F78F16700DD6558 /* Main.storyboard */,
 				3FCC02421F78F16700DD6558 /* Assets.xcassets */,
 				3FCC02441F78F16700DD6558 /* LaunchScreen.storyboard */,
 				3FCC02471F78F16700DD6558 /* Info.plist */,
 				771829FF1F8997CD0098F501 /* Vars.swift */,
+				777F3D001FC614F400EA890B /* StoreKitHelper.swift */,
 				7708387A1F89AA12009306B1 /* HelperFunctions.swift */,
 				3F5BBF121F8AC68A00BCA472 /* ccTransationCellView.swift */,
 				3F2079361F8D4B19006DFD6E /* CryptoTransationCellView.swift */,
@@ -574,7 +580,9 @@
 				ACA3DA931F7FE9C500185245 /* AccountSettingVC.swift in Sources */,
 				3FAAB76A1F90355700DF423B /* PopUpViewGraphTypeSelector.swift in Sources */,
 				3FCC02721F7BD52D00DD6558 /* BuyPageController.swift in Sources */,
+				777F3D011FC614F400EA890B /* StoreKitHelper.swift in Sources */,
 				7708387B1F89AA12009306B1 /* HelperFunctions.swift in Sources */,
+				777F3D031FC7257600EA890B /* InAppPurchaseVC.swift in Sources */,
 				3F012E331F84D2550026EFC0 /* MenuVC.swift in Sources */,
 				77182A001F8997CD0098F501 /* Vars.swift in Sources */,
 				3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */,

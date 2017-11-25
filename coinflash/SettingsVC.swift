@@ -27,6 +27,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     @IBOutlet weak var TableCellViewCard: UITableViewCell!
     @IBOutlet weak var TableCellViewBTC: UITableViewCell!
     @IBOutlet weak var TableCellViewETH: UITableViewCell!
+    @IBOutlet weak var MonthlySubscriptionActivityStatus: UILabel!
     var generalPickerView: UIPickerView!
     var pickerViewSupportingBackgroundView: UIView! // used to ensure user is not able to tap on tableview when pickerview is visible.
     var pickerViewSupportingGestureRecognizer: UITapGestureRecognizer! // used to dismiss pickerview when a user taps on pickerviewsupportingbackgroundview
@@ -179,12 +180,12 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         if indexPath.row == 2{
             return 120
         }
-        if indexPath.row == 4{
+        if indexPath.row == 5{
             if TableCellViewCard.isHidden == true{
                 return 0
             }
         }
-        if indexPath.row == 5{
+        if indexPath.row == 6{
             // check whether to show eth and btc wallets or not
             if btcWalletAccounts.count < 0{
                 return 0
@@ -193,7 +194,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 //return 0
             }
         }
-        if indexPath.row == 6{
+        if indexPath.row == 7{
             if ethWalletAccounts.count < 0{
                 return 0
             }
@@ -329,7 +330,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     
     //MARK: - TableView Taps On cell
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 4{
+        if indexPath.row == 5{
             self.pickerViewData = nil
             self.showingPickerWithDataSource = 1
             pickerViewData = [String]()
@@ -340,7 +341,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             }
             self.showPickerView()
         }
-        if indexPath.row == 5{
+        if indexPath.row == 6{
             print("bitcoin wallet cell")
             self.showingPickerWithDataSource = 2
             self.pickerViewData = nil
@@ -350,7 +351,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             }
             self.showPickerView()
         }
-        if indexPath.row == 6{
+        if indexPath.row == 7{
             print("ether wallet cell")
             self.showingPickerWithDataSource = 3
             self.pickerViewData = [String]()
