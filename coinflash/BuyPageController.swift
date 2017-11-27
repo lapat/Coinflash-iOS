@@ -487,7 +487,9 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
     }
     func loadNetGainEther(){
-        var GainLoss = m_total_amount_spent_on_eth - m_amount_eth_owned * m_price_right_now_eth
+        
+        
+        var GainLoss =  m_amount_eth_owned * m_price_right_now_eth - m_total_amount_spent_on_eth
         if GainLoss == 0{
             self.LabelGroth?.isHidden = true
             self.ImageArrow?.isHidden = true
@@ -512,7 +514,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     }
     func loadNetGainBitcoin(){
         
-        var GainLoss = m_total_amount_spent_on_btc - m_amount_btc_owned * m_price_right_now_btc
+        var GainLoss = m_amount_btc_owned * m_price_right_now_btc - m_total_amount_spent_on_btc
         if GainLoss == 0{
             self.LabelGroth?.isHidden = true
             self.ImageArrow?.isHidden = true
