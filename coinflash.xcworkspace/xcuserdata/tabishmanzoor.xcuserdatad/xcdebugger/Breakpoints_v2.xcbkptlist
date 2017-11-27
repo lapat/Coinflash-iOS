@@ -287,8 +287,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "360"
             endingLineNumber = "360"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "LinkPlaid(mobile_secret:user_id_mobile:mobile_access_token:public_token:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -303,8 +303,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "343"
             endingLineNumber = "343"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "AccountSettingsVC"
+            landmarkType = "3">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
