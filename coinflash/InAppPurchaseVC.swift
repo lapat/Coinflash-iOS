@@ -23,6 +23,15 @@ class InAppPurchaseVC: UIViewController {
         self.purchaseButton.layer.cornerRadius = 5.0
         self.purchaseButton.layer.borderColor = UIColor(red: 8/255.0, green: 79/255.0, blue: 159/255.0, alpha: 1.0).cgColor
         
+        self.fetchSubscriptionOptions()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func fetchSubscriptionOptions(){
         // Get localized pricing
         SVProgressHUD.show(withStatus: "Loading Info")
         StoreKitHelper.sharedInstance.loadSubscriptionOptions(completionClosure: { (product) in
@@ -30,16 +39,19 @@ class InAppPurchaseVC: UIViewController {
             print(product.localizedPrice)
             let priceString = product.localizedPrice!
             self.purchaseButton.setTitle("\(priceString)", for: UIControlState.normal)
-            
         }) { (error) in
             SVProgressHUD.dismiss()
-            print(error)
+            let alert = UIAlertController(title: "Error", message: "Network error, kindly retry to load subscription info", preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
+                self.fetchSubscriptionOptions()
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) in
+                self.didTapOnBackButton(sender: UIButton())
+            })
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func didTapOnBackButton(sender: UIButton){
@@ -65,6 +77,8 @@ class InAppPurchaseVC: UIViewController {
     }
     
     @IBAction func didTapOnRestorePurchasesButton(){
+        /// check if info was loaded successfully
+        
         StoreKitHelper.sharedInstance.restorePreviousPurchases(completionClosure: {
             let alert = UIAlertController(title: "Success", message: "Purchases have been restored.", preferredStyle: UIAlertControllerStyle.alert)
             let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (alert) in

@@ -92,6 +92,14 @@ class StoreKitHelper: NSObject {
     
     /// This will buy the monthly subscription
     func buyMonthlySubscriptionForUser(completionClosure: @escaping ()-> Void, failureClosure: @escaping (SKError!)-> Void){
+        //if monthlySubscriptionProductInfo == nil{
+        //    self.loadSubscriptionOptions(completionClosure: { (product) in
+        //
+        //    }, failureClosure: { (error) in
+        //        return
+        //    })
+       // }
+        
         SwiftyStoreKit.purchaseProduct(monthlySubscriptionProductInfo!) { (result) in
             switch result {
             case .success(let purchase):
