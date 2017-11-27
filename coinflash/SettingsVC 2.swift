@@ -24,14 +24,6 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     @IBOutlet weak var coinbasePaymentMethodLabel: UILabel!
     @IBOutlet weak var ethWalletLabel: UILabel!
     @IBOutlet weak var btcWalletLabel: UILabel!
-    @IBOutlet weak var TableCellViewCard: UITableViewCell!
-    @IBOutlet weak var TableCellViewBTC: UITableViewCell!
-    @IBOutlet weak var TableCellViewETH: UITableViewCell!
-    @IBOutlet weak var MonthlySubscriptionActivityStatus: UILabel!
-    
-    @IBOutlet weak var validSubscriptionTextLabel: UILabel!
-    @IBOutlet weak var validSubscriotionWarningIcon: UIImageView!
-    
     var generalPickerView: UIPickerView!
     var pickerViewSupportingBackgroundView: UIView! // used to ensure user is not able to tap on tableview when pickerview is visible.
     var pickerViewSupportingGestureRecognizer: UITapGestureRecognizer! // used to dismiss pickerview when a user taps on pickerviewsupportingbackgroundview
@@ -45,7 +37,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     var ethPrimaryWalletAccountID: String! // the primary id of ether wallet set by user
     var btcWalletAccounts: [JSON]! // btc wallet accounts
     var btcPrimaryWalletAccountsID: String! // the primary id of btc wallet set by user
-    var plaid_error_code : Int!
+    
     var pickerViewData: [String]!
     
     override func viewDidLoad() {
@@ -93,10 +85,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 weeklyButton?.isSelected = false
                 
             }
-           // else if sender.isSelected == true{
-           //     sender.isSelected = false
-           //     weeklyButton?.isSelected = true
-           // }
+            // else if sender.isSelected == true{
+            //     sender.isSelected = false
+            //     weeklyButton?.isSelected = true
+            // }
         }
         
         if sender == weeklyButton{
@@ -104,10 +96,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 sender.isSelected = true
                 monthlyButton?.isSelected = false
             }
-           // else if sender.isSelected == true{
-           //     sender.isSelected = false
-           //     monthlyButton?.isSelected = true
-           // }
+            // else if sender.isSelected == true{
+            //     sender.isSelected = false
+            //     monthlyButton?.isSelected = true
+            // }
         }
     }
     
@@ -127,6 +119,9 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    
+            
+        
         var str = (textField.text! + string)
         
         
@@ -148,7 +143,11 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         
         //textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
         textField.text = str.substring(to: str.index(str.startIndex, offsetBy:3))
-        //textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10)
+            //textField.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+        
+        
+        
+        
         return false
     }
     
@@ -163,13 +162,24 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         temp.remove(at: temp.startIndex)
         self.tempCapOnInvestmentValue = Int(temp)
         /*
-        globalSettings.capOnInvestment = Int(temp)
-        print(globalSettings.capOnInvestment)
+         globalSettings.capOnInvestment = Int(temp)
+         print(globalSettings.capOnInvestment)
          */
     }
     
     @IBAction func didTapOnBackButton(){
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    // tableview delegate
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if  indexPath.row == 1{
+            return 70
+        }
+        if indexPath.row == 2{
+            return 120
+        }
+        return UITableViewAutomaticDimension
     }
     
     //MARK: - Global settings functions
@@ -183,13 +193,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             monthlyButton?.isSelected = false
             weeklyButton?.isSelected = true
         }
-        if globalSettings.investChange == true{
-            
-            self.investChangeControl.isOn = true
-        }
-        else{
-            self.investChangeControl.isOn = false
-        }
+        
         self.changeToInvestSlider.value = Float(globalSettings.percentOfChangeToInvest)
         self.changeToInvestSliderValueLabel.text = "\(Int(globalSettings.percentOfChangeToInvest))%"
         self.capOnInvestmentTextField.text = "\(globalSettings.capOnInvestment!)"
@@ -197,13 +201,9 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         self.tempCapOnInvestmentValue = globalSettings.capOnInvestment
         self.tempChangeCapValue = globalSettings.percentOfChangeToInvest
         
-        
-        TableCellViewCard.isHidden = true
-        TableCellViewBTC.isHidden = true
-        TableCellViewETH.isHidden = true
-        
         // load the accounts
         // loading coinbase accounts
+        // error occuring here ..... globalCoinflashUser3ResponseValue found nil
         self.coinbaseAccounts = globalCoinflashUser3ResponseValue["coinbase_accounts"]
         let wallets = globalCoinflashUser3ResponseValue["wallets"]
         for (index,subJson):(String, JSON) in self.coinbaseAccounts {
@@ -214,19 +214,16 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 print("not primary")
             }
             if globalCoinflashUser3ResponseValue["user_set_primary_coinbase_account_id"] == JSON.null{
-                // get the first account and set it to primary coinbase account
                 if index == "0"{
                     self.coinbasePaymentMethodLabel.isHidden = false
                     self.coinbasePaymentMethodLabel.text = subJson["name"].string
                     self.coinbasePrimaryAccountID = subJson["id"].string
-                    TableCellViewCard.isHidden = false
                 }
             }else{
                 // find the coinbase wallet account and set its title in view
                 self.coinbasePrimaryAccountID = globalCoinflashUser3ResponseValue["user_set_primary_coinbase_account_id"].string
                 for (_, subJson):(String, JSON) in coinbaseAccounts{
                     //print(subJson["id"].string)
-                    TableCellViewCard.isHidden = false
                     if subJson["id"] == globalCoinflashUser3ResponseValue["user_set_primary_coinbase_account_id"]{
                         self.coinbasePaymentMethodLabel.text = subJson["name"].string
                     }
@@ -236,13 +233,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         
         self.ethPrimaryWalletAccountID = globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string
         self.btcPrimaryWalletAccountsID = globalCoinflashUser3ResponseValue["user_set_primary_coinbase_btc_account_id"].string
-        self.plaid_error_code = globalCoinflashUser3ResponseValue["plaid_error_code"].int
         
-        
+        // Populate BTC and ETH wallets from globalCoinflashUser3ResponseValue
         ethWalletAccounts = [JSON]()
         btcWalletAccounts = [JSON]()
-        
-        
         for (index, subJson):(String, JSON) in wallets{
             
             if subJson["currency"]["code"] == "ETH" && subJson["type"] == "wallet"{
@@ -256,35 +250,16 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         // Check the default eth wallet account and set the label in ui
         for json in ethWalletAccounts{
             if json["id"].string == self.ethPrimaryWalletAccountID{
+                self.ethWalletLabel.isHidden = false
                 ethWalletLabel.text = json["name"].string
             }
-            TableCellViewETH.isHidden = false
-            self.ethWalletLabel.isHidden = false
         }
         
         // Check the default btc wallet account and set the label in ui
         for json in btcWalletAccounts{
             if json["id"].string == self.btcPrimaryWalletAccountsID{
+                btcWalletLabel.isHidden = false
                 btcWalletLabel.text = json["name"].string
-            }
-            TableCellViewBTC.isHidden = false
-            btcWalletLabel.isHidden = false
-        }
-        
-        // if no default eth primary wallet set then get the first one and make it primary
-        print(globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string)
-        if globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"] == JSON.null || globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string == ""{
-            if ethWalletAccounts.count > 0{
-                ethWalletLabel.text = ethWalletAccounts[0]["name"].string
-                self.ethPrimaryWalletAccountID = ethWalletAccounts[0]["id"].string
-            }
-        }
-        
-        // if no default btc primary wallet set.. then get the first one and make it primary
-        if globalCoinflashUser3ResponseValue["user_set_primary_coinbase_btc_account_id"] == JSON.null || globalCoinflashUser3ResponseValue["user_set_primary_coinbase_btc_account_id"].string == ""{
-            if btcWalletAccounts.count > 0{
-                btcWalletLabel.text = btcWalletAccounts[0]["name"].string
-                self.btcPrimaryWalletAccountsID = btcWalletAccounts[0]["id"].string
             }
         }
     }
@@ -294,52 +269,9 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         self.requestToUpdateUserSettings()
     }
     
-    //MARK: - TableView
-    // tableview delegate
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if  indexPath.row == 1{
-            return 70
-        }
-        if indexPath.row == 2{
-            return 120
-        }
-        
-        /// Check if subscription is active or not
-        if StoreKitHelper.sharedInstance.userHasValidMonthluSubscription() == true{
-            self.validSubscriptionTextLabel.text = "\(StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate!)"
-            self.validSubscriotionWarningIcon.isHidden = true
-        }else{
-            self.validSubscriotionWarningIcon.isHidden = false
-            self.validSubscriptionTextLabel.text = "No Subscription"
-        }
-        
-        if indexPath.row == 5{
-            if TableCellViewCard.isHidden == true{
-                return 0
-            }
-        }
-        if indexPath.row == 6{
-            // check whether to show eth and btc wallets or not
-            if btcWalletAccounts.count < 0{
-                return 0
-            }
-            if TableCellViewBTC.isHidden == true{
-                //return 0
-            }
-        }
-        if indexPath.row == 7{
-            if ethWalletAccounts.count < 0{
-                return 0
-            }
-            if TableCellViewETH.isHidden == true{
-                //return 0
-            }
-        }
-        return UITableViewAutomaticDimension
-    }
-    
+    //MARK: - TableView Taps On cell
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 5{
+        if indexPath.row == 4{
             self.pickerViewData = nil
             self.showingPickerWithDataSource = 1
             pickerViewData = [String]()
@@ -350,7 +282,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             }
             self.showPickerView()
         }
-        if indexPath.row == 6{
+        if indexPath.row == 5{
             print("bitcoin wallet cell")
             self.showingPickerWithDataSource = 2
             self.pickerViewData = nil
@@ -360,7 +292,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             }
             self.showPickerView()
         }
-        if indexPath.row == 7{
+        if indexPath.row == 6{
             print("ether wallet cell")
             self.showingPickerWithDataSource = 3
             self.pickerViewData = [String]()
@@ -535,9 +467,9 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     }
     func hideParemeters(){
         
-        self.coinbasePaymentMethodLabel.isHidden  = false
-        self.ethWalletLabel.isHidden = false
-        self.btcWalletLabel.isHidden = false
+        self.coinbasePaymentMethodLabel.isHidden  = true
+        self.ethWalletLabel.isHidden = true
+        self.btcWalletLabel.isHidden = true
         
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

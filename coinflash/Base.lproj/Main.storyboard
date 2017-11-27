@@ -467,6 +467,7 @@
                         <outlet property="LabelSinceChange" destination="2ov-xw-izY" id="bg8-VB-9ie"/>
                         <outlet property="SliderinvestmentRateDecider" destination="ZEF-4j-x7q" id="Ipn-cz-JS1"/>
                         <outlet property="ccTransationTableView" destination="RIb-fi-kFU" id="Xis-Xz-KAv"/>
+                        <outlet property="settingsPageButton" destination="vK6-z5-Vtd" id="xnK-4L-8VO"/>
                         <segue destination="yHX-6H-iSS" kind="presentation" identifier="buyNowSegue" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="SHa-iQ-miU"/>
                     </connections>
                 </viewController>
@@ -564,7 +565,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wHZ-Ue-Lyo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1492" y="1548.5757121439281"/>
+            <point key="canvasLocation" x="-1492" y="1549"/>
         </scene>
         <!--TOC View-->
         <scene sceneID="eyu-YL-tKi">
@@ -1003,6 +1004,13 @@
                                                     <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="zNR-zZ-mb0">
+                                                    <rect key="frame" x="173" y="12" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="cZL-Av-W4Z"/>
+                                                        <constraint firstAttribute="width" constant="20" id="eiF-tZ-kqc"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
@@ -1010,7 +1018,9 @@
                                                 <constraint firstAttribute="trailing" secondItem="cPe-Qh-juO" secondAttribute="trailing" constant="10" id="ADb-Kg-6Gv"/>
                                                 <constraint firstItem="Prp-8u-W0R" firstAttribute="leading" secondItem="HDp-5Q-vpp" secondAttribute="leading" constant="8" id="Evv-OA-TWR"/>
                                                 <constraint firstAttribute="bottom" secondItem="cPe-Qh-juO" secondAttribute="bottom" id="I51-iM-u32"/>
+                                                <constraint firstItem="zNR-zZ-mb0" firstAttribute="leading" secondItem="Prp-8u-W0R" secondAttribute="trailing" constant="2.5" id="MY2-Oy-8Qg"/>
                                                 <constraint firstItem="cPe-Qh-juO" firstAttribute="leading" secondItem="HDp-5Q-vpp" secondAttribute="leading" constant="10" id="SM2-0b-Zzy"/>
+                                                <constraint firstItem="zNR-zZ-mb0" firstAttribute="centerY" secondItem="Prp-8u-W0R" secondAttribute="centerY" id="Tbf-3L-chO"/>
                                                 <constraint firstItem="cPe-Qh-juO" firstAttribute="centerX" secondItem="HDp-5Q-vpp" secondAttribute="centerX" id="iYu-0g-d4m"/>
                                                 <constraint firstItem="Prp-8u-W0R" firstAttribute="centerY" secondItem="tIi-bG-26K" secondAttribute="centerY" id="lWU-jc-r6l"/>
                                                 <constraint firstItem="tIi-bG-26K" firstAttribute="centerY" secondItem="HDp-5Q-vpp" secondAttribute="centerY" id="uSQ-qg-XEQ"/>
@@ -1168,12 +1178,14 @@
                         <outlet property="ethWalletLabel" destination="TmH-9H-XoS" id="4dM-6v-gfC"/>
                         <outlet property="investChangeControl" destination="RPO-FS-J75" id="E9M-NS-bZC"/>
                         <outlet property="monthlyButton" destination="urX-aB-VWH" id="IkC-2R-3oD"/>
+                        <outlet property="validSubscriotionWarningIcon" destination="zNR-zZ-mb0" id="VWe-cV-l4S"/>
+                        <outlet property="validSubscriptionTextLabel" destination="tIi-bG-26K" id="8Of-XZ-vMF"/>
                         <outlet property="weeklyButton" destination="z6y-cf-EeS" id="quv-TK-FAX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Im-Ya-8uW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2236" y="1548.5757121439281"/>
+            <point key="canvasLocation" x="-2324" y="1548.5757121439281"/>
         </scene>
         <!--Buy Page Controller-->
         <scene sceneID="UqS-Va-ZzO">
@@ -1952,7 +1964,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0En-jd-fws" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2358" y="2310"/>
+            <point key="canvasLocation" x="-2324" y="2382"/>
         </scene>
         <!--Nav View Controller-->
         <scene sceneID="obb-R0-mfg">
@@ -2164,8 +2176,9 @@
         <image name="saveBtt" width="195" height="52"/>
         <image name="settingIconn" width="24" height="24"/>
         <image name="settingIcons" width="34" height="34"/>
+        <image name="warning" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YG8-qu-gkh"/>
+        <segue reference="I5M-EP-JW7"/>
     </inferredMetricsTieBreakers>
 </document>

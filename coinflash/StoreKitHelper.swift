@@ -10,12 +10,22 @@ import UIKit
 import SwiftyStoreKit
 import StoreKit
 
+enum SubscriptionState: Int{
+    case expired = 1
+    case valid = 2
+    case notPurchased = 3
+}
+
 class StoreKitHelper: NSObject {
     static let sharedInstance = StoreKitHelper()
+    var monthlySubscriptionState: SubscriptionState!
+    var monthlySubscriptionExpiryDate: Date?
     let monthlySubscriptionProductID = "monthly_subscription_1dollar"
     var monthlySubscriptionProductInfo: SKProduct? = nil
     
-    private override init() {}
+    private override init() {
+        super.init()
+    }
     
     /// Restore pruchases
     func restorePreviousPurchases(){
@@ -23,7 +33,17 @@ class StoreKitHelper: NSObject {
     }
     
     /// Tells if the user has a valid monthly subscription or not
-    func checkIfUserHasValidMonthluSubscription() -> Bool{
+    func userHasValidMonthluSubscription() -> Bool{
+        let receiptData = SwiftyStoreKit.localReceiptData
+        print(receiptData)
+        _ = receiptData?.base64EncodedString(options: [])
+        if monthlySubscriptionExpiryDate != nil{
+            if monthlySubscriptionExpiryDate! > Date(){
+                return true
+            }else{
+                return false
+            }
+        }
         return false
     }
     
@@ -56,6 +76,7 @@ class StoreKitHelper: NSObject {
             switch result {
             case .success(let purchase):
                 print("Purchase Success: \(purchase.productId)")
+                self.validateReceiptForSubscription()
                 completionClosure()
             case .error(let error):
                 failureClosure(error)
@@ -88,5 +109,42 @@ class StoreKitHelper: NSObject {
                 print("Nothing to Restore")
             }
         }
+    }
+    
+    /// Verify the receipt for subscription
+    func validateReceiptForSubscription(){
+        let appleValidator = AppleReceiptValidator(service: .sandbox, sharedSecret: "3e65ea31eaba4acb8a09f3d1da956550")
+        SwiftyStoreKit.verifyReceipt(using: appleValidator) { result in
+            switch result {
+            case .success(let receipt):
+                // Verify the purchase of a Subscription
+                let purchaseResult = SwiftyStoreKit.verifySubscription(
+                    type: .autoRenewable, // or .nonRenewing (see below)
+                    productId: "monthly_subscription_1dollar",
+                    inReceipt: receipt)
+                
+                switch purchaseResult {
+                case .purchased(let expiryDate, let receiptItems):
+                    print("Product is valid until \(expiryDate)")
+                    self.monthlySubscriptionState = .valid
+                    self.monthlySubscriptionExpiryDate = expiryDate
+                case .expired(let expiryDate, let receiptItems):
+                    print("Product is expired since \(expiryDate)")
+                    self.monthlySubscriptionState = .expired
+                    self.monthlySubscriptionExpiryDate = expiryDate
+                case .notPurchased:
+                    print("The user has never purchased this product")
+                    self.monthlySubscriptionState = .notPurchased
+                    self.monthlySubscriptionExpiryDate = nil
+                }
+                
+            case .error(let error):
+                print("Receipt verification failed: \(error)")
+            }
+        }
+    }
+    
+    func saveInfoToUserDefaults(){
+        
     }
 }

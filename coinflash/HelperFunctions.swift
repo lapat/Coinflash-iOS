@@ -146,6 +146,13 @@ class HelperFunctions: NSObject {
         UserDefaults.standard.set(cctransaction_global, forKey: "cctransaction_global")
         UserDefaults.standard.set(coinbaseInfoObject, forKey: "coinbaseInfoObject")
          */
+        
+        // save the helperfunctions
+        if StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate != nil{
+            UserDefaults.standard.set(StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate, forKey: "monthlySubscriptionExpiryDate")
+        }else{
+            UserDefaults.standard.removeObject(forKey: "monthlySubscriptionExpiryDate")
+        }
     }
     
     // loads the nsuser defaults and save them to the vars
@@ -173,6 +180,10 @@ class HelperFunctions: NSObject {
             coinbaseInfoObject = UserDefaults.standard.value(forKey: "coinbaseInfoObject") as! CoinbaseInfo
         }
          */
+        if UserDefaults.standard.value(forKey: "monthlySubscriptionExpiryDate") != nil{
+            StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate = UserDefaults.standard.value(forKey: "monthlySubscriptionExpiryDate") as? Date
+            //StoreKitHelper.sharedInstance.month
+        }
     }
     static func SaveBankInfo(m_token_id : String , m_logged_in : String){
         plaidInfoObject.accessToken = m_token_id

@@ -27,20 +27,17 @@ class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var LabelEtherInvestmentRate: UILabel?
     @IBOutlet weak var SliderinvestmentRateDecider: UISlider?
     @IBOutlet weak var ccTransationTableView: UITableView?
-    @IBOutlet weak var settingsPageButton: UIButton!
-    var warningImageView: UIImageView!
-    
-   
-    @IBOutlet weak var BuyNowButton: UIButton!
     
     var cctransations = [cctransaction_global]
     var m_mobile_secret = user_mobile_secret!
     var m_user_id = user_id_mobile!
     var m_access_token = user_mobile_access_token!
+    
+    
     var m_spare_change_accrued_percent_to_invest : Double = 0.0
     var m_cap : Double = 0.0
     var m_percent_to_invest : Double = 0.0
-    var m_how_often : Int = 0
+    var m_how_often : Double = 0.0
     var m_spare_change_accrued : Double = 0.0
     var m_btc_to_invest : Double = 0.0
     var m_invest_on : Double = 0.0
@@ -49,47 +46,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var coinflashUser3ResponseObject: JSON!
     var cctransaction2ResponseObject: JSON!
     
-    override func viewDidLoad() {
-        SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
-        SideMenuManager.default.menuDismissOnPush = true
-        SideMenuManager.default.menuPresentMode = .menuSlideIn
-        SideMenuManager.default.menuParallaxStrength = 3
-        NotificationCenter.default.addObserver(self, selector: #selector(didSuccessfullyBuyCoins(handleNotification:)), name: NSNotification.Name.onSuccessfulPurchaseOfCoins, object: nil)
-        
-        /// Get the bounds of settings icon and set the for warning over it if user has invalid months
-        if StoreKitHelper.sharedInstance.userHasValidMonthluSubscription() == false{
-            self.warningImageView = UIImageView(image: UIImage(named: "warning"))
-            self.view.addSubview(self.warningImageView)
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-        self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-        HelperFunctions.LoadBankInfo()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
-            let banner = NotificationBanner(title: "", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
-            banner.show()
-            
-            self.BuyNowButton.isEnabled = false
-        }else if !HelperFunctions.isCoinbaseLoggedIn(){
-            // let banner = NotificationBanner(title: "", subtitle: "Connect your coinbase account to start investing.", style: .danger)
-            // banner.show()
-            self.BuyNowButton.isEnabled = false
-        }else if !HelperFunctions.isPlaidLoggedIn(){
-            let banner = NotificationBanner(title: "", subtitle: " Connect your bank to start investing.", style: .danger)
-            banner.show()
-        }
-    }
-    
-    override func viewWillLayoutSubviews() {
-        if self.warningImageView != nil{
-            self.warningImageView.layer.frame = CGRect(x: settingsPageButton.layer.frame.origin.x + settingsPageButton.frame.width - 8, y: settingsPageButton.layer.frame.origin.y, width: settingsPageButton.layer.frame.width/1.5, height: settingsPageButton.frame.height/1.5)
-        }
-    }
     
     @IBAction func InvestmentRateSlider(_ sender: UISlider) {
         var rate: Float = SliderinvestmentRateDecider!.value
@@ -112,10 +68,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         // Set the ether and bitcoin rate in the top label with respect to the percentage
         let dollarToInvestInBTC = Float(dollarsToInvest)*Float(btcRate/100.0)
         let dollarToInvestETH = Float(dollarsToInvest)*Float((ethRate)/100.0)
-        if globalSettings.investChange == false{
-            self.LabelChange?.text = String(format: "$ %.2f / %.2f", 0.0,0.0)
-            return
-        }
         self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
         
         /// Set the mutable attributed string for the top label showing dollars
@@ -141,22 +93,37 @@ class MainViewController: UIViewController, UITableViewDataSource{
         //print("element Released")
     }
     
-    func updateViewInvestmentInformation(){
-        self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested Every Monday"
-         self.LabelSinceChange?.text = "Spare Change Accrued Since Monday"
-        // check to see the label
+    override func viewDidLoad() {
+        SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
+        SideMenuManager.default.menuDismissOnPush = true
+        SideMenuManager.default.menuPresentMode = .menuSlideIn
+        SideMenuManager.default.menuParallaxStrength = 3
+        NotificationCenter.default.addObserver(self, selector: #selector(didSuccessfullyBuyCoins(handleNotification:)), name: NSNotification.Name.onSuccessfulPurchaseOfCoins, object: nil)
         
-        if globalSettings.investHowOften == .monthly{
-            // detect how far it is till next months 1st.
-            let currentDate = Date()
-            let cal = Calendar(identifier: Calendar.Identifier.gregorian)
-            let days = cal.range(of: Calendar.Component.day, in: Calendar.Component.month, for: currentDate)
-            let daysTillNextMonth = (days?.count)! - cal.component(Calendar.Component.day, from: currentDate)
-            
-            self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested In \(daysTillNextMonth + 1) days"
-           self.LabelSinceChange?.text = "Spare Change Accrued This Month"
+        if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isCoinbaseLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: "Connect your coinbase account to start investing.", style: .danger)
+            banner.show()
+        }else if !HelperFunctions.isPlaidLoggedIn(){
+            let banner = NotificationBanner(title: "Error!!", subtitle: " Connect your bank to start investing.", style: .danger)
+            banner.show()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        HelperFunctions.LoadBankInfo()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         
+    }
+    
+    func updateViewInvestmentInformation(){
+        self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% of Your Change Will Be Invested Every Monday"
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
         var bitrate = Double(0)
         
@@ -231,17 +198,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
                             
                         }
                         if user_preferences["how_often"] != nil{
-                            self.m_how_often = Int(user_preferences["how_often"] as! String)!
-                            if self.m_how_often == 1{
-                                globalSettings.investHowOften = .daily
-                            }
-                            else if self.m_how_often == 2{
-                                globalSettings.investHowOften = .weekly
-                            }
-                            else{
-                                globalSettings.investHowOften = .monthly
-                            }
-                            
+                            self.m_how_often = Double(user_preferences["how_often"] as! String)!
                         }
                         if user_preferences["spare_change_accrued"] != nil{
                             self.m_spare_change_accrued = Double(user_preferences["spare_change_accrued"] as! String)!
@@ -304,7 +261,10 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 }
         }
     }
-
+    
+    
+    
+    
     func showConfirmationDialogBox(title : String , Message : String)
     {
         let alert = UIAlertController(title: title, message: Message, preferredStyle: UIAlertControllerStyle.alert)
@@ -364,34 +324,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 self.coinflashUser3ResponseObject = json[0]
                 globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
                 SVProgressHUD.dismiss()
-                
-                // check if plaid needs relinking
-                var plaidNeedsRelinking = false
-                if globalCoinflashUser3ResponseValue["plaid_error_code"] != JSON.null{
-                    if globalCoinflashUser3ResponseValue["plaid_error_code"].int == 2{
-                        
-                        plaidNeedsRelinking = true
-                    }
-                }
-                
-                // check if coinbase needs relinking
-                var coinbaseNeedsRelinking = false
-                if globalCoinflashUser3ResponseValue["wallets"].array?.count == 1{
-                    let wallets = globalCoinflashUser3ResponseValue["wallets"].array!
-                    if wallets[0].string != nil{
-                        coinbaseNeedsRelinking = true
-                    }
-                }
-                
-                if coinbaseNeedsRelinking == true && plaidNeedsRelinking == true{
-                    
-                        self.showConfirmationDialogBox(title: "Error", Message: "Error connecting with Coinbase and Bank account.  Please unlink and relink your bank and coinbase to resolve this issue.")
-                }else if coinbaseNeedsRelinking == true{
-                    self.showConfirmationDialogBox(title: "Error", Message: "Error connecting with Coinbase account.  Please unlink and relink your Coinbase account to resolve this issue.")
-                }else if plaidNeedsRelinking == true{
-                    self.showConfirmationDialogBox(title: "Error", Message: "Error connecting with Bank account.  Please unlink and relink your bank to resolve this issue.")
-                }
-            
             case .failure:
                 print(response.error as Any)
                 SVProgressHUD.dismiss()
@@ -402,8 +334,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     //MARK: - Buy Now implementation
     @IBAction func didTapOnBuyNowButton(){
-        self.performSegue(withIdentifier: "in-app-purchase-segue", sender: self)
-        return
         /// checking if there is a coinbase account with allow_buy = true
         var allow_buy = false
         if coinflashUser3ResponseObject["coinbase_accounts"].arrayValue != nil{
@@ -462,7 +392,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier  == "generalSettingsSegue"{
-            if globalCoinflashUser3ResponseValue == nil{
+            if globalCoinflashUser3ResponseValue != nil && globalCoinflashUser3ResponseValue == JSON.null{
                 self.requestCoinflashUser3Values(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
                 HelperFunctions.showToast(withString: "Error! Trying to reload Data", onViewController: self)
                 return false
