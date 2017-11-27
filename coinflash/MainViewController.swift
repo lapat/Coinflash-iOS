@@ -408,7 +408,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     //MARK: - Buy Now implementation
     @IBAction func didTapOnBuyNowButton(){
         /// Check if user has subscription:
-        StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == false{
+        if StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == false{
             let alert = UIAlertController(title: "Error", message: "You need a valid subscription. Kindly go to settings or visit our website", preferredStyle: UIAlertControllerStyle.alert)
             let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
                 
