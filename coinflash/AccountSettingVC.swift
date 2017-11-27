@@ -331,8 +331,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     // MARK: Plaid Link setup with custom configuration
     func presentPlaidLinkWithCustomConfiguration() {
-        let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .sandbox, product: .auth)
-        linkConfiguration.clientName = "Link Demo"
+        let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .production, product: .transactions)
+        linkConfiguration.clientName = ""
         let linkViewDelegate = self
         let linkViewController = PLKPlaidLinkViewController(configuration: linkConfiguration, delegate: linkViewDelegate as! PLKPlaidLinkViewDelegate)
         if (UI_USER_INTERFACE_IDIOM() == .pad) {

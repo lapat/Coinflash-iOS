@@ -11,7 +11,7 @@ target 'coinflash' do
   pod 'Alamofire'
   pod 'SVProgressHUD'
   pod 'ChartsRealm', '3.0.3'
-  pod 'Plaid'
+  pod 'Plaid' , '1.1.1'
   pod 'SwiftyJSON'
   pod 'Toast-Swift', '~> 2.0.0'
   pod 'SDWebImage'
