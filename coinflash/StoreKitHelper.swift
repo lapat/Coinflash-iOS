@@ -28,16 +28,36 @@ class StoreKitHelper: NSObject {
     }
     
     /// Restore pruchases
-    func restorePreviousPurchases(){
-        
+    func restorePreviousPurchases(completionClosure: @escaping ()->Void, failureClosure: @escaping ()-> Void, noPurchaseClosure: @escaping ()-> Void){
+        SwiftyStoreKit.restorePurchases(atomically: true) { results in
+            if results.restoreFailedPurchases.count > 0 {
+                print("Restore Failed: \(results.restoreFailedPurchases)")
+                failureClosure()
+            }
+            else if results.restoredPurchases.count > 0 {
+                print("Restore Success: \(results.restoredPurchases)")
+                print(results)
+                self.validateReceiptWithCompletionHandler {
+                    if self.monthlySubscriptionState == .valid{
+                        completionClosure()
+                    }else{
+                        noPurchaseClosure()
+                    }
+                }
+            }
+            else {
+                print("Nothing to Restore")
+                noPurchaseClosure()
+            }
+        }
     }
     
     /// Tells if the user has a valid monthly subscription or not
-    func userHasValidMonthluSubscription() -> Bool{
+    func userHasValidMonthlySubscription() -> Bool{
         let receiptData = SwiftyStoreKit.localReceiptData
-        print(receiptData)
-        _ = receiptData?.base64EncodedString(options: [])
-        if monthlySubscriptionExpiryDate != nil{
+        //print(receiptData)
+        print(receiptData?.base64EncodedString(options: []))
+        if monthlySubscriptionExpiryDate != nil && receiptData != nil{
             if monthlySubscriptionExpiryDate! > Date(){
                 return true
             }else{
@@ -96,18 +116,38 @@ class StoreKitHelper: NSObject {
         }
     }
     
-    /// Restore previous purchases
-    func restorePreviousPurchasesForuser(){
-        SwiftyStoreKit.restorePurchases(atomically: true) { results in
-            if results.restoreFailedPurchases.count > 0 {
-                print("Restore Failed: \(results.restoreFailedPurchases)")
+    /// Verify the reciept with completion closures
+    func validateReceiptWithCompletionHandler(completionHandler: @escaping ()-> Void){
+        let appleValidator = AppleReceiptValidator(service: .sandbox, sharedSecret: "3e65ea31eaba4acb8a09f3d1da956550")
+        SwiftyStoreKit.verifyReceipt(using: appleValidator) { result in
+            switch result {
+            case .success(let receipt):
+                // Verify the purchase of a Subscription
+                let purchaseResult = SwiftyStoreKit.verifySubscription(
+                    type: .autoRenewable, // or .nonRenewing (see below)
+                    productId: "monthly_subscription_1dollar",
+                    inReceipt: receipt)
+                
+                switch purchaseResult {
+                case .purchased(let expiryDate, let receiptItems):
+                    print("Product is valid until \(expiryDate)")
+                    self.monthlySubscriptionState = .valid
+                    self.monthlySubscriptionExpiryDate = expiryDate
+                case .expired(let expiryDate, let receiptItems):
+                    print("Product is expired since \(expiryDate)")
+                    self.monthlySubscriptionState = .expired
+                    self.monthlySubscriptionExpiryDate = expiryDate
+                case .notPurchased:
+                    print("The user has never purchased this product")
+                    self.monthlySubscriptionState = .notPurchased
+                    self.monthlySubscriptionExpiryDate = nil
+                }
+                
+            case .error(let error):
+                print("Receipt verification failed: \(error)")
             }
-            else if results.restoredPurchases.count > 0 {
-                print("Restore Success: \(results.restoredPurchases)")
-            }
-            else {
-                print("Nothing to Restore")
-            }
+            completionHandler()
+            HelperFunctions.saveNSUserDefaults()
         }
     }
     
@@ -141,10 +181,7 @@ class StoreKitHelper: NSObject {
             case .error(let error):
                 print("Receipt verification failed: \(error)")
             }
+            HelperFunctions.saveNSUserDefaults()
         }
-    }
-    
-    func saveInfoToUserDefaults(){
-        
     }
 }

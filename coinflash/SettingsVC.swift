@@ -51,7 +51,6 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     override func viewDidLoad() {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        self.loadGlobalSettings()
         
         // CapOnInvestmentTextField initializations
         capOnInvestmentTextField.delegate = self
@@ -74,6 +73,9 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         let imageView = UIImageView(image: backgroundImage)
         self.tableView.backgroundView = imageView
         self.addPickerViewToViewController()
+        
+        self.loadGlobalSettings()
+        self.tableView.reloadData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -305,8 +307,11 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         }
         
         /// Check if subscription is active or not
-        if StoreKitHelper.sharedInstance.userHasValidMonthluSubscription() == true{
-            self.validSubscriptionTextLabel.text = "\(StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate!)"
+        if StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == true{
+            // format the expiry date
+            let dateFormate = DateFormatter()
+            dateFormate.dateStyle = .medium
+            self.validSubscriptionTextLabel.text = "Valid Till: \(dateFormate.string(from: (StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate!)))"
             self.validSubscriotionWarningIcon.isHidden = true
         }else{
             self.validSubscriotionWarningIcon.isHidden = false

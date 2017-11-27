@@ -64,6 +64,31 @@ class InAppPurchaseVC: UIViewController {
         }
     }
     
+    @IBAction func didTapOnRestorePurchasesButton(){
+        StoreKitHelper.sharedInstance.restorePreviousPurchases(completionClosure: {
+            let alert = UIAlertController(title: "Success", message: "Purchases have been restored.", preferredStyle: UIAlertControllerStyle.alert)
+            let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (alert) in
+                //self.dismiss(animated: true, completion: nil)
+            })
+            alert.addAction(okayAction)
+            self.present(alert, animated: true, completion: nil)
+        }, failureClosure: {
+            let alert = UIAlertController(title: "Error", message: "Unable to restore purchase. Kindly retry.", preferredStyle: UIAlertControllerStyle.alert)
+            let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (alert) in
+                //self.dismiss(animated: true, completion: nil)
+            })
+            alert.addAction(okayAction)
+            self.present(alert, animated: true, completion: nil)
+        }) {
+            let alert = UIAlertController(title: "No Purchases", message: "You haven't made any purchases yet.", preferredStyle: UIAlertControllerStyle.alert)
+            let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (alert) in
+                //self.dismiss(animated: true, completion: nil)
+            })
+            alert.addAction(okayAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     
     /*
     // MARK: - Navigation

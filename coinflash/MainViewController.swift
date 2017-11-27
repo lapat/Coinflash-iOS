@@ -57,7 +57,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         NotificationCenter.default.addObserver(self, selector: #selector(didSuccessfullyBuyCoins(handleNotification:)), name: NSNotification.Name.onSuccessfulPurchaseOfCoins, object: nil)
         
         /// Get the bounds of settings icon and set the for warning over it if user has invalid months
-        if StoreKitHelper.sharedInstance.userHasValidMonthluSubscription() == false{
+        if StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == false{
             self.warningImageView = UIImageView(image: UIImage(named: "warning"))
             self.view.addSubview(self.warningImageView)
         }
@@ -88,6 +88,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
     override func viewWillLayoutSubviews() {
         if self.warningImageView != nil{
             self.warningImageView.layer.frame = CGRect(x: settingsPageButton.layer.frame.origin.x + settingsPageButton.frame.width - 8, y: settingsPageButton.layer.frame.origin.y, width: settingsPageButton.layer.frame.width/1.5, height: settingsPageButton.frame.height/1.5)
+            if StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == true{
+                self.warningImageView.isHidden = true
+            }else{
+                self.warningImageView.isHidden = false
+            }
         }
     }
     
@@ -402,8 +407,18 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     //MARK: - Buy Now implementation
     @IBAction func didTapOnBuyNowButton(){
-        self.performSegue(withIdentifier: "in-app-purchase-segue", sender: self)
-        return
+        /// Check if user has subscription:
+        StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == false{
+            let alert = UIAlertController(title: "Error", message: "You need a valid subscription. Kindly go to settings or visit our website", preferredStyle: UIAlertControllerStyle.alert)
+            let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
+                
+            })
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        
         /// checking if there is a coinbase account with allow_buy = true
         var allow_buy = false
         if coinflashUser3ResponseObject["coinbase_accounts"].arrayValue != nil{
