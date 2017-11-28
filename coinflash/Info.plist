@@ -50,11 +50,11 @@
 		<key>clientName</key>
 		<string>$(PRODUCT_NAME)</string>
 		<key>env</key>
-		<string>Development</string>
+		<string>Production</string>
 		<key>key</key>
 		<string>93bf429075d0e7ff0fc28750127c45</string>
 		<key>product</key>
-		<string>auth</string>
+		<string>transactions</string>
 		<key>selectAccount</key>
 		<false/>
 	</dict>

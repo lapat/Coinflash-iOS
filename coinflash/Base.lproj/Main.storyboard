@@ -1685,7 +1685,7 @@
                                         <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unlink Account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJR-oQ-A8b">
+                                    <label hidden="YES" opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unlink Account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJR-oQ-A8b">
                                         <rect key="frame" x="301" y="9" width="66" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="66" id="Xnv-ci-fca"/>
@@ -1856,7 +1856,7 @@
                                     <constraint firstAttribute="height" constant="0.5" id="hMA-fM-kbe"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LHk-sl-Zq1">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LHk-sl-Zq1">
                                 <rect key="frame" x="15" y="517.5" width="141" height="31"/>
                                 <state key="normal" image="addNwbanks"/>
                                 <connections>
@@ -1882,7 +1882,7 @@
                                     <constraint firstAttribute="height" constant="0.5" id="IyU-uP-fhD"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysH-wV-Qx0">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysH-wV-Qx0">
                                 <rect key="frame" x="15" y="621.5" width="141" height="31"/>
                                 <state key="normal" image="addCoinbase"/>
                                 <connections>

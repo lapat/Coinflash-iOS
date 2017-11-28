@@ -101,6 +101,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     func updateViews(){
         // Check for coing base linkage
+       /*
         if HelperFunctions.isCoinbaseLoggedIn() == true{
             coinbaseLinkedLabel.text = "Coinbase Linked"
             self.addCoinbaseButton.isHidden = true
@@ -111,6 +112,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             self.addCoinbaseButton.isHidden = false
             //self.DlinkCoinBase.isHidden = true
             self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseTopGray")
+        
         }
         
         // Check for plaid linkage
@@ -120,11 +122,40 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         }else{
             self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
         }
-        
+        */
         if HelperFunctions.isPlaidLoggedIn() && HelperFunctions.isCoinbaseLoggedIn() {
             self.overallLinkedImageView.image = UIImage(imageLiteralResourceName: "linkedIcon")
         }else{
             self.overallLinkedImageView.image = UIImage(imageLiteralResourceName: "notLinked")
+        }
+       
+        if  HelperFunctions.isCoinbaseLoggedIn() == true{
+           coinbaseLinkedLabel.text = "Coinbase Linked"
+           self.addCoinbaseButton.isHidden = true
+           self.DlinkAccounts.isHidden = false
+           self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseGreen")
+            
+           if HelperFunctions.isPlaidLoggedIn() == true{
+             self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
+             self.AddBankLink.isHidden = true
+            
+           }
+           else
+           {
+            self.AddBankLink.isHidden = false
+            self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
+            
+            }
+        }
+        else
+        {   coinbaseLinkedLabel.text = "Coinbase Not Linked"
+            self.addCoinbaseButton.isHidden = false
+            self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseTopGray")
+            self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
+            self.AddBankLink.isHidden = true
+            self.DlinkAccounts.isHidden = true
+            
+            
         }
     }
     
@@ -176,8 +207,9 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         if indexPath.row == 0 && plaidAccounts == nil || plaidAccounts.count < 1{
             cell = tableView.dequeueReusableCell(withIdentifier: "disabledCell")
             plaidInfoObject.loggedIn = false
-            self.AddBankLink.isHidden = false
-            self.AddBankLink.setImage( UIImage.init(named: "addNwbanks"), for: .normal)
+            //self.AddBankLink.isHidden = false
+            //self.AddBankLink.setImage( UIImage.init(named: "addNwbanks"), for: .normal)
+            //self.DlinkAccounts.isHidden = false
             //self.AddBankLink.image.image = UIImage(named:"addNwbanks")!
             
         }else{
@@ -186,8 +218,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             plaidCell.bankAccountNumber.text = ("**** **** ****\(plaidAccounts[indexPath.row]["last_four_digits"].string!)")
             cell = plaidCell
             plaidInfoObject.loggedIn = true
-            self.AddBankLink.isHidden = true
-            self.AddBankLink.setImage( UIImage.init(named: "unlinkBank"), for: .normal)
+            //self.AddBankLink.isHidden = true
+            //self.AddBankLink.setImage( UIImage.init(named: "unlinkBank"), for: .normal)
            
             
             //self.AddBankLink.image = UIImage(named:"unlinkBank")!
