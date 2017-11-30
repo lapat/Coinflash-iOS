@@ -52,6 +52,12 @@ class StoreKitHelper: NSObject {
         }
     }
     
+    /// Sends back locally saved reciept data
+    func getReceiptForCurrentUser() -> NSString{
+        let receipt = SwiftyStoreKit.localReceiptData
+        return receipt?.base64EncodedString(options: []) as! NSString
+    }
+    
     /// Tells if the user has a valid monthly subscription or not
     func userHasValidMonthlySubscription() -> Bool{
         let receiptData = SwiftyStoreKit.localReceiptData

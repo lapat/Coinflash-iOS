@@ -9,6 +9,8 @@
 import UIKit
 import StoreKit
 import SVProgressHUD
+import Alamofire
+import SwiftyJSON
 
 class InAppPurchaseVC: UIViewController {
     
@@ -16,7 +18,7 @@ class InAppPurchaseVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         // add border to the buy button
         self.purchaseButton.layer.borderWidth = 1.0
@@ -54,6 +56,27 @@ class InAppPurchaseVC: UIViewController {
         }
     }
     
+    func sendServerInAppPurchaseInfo(receipt: NSString){
+        //SVProgressHUD.show(withStatus: "Finalizing Purchase")
+        let parameter = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token, "reciept": receipt] as [String : Any]
+        Alamofire.request("\(baseUrl)coinflashuser4/", method: HTTPMethod.post, parameters: parameter)
+            .validate()
+            .responseJSON { (response) in
+                switch response.result{
+                case .success(let value):
+                    SVProgressHUD.dismiss()
+                    print(value)
+                case .failure:
+                    print("failure")
+                    SVProgressHUD.dismiss()
+                    let alert = UIAlertController(title: "Error", message: "Check your internet connection and retry", preferredStyle: UIAlertControllerStyle.alert)
+                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil)
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
+        }
+    }
+    
     @IBAction func didTapOnBackButton(sender: UIButton){
         self.navigationController?.popViewController(animated: true)
     }
@@ -61,6 +84,13 @@ class InAppPurchaseVC: UIViewController {
     @IBAction func didTapOnBuyButton(){
         StoreKitHelper.sharedInstance.buyMonthlySubscriptionForUser(completionClosure: {
             let alert = UIAlertController(title: "Success", message: "Subscription is now active", preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil)
+            alert.addAction(okAction)
+            //self.present(alert, animated: true, completion: nil)
+            // No need to show any alerts... apple itself manages the alerts very well
+            SVProgressHUD.show(withStatus: "Updating Information")
+            self.sendServerInAppPurchaseInfo(receipt: StoreKitHelper.sharedInstance.getReceiptForCurrentUser())
+            
         }) { (error) in
             switch error.code {
             case .unknown: print("Unknown error. Please contact support")
@@ -102,7 +132,6 @@ class InAppPurchaseVC: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
     
     /*
     // MARK: - Navigation
