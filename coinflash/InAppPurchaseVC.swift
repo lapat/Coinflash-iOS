@@ -58,7 +58,10 @@ class InAppPurchaseVC: UIViewController {
     
     func sendServerInAppPurchaseInfo(receipt: NSString){
         //SVProgressHUD.show(withStatus: "Finalizing Purchase")
-        let parameter = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token, "reciept": receipt] as [String : Any]
+        let parameter = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token, "in_app_receipt": receipt] as [String : Any]
+        print("=-------- START -------=")
+        print(receipt)
+        print("=-------- END -------=")
         Alamofire.request("\(baseUrl)coinflashuser4/", method: HTTPMethod.post, parameters: parameter)
             .validate()
             .responseJSON { (response) in
@@ -66,6 +69,10 @@ class InAppPurchaseVC: UIViewController {
                 case .success(let value):
                     SVProgressHUD.dismiss()
                     print(value)
+                    let alert = UIAlertController(title: "Success", message: "Subscription is now active", preferredStyle: UIAlertControllerStyle.alert)
+                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil)
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true, completion: nil)
                 case .failure:
                     print("failure")
                     SVProgressHUD.dismiss()
@@ -82,16 +89,15 @@ class InAppPurchaseVC: UIViewController {
     }
     
     @IBAction func didTapOnBuyButton(){
+        SVProgressHUD.show()
         StoreKitHelper.sharedInstance.buyMonthlySubscriptionForUser(completionClosure: {
-            let alert = UIAlertController(title: "Success", message: "Subscription is now active", preferredStyle: UIAlertControllerStyle.alert)
-            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil)
-            alert.addAction(okAction)
-            //self.present(alert, animated: true, completion: nil)
+            SVProgressHUD.dismiss()
             // No need to show any alerts... apple itself manages the alerts very well
             SVProgressHUD.show(withStatus: "Updating Information")
             self.sendServerInAppPurchaseInfo(receipt: StoreKitHelper.sharedInstance.getReceiptForCurrentUser())
             
         }) { (error) in
+            SVProgressHUD.dismiss()
             switch error.code {
             case .unknown: print("Unknown error. Please contact support")
             case .clientInvalid: print("Not allowed to make the payment")

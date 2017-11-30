@@ -14,11 +14,12 @@ enum SubscriptionState: Int{
     case expired = 1
     case valid = 2
     case notPurchased = 3
+    case managedOnWebsite = 4
 }
 
 class StoreKitHelper: NSObject {
     static let sharedInstance = StoreKitHelper()
-    var monthlySubscriptionState: SubscriptionState!
+    var monthlySubscriptionState: SubscriptionState = .notPurchased
     var monthlySubscriptionExpiryDate: Date?
     let monthlySubscriptionProductID = "monthly_subscription_1dollar"
     var monthlySubscriptionProductInfo: SKProduct? = nil
@@ -62,12 +63,17 @@ class StoreKitHelper: NSObject {
     func userHasValidMonthlySubscription() -> Bool{
         let receiptData = SwiftyStoreKit.localReceiptData
         //print(receiptData)
+        
         print(receiptData?.base64EncodedString(options: []))
         if monthlySubscriptionExpiryDate != nil && receiptData != nil{
             if monthlySubscriptionExpiryDate! > Date(){
                 return true
             }else{
-                return false
+                if self.monthlySubscriptionState == .managedOnWebsite{
+                    return true
+                }else{
+                    return false
+                }
             }
         }
         return false

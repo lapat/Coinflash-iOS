@@ -27,7 +27,6 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     @IBOutlet weak var TableCellViewCard: UITableViewCell!
     @IBOutlet weak var TableCellViewBTC: UITableViewCell!
     @IBOutlet weak var TableCellViewETH: UITableViewCell!
-    @IBOutlet weak var MonthlySubscriptionActivityStatus: UILabel!
     
     @IBOutlet weak var validSubscriptionTextLabel: UILabel!
     @IBOutlet weak var validSubscriotionWarningIcon: UIImageView!
@@ -311,11 +310,14 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             // format the expiry date
             let dateFormate = DateFormatter()
             dateFormate.dateStyle = .medium
-            self.validSubscriptionTextLabel.text = "Valid Till: \(dateFormate.string(from: (StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate!)))"
+            self.validSubscriptionTextLabel.text = "Active" // \(dateFormate.string(from: (StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate!)))"
+            if StoreKitHelper.sharedInstance.monthlySubscriptionState == .managedOnWebsite{
+                self.validSubscriptionTextLabel.text = "Visit Website"
+            }
             self.validSubscriotionWarningIcon.isHidden = true
         }else{
             self.validSubscriotionWarningIcon.isHidden = false
-            self.validSubscriptionTextLabel.text = "No Subscription"
+            self.validSubscriptionTextLabel.text = "Kindly Activate"
         }
         
         if indexPath.row == 5{
@@ -323,6 +325,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 return 0
             }
         }
+        
         if indexPath.row == 6{
             // check whether to show eth and btc wallets or not
             if btcWalletAccounts.count < 0{
@@ -547,5 +550,15 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "in-app-purchase-segue"{
+            /// If subscription is managed on website... then we dont transition to the in app purchase page
+            if StoreKitHelper.sharedInstance.monthlySubscriptionState == .managedOnWebsite{
+                return false
+            }
+        }
+        return true
     }
 }

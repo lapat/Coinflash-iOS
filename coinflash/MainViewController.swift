@@ -362,13 +362,21 @@ class MainViewController: UIViewController, UITableViewDataSource{
             ]
         SVProgressHUD.show()
         
-        Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+        Alamofire.request("https://coinflashapp.com/coinflashuser4/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             switch response.result{
             case .success(let value):
                 let json = JSON(response.result.value)
                 self.coinflashUser3ResponseObject = json[0]
                 globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
                 SVProgressHUD.dismiss()
+                
+                if globalCoinflashUser3ResponseValue["in_app_purchase_receipt"] != JSON.null{
+                    if globalCoinflashUser3ResponseValue["in_app_purchase_receipt"] == ""{
+                        if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
+                            StoreKitHelper.sharedInstance.monthlySubscriptionState = .managedOnWebsite
+                        }
+                    }
+                }
                 
                 // check if plaid needs relinking
                 var plaidNeedsRelinking = false
