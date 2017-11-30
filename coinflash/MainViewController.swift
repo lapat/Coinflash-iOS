@@ -367,13 +367,24 @@ class MainViewController: UIViewController, UITableViewDataSource{
             case .success(let value):
                 let json = JSON(response.result.value)
                 self.coinflashUser3ResponseObject = json[0]
+                print(json)
                 globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
                 SVProgressHUD.dismiss()
                 
+                if globalCoinflashUser3ResponseValue["how_paying"] != JSON.null{
+                    print(globalCoinflashUser3ResponseValue["how_paying"].string)
+                    if globalCoinflashUser3ResponseValue["how_paying"].string == "1"{
+                        StoreKitHelper.sharedInstance.monthlySubscriptionState = .managedOnWebsite
+                    }
+                    if globalCoinflashUser3ResponseValue["how_paying"].string == "0"{
+                        StoreKitHelper.sharedInstance.monthlySubscriptionState = .notPurchased
+                    }
+                }
+                
                 if globalCoinflashUser3ResponseValue["in_app_purchase_receipt"] != JSON.null{
-                    if globalCoinflashUser3ResponseValue["in_app_purchase_receipt"] == ""{
+                    if globalCoinflashUser3ResponseValue["in_app_purchase_receipt"].string == ""{
                         if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
-                            StoreKitHelper.sharedInstance.monthlySubscriptionState = .managedOnWebsite
+                           // StoreKitHelper.sharedInstance.monthlySubscriptionState = .managedOnWebsite
                         }
                     }
                 }

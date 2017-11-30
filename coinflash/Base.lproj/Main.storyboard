@@ -478,7 +478,7 @@
         <!--In App PurchaseVC-->
         <scene sceneID="3YI-3K-Jyw">
             <objects>
-                <viewController id="wWh-ZR-SLI" customClass="InAppPurchaseVC" customModule="coinflash" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="in-app-purchase-view" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wWh-ZR-SLI" customClass="InAppPurchaseVC" customModule="coinflash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6pG-b9-oC1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -666,7 +666,7 @@
                                     <constraint firstAttribute="height" constant="164" id="WJ3-xF-sd4"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coinflash charges $1 a month in cryptocurrency" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sqZ-vl-6AV">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coinflash charges $1 a month." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sqZ-vl-6AV">
                                 <rect key="frame" x="16" y="267" width="343" height="67"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="67" id="ZYd-Mh-MhG"/>
@@ -1183,7 +1183,6 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="MonthlySubscriptionActivityStatus" destination="tIi-bG-26K" id="LdE-Q4-Ztt"/>
                         <outlet property="TableCellViewBTC" destination="vVt-Ii-MbM" id="hDf-aa-ZBv"/>
                         <outlet property="TableCellViewCard" destination="10e-26-naK" id="AAg-f4-5QE"/>
                         <outlet property="TableCellViewETH" destination="anT-HX-87r" id="mrC-pN-Bhk"/>

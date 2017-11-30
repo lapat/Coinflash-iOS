@@ -89,6 +89,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         let tap = UITapGestureRecognizer(target: self, action: #selector(AccountSettingsVC.DlinkBothAccounts))
         DlinkAccounts.isUserInteractionEnabled = true
         DlinkAccounts.addGestureRecognizer(tap)
+        
+        self.loadInAppPurchaseView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -407,7 +409,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 HelperFunctions.managePlaidLinked()
                 self.updateViews()
             
-        }
+            }
             else if AA != nil{
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Already Linked")
@@ -421,7 +423,20 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             }
             self.updateViews()
             // Loading the data in the Table
+            
+            /// Check if plaid and coinbase are linked and use is not registered for subscriptions.. Then show in app purchases view
+            if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
+                if globalCoinflashUser3ResponseValue["has_payment"].string == "0"{
+                    self.loadInAppPurchaseView()
+                }
+            }
         }
+    }
+    
+    func loadInAppPurchaseView(){
+        let storyboard = self.storyboard
+        let inAppView = storyboard?.instantiateViewController(withIdentifier: "in-app-purchase-view")
+        self.navigationController?.pushViewController(inAppView!, animated: true)
     }
     
     func DlinkCoinbase(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){

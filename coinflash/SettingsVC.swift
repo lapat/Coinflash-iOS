@@ -541,6 +541,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             self.ethWalletLabel.text = ethWalletAccounts[row]["name"].string
         }
     }
+    
     func hideParemeters(){
         
         self.coinbasePaymentMethodLabel.isHidden  = false
