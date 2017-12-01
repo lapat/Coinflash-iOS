@@ -539,7 +539,7 @@
                                     <action selector="didTapOnBuyButton" destination="wWh-ZR-SLI" eventType="touchUpInside" id="c6a-4T-OL2"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Coinflash charges $1 a month to automatically invest your spare change into cryptocurrency." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Vfl-cd-Jqy">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Coinflash charges $1 a month to automatically invest your spare change into cryptocurrency. " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Vfl-cd-Jqy">
                                 <rect key="frame" x="16" y="178" width="240" height="128"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>

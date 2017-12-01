@@ -70,7 +70,9 @@ class InAppPurchaseVC: UIViewController {
                     SVProgressHUD.dismiss()
                     print(value)
                     let alert = UIAlertController(title: "Success", message: "Subscription is now active", preferredStyle: UIAlertControllerStyle.alert)
-                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil)
+                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler:{(action) in
+                        self.navigationController?.popViewController(animated: true)
+                    })
                     alert.addAction(okAction)
                     self.present(alert, animated: true, completion: nil)
                 case .failure:
@@ -119,6 +121,7 @@ class InAppPurchaseVC: UIViewController {
             let alert = UIAlertController(title: "Success", message: "Purchases have been restored.", preferredStyle: UIAlertControllerStyle.alert)
             let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (alert) in
                 //self.dismiss(animated: true, completion: nil)
+                self.navigationController?.popViewController(animated: true)
             })
             alert.addAction(okayAction)
             self.present(alert, animated: true, completion: nil)

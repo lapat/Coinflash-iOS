@@ -428,7 +428,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     @IBAction func didTapOnBuyNowButton(){
         /// Check if user has subscription:
         if StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == false{
-            let alert = UIAlertController(title: "", message: "Coinflash charges $1 a month, go to settings to set up your payments.", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "", message: "Coinflash charges $1 a month for this feature, go to settings to set up your subscription.", preferredStyle: UIAlertControllerStyle.alert)
             let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
                 
             })
