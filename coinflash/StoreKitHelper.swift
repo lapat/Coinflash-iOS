@@ -138,7 +138,7 @@ class StoreKitHelper: NSObject {
     
     /// Verify the reciept with completion closures
     func validateReceiptWithCompletionHandler(completionHandler: @escaping ()-> Void){
-        let appleValidator = AppleReceiptValidator(service: .sandbox, sharedSecret: "3e65ea31eaba4acb8a09f3d1da956550")
+        let appleValidator = AppleReceiptValidator(service: .production, sharedSecret: "3e65ea31eaba4acb8a09f3d1da956550")
         SwiftyStoreKit.verifyReceipt(using: appleValidator) { result in
             switch result {
             case .success(let receipt):
@@ -173,7 +173,7 @@ class StoreKitHelper: NSObject {
     
     /// Verify the receipt for subscription
     func validateReceiptForSubscription(){
-        let appleValidator = AppleReceiptValidator(service: .sandbox, sharedSecret: "3e65ea31eaba4acb8a09f3d1da956550")
+        let appleValidator = AppleReceiptValidator(service: .production, sharedSecret: "3e65ea31eaba4acb8a09f3d1da956550")
         SwiftyStoreKit.verifyReceipt(using: appleValidator) { result in
             switch result {
             case .success(let receipt):
