@@ -77,6 +77,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         self.tableView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
@@ -543,12 +547,12 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     }
     
     func hideParemeters(){
-        
         self.coinbasePaymentMethodLabel.isHidden  = false
         self.ethWalletLabel.isHidden = false
         self.btcWalletLabel.isHidden = false
         
     }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -561,7 +565,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
            // }
             // If user has a valid subscription... then no need to transition forward
             if StoreKitHelper.sharedInstance.monthlySubscriptionState == .valid{
-                return false
+                //return true
             }
         }
         return true
