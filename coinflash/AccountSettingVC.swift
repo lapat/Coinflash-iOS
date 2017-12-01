@@ -90,7 +90,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         DlinkAccounts.isUserInteractionEnabled = true
         DlinkAccounts.addGestureRecognizer(tap)
         
-        self.loadInAppPurchaseView()
+        //self.loadInAppPurchaseView()
     }
     
     override func viewWillAppear(_ animated: Bool) {

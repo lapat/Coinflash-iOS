@@ -312,12 +312,12 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             dateFormate.dateStyle = .medium
             self.validSubscriptionTextLabel.text = "Active" // \(dateFormate.string(from: (StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate!)))"
             if StoreKitHelper.sharedInstance.monthlySubscriptionState == .managedOnWebsite{
-                self.validSubscriptionTextLabel.text = "Visit Website"
+                self.validSubscriptionTextLabel.text = "Not Active"
             }
             self.validSubscriotionWarningIcon.isHidden = true
         }else{
             self.validSubscriotionWarningIcon.isHidden = false
-            self.validSubscriptionTextLabel.text = "Kindly Activate"
+            self.validSubscriptionTextLabel.text = "Not Active"
         }
         
         if indexPath.row == 5{
@@ -556,7 +556,11 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "in-app-purchase-segue"{
             /// If subscription is managed on website... then we dont transition to the in app purchase page
-            if StoreKitHelper.sharedInstance.monthlySubscriptionState == .managedOnWebsite{
+            //if StoreKitHelper.sharedInstance.monthlySubscriptionState == .managedOnWebsite{
+            //    return false
+           // }
+            // If user has a valid subscription... then no need to transition forward
+            if StoreKitHelper.sharedInstance.monthlySubscriptionState == .valid{
                 return false
             }
         }
