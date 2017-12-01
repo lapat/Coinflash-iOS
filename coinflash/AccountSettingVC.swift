@@ -401,6 +401,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             //let data = response.result.value as! [String: String]
             if PLD != nil
             {
+                
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
                 HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
@@ -408,6 +409,13 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
                 HelperFunctions.managePlaidLinked()
                 self.updateViews()
+                
+                /// Check if plaid and coinbase are linked and use is not registered for subscriptions.. Then show in app purchases view
+                if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
+                    if globalCoinflashUser3ResponseValue["has_payment"].string == "0"{
+                        self.loadInAppPurchaseView()
+                    }
+                }
             
             }
             else if AA != nil{
@@ -424,12 +432,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             self.updateViews()
             // Loading the data in the Table
             
-            /// Check if plaid and coinbase are linked and use is not registered for subscriptions.. Then show in app purchases view
-            if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
-                if globalCoinflashUser3ResponseValue["has_payment"].string == "0"{
-                    self.loadInAppPurchaseView()
-                }
-            }
         }
     }
     
@@ -625,6 +627,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             }
         }
     }
+    
     func DlinkBothAccounts(sender:UITapGestureRecognizer)  {
         if HelperFunctions.isPlaidLoggedIn() == true || HelperFunctions.isCoinbaseLoggedIn() == true {
             let alert = UIAlertController(title: "Warning", message: "Are you sure you want to unlink your accounts?", preferredStyle: UIAlertControllerStyle.alert)
@@ -634,9 +637,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             self.present(alert, animated: true, completion: nil)
             return
         }
-        
-        
     }
+    
     func DlinkBanksAndCoinbase(alert: UIAlertAction!) {
         if HelperFunctions.isPlaidLoggedIn() == true{
             

@@ -78,7 +78,20 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.tableView.reloadData()
+        /// Check if subscription is active or not
+        if StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == true{
+            // format the expiry date
+            let dateFormate = DateFormatter()
+            dateFormate.dateStyle = .medium
+            self.validSubscriptionTextLabel.text = "Active" // \(dateFormate.string(from: (StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate!)))"
+            if StoreKitHelper.sharedInstance.monthlySubscriptionState == .managedOnWebsite{
+                self.validSubscriptionTextLabel.text = "Not Active"
+            }
+            self.validSubscriotionWarningIcon.isHidden = true
+        }else{
+            self.validSubscriotionWarningIcon.isHidden = false
+            self.validSubscriptionTextLabel.text = "Not Active"
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
