@@ -6,8 +6,10 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Baseline standard spacing" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -539,12 +541,13 @@
                                     <action selector="didTapOnBuyButton" destination="wWh-ZR-SLI" eventType="touchUpInside" id="c6a-4T-OL2"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Coinflash charges $1 a month to automatically invest your spare change into cryptocurrency. " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Vfl-cd-Jqy">
-                                <rect key="frame" x="16" y="178" width="240" height="128"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="Vfl-cd-Jqy">
+                                <rect key="frame" x="16" y="184" width="343" height="280"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="ekc-yV-MEH"/>
+                                    <constraint firstAttribute="height" constant="280" id="g8B-gi-Mxy"/>
                                 </constraints>
+                                <mutableString key="text">Coinflash charges $1 a month to automatically invest your spare change into cryptocurrency. Payment will be charged to your iTunes Account at confirmation of purchase.  Your subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period.  Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase.  For more information visit our terms of use and privacy policy at https://coinflashapp.com/legal.html</mutableString>
                                 <color key="textColor" red="0.42352941179999998" green="0.42352941179999998" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -552,27 +555,26 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Vfl-cd-Jqy" firstAttribute="firstBaseline" secondItem="VU6-g0-s1e" secondAttribute="baseline" constant="23.5" symbolType="layoutAnchor" id="1nZ-n0-3ol"/>
                             <constraint firstItem="ddU-xw-2e7" firstAttribute="bottom" secondItem="970-6v-PmT" secondAttribute="bottom" id="310-NU-jH6"/>
                             <constraint firstItem="VkH-1N-cxG" firstAttribute="centerY" secondItem="mg5-00-xmE" secondAttribute="centerY" id="3uJ-Y8-lYs"/>
-                            <constraint firstItem="970-6v-PmT" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Vfl-cd-Jqy" secondAttribute="trailing" constant="50" id="4DG-WH-cqW"/>
                             <constraint firstItem="ddU-xw-2e7" firstAttribute="top" secondItem="970-6v-PmT" secondAttribute="top" id="F1r-ht-qWB"/>
                             <constraint firstItem="mg5-00-xmE" firstAttribute="top" secondItem="pdo-8J-nWK" secondAttribute="bottom" constant="32" id="Gei-vy-9wD"/>
                             <constraint firstItem="970-6v-PmT" firstAttribute="top" secondItem="pdo-8J-nWK" secondAttribute="top" id="MEV-gm-CwR"/>
                             <constraint firstItem="pdo-8J-nWK" firstAttribute="leading" secondItem="970-6v-PmT" secondAttribute="leading" id="ReX-Uy-u1j"/>
                             <constraint firstItem="ddU-xw-2e7" firstAttribute="trailing" secondItem="pdo-8J-nWK" secondAttribute="trailing" id="SBk-Ai-uN2"/>
                             <constraint firstItem="ddU-xw-2e7" firstAttribute="leading" secondItem="pdo-8J-nWK" secondAttribute="leading" id="SHa-k3-jB9"/>
-                            <constraint firstItem="970-6v-PmT" firstAttribute="trailing" secondItem="Vfl-cd-Jqy" secondAttribute="trailing" priority="250" constant="119" id="dhy-lp-tsD"/>
+                            <constraint firstItem="Vfl-cd-Jqy" firstAttribute="leading" secondItem="970-6v-PmT" secondAttribute="leading" constant="16" id="YYT-P8-Agq"/>
                             <constraint firstItem="970-6v-PmT" firstAttribute="trailing" secondItem="pdo-8J-nWK" secondAttribute="trailing" id="en9-ar-TPP"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mg5-00-xmE" secondAttribute="trailing" constant="20" symbolic="YES" id="fbd-8T-qdu"/>
                             <constraint firstItem="VkH-1N-cxG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6pG-b9-oC1" secondAttribute="leading" constant="20" symbolic="YES" id="guV-yg-ijx"/>
-                            <constraint firstItem="Vfl-cd-Jqy" firstAttribute="leading" secondItem="mg5-00-xmE" secondAttribute="leading" id="kvp-vT-6iU"/>
+                            <constraint firstItem="970-6v-PmT" firstAttribute="trailing" secondItem="Vfl-cd-Jqy" secondAttribute="trailing" constant="16" id="mVO-nd-YnQ"/>
                             <constraint firstItem="mg5-00-xmE" firstAttribute="leading" secondItem="970-6v-PmT" secondAttribute="leading" constant="16" id="nUJ-6J-Ka1"/>
                             <constraint firstItem="970-6v-PmT" firstAttribute="trailing" secondItem="VU6-g0-s1e" secondAttribute="trailing" constant="16" id="oqc-lK-j4l"/>
                             <constraint firstItem="VU6-g0-s1e" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6pG-b9-oC1" secondAttribute="leading" constant="20" symbolic="YES" id="q5W-ON-d17"/>
                             <constraint firstItem="970-6v-PmT" firstAttribute="trailing" secondItem="VkH-1N-cxG" secondAttribute="trailing" constant="16" id="qBg-Ue-bLG"/>
                             <constraint firstItem="pdo-8J-nWK" firstAttribute="centerX" secondItem="970-6v-PmT" secondAttribute="centerX" id="rkj-da-iqM"/>
                             <constraint firstItem="VU6-g0-s1e" firstAttribute="top" secondItem="mg5-00-xmE" secondAttribute="bottom" constant="12" id="sLn-1A-BLM"/>
-                            <constraint firstItem="Vfl-cd-Jqy" firstAttribute="top" secondItem="VU6-g0-s1e" secondAttribute="bottom" constant="8" id="zjd-01-e4N"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="970-6v-PmT"/>
                     </view>
@@ -582,7 +584,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wHZ-Ue-Lyo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1492" y="1549"/>
+            <point key="canvasLocation" x="-1492" y="1548.5757121439281"/>
         </scene>
         <!--TOC View-->
         <scene sceneID="eyu-YL-tKi">
