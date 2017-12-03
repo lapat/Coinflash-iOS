@@ -196,13 +196,19 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.DataToBeLoadedwithColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         self.CryptoTransationTableView.reloadData()
         self.LabelCoin?.text =  String(self.m_amount_eth_owned)
-        self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_eth) //+ " Dollar"
+        
+        var total_price_of_eth = m_amount_eth_owned * m_price_right_now_eth
+        var total_price_of_eth_rounded = round(num: total_price_of_eth, to: 5)
+        self.LabelCurrency?.text = "$ " + String(total_price_of_eth_rounded)
+        
+        //self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_eth) //+ " Dollar"
+        
         self.CurrencyRatePolixCode = "USDT_ETH"
         self.LabelType?.text = "ETH"
         self.Cryptodates = self.EitherCryptodates
         self.Cryptoprices = self.EitherCryptoprices
         setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
-        self.loadNetGainEther()
+        self.loadNetGainBoth()
         self.unhideLabels()
         
     }
@@ -220,13 +226,18 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.DataToBeLoadedwithColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         self.CryptoTransationTableView.reloadData()
         self.LabelCoin?.text =  String(self.m_amount_btc_owned)
-        self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_btc) //+ " Dollar"
+      
+        var total_price_of_bitcoin = m_amount_btc_owned * m_price_right_now_btc
+        var total_price_of_bitcoin_rounded = round(num: total_price_of_bitcoin, to: 5)
+        self.LabelCurrency?.text = "$ " + String(total_price_of_bitcoin_rounded)
+        
+       // self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_btc) //+ " Dollar"
         self.CurrencyRatePolixCode = "USDT_BTC"
         self.LabelType?.text = "BTC"
         self.Cryptodates = self.BitcoinCryptodates
         self.Cryptoprices = self.BitcoinCryptoprices
         setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
-        self.loadNetGainBitcoin()
+        self.loadNetGainBoth()
         self.unhideLabels()
         
     }
@@ -393,15 +404,19 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 }
                 if datatransation["amount_btc_owned"] != nil{
                     self.m_amount_btc_owned = datatransation.value(forKey: "amount_btc_owned") as! Double
+                    //self.m_amount_btc_owned = self.m_amount_btc_owned.roundToPlaces(7)
                 }
                 if datatransation["price_right_now_btc"] != nil{
                     self.m_price_right_now_btc = datatransation.value(forKey: "price_right_now_btc") as! Double
+                    
                 }
                 if datatransation["amount_eth_owned"] != nil{
                     self.m_amount_eth_owned = datatransation.value(forKey: "amount_eth_owned") as! Double
+                    //self.m_amount_btc_owned = self.m_amount_btc_owned.roundToPlaces(7)
                 }
                 if datatransation["total_amount_spent_on_eth"] != nil{
                     self.m_total_amount_spent_on_eth = datatransation.value(forKey: "total_amount_spent_on_eth") as! Double
+                
                 }
                 
                 let transations = datatransation.value(forKey: "coinflash_transactions") as? NSArray
@@ -486,10 +501,10 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         
     }
-    func loadNetGainEther(){
+    func loadNetGainBoth(){
         
         
-        var GainLoss =  m_amount_eth_owned * m_price_right_now_eth - m_total_amount_spent_on_eth
+        var GainLoss =  ((m_amount_eth_owned * m_price_right_now_eth)+(m_amount_btc_owned * m_price_right_now_btc)) - (m_total_amount_spent_on_eth + m_total_amount_spent_on_btc)
         if GainLoss == 0{
             self.LabelGroth?.isHidden = true
             self.ImageArrow?.isHidden = true
@@ -500,7 +515,33 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         }
         
         
-        GainLoss = round(num: GainLoss, to: 2)
+        GainLoss = round(num: GainLoss, to: 3)
+        
+        if GainLoss > 0{
+            self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Gain"
+            self.ImageArrow?.image = UIImage(named:"gainUp")!
+        }
+        else{
+            GainLoss = GainLoss * -1
+            self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Loss"
+            self.ImageArrow?.image = UIImage(named:"gainDown")!
+        }
+    }
+    func loadNetGainEther(){
+        
+        
+        var GainLoss =  (m_amount_eth_owned * m_price_right_now_eth) - m_total_amount_spent_on_eth
+        if GainLoss == 0{
+            self.LabelGroth?.isHidden = true
+            self.ImageArrow?.isHidden = true
+        }
+        else{
+            self.LabelGroth?.isHidden = false
+            self.ImageArrow?.isHidden = false
+        }
+        
+        
+        GainLoss = round(num: GainLoss, to: 3)
         
         if GainLoss > 0{
             self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Gain"
@@ -514,7 +555,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     }
     func loadNetGainBitcoin(){
         
-        var GainLoss = m_amount_btc_owned * m_price_right_now_btc - m_total_amount_spent_on_btc
+        var GainLoss = (m_amount_btc_owned * m_price_right_now_btc) - m_total_amount_spent_on_btc
         if GainLoss == 0{
             self.LabelGroth?.isHidden = true
             self.ImageArrow?.isHidden = true
@@ -524,7 +565,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             self.ImageArrow?.isHidden = false
         }
         
-        GainLoss = round(num: GainLoss, to: 2)
+        GainLoss = round(num: GainLoss, to: 3)
         if GainLoss > 0{
             self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Gain"
             self.ImageArrow?.image = UIImage(named:"gainUp")!

@@ -49,7 +49,12 @@ class MenuVC: UIViewController {
         nvController?.pushViewController(newViewController, animated: true)
         dismiss(animated: true, completion: nil)
     }
-    
+    // View Navigation:
+    @IBAction func didTapOnHelpAndSupport(sender: UIButton){
+        //sendSignal(withMessage: "Account Settings")
+        UIApplication.shared.openURL(NSURL(string: "https://coinflashapp.com/support.html") as! URL)
+        dismiss(animated: true, completion: nil)
+    }
     @IBAction func didTapOnPortFolioButton(sender: UIButton){
         //sendSignal(withMessage: "Account Settings")
         let nvController = (UIApplication.shared.delegate as! AppDelegate).mainNavController
