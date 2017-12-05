@@ -298,7 +298,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
                                     else
                                     {
                                         let transation = self.roundtoPlace(num: difference, to: 2)
-                                        singleTransation?.cctransaction_amount  = transation
+                                        singleTransation?.cctransaction_amount  = "$ "+transation
                                         
                                     }
                                 
