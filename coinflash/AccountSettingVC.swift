@@ -391,7 +391,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         ]
         SVProgressHUD.show()
         
-        Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+        Alamofire.request("https://coinflashapp.com/auththirdparty3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON
+            { response in
             
             let data = response.result.value as? NSDictionary
             

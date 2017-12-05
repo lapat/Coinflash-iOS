@@ -226,6 +226,11 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         let wallets = globalCoinflashUser3ResponseValue["wallets"]
         for (index,subJson):(String, JSON) in self.coinbaseAccounts {
             //Do something you want
+            print(subJson)
+            if subJson["type"] == "fiat_account"{
+                self.coinbaseAccounts.arrayObject?.remove(at: Int(index)!)
+                continue
+            }
             if subJson["id"].string == self.coinbasePrimaryAccountID{
                 print("this is primary")
             }else{
@@ -251,6 +256,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 }
             }
         }
+        print(self.coinbaseAccounts)
         
         self.ethPrimaryWalletAccountID = globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string
         self.btcPrimaryWalletAccountsID = globalCoinflashUser3ResponseValue["user_set_primary_coinbase_btc_account_id"].string
