@@ -272,9 +272,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
                         
                         self.cctransations.removeAll()
                         /// Bound error occuring check
+                        var TransationToAdd = true
                         if TransationArray.count > 0{
                             for index in 0...TransationArray.count - 1 {
                                 let transation = TransationArray[index]
+                                TransationToAdd = true
                                 var singleTransation = cctransaction_global
                                 if transation["cctransaction_name"] != nil{
                                     singleTransation?.cctransaction_name = transation["cctransaction_name"] as! String
@@ -286,6 +288,20 @@ class MainViewController: UIViewController, UITableViewDataSource{
                                 }
                                 if transation["cctransaction_amount"] != nil{
                                     singleTransation?.cctransaction_amount = transation["cctransaction_amount"] as! String!
+                                    let RowData = transation["cctransaction_amount"] as! String!
+                                    let cctransationCopy = Double(RowData!)
+                                    let difference = (cctransationCopy!) - (Double(Int(cctransationCopy!)))
+                                    if difference == 0 {
+                                        TransationToAdd = false
+                                        
+                                    }
+                                    else
+                                    {
+                                        let transation = self.roundtoPlace(num: difference, to: 2)
+                                        singleTransation?.cctransaction_amount  = transation
+                                        
+                                    }
+                                
                                 }
                                 if transation["coinbase_transaction_id"] != nil{
                                     singleTransation?.cctransaction_coinbase_transaction_id = transation["coinbase_transaction_id"] as! String
@@ -294,8 +310,9 @@ class MainViewController: UIViewController, UITableViewDataSource{
                                 else{
                                     singleTransation?.cctransaction_invested = "Not invested"
                                 }
-                                self.cctransations.append(singleTransation)
-                                
+                                if TransationToAdd == true{
+                                    self.cctransations.append(singleTransation)
+                                }
                             }
                         }
                         
@@ -509,6 +526,14 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
         return true
     }
-    
+    func roundtoPlace(num: Double, to places: Int) -> String {
+        let p = log10(abs(num))
+        let f = pow(10, p.rounded() - Double(places) + 1)
+        let rnum = (num / f).rounded() * f
+        let formate = "%." + String(places) + "f"
+        let conversion = String(format:formate, num)
+        let output = Double(conversion)
+        return conversion
+    }
 }
 

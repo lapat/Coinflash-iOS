@@ -164,8 +164,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! CryptoTransationCellView
-        
-        cell.CryptoPrice.text = DataToBeLoaded[indexPath.row].TCryptoInfo_crypto + " / $" + DataToBeLoaded[indexPath.row].TCryptoInfo_price
+        let priceOfCrypto = round(num: Double(DataToBeLoaded[indexPath.row].TCryptoInfo_price)!, to: 2)
+        cell.CryptoPrice.text = DataToBeLoaded[indexPath.row].TCryptoInfo_crypto + " / $" + priceOfCrypto //DataToBeLoaded[indexPath.row].TCryptoInfo_price
         cell.CryptoPrice.textColor = self.DataToBeLoadedwithColor
         cell.Date.text = DataToBeLoaded[indexPath.row].TCryptoInfo_Date
         cell.Value.text = DataToBeLoaded[indexPath.row].TCryptoInfo_Value
@@ -198,7 +198,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelCoin?.text =  String(self.m_amount_eth_owned)
         
         var total_price_of_eth = m_amount_eth_owned * m_price_right_now_eth
-        var total_price_of_eth_rounded = round(num: total_price_of_eth, to: 5)
+        
+        var total_price_of_eth_rounded = round(num: total_price_of_eth, to: 2)
         self.LabelCurrency?.text = "$ " + String(total_price_of_eth_rounded)
         
         //self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_eth) //+ " Dollar"
@@ -208,7 +209,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.Cryptodates = self.EitherCryptodates
         self.Cryptoprices = self.EitherCryptoprices
         setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
-        self.loadNetGainBoth()
+        self.loadNetGainEther()
         self.unhideLabels()
         
     }
@@ -228,7 +229,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelCoin?.text =  String(self.m_amount_btc_owned)
       
         var total_price_of_bitcoin = m_amount_btc_owned * m_price_right_now_btc
-        var total_price_of_bitcoin_rounded = round(num: total_price_of_bitcoin, to: 5)
+        var total_price_of_bitcoin_rounded = round(num: total_price_of_bitcoin, to: 2)
         self.LabelCurrency?.text = "$ " + String(total_price_of_bitcoin_rounded)
         
        // self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_btc) //+ " Dollar"
@@ -237,7 +238,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.Cryptodates = self.BitcoinCryptodates
         self.Cryptoprices = self.BitcoinCryptoprices
         setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
-        self.loadNetGainBoth()
+        self.loadNetGainBitcoin()
         self.unhideLabels()
         
     }
@@ -515,15 +516,15 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         }
         
         
-        GainLoss = round(num: GainLoss, to: 3)
+        //GainLoss = round(num: GainLoss, to: 2)
         
         if GainLoss > 0{
-            self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Gain"
+            self.LabelGroth?.text = "$ " + round(num: GainLoss, to: 2) + " Net Gain"
             self.ImageArrow?.image = UIImage(named:"gainUp")!
         }
         else{
             GainLoss = GainLoss * -1
-            self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Loss"
+            self.LabelGroth?.text = "$ " + round(num: GainLoss, to: 2) + " Net Loss"
             self.ImageArrow?.image = UIImage(named:"gainDown")!
         }
     }
@@ -541,15 +542,15 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         }
         
         
-        GainLoss = round(num: GainLoss, to: 3)
+        
         
         if GainLoss > 0{
-            self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Gain"
+            self.LabelGroth?.text = "$ " + round(num: GainLoss, to: 2) + " Net Gain"
             self.ImageArrow?.image = UIImage(named:"gainUp")!
         }
         else{
             GainLoss = GainLoss * -1
-            self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Loss"
+            self.LabelGroth?.text = "$ " + round(num: GainLoss, to: 2) + " Net Loss"
             self.ImageArrow?.image = UIImage(named:"gainDown")!
         }
     }
@@ -565,14 +566,14 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             self.ImageArrow?.isHidden = false
         }
         
-        GainLoss = round(num: GainLoss, to: 3)
+        
         if GainLoss > 0{
-            self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Gain"
+            self.LabelGroth?.text = "$ " + round(num: GainLoss, to: 2) + " Net Gain"
             self.ImageArrow?.image = UIImage(named:"gainUp")!
         }
         else{
             GainLoss = GainLoss * -1
-            self.LabelGroth?.text = "$ " + String(GainLoss) + " Net Loss"
+            self.LabelGroth?.text = "$ " + round(num: GainLoss, to: 2) + " Net Loss"
             self.ImageArrow?.image = UIImage(named:"gainDown")!
         }
         
@@ -610,12 +611,14 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelType?.isHidden = false
         
     }
-    func round(num: Double, to places: Int) -> Double {
+    func round(num: Double, to places: Int) -> String {
         let p = log10(abs(num))
         let f = pow(10, p.rounded() - Double(places) + 1)
         let rnum = (num / f).rounded() * f
-        
-        return rnum
+        let formate = "%." + String(places) + "f"
+        let conversion = String(format:formate, num)
+        let output = Double(conversion)
+        return conversion
     }
     
     
