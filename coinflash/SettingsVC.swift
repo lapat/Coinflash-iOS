@@ -178,7 +178,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     func doneWithNumberPad(){
         capOnInvestmentTextField.resignFirstResponder()
         var temp = capOnInvestmentTextField.text!
-        temp.remove(at: temp.startIndex)
+        //temp.remove(at: temp.startIndex)
         self.tempCapOnInvestmentValue = Int(temp)
         /*
         globalSettings.capOnInvestment = Int(temp)
@@ -432,6 +432,8 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             howOften = 2
         }
         
+        // process the tempCapOnInvestment
+        self.doneWithNumberPad()
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,
                                      "update_preferences": "true", "invest_change": investChange, "percent_to_invest": self.tempChangeCapValue,
                                      "how_often": howOften, "cap": self.tempCapOnInvestmentValue,

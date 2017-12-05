@@ -220,6 +220,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
                             SVProgressHUD.dismiss()
                         }
                         let data = response.result.value as! [String: Any]
+                        print(data)
                         if data["cc_transactions_array"] == nil
                         {
                             SVProgressHUD.dismiss()
@@ -233,7 +234,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
                         }
                         if user_preferences["percent_to_invest"] != nil{
                             self.m_percent_to_invest = Double(user_preferences["percent_to_invest"] as! String)!
+                            globalSettings.percentOfChangeToInvest = Int(self.m_percent_to_invest)
                             
+                        }
+                        if user_preferences["cap"] != nil{
+                            globalSettings.capOnInvestment = Int(user_preferences["cap"] as! String)
                         }
                         if user_preferences["how_often"] != nil{
                             self.m_how_often = Int(user_preferences["how_often"] as! String)!
