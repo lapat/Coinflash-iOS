@@ -416,11 +416,11 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                         self.loadInAppPurchaseView()
                     }
                 }
-            
             }
             else if AA != nil{
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Already Linked")
+                HelperFunctions.managePlaidLinked()
                 HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
             }
             else
