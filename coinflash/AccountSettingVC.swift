@@ -114,7 +114,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             self.addCoinbaseButton.isHidden = false
             //self.DlinkCoinBase.isHidden = true
             self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseTopGray")
-        
         }
         
         // Check for plaid linkage
@@ -220,6 +219,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             plaidCell.bankAccountNumber.text = ("**** **** ****\(plaidAccounts[indexPath.row]["last_four_digits"].string!)")
             cell = plaidCell
             plaidInfoObject.loggedIn = true
+            HelperFunctions.managePlaidLinked()
             //self.AddBankLink.isHidden = true
             //self.AddBankLink.setImage( UIImage.init(named: "unlinkBank"), for: .normal)
            
