@@ -59,6 +59,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     @IBOutlet weak var DlinkAccounts: UILabel!
     var plaidAccounts: [JSON]!
     
+    
+    @IBOutlet weak var createCoinbaseAccount: UIButton!
+    @IBOutlet weak var createCoinbaseAccountLabel: UILabel!
+    
     @IBOutlet weak var DlinkCoinBase: UIButton!
     var m_mobile_secret = user_mobile_secret!
     var m_user_id = user_id_mobile!
@@ -135,6 +139,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
            self.addCoinbaseButton.isHidden = true
            self.DlinkAccounts.isHidden = false
            self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseGreen")
+            self.createCoinbaseAccount.isHidden = true
+            self.createCoinbaseAccountLabel.isHidden = true
             
            if HelperFunctions.isPlaidLoggedIn() == true{
              self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
@@ -155,6 +161,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
             self.AddBankLink.isHidden = true
             self.DlinkAccounts.isHidden = true
+            self.createCoinbaseAccount.isHidden = false
+            self.createCoinbaseAccountLabel.isHidden = false
             
             
         }
@@ -165,6 +173,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         self.DlinkCoinbase(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
     }
     
+    @IBAction func didtaponCreatAccount(_ sender: Any) {
+        UIApplication.shared.openURL(NSURL(string: "https://www.coinbase.com/join/5924d7298fb60a02816ccc08") as! URL)
+        dismiss(animated: true, completion: nil)
+    }
     func viewDidEnterForground(notificaiton: NSNotification){
         if (UIApplication.shared.delegate as! AppDelegate).processingBacklink == true{
             //SVProgressHUD.show(withStatus: "Processing Login")
