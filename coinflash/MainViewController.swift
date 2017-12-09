@@ -479,7 +479,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
             let dollars = m_spare_change_accrued_percent_to_invest
             let dollarsToBuyBtc = m_spare_change_accrued_percent_to_invest * m_btc_percentage/100
             let dollarsToBuyEther = m_spare_change_accrued_percent_to_invest - dollarsToBuyBtc
-            if dollarsToBuyEther < 3 || dollarsToBuyBtc < 3{
+            if dollarsToBuyEther < 3 && dollarsToBuyBtc < 3{
                 HelperFunctions.showToast(withString: "Minimum amount required to buy any cryptocurrency is $3. Kindly review!", onViewController: self)
             }else{
                 //self.requestServerToBuy(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, dollars: dollars)
