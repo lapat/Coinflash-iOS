@@ -291,7 +291,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
                                     let RowData = transation["cctransaction_amount"] as! String!
                                     let cctransationCopy = Double(RowData!)
                                     let difference = (cctransationCopy!) - (Double(Int(cctransationCopy!)))
-                                    if difference == 0 {
+                                    if difference <= 0 {
                                         TransationToAdd = false
                                         
                                     }
