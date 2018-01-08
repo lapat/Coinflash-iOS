@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         // Deliver content from server, then:
                         SwiftyStoreKit.finishTransaction(purchase.transaction)
                     }
-                    print("purchased: \(purchase)")
+                   // print("purchased: \(purchase)")
                 }
             }
         }
@@ -93,8 +93,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     if let result = result as? [String : AnyObject] {
                         if let accessToken = result["access_token"] as? String {
                             let apiClient = Coinbase(oAuthAccessToken: accessToken)
-                            print(apiClient!)
-                            print(result)
+                           // print(apiClient!)
+                           // print(result)
                         }
                         
                     }
@@ -112,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                      annotation: options[UIApplicationOpenURLOptionsKey.annotation])
         }
         
-        print("outside if \(url.scheme)")
+       // print("outside if \(url.scheme)")
         return true
     }
     

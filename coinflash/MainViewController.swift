@@ -142,7 +142,9 @@ class MainViewController: UIViewController, UITableViewDataSource{
         var rate: Float = SliderinvestmentRateDecider!.value
         rate = Float(Int(rate))
         let ethRate =  rate
-        UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: Int(ethRate))
+        let btcRate = rate
+        
+        UpdateSlideVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,SliderValue: Int(btcRate))
         //print("element Released")
     }
     
@@ -220,7 +222,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
                             SVProgressHUD.dismiss()
                         }
                         let data = response.result.value as! [String: Any]
-                        print(data)
+                        //print(data)
                         if data["cc_transactions_array"] == nil
                         {
                             SVProgressHUD.dismiss()
@@ -325,7 +327,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
                         SVProgressHUD.dismiss()
                     }
                 case .failure:
-                    print(response.error as Any)
+                    //print(response.error as Any)
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
                 }
@@ -366,7 +368,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 }
                 SVProgressHUD.dismiss()
             case .failure:
-                print(response.error as Any)
+                //print(response.error as Any)
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
@@ -389,12 +391,12 @@ class MainViewController: UIViewController, UITableViewDataSource{
             case .success(let value):
                 let json = JSON(response.result.value)
                 self.coinflashUser3ResponseObject = json[0]
-                print(json)
+                //print(json)
                 globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
                 SVProgressHUD.dismiss()
                 
                 if globalCoinflashUser3ResponseValue["how_paying"] != JSON.null{
-                    print(globalCoinflashUser3ResponseValue["how_paying"].string)
+                    //print(globalCoinflashUser3ResponseValue["how_paying"].string)
                     if globalCoinflashUser3ResponseValue["how_paying"].string == "1"{
                         StoreKitHelper.sharedInstance.monthlySubscriptionState = .managedOnWebsite
                     }
@@ -439,7 +441,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 }
             
             case .failure:
-                print(response.error as Any)
+                //print(response.error as Any)
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
@@ -455,8 +457,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 
             })
             alert.addAction(action)
-            self.present(alert, animated: true, completion: nil)
-            return
+            //self.present(alert, animated: true, completion: nil)
+            //return
         }
         
         
@@ -475,11 +477,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
         
         // if allow buy true then else show error
         let testing = true
-        if allow_buy == true{
+        if allow_buy == true || testing == true{
             //HelperFunctions.showToast(withString: "Buying is allowed", onViewController: self)
             let dollars = m_spare_change_accrued_percent_to_invest
-            let dollarsToBuyBtc = m_spare_change_accrued_percent_to_invest * m_btc_percentage/100
-            let dollarsToBuyEther = m_spare_change_accrued_percent_to_invest - dollarsToBuyBtc
+            let dollarsToBuyBtc = (m_spare_change_accrued_percent_to_invest * Double((100 - (SliderinvestmentRateDecider?.value)!)))/100
+            let dollarsToBuyEther = (m_spare_change_accrued_percent_to_invest * Double((SliderinvestmentRateDecider?.value)!))/100
             if dollarsToBuyEther < 3 && dollarsToBuyBtc < 3{
                 HelperFunctions.showToast(withString: "Minimum amount required to buy any cryptocurrency is $3. Kindly review!", onViewController: self)
             }else{

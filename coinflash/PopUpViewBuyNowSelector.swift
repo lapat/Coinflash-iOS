@@ -59,10 +59,12 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
     func tapped(gestureRecognizer: UITapGestureRecognizer) {
         removeAnimate()
     }
+    
     @IBAction func ButtonTouch(_ sender: Any) {
-        print("Stop")
+       // print("Stop")
         self.requestServerToBuy(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, dollars: dollars)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -97,7 +99,7 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
                 SVProgressHUD.dismiss()
                 switch response.result{
                 case .success:
-                    print(response)
+                 //   print(response)
                     self.removeAnimate()
                     NotificationCenter.default.post(name: .onSuccessfulPurchaseOfCoins, object: nil)
                 case .failure:

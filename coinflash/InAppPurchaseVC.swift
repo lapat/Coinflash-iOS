@@ -38,7 +38,7 @@ class InAppPurchaseVC: UIViewController {
         SVProgressHUD.show(withStatus: "Loading Info")
         StoreKitHelper.sharedInstance.loadSubscriptionOptions(completionClosure: { (product) in
             SVProgressHUD.dismiss()
-            print(product.localizedPrice)
+          //  print(product.localizedPrice)
             let priceString = product.localizedPrice!
             self.purchaseButton.setTitle("\(priceString)", for: UIControlState.normal)
         }) { (error) in
@@ -59,16 +59,16 @@ class InAppPurchaseVC: UIViewController {
     func sendServerInAppPurchaseInfo(receipt: NSString){
         //SVProgressHUD.show(withStatus: "Finalizing Purchase")
         let parameter = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token, "in_app_receipt": receipt] as [String : Any]
-        print("=-------- START -------=")
-        print(receipt)
-        print("=-------- END -------=")
+      //  print("=-------- START -------=")
+      //  print(receipt)
+      //  print("=-------- END -------=")
         Alamofire.request("\(baseUrl)coinflashuser4/", method: HTTPMethod.post, parameters: parameter)
             .validate()
             .responseJSON { (response) in
                 switch response.result{
                 case .success(let value):
                     SVProgressHUD.dismiss()
-                    print(value)
+                 //   print(value)
                     let alert = UIAlertController(title: "Success", message: "Subscription is now active", preferredStyle: UIAlertControllerStyle.alert)
                     let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler:{(action) in
                         self.navigationController?.popViewController(animated: true)
@@ -76,7 +76,7 @@ class InAppPurchaseVC: UIViewController {
                     alert.addAction(okAction)
                     self.present(alert, animated: true, completion: nil)
                 case .failure:
-                    print("failure")
+                //    print("failure")
                     SVProgressHUD.dismiss()
                     let alert = UIAlertController(title: "Error", message: "Check your internet connection and retry", preferredStyle: UIAlertControllerStyle.alert)
                     let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil)

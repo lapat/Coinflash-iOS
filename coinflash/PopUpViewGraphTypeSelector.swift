@@ -27,7 +27,7 @@ class PopUpViewGraphTypeSelector:UIViewController , UIGestureRecognizerDelegate{
          removeAnimate()
     }
     @IBAction func ButtonTouch(_ sender: Any) {
-        print("Stop")
+       // print("Stop")
         removeAnimate()
     }
     override func didReceiveMemoryWarning() {

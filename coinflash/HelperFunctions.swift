@@ -86,7 +86,7 @@ class HelperFunctions: NSObject {
     // MARK: - Coin base Helpers
     static func coinBaseSaveLoginInfo(info: NSDictionary){
         // save all the info in the coinbase struct
-        print(info)
+        //print(info)
         coinbaseInfoObject.accessToken = info.value(forKey: "access_token") as! String
         coinbaseInfoObject.expiresIn = NSNumber(value: info.value(forKey: "expires_in") as! Int)
         coinbaseInfoObject.refreshToken = info.value(forKey: "refresh_token") as! String
@@ -94,7 +94,7 @@ class HelperFunctions: NSObject {
         coinbaseInfoObject.tokenType = info.value(forKey: "token_type") as! String
         coinbaseInfoObject.loggedIn = true
         self.manageCoinBaseLinking()
-        print("number \(coinbaseInfoObject.expiresIn)")
+      //  print("number \(coinbaseInfoObject.expiresIn)")
     }
     
     static func isCoinbaseLoggedIn() -> Bool{

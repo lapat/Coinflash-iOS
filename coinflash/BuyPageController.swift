@@ -153,7 +153,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         if isGraphOptionSelected == true{
             isGraphOptionSelected = false
             
-            print(GraphOptionSelected)
+           // print(GraphOptionSelected)
         }
     }
     
@@ -369,7 +369,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 //self.changThemeToBitCoin(for: self.btcBtn!)
                 SVProgressHUD.dismiss()
             case .failure:
-                print(response.error as Any)
+               // print(response.error as Any)
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
             }
@@ -468,7 +468,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 self.loadPieChart()
                 SVProgressHUD.dismiss()
             case .failure:
-                print(response.error as Any)
+              //  print(response.error as Any)
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
             }

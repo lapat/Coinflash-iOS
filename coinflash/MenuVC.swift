@@ -84,7 +84,7 @@ class MenuVC: UIViewController {
     }
     
     func sendSignal(withMessage message: String)  {
-        print(message)
+      //  print(message)
     }
     
     @IBAction func didTapLogoutButton(){
@@ -97,7 +97,7 @@ class MenuVC: UIViewController {
                 switch response.result{
                 case .success:
                     let data = response.result.value as! [String: Any]
-                    print(data)
+                  //  print(data)
                     // Dismiss all views and load the login view
                     user_isLoggedIn = false
                     
@@ -113,7 +113,7 @@ class MenuVC: UIViewController {
                     
                     SVProgressHUD.dismiss()
                 case .failure:
-                    print(response.error as Any)
+                 //   print(response.error as Any)
                     SVProgressHUD.dismiss()
                 }
         }

@@ -274,7 +274,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 switch response.result{
                 case .success:
                     let data = response.result.value as! [String: Any]
-                    print(response)
+                   // print(response)
                     // Dismiss all views and load the login view
                     
                     SVProgressHUD.dismiss()
@@ -287,7 +287,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     HelperFunctions.manageCoinBaseLinking()
                     self.updateViews()
                 case .failure:
-                    print(response.error as Any)
+                 //   print(response.error as Any)
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
                     self.addCoinbaseButton.isHidden = false
@@ -306,7 +306,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 switch response.result{
                 case .success(let value):
                     let json = JSON(value)
-                    print(value)
+                  //  print(value)
                     let accounts = json[0]["plaid_accounts"].array
                     self.plaidAccounts = accounts
                     
@@ -316,7 +316,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     UIApplication.shared.endIgnoringInteractionEvents()
                     self.updateViews()
                 case .failure:
-                    print(response.error as Any)
+               //     print(response.error as Any)
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
                 }
@@ -470,7 +470,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             switch response.result{
             case .success(let value):
                 let data = response.result.value as? NSDictionary
-                print(response)
+              //  print(response)
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Coinbase", message: " Your Coinbase account was unlinked.")
                     
@@ -483,7 +483,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 self.updateViews()
                 
             case .failure:
-                print(response.error as Any)
+            //    print(response.error as Any)
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 self.presentAlertViewWithTitle("CoinBase", message: "DeLinking Fail : Retry")
@@ -539,7 +539,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 self.updateViews()
                 
             case .failure:
-                print(response.error as Any)
+             //   print(response.error as Any)
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Failure", message: "De Linking Failed : Retry")
                 UIApplication.shared.endIgnoringInteractionEvents()
@@ -564,7 +564,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             switch response.result{
             case .success(let value):
                 let data = response.result.value as? NSDictionary
-                print(response)
+             //   print(response)
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Coinbase", message: " Your Coinbase account was unlinked.")
                 
@@ -577,7 +577,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 self.updateViews()
                 
             case .failure:
-                print(response.error as Any)
+             //   print(response.error as Any)
                 SVProgressHUD.dismiss()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 self.presentAlertViewWithTitle("CoinBase", message: "DeLinking Fail")
@@ -633,7 +633,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 self.updateViews()
                 
             case .failure:
-                print(response.error as Any)
+            //    print(response.error as Any)
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Failure", message: "DeLinking Failed")
                 UIApplication.shared.endIgnoringInteractionEvents()

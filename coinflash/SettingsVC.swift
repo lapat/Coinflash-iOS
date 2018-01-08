@@ -226,15 +226,15 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         let wallets = globalCoinflashUser3ResponseValue["wallets"]
         for (index,subJson):(String, JSON) in self.coinbaseAccounts {
             //Do something you want
-            print(subJson)
+           // print(subJson)
             if subJson["type"] == "fiat_account"{
                 self.coinbaseAccounts.arrayObject?.remove(at: Int(index)!)
                 continue
             }
             if subJson["id"].string == self.coinbasePrimaryAccountID{
-                print("this is primary")
+               // print("this is primary")
             }else{
-                print("not primary")
+              //  print("not primary")
             }
             if globalCoinflashUser3ResponseValue["user_set_primary_coinbase_account_id"] == JSON.null{
                 // get the first account and set it to primary coinbase account
@@ -256,7 +256,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 }
             }
         }
-        print(self.coinbaseAccounts)
+      //  print(self.coinbaseAccounts)
         
         self.ethPrimaryWalletAccountID = globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string
         self.btcPrimaryWalletAccountsID = globalCoinflashUser3ResponseValue["user_set_primary_coinbase_btc_account_id"].string
@@ -296,7 +296,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         }
         
         // if no default eth primary wallet set then get the first one and make it primary
-        print(globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string)
+       // print(globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string)
         if globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"] == JSON.null || globalCoinflashUser3ResponseValue["user_set_primary_coinbase_eth_account_id"].string == ""{
             if ethWalletAccounts.count > 0{
                 ethWalletLabel.text = ethWalletAccounts[0]["name"].string
@@ -376,13 +376,13 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             pickerViewData = [String]()
             for (index,subJson):(String, JSON) in self.coinbaseAccounts {
                 //Do something you want
-                print(subJson["name"].string)
+             //   print(subJson["name"].string)
                 pickerViewData.append(subJson["name"].string!)
             }
             self.showPickerView()
         }
         if indexPath.row == 6{
-            print("bitcoin wallet cell")
+          //  print("bitcoin wallet cell")
             self.showingPickerWithDataSource = 2
             self.pickerViewData = nil
             pickerViewData = [String]()
@@ -392,7 +392,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             self.showPickerView()
         }
         if indexPath.row == 7{
-            print("ether wallet cell")
+         //   print("ether wallet cell")
             self.showingPickerWithDataSource = 3
             self.pickerViewData = [String]()
             for json in ethWalletAccounts{
@@ -454,7 +454,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 switch response.result{
                 case .success(let value):
                     let json = JSON(value)
-                    print(json)
+                  //  print(json)
                     // dismiss the progress hud
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
@@ -472,7 +472,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                     globalSettings.percentOfChangeToInvest = self.tempChangeCapValue
                     globalSettings.capOnInvestment = self.tempCapOnInvestmentValue
                 case .failure:
-                    print(response.error as Any)
+                 //   print(response.error as Any)
                     SVProgressHUD.dismiss()
                     UIApplication.shared.endIgnoringInteractionEvents()
                     self.loadGlobalSettings()
@@ -554,7 +554,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(row)
+      //  print(row)
         if showingPickerWithDataSource == 1{
             self.coinbasePrimaryAccountID = coinbaseAccounts[row]["id"].string
             self.coinbasePaymentMethodLabel.text = coinbaseAccounts[row]["name"].string

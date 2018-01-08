@@ -32,12 +32,12 @@ class StoreKitHelper: NSObject {
     func restorePreviousPurchases(completionClosure: @escaping ()->Void, failureClosure: @escaping ()-> Void, noPurchaseClosure: @escaping ()-> Void){
         SwiftyStoreKit.restorePurchases(atomically: true) { results in
             if results.restoreFailedPurchases.count > 0 {
-                print("Restore Failed: \(results.restoreFailedPurchases)")
+             //   print("Restore Failed: \(results.restoreFailedPurchases)")
                 failureClosure()
             }
             else if results.restoredPurchases.count > 0 {
-                print("Restore Success: \(results.restoredPurchases)")
-                print(results)
+             //   print("Restore Success: \(results.restoredPurchases)")
+             //   print(results)
                 self.validateReceiptWithCompletionHandler {
                     if self.monthlySubscriptionState == .valid{
                         completionClosure()
@@ -47,7 +47,7 @@ class StoreKitHelper: NSObject {
                 }
             }
             else {
-                print("Nothing to Restore")
+              //  print("Nothing to Restore")
                 noPurchaseClosure()
             }
         }
@@ -64,7 +64,7 @@ class StoreKitHelper: NSObject {
         let receiptData = SwiftyStoreKit.localReceiptData
         //print(receiptData)
         
-        print(receiptData?.base64EncodedString(options: []))
+      //  print(receiptData?.base64EncodedString(options: []))
         if monthlySubscriptionExpiryDate != nil && receiptData != nil{
             if monthlySubscriptionExpiryDate! > Date(){
                 return true
@@ -88,7 +88,7 @@ class StoreKitHelper: NSObject {
         SwiftyStoreKit.retrieveProductsInfo([monthlySubscriptionProductID]) { result in
             if let product = result.retrievedProducts.first {
                 let priceString = product.localizedPrice!
-                print("Product: \(product.localizedDescription), price: \(priceString)")
+             //   print("Product: \(product.localizedDescription), price: \(priceString)")
                 self.monthlySubscriptionProductInfo = product
                 completionClosure(product)
             }
@@ -96,7 +96,7 @@ class StoreKitHelper: NSObject {
                 //return alertWithTitle("Could not retrieve product info", message: "Invalid product identifier: \(invalidProductId)")
             }
             else {
-                print("Error: \(result.error)")
+             //   print("Error: \(result.error)")
                 failureClosure(result.error!)
             }
         }
@@ -115,7 +115,7 @@ class StoreKitHelper: NSObject {
         SwiftyStoreKit.purchaseProduct(monthlySubscriptionProductInfo!) { (result) in
             switch result {
             case .success(let purchase):
-                print("Purchase Success: \(purchase.productId)")
+              //  print("Purchase Success: \(purchase.productId)")
                 self.validateReceiptForSubscription()
                 completionClosure()
             case .error(let error):
@@ -150,15 +150,15 @@ class StoreKitHelper: NSObject {
                 
                 switch purchaseResult {
                 case .purchased(let expiryDate, let receiptItems):
-                    print("Product is valid until \(expiryDate)")
+                 //   print("Product is valid until \(expiryDate)")
                     self.monthlySubscriptionState = .valid
                     self.monthlySubscriptionExpiryDate = expiryDate
                 case .expired(let expiryDate, let receiptItems):
-                    print("Product is expired since \(expiryDate)")
+                 //   print("Product is expired since \(expiryDate)")
                     self.monthlySubscriptionState = .expired
                     self.monthlySubscriptionExpiryDate = expiryDate
                 case .notPurchased:
-                    print("The user has never purchased this product")
+                  ///  print("The user has never purchased this product")
                     self.monthlySubscriptionState = .notPurchased
                     self.monthlySubscriptionExpiryDate = nil
                 }
@@ -185,15 +185,15 @@ class StoreKitHelper: NSObject {
                 
                 switch purchaseResult {
                 case .purchased(let expiryDate, let receiptItems):
-                    print("Product is valid until \(expiryDate)")
+                 //   print("Product is valid until \(expiryDate)")
                     self.monthlySubscriptionState = .valid
                     self.monthlySubscriptionExpiryDate = expiryDate
                 case .expired(let expiryDate, let receiptItems):
-                    print("Product is expired since \(expiryDate)")
+                  //  print("Product is expired since \(expiryDate)")
                     self.monthlySubscriptionState = .expired
                     self.monthlySubscriptionExpiryDate = expiryDate
                 case .notPurchased:
-                    print("The user has never purchased this product")
+                  //  print("The user has never purchased this product")
                     self.monthlySubscriptionState = .notPurchased
                     self.monthlySubscriptionExpiryDate = nil
                 }

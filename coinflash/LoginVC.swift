@@ -47,11 +47,11 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         
         guard error == nil else {
             
-            print("Error while trying to redirect : \(error)")
+          //  print("Error while trying to redirect : \(error)")
             return
         }
         
-        print("Successful Redirection")
+      //  print("Successful Redirection")
     }
     
     func application(application: UIApplication, openURL url: NSURL,
@@ -103,14 +103,14 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             self.requestServerForLoginConfirmation(googleUser: user)
             
         } else {
-            print("ERROR ::\(error.localizedDescription)")
+         //   print("ERROR ::\(error.localizedDescription)")
         }
     }
     
     // Finished disconnecting |user| from the app successfully if |error| is |nil|.
     public func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!)
     {
-        print(error)
+     //   print(error)
     }
     
     // Check Google info from server
@@ -124,7 +124,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             case .success:
                 SVProgressHUD.dismiss()
                 let data = response.result.value as! [String: Any]
-                print(response)
+              //  print(response)
                 HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
                 if HelperFunctions.isTOCAccepted(){
                     OperationQueue.main.addOperation
@@ -139,14 +139,14 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
                     }
                 }
             case .failure:
-                print(response.error)
+             //   print(response.error)
                 SVProgressHUD.dismiss()
             }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print(segue.identifier)
+      //  print(segue.identifier)
     }
     
     @IBOutlet weak var signInButton: GIDSignInButton!
@@ -157,7 +157,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             // Perform any operations on signed in user here.
             // ...
         } else {
-            print("\(error.localizedDescription)")
+         //   print("\(error.localizedDescription)")
         }
     }    
 }
