@@ -269,7 +269,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
                             self.m_btc_percentage = user_preferences["btc_percentage"] as! Double
                         }
                         
-                        
                         self.cctransations.removeAll()
                         /// Bound error occuring check
                         var TransationToAdd = true
@@ -290,7 +289,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
                                     singleTransation?.cctransaction_amount = transation["cctransaction_amount"] as! String!
                                     let RowData = transation["cctransaction_amount"] as! String!
                                     let cctransationCopy = Double(RowData!)
-                                    let difference = (cctransationCopy!) - (Double(Int(cctransationCopy!)))
+                                    let difference = 1 - ( (cctransationCopy!) - (Double(Int(cctransationCopy!))))
+                                   
                                     if difference <= 0 {
                                         TransationToAdd = false
                                         
@@ -349,8 +349,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
             "slider_value" : "\(SliderValue)"
-            
         ]
+        
         SVProgressHUD.show(withStatus: "Updating Values")
         
         Alamofire.request("https://coinflashapp.com/coinflashuser3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
@@ -474,6 +474,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
         
         // if allow buy true then else show error
+        let testing = true
         if allow_buy == true{
             //HelperFunctions.showToast(withString: "Buying is allowed", onViewController: self)
             let dollars = m_spare_change_accrued_percent_to_invest

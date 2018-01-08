@@ -51,7 +51,7 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
         etherBTCView.layer.cornerRadius = 15
         
         popUpView.layer.cornerRadius = 15
-    
+        
         self.showAnimate()
         self.requestCoinFlashFeatchwallet(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
     }
