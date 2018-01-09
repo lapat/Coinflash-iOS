@@ -457,8 +457,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 
             })
             alert.addAction(action)
-            //self.present(alert, animated: true, completion: nil)
-            //return
+            self.present(alert, animated: true, completion: nil)
+            return
         }
         
         
@@ -476,7 +476,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
         
         // if allow buy true then else show error
-        let testing = true
+        let testing = false
         if allow_buy == true || testing == true{
             //HelperFunctions.showToast(withString: "Buying is allowed", onViewController: self)
             let dollars = m_spare_change_accrued_percent_to_invest
