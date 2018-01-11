@@ -27,6 +27,7 @@
 		6AD120B7C913CC48A7586DD0 /* Pods_coinflashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */; };
 		7708387B1F89AA12009306B1 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7708387A1F89AA12009306B1 /* HelperFunctions.swift */; };
 		77182A001F8997CD0098F501 /* Vars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771829FF1F8997CD0098F501 /* Vars.swift */; };
+		7769E6812006D7E6000E256E /* UIView+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7769E6802006D7E6000E256E /* UIView+Color.swift */; };
 		777CBC001F89B80A00724DC5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */; };
 		777F3D011FC614F400EA890B /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777F3D001FC614F400EA890B /* StoreKitHelper.swift */; };
 		777F3D031FC7257600EA890B /* InAppPurchaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777F3D021FC7257600EA890B /* InAppPurchaseVC.swift */; };
@@ -98,6 +99,7 @@
 		68F80628794C280040E2F105 /* Pods-coinflashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.release.xcconfig"; sourceTree = "<group>"; };
 		7708387A1F89AA12009306B1 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		771829FF1F8997CD0098F501 /* Vars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vars.swift; sourceTree = "<group>"; };
+		7769E6802006D7E6000E256E /* UIView+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Color.swift"; sourceTree = "<group>"; };
 		777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		777F3D001FC614F400EA890B /* StoreKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
 		777F3D021FC7257600EA890B /* InAppPurchaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseVC.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				3FAAB7691F90355700DF423B /* PopUpViewGraphTypeSelector.swift */,
 				3FAAB76B1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift */,
 				3F607D0B1FA8A56000D8F722 /* LinkAccountPageVC.swift */,
+				7769E6802006D7E6000E256E /* UIView+Color.swift */,
 			);
 			path = coinflash;
 			sourceTree = "<group>";
@@ -588,6 +591,7 @@
 				3FCC026C1F790E0A00DD6558 /* SettingsVC.swift in Sources */,
 				3FAAB76C1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift in Sources */,
 				3F5BBF131F8AC68A00BCA472 /* ccTransationCellView.swift in Sources */,
+				7769E6812006D7E6000E256E /* UIView+Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

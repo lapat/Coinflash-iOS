@@ -28,10 +28,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var SliderinvestmentRateDecider: UISlider?
     @IBOutlet weak var ccTransationTableView: UITableView?
     @IBOutlet weak var settingsPageButton: UIButton!
+    @IBOutlet weak var BuyNowButton: UIButton!
+    @IBOutlet weak var selectCurrency: UIView!
+    
     var warningImageView: UIImageView!
     
-   
-    @IBOutlet weak var BuyNowButton: UIButton!
     
     var cctransations = [cctransaction_global]
     var m_mobile_secret = user_mobile_secret!
