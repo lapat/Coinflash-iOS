@@ -182,7 +182,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         return DataToBeLoaded.count
     }
     
-    @IBAction func changThemeToEther(for button: UIButton){
+    func changThemeToEther(){
         btcBtn?.isEnabled  = true
         btcEth?.isEnabled  = false
         LabelCoin?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
@@ -202,7 +202,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         var total_price_of_eth_rounded = round(num: total_price_of_eth, to: 2)
         self.LabelCurrency?.text = "$ " + String(total_price_of_eth_rounded)
         
-        //self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_eth) //+ " Dollar"
         
         self.CurrencyRatePolixCode = "USDT_ETH"
         self.LabelType?.text = "ETH"
@@ -213,7 +212,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.unhideLabels()
         
     }
-    @IBAction func changThemeToBitCoin(for button: UIButton){
+    func changThemeToBitCoin(){
         btcBtn?.isEnabled  = false
         btcEth?.isEnabled  = true
         LabelCoin?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
@@ -232,7 +231,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         var total_price_of_bitcoin_rounded = round(num: total_price_of_bitcoin, to: 2)
         self.LabelCurrency?.text = "$ " + String(total_price_of_bitcoin_rounded)
         
-       // self.LabelCurrency?.text =  "$ " + String(self.m_total_amount_spent_on_btc) //+ " Dollar"
         self.CurrencyRatePolixCode = "USDT_BTC"
         self.LabelType?.text = "BTC"
         self.Cryptodates = self.BitcoinCryptodates
@@ -365,7 +363,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                     }
                     
                 }
-                self.changThemeToBitCoin(for: self.btcBtn!)
+                self.changThemeToBitCoin()
                 //self.changThemeToBitCoin(for: self.btcBtn!)
                 SVProgressHUD.dismiss()
             case .failure:
@@ -464,7 +462,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                     }
                 }
                 // Loading the data in the Table
-                self.changThemeToBitCoin(for: self.btcBtn!)
+                self.changThemeToBitCoin()
                 self.loadPieChart()
                 SVProgressHUD.dismiss()
             case .failure:
