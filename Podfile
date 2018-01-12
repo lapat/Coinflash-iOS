@@ -17,6 +17,7 @@ target 'coinflash' do
   pod 'SDWebImage'
   pod 'NotificationBannerSwift', '~> 1.4.4'
   pod 'SwiftyStoreKit'
+  pod 'RMPickerViewController'
   use_frameworks!
   
   target 'coinflashTests' do
