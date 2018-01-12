@@ -33,7 +33,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     var warningImageView: UIImageView!
     
-    
     var cctransations = [cctransaction_global]
     var m_mobile_secret = user_mobile_secret!
     var m_user_id = user_id_mobile!
