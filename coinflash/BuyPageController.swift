@@ -385,7 +385,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             ]
         SVProgressHUD.show()
         
-        Alamofire.request("https://coinflashapp.com/coinflashtransactions3/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+        Alamofire.request("https://coinflashapp.com/coinflashtransactions4/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             switch response.result{
             case .success(let value):
                 self.BitcoinTransation.removeAll()
