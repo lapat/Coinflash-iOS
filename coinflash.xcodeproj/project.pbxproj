@@ -27,6 +27,8 @@
 		6AD120B7C913CC48A7586DD0 /* Pods_coinflashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0137380E7D9B576EBE56E6A1 /* Pods_coinflashTests.framework */; };
 		7708387B1F89AA12009306B1 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7708387A1F89AA12009306B1 /* HelperFunctions.swift */; };
 		77182A001F8997CD0098F501 /* Vars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771829FF1F8997CD0098F501 /* Vars.swift */; };
+		77610D0A200985DE008F4DE2 /* CryptoPercentSliderControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77610D09200985DE008F4DE2 /* CryptoPercentSliderControll.swift */; };
+		77610D0D2009C16E008F4DE2 /* MainViewController+UIPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77610D0C2009C16E008F4DE2 /* MainViewController+UIPicker.swift */; };
 		7769E6812006D7E6000E256E /* UIView+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7769E6802006D7E6000E256E /* UIView+Color.swift */; };
 		777CBC001F89B80A00724DC5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */; };
 		777F3D011FC614F400EA890B /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777F3D001FC614F400EA890B /* StoreKitHelper.swift */; };
@@ -99,6 +101,8 @@
 		68F80628794C280040E2F105 /* Pods-coinflashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coinflashTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests.release.xcconfig"; sourceTree = "<group>"; };
 		7708387A1F89AA12009306B1 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		771829FF1F8997CD0098F501 /* Vars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vars.swift; sourceTree = "<group>"; };
+		77610D09200985DE008F4DE2 /* CryptoPercentSliderControll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoPercentSliderControll.swift; sourceTree = "<group>"; };
+		77610D0C2009C16E008F4DE2 /* MainViewController+UIPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+UIPicker.swift"; sourceTree = "<group>"; };
 		7769E6802006D7E6000E256E /* UIView+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Color.swift"; sourceTree = "<group>"; };
 		777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		777F3D001FC614F400EA890B /* StoreKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
@@ -169,10 +173,10 @@
 		3FCC023A1F78F16700DD6558 /* coinflash */ = {
 			isa = PBXGroup;
 			children = (
+				77610D0B200986A4008F4DE2 /* ManageChange */,
 				3FCC023B1F78F16700DD6558 /* AppDelegate.swift */,
 				3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */,
 				3FCC023D1F78F16700DD6558 /* NavViewController.swift */,
-				3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */,
 				3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */,
 				ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */,
 				ACA3DA9B1F7FF4F400185245 /* LoginVC.swift */,
@@ -212,6 +216,16 @@
 				3FCC025D1F78F16700DD6558 /* Info.plist */,
 			);
 			path = coinflashUITests;
+			sourceTree = "<group>";
+		};
+		77610D0B200986A4008F4DE2 /* ManageChange */ = {
+			isa = PBXGroup;
+			children = (
+				3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */,
+				77610D0C2009C16E008F4DE2 /* MainViewController+UIPicker.swift */,
+				77610D09200985DE008F4DE2 /* CryptoPercentSliderControll.swift */,
+			);
+			path = ManageChange;
 			sourceTree = "<group>";
 		};
 		B2555A39542D171CD0A9C536 /* Pods */ = {
@@ -580,8 +594,10 @@
 				3FAAB7731F90F39100DF423B /* MainViewController.swift in Sources */,
 				3F2079371F8D4B19006DFD6E /* CryptoTransationCellView.swift in Sources */,
 				3FCC023E1F78F16700DD6558 /* NavViewController.swift in Sources */,
+				77610D0D2009C16E008F4DE2 /* MainViewController+UIPicker.swift in Sources */,
 				3F607D0C1FA8A56000D8F722 /* LinkAccountPageVC.swift in Sources */,
 				3FCC023C1F78F16700DD6558 /* AppDelegate.swift in Sources */,
+				77610D0A200985DE008F4DE2 /* CryptoPercentSliderControll.swift in Sources */,
 				ACA3DA9C1F7FF4F400185245 /* LoginVC.swift in Sources */,
 				7787AF2D1FA0C39A00082093 /* TOCVC.swift in Sources */,
 				ACA3DA931F7FE9C500185245 /* AccountSettingVC.swift in Sources */,

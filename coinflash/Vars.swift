@@ -131,3 +131,17 @@ struct PlaidInfo{
 }
 var plaidInfoObject: PlaidInfo = PlaidInfo()
 
+
+//MARK:- CryptoCurrency
+enum CryptoCurrency: String{
+    case bitcoin = "Bitcoin"
+    case ether = "Ether"
+    case litecoin = "Lietcoin"
+    case bitcoinCash = "BitcoinCash"
+    case unknown = "Unknown"
+}
+
+let btcColor = UIColor(red: 8/255.0, green: 79/255.0, blue: 159/255.0, alpha: 1.0)
+let ethColor = UIColor(red: 110/255.0, green: 176/255.0, blue: 56/255.0, alpha: 1.0)
+let bchColor = UIColor(red: 235/255.0, green: 151/255.0, blue: 61/255.0, alpha: 1.0)
+let ltcColor = UIColor(red: 193/255.0, green: 196/255.0, blue: 197/255.0, alpha: 1.0)
