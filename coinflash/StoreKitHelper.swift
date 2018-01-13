@@ -144,7 +144,7 @@ class StoreKitHelper: NSObject {
             case .success(let receipt):
                 // Verify the purchase of a Subscription
                 let purchaseResult = SwiftyStoreKit.verifySubscription(
-                    type: .autoRenewable, // or .nonRenewing (see below)
+                    ofType: .autoRenewable, // or .nonRenewing (see below)
                     productId: "monthly_subscription_1dollar",
                     inReceipt: receipt)
                 
@@ -179,7 +179,7 @@ class StoreKitHelper: NSObject {
             case .success(let receipt):
                 // Verify the purchase of a Subscription
                 let purchaseResult = SwiftyStoreKit.verifySubscription(
-                    type: .autoRenewable, // or .nonRenewing (see below)
+                    ofType: .autoRenewable, // or .nonRenewing (see below)
                     productId: "monthly_subscription_1dollar",
                     inReceipt: receipt)
                 

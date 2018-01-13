@@ -236,8 +236,42 @@ class HelperFunctions: NSObject {
             user_onboard_status = OnBoardStatus.linkedCoinbaseButNoPlaid
         }
     }
+
+    // MARK: - CryptoCurrency
+    static func getCryptoCurrencyFromCode(code: Int) ->CryptoCurrency{
+        if code == 1{
+            return .bitcoin
+        }
+        if code == 2{
+            return .ether
+        }
+        if code == 3{
+            return .litecoin
+        }
+        if code == 4{
+            return .bitcoinCash
+        }
+        return .unknown
+    }
     
+    static func getColorForCryptoCurrency(currency: CryptoCurrency)-> UIColor{
+        if currency == .bitcoin{
+            return btcColor
+        }
+        if currency == .ether{
+            return ethColor
+        }
+        if currency == .litecoin{
+            return ltcColor
+        }
+        if currency == .bitcoinCash{
+            return bchColor
+        }
+        return UIColor()
+    }
 }
+
+
 
 extension UIColor {
     static func blend(color1: UIColor, intensity1: CGFloat = 0.5, color2: UIColor, intensity2: CGFloat = 0.5) -> UIColor {
