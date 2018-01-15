@@ -269,6 +269,54 @@ class HelperFunctions: NSObject {
         }
         return UIColor()
     }
+    
+    static func getShortNameForCryptoCurrency(currency: CryptoCurrency) -> String{
+        if currency == .bitcoin{
+            return "BTC"
+        }
+        if currency == .ether{
+            return "ETH"
+        }
+        if currency == .litecoin{
+            return "LTC"
+        }
+        if currency == .bitcoinCash{
+            return "BCH"
+        }
+        return "UNK"
+    }
+    
+    static func getCurrencyIcon(currency: CryptoCurrency) -> String{
+        if currency == .bitcoin{
+        return "bitcoinIcon"
+        }
+        if currency == .ether{
+        return "etherIcon"
+        }
+        if currency == .litecoin{
+        return "litecoinIcon"
+        }
+        if currency == .bitcoinCash{
+        return "bitcoincashIcon"
+        }
+        return "UNK"
+    }
+    
+    static func getCodeFromCryptoCurrency(currency: CryptoCurrency) -> Int{
+        if currency == .bitcoin{
+            return 1
+        }
+        if currency == .ether{
+            return 2
+        }
+        if currency == .litecoin{
+            return 3
+        }
+        if currency == .bitcoinCash{
+            return 4
+        }
+        return 0
+    }
 }
 
 

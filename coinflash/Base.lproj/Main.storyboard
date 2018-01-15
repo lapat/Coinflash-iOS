@@ -575,10 +575,14 @@
                         <outlet property="LabelSinceChange" destination="2ov-xw-izY" id="bg8-VB-9ie"/>
                         <outlet property="ccTransationTableView" destination="RIb-fi-kFU" id="Xis-Xz-KAv"/>
                         <outlet property="cryptoInvestmentSlider" destination="ZEF-4j-x7q" id="NyH-Kc-ggv"/>
+                        <outlet property="currencySelctorLeftCurrencyIcon" destination="Lp2-dR-tRo" id="cfG-1D-3Ey"/>
+                        <outlet property="currencySelctorLeftCurrencyLabel" destination="kl1-0r-7dJ" id="EwF-Zf-kBb"/>
+                        <outlet property="currencySelctorRightCurrencyIcon" destination="w43-xl-qai" id="gSx-2Z-hac"/>
+                        <outlet property="currencySelctorRightCurrencyLabel" destination="iFR-9u-Z4o" id="4Lk-eg-Tfx"/>
                         <outlet property="leftSideCryptoInvestmentNameLabel" destination="gQ9-RF-qbu" id="mKv-k8-YSp"/>
                         <outlet property="leftSideCryptoInvestmentPercentLabel" destination="nyv-gv-yRd" id="7fE-4u-hMb"/>
-                        <outlet property="rightideCryptoInvestmentNameabel" destination="q2i-it-pCR" id="dHZ-si-aBd"/>
-                        <outlet property="rightideCryptoInvestmentPercentLabel" destination="aZ7-nO-Msi" id="mh0-Gk-plq"/>
+                        <outlet property="rightsideCryptoInvestmentNameabel" destination="q2i-it-pCR" id="IHs-Uw-d3K"/>
+                        <outlet property="rightsideCryptoInvestmentPercentLabel" destination="aZ7-nO-Msi" id="A44-c3-dGo"/>
                         <outlet property="selectCoinPairGestureRecognizer" destination="dTI-JM-2Ue" id="seA-Cq-d5E"/>
                         <outlet property="settingsPageButton" destination="vK6-z5-Vtd" id="xnK-4L-8VO"/>
                         <outlet property="spareChangeAccuredToInvestLabel" destination="e3q-Di-Db0" id="ls6-fc-5De"/>

@@ -31,14 +31,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var selectCurrency: UIView!
     @IBOutlet weak var selectCoinPairGestureRecognizer: UITapGestureRecognizer!
     
-    @IBOutlet weak var leftSideCryptoInvestmentPercentLabel: UILabel!
-    @IBOutlet weak var leftSideCryptoInvestmentNameLabel: UILabel!
-    @IBOutlet weak var rightideCryptoInvestmentNameabel: UILabel!
-    @IBOutlet weak var rightideCryptoInvestmentPercentLabel: UILabel!
-    
     
     var warningImageView: UIImageView!
-    
     
     var cctransations = [cctransaction_global]
     var m_mobile_secret = user_mobile_secret!
@@ -394,23 +388,92 @@ class MainViewController: UIViewController, UITableViewDataSource{
     
     //MARK: - Currency Selector
     var currencyPicker: UIPickerView!
+    var pickerToolbar: UIToolbar!
+    var currencyNamesForPickerView: [String] = ["Bitcoin","Ether","Litecoin","BitcoinCash"]
+    @IBOutlet weak var currencySelctorLeftCurrencyIcon: UIImageView!
+    @IBOutlet weak var currencySelctorLeftCurrencyLabel: UILabel!
+    @IBOutlet weak var currencySelctorRightCurrencyIcon: UIImageView!
+    @IBOutlet weak var currencySelctorRightCurrencyLabel: UILabel!
+
     
     @IBAction func didTapOnSelectCurrencyPairGesture(sender: UITapGestureRecognizer){
+        if currencyPicker == nil{
+            let width = self.view.frame.size.width
+            let height = self.view.frame.size.height/2.7
+            let x = self.view.frame.origin.x
+            let y = self.view.frame.origin.y + self.view.frame.height
+            let frame = CGRect(x: x, y: y, width: width, height: height)
+            currencyPicker = UIPickerView(frame: frame)
+            currencyPicker.backgroundColor = UIColor.white
+            self.view.addSubview(currencyPicker)
+            currencyPicker.delegate = self
+            currencyPicker.dataSource = self
+            
+            // Add the done button uitoolbar
+            pickerToolbar = UIToolbar(frame: CGRect(x: x, y: y - 50, width: width, height: 50))
+            self.view.addSubview(pickerToolbar)
+            
+            // Add the done button to pickertoolbar
+            let pickerDoneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self
+                , action: #selector(didPressPickerDoneButton(sender:)))
+            let pickerToolBarFlexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+            pickerToolbar.setItems([pickerToolBarFlexibleSpace, pickerDoneButton], animated: false)
+            
+        }
         // Show the picker view to select currencies
-        let width = self.view.frame.size.width
-        let height = self.view.frame.size.height/2.8
-        let x = self.view.frame.origin.x
-        let y = self.view.frame.origin.y + (self.view.frame.height - height)
-        let frame = CGRect(x: x, y: y, width: width, height: height)
-        currencyPicker = UIPickerView(frame: frame)
-        currencyPicker.backgroundColor = UIColor.white
-        self.view.addSubview(currencyPicker)
-        currencyPicker.delegate = self
-        currencyPicker.dataSource = self
+        UIView.animate(withDuration: 0.5) {
+            let width = self.view.frame.size.width
+            let height = self.view.frame.size.height/2.8
+            let x = self.view.frame.origin.x
+            let y  = self.view.frame.origin.y + (self.view.frame.height - height)
+            self.currencyPicker.frame = CGRect(x: x, y: y, width: width, height: height)
+            
+            self.pickerToolbar.frame = CGRect(x: x, y: y-50, width: width, height: 50)
+        }
+        
+        // anime to picker to currently selected currency
+        // -1 is done cause cryptoCurrency code start from 1 and picker array starts from 0
+        currencyPicker.selectRow(HelperFunctions.getCodeFromCryptoCurrency(currency: (cryptoInvestmentSlider?.leftSideCurrency)!)-1, inComponent: 0, animated: true)
+        currencyPicker.selectRow(HelperFunctions.getCodeFromCryptoCurrency(currency: (cryptoInvestmentSlider?.rightSideCurrency)!)-1, inComponent: 1, animated: true)
+        
+    }
+    
+    func didPressPickerDoneButton(sender: UIBarButtonItem){
+        UIView.animate(withDuration: 0.5) {
+            let width = self.view.frame.size.width
+            let height = self.view.frame.size.height/2.8
+            let x = self.view.frame.origin.x
+            let y  = self.view.frame.origin.y + self.view.frame.height + 50
+            self.currencyPicker.frame = CGRect(x: x, y: y, width: width, height: height)
+            
+            self.pickerToolbar.frame = CGRect(x: x, y: y-50, width: width, height: 50)
+        }
+        let firstCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: currencyPicker.selectedRow(inComponent: 0)+1)
+        let secondCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: currencyPicker.selectedRow(inComponent: 1)+1)
+        self.updateViewForNewlySlectedCurrency(firstCurrency: firstCurrency, secondCurrency: secondCurrency)
+    }
+    
+    func updateViewForNewlySlectedCurrency(firstCurrency: CryptoCurrency, secondCurrency: CryptoCurrency){
+        // Update the slider to reflect the correct colors
+        self.cryptoInvestmentSliderChangeCurrency(leftCurrency: firstCurrency, rightCurrency: secondCurrency)
+        
+        // Update the currency selector view to show the change in currency
+        let leftCurrencyShortLabel = HelperFunctions.getShortNameForCryptoCurrency(currency: firstCurrency)
+        let rightCurrencyShortLabel = HelperFunctions.getShortNameForCryptoCurrency(currency: secondCurrency)
+        currencySelctorLeftCurrencyLabel.text = leftCurrencyShortLabel
+        currencySelctorLeftCurrencyLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: firstCurrency)
+        currencySelctorRightCurrencyLabel.text = rightCurrencyShortLabel
+        currencySelctorRightCurrencyLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: secondCurrency)
+        currencySelctorLeftCurrencyIcon.image = UIImage(named: HelperFunctions.getCurrencyIcon(currency: firstCurrency))
+        currencySelctorRightCurrencyIcon.image = UIImage(named: HelperFunctions.getCurrencyIcon(currency: secondCurrency))
     }
     
     //MARK: - Slider
     @IBOutlet weak var cryptoInvestmentSlider: CryptoPercentSliderControll?
+    @IBOutlet weak var leftSideCryptoInvestmentPercentLabel: UILabel!
+    @IBOutlet weak var leftSideCryptoInvestmentNameLabel: UILabel!
+    @IBOutlet weak var rightsideCryptoInvestmentNameabel: UILabel!
+    @IBOutlet weak var rightsideCryptoInvestmentPercentLabel: UILabel!
     
     func updateCryptoInvestmentSlider(value: Float){
         self.cryptoInvestmentSlider?.value = 100 - value
@@ -418,30 +481,46 @@ class MainViewController: UIViewController, UITableViewDataSource{
         cryptoInvestmentSlider?.rightPercent = Int(100 - value)
         
         self.leftSideCryptoInvestmentPercentLabel.text = String(format: "%d%%", (cryptoInvestmentSlider?.leftPercent)!)
-        self.rightideCryptoInvestmentPercentLabel.text = String(format: "%d%%", (cryptoInvestmentSlider?.rightPercent)!)
+        self.rightsideCryptoInvestmentPercentLabel.text = String(format: "%d%%", (cryptoInvestmentSlider?.rightPercent)!)
         
         cryptoInvestmentSlider?.updateSliderColor()
         self.updateDollarsToInvestInCryptoLabel(leftPercent: cryptoInvestmentSlider!.leftPercent, rightPercent: cryptoInvestmentSlider!.rightPercent, leftCurrency: cryptoInvestmentSlider!.leftSideCurrency, rightCurrency: cryptoInvestmentSlider!.rightSideCurrency)
     }
     
+    // call this to change the crypto sliders currency. CHanges the colors of and labels associated with the slider
+    func cryptoInvestmentSliderChangeCurrency(leftCurrency: CryptoCurrency, rightCurrency: CryptoCurrency){
+        cryptoInvestmentSlider?.leftSideCurrency = leftCurrency
+        cryptoInvestmentSlider?.rightSideCurrency = rightCurrency
+        
+        self.leftSideCryptoInvestmentNameLabel.text = leftCurrency.rawValue
+        self.rightsideCryptoInvestmentNameabel.text = rightCurrency.rawValue
+        
+        cryptoInvestmentSlider?.updateSliderColor()
+        // also update the label colors
+        leftSideCryptoInvestmentNameLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: leftCurrency)
+        leftSideCryptoInvestmentPercentLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: leftCurrency)
+        rightsideCryptoInvestmentNameabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: rightCurrency)
+        rightsideCryptoInvestmentPercentLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: rightCurrency)
+    }
+    
+    // called when user initializes the slider. Currency etc gets set here
     func updateCryptoInvestmentSlider(value: Float,  leftCurrency: CryptoCurrency, rightCurrency: CryptoCurrency){
         self.cryptoInvestmentSlider?.value = 100 - value
         cryptoInvestmentSlider?.leftSideCurrency = leftCurrency
         cryptoInvestmentSlider?.rightSideCurrency = rightCurrency
         
         self.leftSideCryptoInvestmentNameLabel.text = leftCurrency.rawValue
-        self.rightideCryptoInvestmentNameabel.text = rightCurrency.rawValue
-        
-        cryptoInvestmentSlider?.leftSideCurrency = leftCurrency
-        cryptoInvestmentSlider?.rightSideCurrency = rightCurrency
+        self.rightsideCryptoInvestmentNameabel.text = rightCurrency.rawValue
         
         cryptoInvestmentSlider?.leftPercent = Int(value)
         cryptoInvestmentSlider?.rightPercent = Int(100 - value)
         
         self.leftSideCryptoInvestmentPercentLabel.text = String(format: "%d%%", (cryptoInvestmentSlider?.leftPercent)!)
-        self.rightideCryptoInvestmentPercentLabel.text = String(format: "%d%%", (cryptoInvestmentSlider?.rightPercent)!)
+        self.rightsideCryptoInvestmentPercentLabel.text = String(format: "%d%%", (cryptoInvestmentSlider?.rightPercent)!)
         
         cryptoInvestmentSlider?.updateSliderColor()
+        // also update the label colors
+        
         self.updateDollarsToInvestInCryptoLabel(leftPercent: cryptoInvestmentSlider!.leftPercent, rightPercent: cryptoInvestmentSlider!.rightPercent, leftCurrency: leftCurrency, rightCurrency: rightCurrency)
     }
     
@@ -450,7 +529,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         cryptoInvestmentSlider?.rightPercent = Int(ceil(sender.value))
         cryptoInvestmentSlider?.leftPercent = Int(100 - ceil(sender.value))
         self.leftSideCryptoInvestmentPercentLabel.text = String(format: "%d%%", (cryptoInvestmentSlider?.leftPercent)!)
-        self.rightideCryptoInvestmentPercentLabel.text = String(format: "%d%%", (cryptoInvestmentSlider?.rightPercent)!)
+        self.rightsideCryptoInvestmentPercentLabel.text = String(format: "%d%%", (cryptoInvestmentSlider?.rightPercent)!)
         
         sender.updateSliderColor()
         self.updateDollarsToInvestInCryptoLabel(leftPercent: sender.leftPercent, rightPercent: sender.rightPercent, leftCurrency: sender.leftSideCurrency, rightCurrency: sender.rightSideCurrency)
