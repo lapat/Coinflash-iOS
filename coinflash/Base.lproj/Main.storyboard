@@ -587,6 +587,7 @@
                         <outlet property="settingsPageButton" destination="vK6-z5-Vtd" id="xnK-4L-8VO"/>
                         <outlet property="spareChangeAccuredToInvestLabel" destination="e3q-Di-Db0" id="ls6-fc-5De"/>
                         <segue destination="yHX-6H-iSS" kind="presentation" identifier="buyNowSegue" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="SHa-iQ-miU"/>
+                        <segue destination="wWh-ZR-SLI" kind="show" identifier="mainViewToInAppPurchaseViewSegue" id="dy2-48-K8r"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l1F-nO-B7j" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2372,6 +2373,7 @@
         <image name="warning" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="dy2-48-K8r"/>
         <segue reference="I5M-EP-JW7"/>
     </inferredMetricsTieBreakers>
 </document>

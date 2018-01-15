@@ -64,6 +64,10 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
         self.showAnimate()
         //self.requestCoinFlashFeatchwallet(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         self.requestCoinflashTransactions4(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        
+        // set the colors of labels
+        self.firstCurrencyLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: firstCurrency)
+        self.secondCurrencyLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: secondCurrency)
     }
     
     func tapped(gestureRecognizer: UITapGestureRecognizer) {
