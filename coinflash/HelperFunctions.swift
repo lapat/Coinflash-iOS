@@ -238,6 +238,23 @@ class HelperFunctions: NSObject {
     }
 
     // MARK: - CryptoCurrency
+    // Server side code
+    static func getCryptoCurrencyFromServerCode(code: Int) ->CryptoCurrency{
+        if code == 1{
+            return .bitcoin
+        }
+        if code == 2{
+            return .ether
+        }
+        if code == 3{
+            return .litecoin
+        }
+        if code == 7{
+            return .bitcoinCash
+        }
+        return .unknown
+    }
+    // Client side code - will be same as server side when all currencies are added
     static func getCryptoCurrencyFromCode(code: Int) ->CryptoCurrency{
         if code == 1{
             return .bitcoin
@@ -253,7 +270,7 @@ class HelperFunctions: NSObject {
         }
         return .unknown
     }
-    
+    // Explanatory
     static func getColorForCryptoCurrency(currency: CryptoCurrency)-> UIColor{
         if currency == .bitcoin{
             return btcColor
@@ -313,9 +330,41 @@ class HelperFunctions: NSObject {
             return 3
         }
         if currency == .bitcoinCash{
-            return 4
+            return 4 /// ON server this is 7
         }
         return 0
+    }
+    
+    static func getCodeFromCryptoCurrencyForServerSide(currency: CryptoCurrency) -> Int{
+        if currency == .bitcoin{
+            return 1
+        }
+        if currency == .ether{
+            return 2
+        }
+        if currency == .litecoin{
+            return 3
+        }
+        if currency == .bitcoinCash{
+            return 7 /// ON server this is 7
+        }
+        return 0
+    }
+    
+    static func getPriceKeyForCryptoCurrency(currency: CryptoCurrency) -> String{
+        if currency == .bitcoin{
+            return "price_right_now_btc"
+        }
+        if currency == .ether{
+            return "price_right_now_eth"
+        }
+        if currency == .litecoin{
+            return "price_right_now_ltc"
+        }
+        if currency == .bitcoinCash{
+            return "price_right_now_bch" /// ON server this is 7
+        }
+        return "unknown"
     }
 }
 

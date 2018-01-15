@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYF-Qi-s9i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYF-Qi-s9i">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -1812,7 +1812,9 @@
                         <outlet property="btcToBuyLabel" destination="TD1-wc-ajr" id="LzT-R1-9Fj"/>
                         <outlet property="etherBTCView" destination="z8c-O3-Umr" id="WKH-CH-A0L"/>
                         <outlet property="etherToBuyLabel" destination="fPi-3r-7gu" id="SIv-hW-mw4"/>
+                        <outlet property="firstCurrencyLabel" destination="fPi-3r-7gu" id="PWD-cy-QsP"/>
                         <outlet property="popUpView" destination="6Fg-TP-gXf" id="qVD-Z8-XI9"/>
+                        <outlet property="secondCurrencyLabel" destination="TD1-wc-ajr" id="maj-RM-WI2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6u5-Ju-IzJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2372,6 +2374,6 @@
         <image name="warning" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YG8-qu-gkh"/>
+        <segue reference="I5M-EP-JW7"/>
     </inferredMetricsTieBreakers>
 </document>

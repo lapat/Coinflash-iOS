@@ -193,7 +193,6 @@
 				3F5BBF121F8AC68A00BCA472 /* ccTransationCellView.swift */,
 				3F2079361F8D4B19006DFD6E /* CryptoTransationCellView.swift */,
 				3FAAB7691F90355700DF423B /* PopUpViewGraphTypeSelector.swift */,
-				3FAAB76B1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift */,
 				3F607D0B1FA8A56000D8F722 /* LinkAccountPageVC.swift */,
 				7769E6802006D7E6000E256E /* UIView+Color.swift */,
 			);
@@ -224,6 +223,7 @@
 				3FCC026F1F7A3F0800DD6558 /* MainViewController.swift */,
 				77610D0C2009C16E008F4DE2 /* MainViewController+UIPicker.swift */,
 				77610D09200985DE008F4DE2 /* CryptoPercentSliderControll.swift */,
+				3FAAB76B1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift */,
 			);
 			path = ManageChange;
 			sourceTree = "<group>";

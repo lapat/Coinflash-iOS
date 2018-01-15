@@ -124,7 +124,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         
         self.LabelEtherInvestmentRate?.text = String(Int(etherRate)) + "%"
         self.LabelBitcoinInvestmentRate?.text = String(Int(bitrate)) + "%"
-        self.cryptoInvestmentSlider?.value = Float(etherRate)
+        //self.cryptoInvestmentSlider?.value = Float(etherRate)
         //self.InvestmentRateSlider(self.cryptoInvestmentSlider!)
         
         // Set the ether and bitcoin rate in the top label with respect to the percentage
@@ -215,12 +215,10 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 if globalCoinflashUser3ResponseValue["btc_percentage"] != JSON.null{
                     
                     let sliderProgress = Float(globalCoinflashUser3ResponseValue["btc_percentage"].string!)!;
-                    let leftCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: globalCoinflashUser3ResponseValue["left_side"].int!)
-                    let rightCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: globalCoinflashUser3ResponseValue["right_side"].int!)
+                    let leftCurrency = HelperFunctions.getCryptoCurrencyFromServerCode(code: globalCoinflashUser3ResponseValue["left_side"].int!)
+                    let rightCurrency = HelperFunctions.getCryptoCurrencyFromServerCode(code: globalCoinflashUser3ResponseValue["right_side"].int!)
                     self.updateCryptoInvestmentSlider(value: sliderProgress, leftCurrency: leftCurrency, rightCurrency: rightCurrency)
                 }
-                
-                
                 
                 if coinbaseNeedsRelinking == true && plaidNeedsRelinking == true{
                     
@@ -369,6 +367,44 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
     }
     
+    func sendSliderVaueToServerWithCurrency(mobile_secret: String,user_id_mobile: String,mobile_access_token: String,SliderValue :Int,
+                                            leftCurrencyCode: Int, rightCurrencyCode: Int){
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+            "slider_value" : "\(SliderValue)",
+            "left_slide" : "\(leftCurrencyCode)",
+            "right_slide" : "\(rightCurrencyCode)"
+        ]
+        
+        SVProgressHUD.show(withStatus: "Updating Values")
+        
+        Alamofire.request("https://coinflashapp.com/coinflashuser5/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            switch response.result{
+            case .success( _):
+                let data = response.result.value as? NSDictionary
+                let SliderUpdated = data?.value(forKey: "success")
+                print(data)
+                //let data = response.result.value as! [String: String]
+                if SliderUpdated != nil
+                {
+                    // Update the global vars with respect to the change:
+                    //self.m_btc_percentage = Double(SliderValue)
+                }
+                SVProgressHUD.dismiss()
+            case .failure:
+                //print(response.error as Any)
+                SVProgressHUD.dismiss()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+        }
+    }
+    
     func showConfirmationDialogBox(title : String , Message : String)
     {
         let alert = UIAlertController(title: title, message: Message, preferredStyle: UIAlertControllerStyle.alert)
@@ -435,7 +471,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         // -1 is done cause cryptoCurrency code start from 1 and picker array starts from 0
         currencyPicker.selectRow(HelperFunctions.getCodeFromCryptoCurrency(currency: (cryptoInvestmentSlider?.leftSideCurrency)!)-1, inComponent: 0, animated: true)
         currencyPicker.selectRow(HelperFunctions.getCodeFromCryptoCurrency(currency: (cryptoInvestmentSlider?.rightSideCurrency)!)-1, inComponent: 1, animated: true)
-        
     }
     
     func didPressPickerDoneButton(sender: UIBarButtonItem){
@@ -451,6 +486,21 @@ class MainViewController: UIViewController, UITableViewDataSource{
         let firstCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: currencyPicker.selectedRow(inComponent: 0)+1)
         let secondCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: currencyPicker.selectedRow(inComponent: 1)+1)
         self.updateViewForNewlySlectedCurrency(firstCurrency: firstCurrency, secondCurrency: secondCurrency)
+    }
+    
+    /// Just updates the labels and icosn of the crypto currency selector view.
+    func updateCryptoCurrencySelectorView(leftCurrency: CryptoCurrency, rightCurrency: CryptoCurrency){
+        let firstCurrency = leftCurrency
+        let secondCurrency = rightCurrency
+        // Update the currency selector view to show the change in currency
+        let leftCurrencyShortLabel = HelperFunctions.getShortNameForCryptoCurrency(currency: firstCurrency)
+        let rightCurrencyShortLabel = HelperFunctions.getShortNameForCryptoCurrency(currency: secondCurrency)
+        currencySelctorLeftCurrencyLabel.text = leftCurrencyShortLabel
+        currencySelctorLeftCurrencyLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: firstCurrency)
+        currencySelctorRightCurrencyLabel.text = rightCurrencyShortLabel
+        currencySelctorRightCurrencyLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: secondCurrency)
+        currencySelctorLeftCurrencyIcon.image = UIImage(named: HelperFunctions.getCurrencyIcon(currency: firstCurrency))
+        currencySelctorRightCurrencyIcon.image = UIImage(named: HelperFunctions.getCurrencyIcon(currency: secondCurrency))
     }
     
     func updateViewForNewlySlectedCurrency(firstCurrency: CryptoCurrency, secondCurrency: CryptoCurrency){
@@ -521,7 +571,15 @@ class MainViewController: UIViewController, UITableViewDataSource{
         cryptoInvestmentSlider?.updateSliderColor()
         // also update the label colors
         
+        leftSideCryptoInvestmentNameLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: leftCurrency)
+        leftSideCryptoInvestmentPercentLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: leftCurrency)
+        rightsideCryptoInvestmentNameabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: rightCurrency)
+        rightsideCryptoInvestmentPercentLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: rightCurrency)
+        
         self.updateDollarsToInvestInCryptoLabel(leftPercent: cryptoInvestmentSlider!.leftPercent, rightPercent: cryptoInvestmentSlider!.rightPercent, leftCurrency: leftCurrency, rightCurrency: rightCurrency)
+        
+        // Update the crypto currency selector view
+        self.updateCryptoCurrencySelectorView(leftCurrency: leftCurrency, rightCurrency: rightCurrency)
     }
     
     @IBAction func didSlideCryptoInvestmentSlider(sender: CryptoPercentSliderControll){
@@ -540,8 +598,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
         rate = Float(Int(rate))
         _ =  rate
         
-        sendSliderVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,
-                               SliderValue: (cryptoInvestmentSlider?.rightPercent)!)
+       // sendSliderVaueToServer(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token,
+       //                        SliderValue: (cryptoInvestmentSlider?.rightPercent)!)
+        let leftCurrencyCode = HelperFunctions.getCodeFromCryptoCurrencyForServerSide(currency: (cryptoInvestmentSlider?.leftSideCurrency)!)
+        let rightCurrencyCode = HelperFunctions.getCodeFromCryptoCurrencyForServerSide(currency: (cryptoInvestmentSlider?.rightSideCurrency)!)
+        sendSliderVaueToServerWithCurrency(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, SliderValue: (cryptoInvestmentSlider?.rightPercent)!, leftCurrencyCode: leftCurrencyCode, rightCurrencyCode: rightCurrencyCode)
         //print("element Released")
     }
     
@@ -582,7 +643,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
     //MARK: - Buy Now implementation
     @IBAction func didTapOnBuyNowButton(){
         /// Check if user has subscription:
-        if StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == false{
+        let testing = false
+        if StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == false && testing == false{
             let alert = UIAlertController(title: "", message: "Coinflash charges $1 a month for this feature, go to settings to set up your subscription.", preferredStyle: UIAlertControllerStyle.alert)
             let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
                 
@@ -607,13 +669,16 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
         
         // if allow buy true then else show error
-        let testing = false
+        //let testing = false
         if allow_buy == true || testing == true{
             //HelperFunctions.showToast(withString: "Buying is allowed", onViewController: self)
             let dollars = m_spare_change_accrued_percent_to_invest
             let dollarsToBuyBtc = (m_spare_change_accrued_percent_to_invest * Double((100 - (cryptoInvestmentSlider?.value)!)))/100
             let dollarsToBuyEther = (m_spare_change_accrued_percent_to_invest * Double((cryptoInvestmentSlider?.value)!))/100
-            if dollarsToBuyEther < 3 && dollarsToBuyBtc < 3{
+            
+            let firstCurrencyToBuyInDollars = m_spare_change_accrued_percent_to_invest * Double((cryptoInvestmentSlider?.leftPercent)!)/100
+            let secondCurrencyToBuyInDollars = m_spare_change_accrued_percent_to_invest * Double((cryptoInvestmentSlider?.rightPercent)!)/100
+            if (firstCurrencyToBuyInDollars < 3 && secondCurrencyToBuyInDollars < 3) && testing == false{
                 HelperFunctions.showToast(withString: "Minimum amount required to buy any cryptocurrency is $3. Kindly review!", onViewController: self)
             }else{
                 //self.requestServerToBuy(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, dollars: dollars)
@@ -622,6 +687,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 popUpView.dollars = dollars
                 popUpView.btcToBuyValueInDollars = dollarsToBuyBtc
                 popUpView.etherToBuyValueInDollars = dollarsToBuyEther
+                
+                popUpView.firstCurrency = cryptoInvestmentSlider?.leftSideCurrency
+                popUpView.secondCurrency = cryptoInvestmentSlider?.rightSideCurrency
+                popUpView.firstCurrencyValueInDollars = firstCurrencyToBuyInDollars
+                popUpView.secondCurrencyValueInDollars = secondCurrencyToBuyInDollars
                 
                 // Setting the transition settings
                 popUpView.modalPresentationStyle = .overCurrentContext

@@ -21,6 +21,15 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
     @IBOutlet var etherToBuyLabel: UILabel!
     @IBOutlet var btcToBuyLabel: UILabel!
     
+    @IBOutlet var firstCurrencyLabel: UILabel!
+    @IBOutlet var secondCurrencyLabel: UILabel!
+    
+    var firstCurrency: CryptoCurrency!
+    var secondCurrency: CryptoCurrency!
+    
+    var firstCurrencyValueInDollars: Double!
+    var secondCurrencyValueInDollars: Double!
+    
     var dollars: Double!
     var etherToInvest: Double!
     var etherToBuyValueInDollars: Double!
@@ -53,7 +62,8 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
         popUpView.layer.cornerRadius = 15
         
         self.showAnimate()
-        self.requestCoinFlashFeatchwallet(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        //self.requestCoinFlashFeatchwallet(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        self.requestCoinflashTransactions4(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
     }
     
     func tapped(gestureRecognizer: UITapGestureRecognizer) {
@@ -62,7 +72,8 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
     
     @IBAction func ButtonTouch(_ sender: Any) {
        // print("Stop")
-        self.requestServerToBuy(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, dollars: dollars)
+        //self.requestServerToBuy(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, dollars: dollars)
+        self.requestServerToBuy4(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, dollars: dollars)
     }
     
     override func didReceiveMemoryWarning() {
@@ -109,6 +120,25 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
         }
     }
     
+    func requestServerToBuy4(mobile_secret: String, user_id_mobile: String, mobile_access_token: String, dollars: Double){
+        let parameters = ["mobile_secret": mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": mobile_access_token,
+                          "dollar_amount": dollars, "execute": true] as [String : Any]
+        SVProgressHUD.show(withStatus: "Buying coins for you!")
+        Alamofire.request("\(baseUrl)coinflashbuy4/", method: HTTPMethod.post, parameters: parameters)
+            .responseJSON { (response) in
+                SVProgressHUD.dismiss()
+                switch response.result{
+                case .success:
+                      print(response)
+                    self.removeAnimate()
+                    NotificationCenter.default.post(name: .onSuccessfulPurchaseOfCoins, object: nil)
+                case .failure:
+                    HelperFunctions.showToast(withString: "Error connecting to server. Please retry!", onViewController: self)
+                    
+                }
+        }
+    }
+    
     func requestCoinFlashFeatchwallet(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -135,6 +165,52 @@ class PopUpViewBuyNowSelector:UIViewController , UIGestureRecognizerDelegate{
             // Set the labels
             self.etherToBuyLabel.text = String(format: "%.6f ETH Worth $%.2f", self.etherToBuyValueInDollars/self.m_price_right_now_eth, self.etherToBuyValueInDollars!)
             self.btcToBuyLabel.text = String(format: "%.6f BTC Worth $%.2f",self.btcToBuyValueInDollars/self.m_price_right_now_btc, self.btcToBuyValueInDollars!)
+            
+        }
+    }
+    
+    func requestCoinflashTransactions4(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+            ]
+        SVProgressHUD.show(withStatus: "Fetching latest prices from coinbase.")
+        Alamofire.request("https://coinflashapp.com/coinflashtransactions4/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            
+            let datatransation = response.result.value as! NSDictionary
+            print(datatransation)
+            
+            if datatransation["price_right_now_eth"] != nil{
+                self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_eth") as! Double
+            }
+            
+            if datatransation["price_right_now_btc"] != nil{
+                self.m_price_right_now_btc = datatransation.value(forKey: "price_right_now_btc") as! Double
+            }
+            
+            SVProgressHUD.dismiss()
+            // Set the labels
+            // set firstcurrency label
+            let firstCurrencyShortName = HelperFunctions.getShortNameForCryptoCurrency(currency: self.firstCurrency)
+            let secondCurrencyShortName = HelperFunctions.getShortNameForCryptoCurrency(currency: self.secondCurrency)
+            
+            let firstCurrencyPricekey = HelperFunctions.getPriceKeyForCryptoCurrency(currency: self.firstCurrency)
+            let secondCurrencyPriceKey = HelperFunctions.getPriceKeyForCryptoCurrency(currency: self.secondCurrency)
+            
+            let firstPrice = datatransation.value(forKey: firstCurrencyPricekey) as! Double
+            let secondPrice = datatransation.value(forKey: secondCurrencyPriceKey) as! Double
+            
+            self.firstCurrencyLabel.text = String(format: "%.6f %@ Worth $%.2f", self.firstCurrencyValueInDollars/firstPrice,
+                                                  firstCurrencyShortName, self.firstCurrencyValueInDollars)
+            self.secondCurrencyLabel.text = String(format: "%.6f %@ Worth $%.2f",self.secondCurrencyValueInDollars/secondPrice,
+                                                   secondCurrencyShortName, self.secondCurrencyValueInDollars)
+            
+            //self.etherToBuyLabel.text = String(format: "%.6f ETH Worth $%.2f", self.etherToBuyValueInDollars/self.m_price_right_now_eth, self.etherToBuyValueInDollars!)
+            //self.btcToBuyLabel.text = String(format: "%.6f BTC Worth $%.2f",self.btcToBuyValueInDollars/self.m_price_right_now_btc, self.btcToBuyValueInDollars!)
             
         }
     }
