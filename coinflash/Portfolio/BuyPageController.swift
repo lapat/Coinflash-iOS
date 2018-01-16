@@ -58,6 +58,20 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     var EitherCryptodates:[String]!
     var EitherCryptoprices:[Double]!
     
+    // LTC Vars
+    var LitecoinTransation = [TCryptoInfo]()
+    var LitecoinTotal : Double = 0.0
+    var LitecoinTotalPrice : Double = 0.0
+    var LitecoinCryptodates:[String]!
+    var LitecoinCryptoprices:[Double]!
+    
+    // BCH
+    var BitcoinCashTransation = [TCryptoInfo]()
+    var BitcoinCashTotal : Double = 0.0
+    var BitcoinCashTotalPrice : Double = 0.0
+    var BitcoinCashCryptodates:[String]!
+    var BitcoinCashCryptoprices:[Double]!
+    
     // Bitcoin Variables
     var BitcoinTransation = [TCryptoInfo]()
     var BitcoinTotal : Double = 0.0
@@ -219,60 +233,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.unhideLabels()
         
     }
-    func setCryptoPieChart(dataPoints: [String], values: [Double]){
-        var dataEntries: [ChartDataEntry] = []
-        
-        for i in 0..<dataPoints.count {
-            let dataEntry = ChartDataEntry(x: Double(i),y:values[i])
-            dataEntries.append(dataEntry)
-        }
-        
-        let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
-        pieChartDataSet.drawValuesEnabled = false
-        pieChartDataSet.selectionShift = 0
-        let pieChartData = PieChartData(dataSet: pieChartDataSet)
-        CrypotEitherBitPieChart.data = pieChartData
-        
-        
-        var colors: [UIColor] = [UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1), UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)]
-        
-        pieChartDataSet.colors = colors
-        
-        
-        
-        
-        
-        
-    }
-    func setCryptochartView(date:[String],prices:[Double]){
-        
-        if date.count == 0{
-            return
-        }
-        var pricesDates: [ChartDataEntry] = []
-        var datadays : [String] = []
-        for i in 0..<date.count{
-            let DataEntry = ChartDataEntry(x: Double(i),y:prices[i])
-            pricesDates.append(DataEntry)
-            
-        }
-        let chartDataSet = LineChartDataSet(values: pricesDates, label: nil)
-        chartDataSet.drawValuesEnabled = false
-        chartDataSet.drawCircleHoleEnabled = false
-        chartDataSet.drawCirclesEnabled  = false
-        
-        chartDataSet.mode = LineChartDataSet.Mode.cubicBezier
-        chartDataSet.lineWidth = 3
-        chartDataSet.colors = [UIColor(red: 8/255, green: 79/255, blue: 159/255, alpha: 1)]
-        
-        let chartData = LineChartData(dataSet: chartDataSet)
-        
-        CryptoPriceGraph.data = chartData
-        self.CryptoPriceGraph.xAxis.granularity = 1
-        self.CryptoPriceGraph.xAxis.valueFormatter = DefaultAxisValueFormatter(block: { (index, _) -> String in
-            return date[Int(index)]
-        })
-    }
     
     @IBAction func showPopup(_ sender: AnyObject) {
         
@@ -376,6 +336,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         }
         
     }
+    
     func loadPieChart(){
         
         let price_btc = m_amount_btc_owned * m_price_right_now_btc
@@ -417,6 +378,59 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         let conversion = String(format:formate, num)
         let output = Double(conversion)
         return conversion
+    }
+    
+    //MARK: - Price Graph
+    var cryptoPricesDic = [Int: [String: Double]]()
+    
+    func setCryptoPieChart(dataPoints: [String], values: [Double]){
+        var dataEntries: [ChartDataEntry] = []
+        
+        for i in 0..<dataPoints.count {
+            let dataEntry = ChartDataEntry(x: Double(i),y:values[i])
+            dataEntries.append(dataEntry)
+        }
+        
+        let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
+        pieChartDataSet.drawValuesEnabled = false
+        pieChartDataSet.selectionShift = 0
+        let pieChartData = PieChartData(dataSet: pieChartDataSet)
+        CrypotEitherBitPieChart.data = pieChartData
+        
+        
+        var colors: [UIColor] = [UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1), UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)]
+        
+        pieChartDataSet.colors = colors
+    }
+    
+    func setCryptochartView(date:[String],prices:[Double]){
+        
+        if date.count == 0{
+            return
+        }
+        var pricesDates: [ChartDataEntry] = []
+        var datadays : [String] = []
+        for i in 0..<date.count{
+            let DataEntry = ChartDataEntry(x: Double(i),y:prices[i])
+            pricesDates.append(DataEntry)
+            
+        }
+        let chartDataSet = LineChartDataSet(values: pricesDates, label: nil)
+        chartDataSet.drawValuesEnabled = false
+        chartDataSet.drawCircleHoleEnabled = false
+        chartDataSet.drawCirclesEnabled  = false
+        
+        chartDataSet.mode = LineChartDataSet.Mode.cubicBezier
+        chartDataSet.lineWidth = 3
+        chartDataSet.colors = [UIColor(red: 8/255, green: 79/255, blue: 159/255, alpha: 1)]
+        
+        let chartData = LineChartData(dataSet: chartDataSet)
+        
+        CryptoPriceGraph.data = chartData
+        self.CryptoPriceGraph.xAxis.granularity = 1
+        self.CryptoPriceGraph.xAxis.valueFormatter = DefaultAxisValueFormatter(block: { (index, _) -> String in
+            return date[Int(index)]
+        })
     }
     
     //MARK:- TableView
@@ -475,6 +489,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 
                 self.EitherCryptodates.removeAll()
                 self.EitherCryptoprices.removeAll()
+                
+                print(response.result.value)
                 let count = 0
                 if let array = response.result.value as? NSDictionary {
                     if array == nil{
@@ -488,25 +504,49 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                         return
                     }
                     
-                    let DataResponseBTC = array["BTC"] as! NSArray
-                    let DataResponseETH = array["ETH"] as! NSArray
-                    for index in stride(from: 0, to: (DataResponseBTC.count), by: 1){//(DataResponseBTC.count - 1)...0 {
-                        let DataDic = DataResponseBTC[index] as? NSDictionary
-                        var Date = DataDic!["date"] as! String
-                        Date = String(Date.characters.dropFirst(5))
-                        let price = DataDic!["price"] as! Double
-                        self.BitcoinCryptodates.append(Date)
-                        self.BitcoinCryptoprices.append(price)
-                        
+                    if array["BTC"] != nil{
+                        let DataResponseBTC = array["BTC"] as! NSArray
+                        for index in stride(from: 0, to: (DataResponseBTC.count), by: 1){//(DataResponseBTC.count - 1)...0 {
+                            let DataDic = DataResponseBTC[index] as? NSDictionary
+                            var Date = DataDic!["date"] as! String
+                            Date = String(Date.characters.dropFirst(5))
+                            let price = DataDic!["price"] as! Double
+                            self.BitcoinCryptodates.append(Date)
+                            self.BitcoinCryptoprices.append(price)
+                        }
                     }
-                    for index in stride(from: 0, to: (DataResponseETH.count), by: 1){//(DataResponseETH.count - 1)...0 {
-                        let DataDic = DataResponseETH[index] as? NSDictionary
-                        var Date = DataDic!["date"] as! String
-                        Date = String(Date.characters.dropFirst(5))
-                        let price = DataDic!["price"] as! Double
-                        self.EitherCryptodates.append(Date)
-                        self.EitherCryptoprices.append(price)
-                        
+                    if array["ETH"] != nil{
+                        let DataResponseETH = array["ETH"] as! NSArray
+                        for index in stride(from: 0, to: (DataResponseETH.count), by: 1){//(DataResponseETH.count - 1)...0 {
+                            let DataDic = DataResponseETH[index] as? NSDictionary
+                            var Date = DataDic!["date"] as! String
+                            Date = String(Date.characters.dropFirst(5))
+                            let price = DataDic!["price"] as! Double
+                            self.EitherCryptodates.append(Date)
+                            self.EitherCryptoprices.append(price)
+                        }
+                    }
+                    if array["LTC"] != nil{
+                        let DataResponseETH = array["ETH"] as! NSArray
+                        for index in stride(from: 0, to: (DataResponseETH.count), by: 1){//(DataResponseETH.count - 1)...0 {
+                            let DataDic = DataResponseETH[index] as? NSDictionary
+                            var Date = DataDic!["date"] as! String
+                            Date = String(Date.characters.dropFirst(5))
+                            let price = DataDic!["price"] as! Double
+                            self.LitecoinCryptodates.append(Date)
+                            self.LitecoinCryptoprices.append(price)
+                        }
+                    }
+                    if array["BCH"] != nil{
+                        let DataResponseETH = array["ETH"] as! NSArray
+                        for index in stride(from: 0, to: (DataResponseETH.count), by: 1){//(DataResponseETH.count - 1)...0 {
+                            let DataDic = DataResponseETH[index] as? NSDictionary
+                            var Date = DataDic!["date"] as! String
+                            Date = String(Date.characters.dropFirst(5))
+                            let price = DataDic!["price"] as! Double
+                            self.BitcoinCashCryptodates.append(Date)
+                            self.BitcoinCashCryptoprices.append(price)
+                        }
                     }
                     
                 }
@@ -541,7 +581,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 
                 let datatransation = response.result.value as! NSDictionary
                 
-                print(datatransation)
+                //print(datatransation)
                 
                 if datatransation["price_right_now_eth"] != nil{
                     self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_eth") as! Double
@@ -631,7 +671,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         }else{
             self.cryptoTransactionInfoDic[cryptoCode]!.append(transaction)
         }
-        print(self.cryptoTransactionInfoDic.count)
+        //print(self.cryptoTransactionInfoDic.count)
     }
     
     //MARK:- Currency Picker
