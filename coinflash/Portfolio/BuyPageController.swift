@@ -480,7 +480,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         ]
         SVProgressHUD.show()
         
-        
         Alamofire.request("https://coinflashapp.com/coinflashprice/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             switch response.result{
             case .success(let value):

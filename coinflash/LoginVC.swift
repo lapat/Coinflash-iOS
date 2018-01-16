@@ -35,10 +35,13 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         
         if user_isLoggedIn == true{
             if HelperFunctions.isTOCAccepted(){
-                self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+                //self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+                self.requestServerForLoginConfirmation(googleUser: googleUser)
                 //self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
             }else{
-                self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+                self.requestServerForLoginConfirmation(googleUser: googleUser)
+                //self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+                //self.
             }
         }
     }
@@ -124,7 +127,16 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             case .success:
                 SVProgressHUD.dismiss()
                 let data = response.result.value as! [String: Any]
-              //  print(response)
+                print(response)
+                if data["Invalid ID token"] != nil{
+                    // make user login again
+                    let alert = UIAlertController(title: "Error", message: "Kindly login again", preferredStyle: UIAlertControllerStyle.alert)
+                    let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil)
+                    alert.addAction(okayAction)
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    return
+                }
                 HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
                 if HelperFunctions.isTOCAccepted(){
                     OperationQueue.main.addOperation
