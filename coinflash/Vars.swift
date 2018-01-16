@@ -84,6 +84,7 @@ struct TCryptoInfo{
     var TCryptoInfo_Date: String!
     var TCryptoInfo_type: String!
     var TCryptoInfo_Value: String!
+    var currency: CryptoCurrency!
     init(){
         TCryptoInfo_crypto = ""
         TCryptoInfo_price = ""

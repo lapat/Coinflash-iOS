@@ -185,7 +185,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         boundryCricleImage?.image = UIImage(named: "circleGreen")
         self.PriceTypeLabel.text = "Ethereum Price"
         // Value assignement
-        self.DataToBeLoaded = self.EitherTransation
+        //self.DataToBeLoaded = self.EitherTransation
         self.DataToBeLoadedwithColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         self.CryptoTransationTableView.reloadData()
         self.LabelCoin?.text =  String(self.m_amount_eth_owned)
@@ -215,11 +215,11 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         boundryCricleImage?.image = UIImage(named: "circleBlue")
         self.PriceTypeLabel.text = "Bitcoin Price"
         // Value assignement
-        self.DataToBeLoaded = self.BitcoinTransation
+        //self.DataToBeLoaded = self.BitcoinTransation
         self.DataToBeLoadedwithColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         self.CryptoTransationTableView.reloadData()
         self.LabelCoin?.text =  String(self.m_amount_btc_owned)
-      
+        
         var total_price_of_bitcoin = m_amount_btc_owned * m_price_right_now_btc
         var total_price_of_bitcoin_rounded = round(num: total_price_of_bitcoin, to: 2)
         self.LabelCurrency?.text = "$ " + String(total_price_of_bitcoin_rounded)
@@ -439,7 +439,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! CryptoTransationCellView
         let priceOfCrypto = round(num: Double(DataToBeLoaded[indexPath.row].TCryptoInfo_price)!, to: 2)
         cell.CryptoPrice.text = DataToBeLoaded[indexPath.row].TCryptoInfo_crypto + " / $" + priceOfCrypto //DataToBeLoaded[indexPath.row].TCryptoInfo_price
-        cell.CryptoPrice.textColor = self.DataToBeLoadedwithColor
+        cell.CryptoPrice.textColor = HelperFunctions.getColorForCryptoCurrency(currency: DataToBeLoaded[indexPath.row].currency)
         cell.Date.text = DataToBeLoaded[indexPath.row].TCryptoInfo_Date
         cell.Value.text = DataToBeLoaded[indexPath.row].TCryptoInfo_Value
         cell.CryptoType.text = DataToBeLoaded[indexPath.row].TCryptoInfo_type
@@ -532,8 +532,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                             var Date = DataDic!["date"] as! String
                             Date = String(Date.characters.dropFirst(5))
                             let price = DataDic!["price"] as! Double
-                            self.LitecoinCryptodates.append(Date)
-                            self.LitecoinCryptoprices.append(price)
+                           // self.LitecoinCryptodates.append(Date)
+                           // self.LitecoinCryptoprices.append(price)
                         }
                     }
                     if array["BCH"] != nil{
@@ -543,8 +543,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                             var Date = DataDic!["date"] as! String
                             Date = String(Date.characters.dropFirst(5))
                             let price = DataDic!["price"] as! Double
-                            self.BitcoinCashCryptodates.append(Date)
-                            self.BitcoinCashCryptoprices.append(price)
+                           // self.BitcoinCashCryptodates.append(Date)
+                           // self.BitcoinCashCryptoprices.append(price)
                         }
                     }
                     
@@ -580,7 +580,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 
                 let datatransation = response.result.value as! NSDictionary
                 
-                //print(datatransation)
+                print(datatransation)
                 
                 if datatransation["price_right_now_eth"] != nil{
                     self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_eth") as! Double
@@ -615,7 +615,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                             singleTransation?.TCryptoInfo_Date  = dict.value(forKey: "coinbase_time_transaction_will_payout") as! String
                             singleTransation?.TCryptoInfo_type  = dict.value(forKey: "crypto_type") as! String
                             
-                            
                             if singleTransation?.TCryptoInfo_Date   != nil{
                                 var date: String = singleTransation!.TCryptoInfo_Date
                                 var truncated = String(date.characters.dropFirst(5))
@@ -649,6 +648,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                     }
                 }
                 // Loading the data in the Table
+                self.DataToBeLoaded = self.cryptoTransactionInfoDic[1]!; // 1 = code for btc
+                self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: CryptoCurrency.bitcoin)
                 self.changThemeToBitCoin()
                 self.loadPieChart()
                 SVProgressHUD.dismiss()
@@ -665,10 +666,17 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     var cryptoTransactionInfoDic =  [Int: [TCryptoInfo]]()
     
     func addTransactionToDictionary(transaction: TCryptoInfo, cryptoCode: Int){
-        if self.cryptoTransactionInfoDic[cryptoCode] == nil{
-            self.cryptoTransactionInfoDic[cryptoCode] = [transaction]
+        // Change the code from server to client side one.
+        let currency = HelperFunctions.getCryptoCurrencyFromServerCode(code: cryptoCode)
+        let code = HelperFunctions.getCodeFromCryptoCurrency(currency: currency)
+        var trans = transaction
+        
+        trans.TCryptoInfo_type = HelperFunctions.getShortNameForCryptoCurrency(currency: currency)
+        trans.currency = currency
+        if self.cryptoTransactionInfoDic[code] == nil{
+            self.cryptoTransactionInfoDic[code] = [trans]
         }else{
-            self.cryptoTransactionInfoDic[cryptoCode]!.append(transaction)
+            self.cryptoTransactionInfoDic[code]!.append(trans)
         }
         //print(self.cryptoTransactionInfoDic.count)
     }
@@ -741,6 +749,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             DataToBeLoaded = cryptoTransactionInfoDic[index]!
         }
         CryptoTransationTableView.reloadData()
+        self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: currency)
     }
     
     

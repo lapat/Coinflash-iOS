@@ -366,9 +366,23 @@ class HelperFunctions: NSObject {
         }
         return "unknown"
     }
+    
+    static func getCurrencyWithShortName(name: String) -> CryptoCurrency{
+        if name == "BTC"{
+            return .bitcoin
+        }
+        if name == "ETH"{
+            return .ether
+        }
+        if name == "LTC"{
+            return .litecoin
+        }
+        if name == "BCH"{
+            return .bitcoinCash
+        }
+        return CryptoCurrency.bitcoin
+    }
 }
-
-
 
 extension UIColor {
     static func blend(color1: UIColor, intensity1: CGFloat = 0.5, color2: UIColor, intensity2: CGFloat = 0.5) -> UIColor {
