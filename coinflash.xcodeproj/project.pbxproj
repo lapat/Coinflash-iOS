@@ -29,6 +29,7 @@
 		77182A001F8997CD0098F501 /* Vars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771829FF1F8997CD0098F501 /* Vars.swift */; };
 		77610D0A200985DE008F4DE2 /* CryptoPercentSliderControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77610D09200985DE008F4DE2 /* CryptoPercentSliderControll.swift */; };
 		77610D0D2009C16E008F4DE2 /* MainViewController+UIPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77610D0C2009C16E008F4DE2 /* MainViewController+UIPicker.swift */; };
+		77610D10200D343D008F4DE2 /* BuyPageController+UIPickerVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77610D0F200D343D008F4DE2 /* BuyPageController+UIPickerVIew.swift */; };
 		7769E6812006D7E6000E256E /* UIView+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7769E6802006D7E6000E256E /* UIView+Color.swift */; };
 		777CBC001F89B80A00724DC5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */; };
 		777F3D011FC614F400EA890B /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777F3D001FC614F400EA890B /* StoreKitHelper.swift */; };
@@ -103,6 +104,7 @@
 		771829FF1F8997CD0098F501 /* Vars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vars.swift; sourceTree = "<group>"; };
 		77610D09200985DE008F4DE2 /* CryptoPercentSliderControll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoPercentSliderControll.swift; sourceTree = "<group>"; };
 		77610D0C2009C16E008F4DE2 /* MainViewController+UIPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+UIPicker.swift"; sourceTree = "<group>"; };
+		77610D0F200D343D008F4DE2 /* BuyPageController+UIPickerVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuyPageController+UIPickerVIew.swift"; sourceTree = "<group>"; };
 		7769E6802006D7E6000E256E /* UIView+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Color.swift"; sourceTree = "<group>"; };
 		777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		777F3D001FC614F400EA890B /* StoreKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
@@ -173,9 +175,7 @@
 		3FCC023A1F78F16700DD6558 /* coinflash */ = {
 			isa = PBXGroup;
 			children = (
-				77610D0B200986A4008F4DE2 /* ManageChange */,
 				3FCC023B1F78F16700DD6558 /* AppDelegate.swift */,
-				3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */,
 				3FCC023D1F78F16700DD6558 /* NavViewController.swift */,
 				3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */,
 				ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */,
@@ -183,6 +183,8 @@
 				3F012E321F84D2550026EFC0 /* MenuVC.swift */,
 				7787AF2C1FA0C39A00082093 /* TOCVC.swift */,
 				777F3D021FC7257600EA890B /* InAppPurchaseVC.swift */,
+				77610D0B200986A4008F4DE2 /* ManageChange */,
+				77610D0E200D338D008F4DE2 /* Portfolio */,
 				3FCC023F1F78F16700DD6558 /* Main.storyboard */,
 				3FCC02421F78F16700DD6558 /* Assets.xcassets */,
 				3FCC02441F78F16700DD6558 /* LaunchScreen.storyboard */,
@@ -226,6 +228,15 @@
 				3FAAB76B1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift */,
 			);
 			path = ManageChange;
+			sourceTree = "<group>";
+		};
+		77610D0E200D338D008F4DE2 /* Portfolio */ = {
+			isa = PBXGroup;
+			children = (
+				3FCC02711F7BD52C00DD6558 /* BuyPageController.swift */,
+				77610D0F200D343D008F4DE2 /* BuyPageController+UIPickerVIew.swift */,
+			);
+			path = Portfolio;
 			sourceTree = "<group>";
 		};
 		B2555A39542D171CD0A9C536 /* Pods */ = {
@@ -605,6 +616,7 @@
 				3FCC02721F7BD52D00DD6558 /* BuyPageController.swift in Sources */,
 				777F3D011FC614F400EA890B /* StoreKitHelper.swift in Sources */,
 				7708387B1F89AA12009306B1 /* HelperFunctions.swift in Sources */,
+				77610D10200D343D008F4DE2 /* BuyPageController+UIPickerVIew.swift in Sources */,
 				777F3D031FC7257600EA890B /* InAppPurchaseVC.swift in Sources */,
 				3F012E331F84D2550026EFC0 /* MenuVC.swift in Sources */,
 				77182A001F8997CD0098F501 /* Vars.swift in Sources */,

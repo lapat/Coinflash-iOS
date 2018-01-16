@@ -161,27 +161,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! CryptoTransationCellView
-        let priceOfCrypto = round(num: Double(DataToBeLoaded[indexPath.row].TCryptoInfo_price)!, to: 2)
-        cell.CryptoPrice.text = DataToBeLoaded[indexPath.row].TCryptoInfo_crypto + " / $" + priceOfCrypto //DataToBeLoaded[indexPath.row].TCryptoInfo_price
-        cell.CryptoPrice.textColor = self.DataToBeLoadedwithColor
-        cell.Date.text = DataToBeLoaded[indexPath.row].TCryptoInfo_Date
-        cell.Value.text = DataToBeLoaded[indexPath.row].TCryptoInfo_Value
-        cell.CryptoType.text = DataToBeLoaded[indexPath.row].TCryptoInfo_type
-        
-        return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DataToBeLoaded.count
-    }
-    
     func changThemeToEther(){
         btcBtn?.isEnabled  = true
         btcEth?.isEnabled  = false
@@ -295,183 +274,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         })
     }
     
-    func requestCryptoRates(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
-        let now = NSDate()
-        
-        //let reducedTime = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)?.dateByAddingUnit(.W, value: -10, toDate: now, options: NSCalendarOptions())
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        let fromDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())
-        let date = formatter.string(from: fromDate!)
-        let dateFormate = formatter.date(from: date)
-        let DateToString = formatter.string(from: dateFormate!)
-        
-        
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-        let parameters: [String: String] = [
-            "mobile_secret" : mobile_secret,
-            "user_id_mobile" : user_id_mobile,
-            "mobile_access_token" : mobile_access_token,
-            "after" : DateToString
-        ]
-        SVProgressHUD.show()
-        
-        
-        Alamofire.request("https://coinflashapp.com/coinflashprice/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-            switch response.result{
-            case .success(let value):
-                self.BitcoinCryptodates.removeAll()
-                self.BitcoinCryptoprices.removeAll()
-                
-                self.EitherCryptodates.removeAll()
-                self.EitherCryptoprices.removeAll()
-                let count = 0
-                if let array = response.result.value as? NSDictionary {
-                    if array == nil{
-                        self.showErrorToast(message: "Check you internet connection")
-                        return
-                    }
-                    let error = array["error"]
-                    if error != nil{
-                        
-                        self.showErrorToast(message: "Check you internet connection")
-                        return
-                    }
-                    
-                    let DataResponseBTC = array["BTC"] as! NSArray
-                    let DataResponseETH = array["ETH"] as! NSArray
-                    for index in stride(from: 0, to: (DataResponseBTC.count), by: 1){//(DataResponseBTC.count - 1)...0 {
-                        let DataDic = DataResponseBTC[index] as? NSDictionary
-                        var Date = DataDic!["date"] as! String
-                        Date = String(Date.characters.dropFirst(5))
-                        let price = DataDic!["price"] as! Double
-                        self.BitcoinCryptodates.append(Date)
-                        self.BitcoinCryptoprices.append(price)
-                        
-                    }
-                    for index in stride(from: 0, to: (DataResponseETH.count), by: 1){//(DataResponseETH.count - 1)...0 {
-                        let DataDic = DataResponseETH[index] as? NSDictionary
-                        var Date = DataDic!["date"] as! String
-                        Date = String(Date.characters.dropFirst(5))
-                        let price = DataDic!["price"] as! Double
-                        self.EitherCryptodates.append(Date)
-                        self.EitherCryptoprices.append(price)
-                        
-                    }
-                    
-                }
-                self.changThemeToBitCoin()
-                //self.changThemeToBitCoin(for: self.btcBtn!)
-                SVProgressHUD.dismiss()
-            case .failure:
-               // print(response.error as Any)
-                SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
-            }
-        }
-    }
-    
-    func requestCoinFlashFeatchwallet(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-        let parameters: [String: String] = [
-            "mobile_secret" : mobile_secret,
-            "user_id_mobile" : user_id_mobile,
-            "mobile_access_token" : mobile_access_token,
-            ]
-        SVProgressHUD.show()
-        
-        Alamofire.request("https://coinflashapp.com/coinflashtransactions4/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
-            switch response.result{
-            case .success(let value):
-                self.BitcoinTransation.removeAll()
-                self.EitherTransation.removeAll()
-                
-                
-                let datatransation = response.result.value as! NSDictionary
-                
-                
-                if datatransation["price_right_now_eth"] != nil{
-                    self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_eth") as! Double
-                }
-                if datatransation["total_amount_spent_on_btc"] != nil{
-                    self.m_total_amount_spent_on_btc = datatransation.value(forKey: "total_amount_spent_on_btc") as! Double
-                }
-                if datatransation["amount_btc_owned"] != nil{
-                    self.m_amount_btc_owned = datatransation.value(forKey: "amount_btc_owned") as! Double
-                    //self.m_amount_btc_owned = self.m_amount_btc_owned.roundToPlaces(7)
-                }
-                if datatransation["price_right_now_btc"] != nil{
-                    self.m_price_right_now_btc = datatransation.value(forKey: "price_right_now_btc") as! Double
-                    
-                }
-                if datatransation["amount_eth_owned"] != nil{
-                    self.m_amount_eth_owned = datatransation.value(forKey: "amount_eth_owned") as! Double
-                    //self.m_amount_btc_owned = self.m_amount_btc_owned.roundToPlaces(7)
-                }
-                if datatransation["total_amount_spent_on_eth"] != nil{
-                    self.m_total_amount_spent_on_eth = datatransation.value(forKey: "total_amount_spent_on_eth") as! Double
-                
-                }
-                
-                let transations = datatransation.value(forKey: "coinflash_transactions") as? NSArray
-                if (transations != nil) {
-                    for obj in transations! {
-                        if let dict = obj as? NSDictionary {
-                            var singleTransation = TCryptoInfo_global
-                            
-                            singleTransation?.TCryptoInfo_crypto  = dict.value(forKey: "coinbase_crypto_amount") as! String
-                            singleTransation?.TCryptoInfo_price  = dict.value(forKey: "coinbase_total_amount_spent") as! String
-                            singleTransation?.TCryptoInfo_Value  = dict.value(forKey: "coinbase_amount_spent_on_crypto") as! String
-                            singleTransation?.TCryptoInfo_Date  = dict.value(forKey: "coinbase_time_transaction_will_payout") as! String
-                            singleTransation?.TCryptoInfo_type  = dict.value(forKey: "crypto_type") as! String
-                            
-                            
-                            if singleTransation?.TCryptoInfo_Date   != nil{
-                                var date: String = singleTransation!.TCryptoInfo_Date
-                                var truncated = String(date.characters.dropFirst(5))
-                                truncated = String(truncated.characters.dropLast(10))
-                                singleTransation?.TCryptoInfo_Date = truncated
-                            }
-                            if singleTransation?.TCryptoInfo_type != nil{
-                                let cryptoType = singleTransation?.TCryptoInfo_type
-                                
-                                if(cryptoType == "1")
-                                {
-                                    singleTransation?.TCryptoInfo_type = "BTC"
-                                    self.BitcoinTotal = self.BitcoinTotal + Double(singleTransation!.TCryptoInfo_crypto)!
-                                    self.BitcoinTotalPrice = self.BitcoinTotalPrice + Double(singleTransation!.TCryptoInfo_price)!
-                                    self.BitcoinTransation.append(singleTransation!)
-                                }
-                                else
-                                {
-                                    singleTransation?.TCryptoInfo_type = "ETH"
-                                    self.EitherTotal = self.EitherTotal + Double(singleTransation!.TCryptoInfo_crypto)!
-                                    self.EitherTotalPrice = self.EitherTotalPrice + Double(singleTransation!.TCryptoInfo_price)!
-                                    self.EitherTransation.append(singleTransation!)
-                                }
-                            }
-                            
-                            
-                            
-                        }
-                    }
-                }
-                // Loading the data in the Table
-                self.changThemeToBitCoin()
-                self.loadPieChart()
-                SVProgressHUD.dismiss()
-            case .failure:
-              //  print(response.error as Any)
-                SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
-            }
-        }
-    }
     @IBAction func showPopup(_ sender: AnyObject) {
         
         let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GraphPopUp") as! PopUpViewGraphTypeSelector
@@ -481,25 +283,23 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         popOverVC.didMove(toParentViewController: self)
         
     }
+    
     func ShowBuyPopUp(){
         let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BuyPopUp") as! PopUpViewBuyNowSelector
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
         self.view.addSubview(popOverVC.view)
         popOverVC.didMove(toParentViewController: self)
-        
-        
     }
+    
     func showErrorToast(message :String){
         
         var style = ToastStyle()
         style.messageColor = .black
         style.backgroundColor = .white
         self.view.makeToast(message, duration: 3.0, position: .bottom, style: style)
-        
-        
-        
     }
+    
     func loadNetGainBoth(){
         
         
@@ -617,6 +417,291 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         let conversion = String(format:formate, num)
         let output = Double(conversion)
         return conversion
+    }
+    
+    //MARK:- TableView
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! CryptoTransationCellView
+        let priceOfCrypto = round(num: Double(DataToBeLoaded[indexPath.row].TCryptoInfo_price)!, to: 2)
+        cell.CryptoPrice.text = DataToBeLoaded[indexPath.row].TCryptoInfo_crypto + " / $" + priceOfCrypto //DataToBeLoaded[indexPath.row].TCryptoInfo_price
+        cell.CryptoPrice.textColor = self.DataToBeLoadedwithColor
+        cell.Date.text = DataToBeLoaded[indexPath.row].TCryptoInfo_Date
+        cell.Value.text = DataToBeLoaded[indexPath.row].TCryptoInfo_Value
+        cell.CryptoType.text = DataToBeLoaded[indexPath.row].TCryptoInfo_type
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return DataToBeLoaded.count
+    }
+    
+    //MARK:- Server Calls
+    func requestCryptoRates(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+        let now = NSDate()
+        
+        //let reducedTime = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)?.dateByAddingUnit(.W, value: -10, toDate: now, options: NSCalendarOptions())
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let fromDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())
+        let date = formatter.string(from: fromDate!)
+        let dateFormate = formatter.date(from: date)
+        let DateToString = formatter.string(from: dateFormate!)
+        
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+            "after" : DateToString
+        ]
+        SVProgressHUD.show()
+        
+        
+        Alamofire.request("https://coinflashapp.com/coinflashprice/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            switch response.result{
+            case .success(let value):
+                self.BitcoinCryptodates.removeAll()
+                self.BitcoinCryptoprices.removeAll()
+                
+                self.EitherCryptodates.removeAll()
+                self.EitherCryptoprices.removeAll()
+                let count = 0
+                if let array = response.result.value as? NSDictionary {
+                    if array == nil{
+                        self.showErrorToast(message: "Check you internet connection")
+                        return
+                    }
+                    let error = array["error"]
+                    if error != nil{
+                        
+                        self.showErrorToast(message: "Check you internet connection")
+                        return
+                    }
+                    
+                    let DataResponseBTC = array["BTC"] as! NSArray
+                    let DataResponseETH = array["ETH"] as! NSArray
+                    for index in stride(from: 0, to: (DataResponseBTC.count), by: 1){//(DataResponseBTC.count - 1)...0 {
+                        let DataDic = DataResponseBTC[index] as? NSDictionary
+                        var Date = DataDic!["date"] as! String
+                        Date = String(Date.characters.dropFirst(5))
+                        let price = DataDic!["price"] as! Double
+                        self.BitcoinCryptodates.append(Date)
+                        self.BitcoinCryptoprices.append(price)
+                        
+                    }
+                    for index in stride(from: 0, to: (DataResponseETH.count), by: 1){//(DataResponseETH.count - 1)...0 {
+                        let DataDic = DataResponseETH[index] as? NSDictionary
+                        var Date = DataDic!["date"] as! String
+                        Date = String(Date.characters.dropFirst(5))
+                        let price = DataDic!["price"] as! Double
+                        self.EitherCryptodates.append(Date)
+                        self.EitherCryptoprices.append(price)
+                        
+                    }
+                    
+                }
+                self.changThemeToBitCoin()
+                //self.changThemeToBitCoin(for: self.btcBtn!)
+                SVProgressHUD.dismiss()
+            case .failure:
+                // print(response.error as Any)
+                SVProgressHUD.dismiss()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+        }
+    }
+    
+    func requestCoinFlashFeatchwallet(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : mobile_access_token,
+            ]
+        SVProgressHUD.show()
+        
+        Alamofire.request("https://coinflashapp.com/coinflashtransactions4/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
+            switch response.result{
+            case .success(let value):
+                self.BitcoinTransation.removeAll()
+                self.EitherTransation.removeAll()
+                
+                
+                let datatransation = response.result.value as! NSDictionary
+                
+                print(datatransation)
+                
+                if datatransation["price_right_now_eth"] != nil{
+                    self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_eth") as! Double
+                }
+                if datatransation["total_amount_spent_on_btc"] != nil{
+                    self.m_total_amount_spent_on_btc = datatransation.value(forKey: "total_amount_spent_on_btc") as! Double
+                }
+                if datatransation["amount_btc_owned"] != nil{
+                    self.m_amount_btc_owned = datatransation.value(forKey: "amount_btc_owned") as! Double
+                    //self.m_amount_btc_owned = self.m_amount_btc_owned.roundToPlaces(7)
+                }
+                if datatransation["price_right_now_btc"] != nil{
+                    self.m_price_right_now_btc = datatransation.value(forKey: "price_right_now_btc") as! Double
+                }
+                if datatransation["amount_eth_owned"] != nil{
+                    self.m_amount_eth_owned = datatransation.value(forKey: "amount_eth_owned") as! Double
+                    //self.m_amount_btc_owned = self.m_amount_btc_owned.roundToPlaces(7)
+                }
+                if datatransation["total_amount_spent_on_eth"] != nil{
+                    self.m_total_amount_spent_on_eth = datatransation.value(forKey: "total_amount_spent_on_eth") as! Double
+                }
+                
+                let transations = datatransation.value(forKey: "coinflash_transactions") as? NSArray
+                if (transations != nil) {
+                    for obj in transations! {
+                        if let dict = obj as? NSDictionary {
+                            var singleTransation = TCryptoInfo_global
+                            
+                            singleTransation?.TCryptoInfo_crypto  = dict.value(forKey: "coinbase_crypto_amount") as! String
+                            singleTransation?.TCryptoInfo_price  = dict.value(forKey: "coinbase_total_amount_spent") as! String
+                            singleTransation?.TCryptoInfo_Value  = dict.value(forKey: "coinbase_amount_spent_on_crypto") as! String
+                            singleTransation?.TCryptoInfo_Date  = dict.value(forKey: "coinbase_time_transaction_will_payout") as! String
+                            singleTransation?.TCryptoInfo_type  = dict.value(forKey: "crypto_type") as! String
+                            
+                            
+                            if singleTransation?.TCryptoInfo_Date   != nil{
+                                var date: String = singleTransation!.TCryptoInfo_Date
+                                var truncated = String(date.characters.dropFirst(5))
+                                truncated = String(truncated.characters.dropLast(10))
+                                singleTransation?.TCryptoInfo_Date = truncated
+                            }
+                            if singleTransation?.TCryptoInfo_type != nil{
+                                let cryptoType = singleTransation?.TCryptoInfo_type!
+                                
+                                if(cryptoType == "1")
+                                {
+                                    singleTransation?.TCryptoInfo_type = "BTC"
+                                    self.BitcoinTotal = self.BitcoinTotal + Double(singleTransation!.TCryptoInfo_crypto)!
+                                    self.BitcoinTotalPrice = self.BitcoinTotalPrice + Double(singleTransation!.TCryptoInfo_price)!
+                                    self.BitcoinTransation.append(singleTransation!)
+                                }
+                                if(cryptoType == "2")
+                                {
+                                    singleTransation?.TCryptoInfo_type = "ETH"
+                                    self.EitherTotal = self.EitherTotal + Double(singleTransation!.TCryptoInfo_crypto)!
+                                    self.EitherTotalPrice = self.EitherTotalPrice + Double(singleTransation!.TCryptoInfo_price)!
+                                    self.EitherTransation.append(singleTransation!)
+                                }
+                                
+                                //self.cryptoTransactionInfoDic[cryptoType!]?.append(singleTransation!)
+                                self.addTransactionToDictionary(transaction: singleTransation!,
+                                                                cryptoCode: Int(cryptoType!)!)
+                                
+                            }
+                        }
+                    }
+                }
+                // Loading the data in the Table
+                self.changThemeToBitCoin()
+                self.loadPieChart()
+                SVProgressHUD.dismiss()
+            case .failure:
+                //  print(response.error as Any)
+                SVProgressHUD.dismiss()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+        }
+    }
+    
+    //MARK:- CryptoData Management
+    /// String being the crypto number and array being the transactions related to that crypto
+    var cryptoTransactionInfoDic =  [Int: [TCryptoInfo]]()
+    
+    func addTransactionToDictionary(transaction: TCryptoInfo, cryptoCode: Int){
+        if self.cryptoTransactionInfoDic[cryptoCode] == nil{
+            self.cryptoTransactionInfoDic[cryptoCode] = [transaction]
+        }else{
+            self.cryptoTransactionInfoDic[cryptoCode]!.append(transaction)
+        }
+        print(self.cryptoTransactionInfoDic.count)
+    }
+    
+    //MARK:- Currency Picker
+    var currencyPicker: UIPickerView!
+    var pickerToolbar: UIToolbar!
+    @IBOutlet weak var currencyPickerCurrencyIcon: UIImageView!
+    @IBOutlet weak var currencyPickerCurrencyLabel: UILabel!
+    
+    @IBAction func didTapOnCurrenyPicker(sender: UITapGestureRecognizer){
+        if currencyPicker == nil{
+            let width = self.view.frame.size.width
+            let height = self.view.frame.size.height/2.7
+            let x = self.view.frame.origin.x
+            let y = self.view.frame.origin.y + self.view.frame.height
+            let frame = CGRect(x: x, y: y, width: width, height: height)
+            currencyPicker = UIPickerView(frame: frame)
+            currencyPicker.backgroundColor = UIColor.white
+            self.view.addSubview(currencyPicker)
+            currencyPicker.delegate = self
+            currencyPicker.dataSource = self
+            
+            // Add the done button uitoolbar
+            pickerToolbar = UIToolbar(frame: CGRect(x: x, y: y - 50, width: width, height: 50))
+            self.view.addSubview(pickerToolbar)
+            
+            // Add the done button to pickertoolbar
+            let pickerDoneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self
+                , action: #selector(didPressPickerDoneButton(sender:)))
+            let pickerToolBarFlexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+            pickerToolbar.setItems([pickerToolBarFlexibleSpace, pickerDoneButton], animated: false)
+            
+        }
+        // Show the picker view to select currencies
+        UIView.animate(withDuration: 0.5) {
+            let width = self.view.frame.size.width
+            let height = self.view.frame.size.height/2.8
+            let x = self.view.frame.origin.x
+            let y  = self.view.frame.origin.y + (self.view.frame.height - height)
+            self.currencyPicker.frame = CGRect(x: x, y: y, width: width, height: height)
+            
+            self.pickerToolbar.frame = CGRect(x: x, y: y-50, width: width, height: 50)
+        }
+        
+        // anime to picker to currently selected currency
+    }
+    
+    func didPressPickerDoneButton(sender: UIBarButtonItem){
+        UIView.animate(withDuration: 0.5) {
+            let width = self.view.frame.size.width
+            let height = self.view.frame.size.height/2.8
+            let x = self.view.frame.origin.x
+            let y  = self.view.frame.origin.y + self.view.frame.height + 50
+            self.currencyPicker.frame = CGRect(x: x, y: y, width: width, height: height)
+            
+            self.pickerToolbar.frame = CGRect(x: x, y: y-50, width: width, height: 50)
+        }
+        // set the newly selected currency in view
+        let currency = HelperFunctions.getCryptoCurrencyFromCode(code: currencyPicker.selectedRow(inComponent: 0)+1)
+        currencyPickerCurrencyLabel.text = HelperFunctions.getShortNameForCryptoCurrency(currency: currency)
+        currencyPickerCurrencyLabel.textColor = HelperFunctions.getColorForCryptoCurrency(currency: currency)
+        currencyPickerCurrencyIcon.image = UIImage(named: HelperFunctions.getCurrencyIcon(currency: currency))
+        
+        // get the index of picked data and load it
+        let index = currencyPicker.selectedRow(inComponent: 0)+1
+        if cryptoTransactionInfoDic[index] == nil{
+            DataToBeLoaded = [TCryptoInfo]()
+        }else{
+            DataToBeLoaded = cryptoTransactionInfoDic[index]!
+        }
+        CryptoTransationTableView.reloadData()
     }
     
     

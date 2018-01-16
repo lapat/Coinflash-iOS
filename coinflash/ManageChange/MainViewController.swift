@@ -171,7 +171,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
             case .success( _):
                 let json = JSON(response.result.value!)
                 self.coinflashUser3ResponseObject = json[0]
-                //print(json)
+                print(json)
                 globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
                 SVProgressHUD.dismiss()
                 
@@ -378,8 +378,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
             "slider_value" : "\(SliderValue)",
-            "left_slide" : "\(leftCurrencyCode)",
-            "right_slide" : "\(rightCurrencyCode)"
+            "left_side" : "\(leftCurrencyCode)",
+            "right_side" : "\(rightCurrencyCode)"
         ]
         
         SVProgressHUD.show(withStatus: "Updating Values")
