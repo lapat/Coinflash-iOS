@@ -164,7 +164,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
             "mobile_access_token" : mobile_access_token,
             ]
         
-        SVProgressHUD.show(withStatus: "Coinflash User 5")
+        SVProgressHUD.show(withStatus: "Loading Data")
         
         Alamofire.request("https://coinflashapp.com/coinflashuser5/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             switch response.result{
