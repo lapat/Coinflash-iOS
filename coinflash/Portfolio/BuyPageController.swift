@@ -663,12 +663,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                     self.m_total_amount_spent_on_eth = datatransation.value(forKey: "total_amount_spent_on_eth") as! Double
                 }
                 
-                
-                
-                
-                
-                
-                
                 let transations = datatransation.value(forKey: "coinflash_transactions") as? NSArray
                 if (transations != nil) {
                     for obj in transations! {
@@ -821,10 +815,10 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         }
         
         
-        if cryptoTransactionInfoDic[index] == nil{
+        if cryptoTransactionInfoDic[index+1] == nil{
             DataToBeLoaded = [TCryptoInfo]()
         }else{
-            DataToBeLoaded = cryptoTransactionInfoDic[index]!
+            DataToBeLoaded = cryptoTransactionInfoDic[index+1]!
         }
         CryptoTransationTableView.reloadData()
         self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: currency)
