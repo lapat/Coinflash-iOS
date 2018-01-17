@@ -87,8 +87,10 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     // Check Gain
     var m_price_right_now_eth : Double = 0.0
     var m_total_amount_spent_on_btc : Double = 0.0
+    
     var m_amount_btc_owned : Double = 0.0
     var m_price_right_now_btc : Double = 0.0
+    
     var m_amount_eth_owned : Double = 0.0
     var m_total_amount_spent_on_eth : Double = 0.0
     
@@ -108,6 +110,12 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         EitherCryptodates = []
         EitherCryptoprices = []
+        
+        LitecoinCryptodates = []
+        LitecoinCryptoprices = []
+        
+        BitcoinCashCryptodates = []
+        BitcoinCashCryptoprices = []
         
         
         //Set Chart Properties
@@ -132,7 +140,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
         self.CryptoPriceGraph.minOffset = 17
         self.CryptoPriceGraph.xAxis.labelPosition = .bottom
-        setCryptochartView(date: Cryptodates, prices: Cryptoprices)
+        setCryptochartView(datetags: Cryptodates, prices: Cryptoprices)
         
         // pie chart for either pricing
         self.CrypotEitherBitPieChart.chartDescription?.text = ""
@@ -182,7 +190,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelCurrency?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         LabelGroth?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
         LabelType?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
-        boundryCricleImage?.image = UIImage(named: "circleGreen")
+       // boundryCricleImage?.image = UIImage(named: "circleGreen")
         self.PriceTypeLabel.text = "Ethereum Price"
         // Value assignement
         self.DataToBeLoaded = self.EitherTransation
@@ -200,7 +208,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelType?.text = "ETH"
         self.Cryptodates = self.EitherCryptodates
         self.Cryptoprices = self.EitherCryptoprices
-        setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
+        setCryptochartView(datetags: self.Cryptodates, prices: self.Cryptoprices)
         self.loadNetGainEther()
         self.unhideLabels()
         
@@ -212,7 +220,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         LabelCurrency?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         LabelGroth?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
         LabelType?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
-        boundryCricleImage?.image = UIImage(named: "circleBlue")
+        //boundryCricleImage?.image = UIImage(named: "circleBlue")
         self.PriceTypeLabel.text = "Bitcoin Price"
         // Value assignement
         self.DataToBeLoaded = self.BitcoinTransation
@@ -228,11 +236,57 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.LabelType?.text = "BTC"
         self.Cryptodates = self.BitcoinCryptodates
         self.Cryptoprices = self.BitcoinCryptoprices
-        setCryptochartView(date: self.Cryptodates, prices: self.Cryptoprices)
+        setCryptochartView(datetags: self.Cryptodates, prices: self.Cryptoprices)
         self.loadNetGainBitcoin()
         self.unhideLabels()
         
     }
+    func changThemeToLtc(){
+        LabelCoin?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
+        LabelCurrency?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
+        LabelGroth?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
+        LabelType?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
+        self.PriceTypeLabel.text = "Litecoin Price"
+        
+        self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
+        self.LabelCoin?.text =  String(self.m_amount_btc_owned)
+        
+        var total_price_of_bitcoin = m_amount_btc_owned * m_price_right_now_btc
+        var total_price_of_bitcoin_rounded = round(num: total_price_of_bitcoin, to: 2)
+        self.LabelCurrency?.text = "$ " + String(total_price_of_bitcoin_rounded)
+        
+        self.CurrencyRatePolixCode = "USDT_LTC"
+        self.LabelType?.text = "LTC"
+        self.Cryptodates = self.LitecoinCryptodates
+        self.Cryptoprices = self.LitecoinCryptoprices
+        setCryptochartView(datetags: self.Cryptodates, prices: self.Cryptoprices)
+        self.loadNetGainBitcoin()
+        self.unhideLabels()
+        
+    }
+    func changThemeToLBch(){
+        LabelCoin?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
+        LabelCurrency?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
+        LabelGroth?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
+        LabelType?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
+        self.PriceTypeLabel.text = "BitCoin Cash Price"
+        
+        self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
+        self.LabelCoin?.text =  String(self.m_amount_btc_owned)
+        
+        var total_price_of_bitcoin = m_amount_btc_owned * m_price_right_now_btc
+        var total_price_of_bitcoin_rounded = round(num: total_price_of_bitcoin, to: 2)
+        self.LabelCurrency?.text = "$ " + String(total_price_of_bitcoin_rounded)
+        
+        self.CurrencyRatePolixCode = "USDT_BCH"
+        self.LabelType?.text = "BCH"
+        self.Cryptodates = self.BitcoinCashCryptodates
+        self.Cryptoprices = self.BitcoinCashCryptoprices
+        setCryptochartView(datetags: self.Cryptodates, prices: self.Cryptoprices)
+        self.unhideLabels()
+        
+    }
+    
     
     @IBAction func showPopup(_ sender: AnyObject) {
         
@@ -403,14 +457,14 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         pieChartDataSet.colors = colors
     }
     
-    func setCryptochartView(date:[String],prices:[Double]){
+    func setCryptochartView(datetags:[String],prices:[Double]){
         
-        if date.count == 0{
+        if datetags.count == 0{
             return
         }
         var pricesDates: [ChartDataEntry] = []
         var datadays : [String] = []
-        for i in 0..<date.count{
+        for i in 0..<datetags.count{
             let DataEntry = ChartDataEntry(x: Double(i),y:prices[i])
             pricesDates.append(DataEntry)
             
@@ -429,7 +483,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         CryptoPriceGraph.data = chartData
         self.CryptoPriceGraph.xAxis.granularity = 1
         self.CryptoPriceGraph.xAxis.valueFormatter = DefaultAxisValueFormatter(block: { (index, _) -> String in
-            return date[Int(index)]
+            return datetags[Int(index)]
         })
     }
     
@@ -489,6 +543,12 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 self.EitherCryptodates.removeAll()
                 self.EitherCryptoprices.removeAll()
                 
+                self.LitecoinCryptodates.removeAll()
+                self.LitecoinCryptoprices.removeAll()
+                
+                self.BitcoinCryptodates.removeAll()
+                self.BitcoinCryptoprices.removeAll()
+                
                 print(response.result.value)
                 let count = 0
                 if let array = response.result.value as? NSDictionary {
@@ -526,7 +586,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                         }
                     }
                     if array["LTC"] != nil{
-                        let DataResponseETH = array["ETH"] as! NSArray
+                        let DataResponseETH = array["LTC"] as! NSArray
                         for index in stride(from: 0, to: (DataResponseETH.count), by: 1){//(DataResponseETH.count - 1)...0 {
                             let DataDic = DataResponseETH[index] as? NSDictionary
                             var Date = DataDic!["date"] as! String
@@ -537,7 +597,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                         }
                     }
                     if array["BCH"] != nil{
-                        let DataResponseETH = array["ETH"] as! NSArray
+                        let DataResponseETH = array["BCH"] as! NSArray
                         for index in stride(from: 0, to: (DataResponseETH.count), by: 1){//(DataResponseETH.count - 1)...0 {
                             let DataDic = DataResponseETH[index] as? NSDictionary
                             var Date = DataDic!["date"] as! String
@@ -602,6 +662,12 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 if datatransation["total_amount_spent_on_eth"] != nil{
                     self.m_total_amount_spent_on_eth = datatransation.value(forKey: "total_amount_spent_on_eth") as! Double
                 }
+                
+                
+                
+                
+                
+                
                 
                 let transations = datatransation.value(forKey: "coinflash_transactions") as? NSArray
                 if (transations != nil) {
@@ -734,7 +800,19 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         currencyPickerCurrencyIcon.image = UIImage(named: HelperFunctions.getCurrencyIcon(currency: currency))
         
         // get the index of picked data and load it
-        let index = currencyPicker.selectedRow(inComponent: 0)+1
+        let index = currencyPicker.selectedRow(inComponent: 0)
+        if index == 0{
+         changThemeToBitCoin()
+        }else if index == 1{
+         changThemeToEther()
+        }else if index == 2{
+            changThemeToLtc()
+        }else if index == 3{
+            
+            changThemeToLBch()
+        }
+        
+        
         if cryptoTransactionInfoDic[index] == nil{
             DataToBeLoaded = [TCryptoInfo]()
         }else{
