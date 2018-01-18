@@ -360,6 +360,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             if TableCellViewBTC.isHidden == true{
                 //return 0
             }
+            return 0
         }
         if indexPath.row == 7{
             if ethWalletAccounts.count < 0{
@@ -368,6 +369,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
             if TableCellViewETH.isHidden == true{
                 //return 0
             }
+            return 0
         }
         return UITableViewAutomaticDimension
     }

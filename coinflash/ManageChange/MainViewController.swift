@@ -152,7 +152,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         return cctransations.count
     }
     
-    
     //MARK: - General Server Calls
     func requestCoinflashUser5(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
         let headers: HTTPHeaders = [

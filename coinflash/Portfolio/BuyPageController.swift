@@ -717,7 +717,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 }
                 // bch
                 if datatransation["price_right_now_bch"] != nil{
-                    self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_bch") as! Double
+                    self.m_price_right_now_bch = datatransation.value(forKey: "price_right_now_bch") as! Double
                 }
                 if datatransation["total_amount_spent_on_bch"] != nil{
                     self.m_total_amount_spent_on_bch = datatransation.value(forKey: "total_amount_spent_on_bch") as! Double
