@@ -127,7 +127,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             case .success:
                 SVProgressHUD.dismiss()
                 let data = response.result.value as! [String: Any]
-                print(response)
+                //print(response)
                 if data["Invalid ID token"] != nil{
                     // make user login again
                     let alert = UIAlertController(title: "Error", message: "Kindly login again", preferredStyle: UIAlertControllerStyle.alert)

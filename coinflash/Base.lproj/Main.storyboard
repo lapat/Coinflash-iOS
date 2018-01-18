@@ -85,28 +85,28 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vgm-I7-MBy">
-                                <rect key="frame" x="0.0" y="342" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="322" width="375" height="0.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="1kD-Fb-syo"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRO-dB-dNt">
-                                <rect key="frame" x="0.0" y="396.5" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="376.5" width="375" height="0.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="2W6-fU-Fbi"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K3k-9p-P6k">
-                                <rect key="frame" x="0.0" y="454" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="434" width="375" height="0.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="9Qi-Rx-NRH"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xv6-tC-z51">
-                                <rect key="frame" x="16" y="303" width="343" height="31"/>
+                                <rect key="frame" x="16" y="283" width="343" height="31"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="50" maxY="0.0"/>
                                 <state key="normal" title="Manage Change" image="manageIcons">
@@ -117,7 +117,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juU-Ik-jKq">
-                                <rect key="frame" x="16" y="357" width="343" height="31"/>
+                                <rect key="frame" x="16" y="337" width="343" height="31"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="117" maxY="0.0"/>
                                 <state key="normal" title="Portfolio" image="portfolioIcon">
@@ -128,7 +128,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ob7-Yd-L1i">
-                                <rect key="frame" x="16" y="412" width="343" height="34"/>
+                                <rect key="frame" x="16" y="392" width="343" height="34"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="50" maxY="0.0"/>
                                 <state key="normal" title="Account Settings" image="settingIcons">
@@ -146,7 +146,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F0k-Ap-JnW">
-                                <rect key="frame" x="16" y="469.5" width="343" height="36"/>
+                                <rect key="frame" x="16" y="449.5" width="343" height="36"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="45" maxY="0.0"/>
                                 <state key="normal" title="Help and Support" image="helpandsupport">
@@ -157,7 +157,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RkE-mH-bNb">
-                                <rect key="frame" x="0.0" y="513.5" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="493.5" width="375" height="0.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="Cfk-Lx-EHH"/>
@@ -173,9 +173,10 @@
                             <constraint firstItem="K3k-9p-P6k" firstAttribute="leading" secondItem="7xg-sp-eq8" secondAttribute="leading" id="B9n-yw-XFv"/>
                             <constraint firstItem="MbZ-jR-YmH" firstAttribute="centerX" secondItem="7xg-sp-eq8" secondAttribute="centerX" id="CYt-P7-cKr"/>
                             <constraint firstItem="K3k-9p-P6k" firstAttribute="centerX" secondItem="rRO-dB-dNt" secondAttribute="centerX" id="D4U-Sf-e1K"/>
+                            <constraint firstItem="TCN-xd-Tqu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="F0k-Ap-JnW" secondAttribute="bottom" id="FgJ-4X-mBM"/>
                             <constraint firstItem="ZL6-sK-41j" firstAttribute="top" secondItem="MbZ-jR-YmH" secondAttribute="bottom" constant="7.5" id="Fk8-ph-dsG"/>
                             <constraint firstItem="F0k-Ap-JnW" firstAttribute="top" secondItem="K3k-9p-P6k" secondAttribute="bottom" constant="15" id="Gri-gD-Vdq"/>
-                            <constraint firstItem="7xg-sp-eq8" firstAttribute="bottom" secondItem="TCN-xd-Tqu" secondAttribute="bottom" constant="20" id="Il1-ed-Y3j"/>
+                            <constraint firstItem="7xg-sp-eq8" firstAttribute="bottom" secondItem="TCN-xd-Tqu" secondAttribute="bottom" priority="750" constant="20" id="Il1-ed-Y3j"/>
                             <constraint firstItem="juU-Ik-jKq" firstAttribute="leading" secondItem="7xg-sp-eq8" secondAttribute="leading" constant="16" id="LqD-XP-eaF"/>
                             <constraint firstItem="7xg-sp-eq8" firstAttribute="trailing" secondItem="ob7-Yd-L1i" secondAttribute="trailing" constant="16" id="LxI-5o-o72"/>
                             <constraint firstItem="7xg-sp-eq8" firstAttribute="trailing" secondItem="K3k-9p-P6k" secondAttribute="trailing" id="O3w-HW-Mct"/>
@@ -183,7 +184,7 @@
                             <constraint firstItem="rRO-dB-dNt" firstAttribute="leading" secondItem="7xg-sp-eq8" secondAttribute="leading" id="Qay-zM-U8a"/>
                             <constraint firstItem="MbZ-jR-YmH" firstAttribute="top" secondItem="7xg-sp-eq8" secondAttribute="top" constant="44.5" id="T1L-gq-Cfm"/>
                             <constraint firstItem="Vgm-I7-MBy" firstAttribute="leading" secondItem="7xg-sp-eq8" secondAttribute="leading" id="TxC-fe-bbm"/>
-                            <constraint firstItem="Xv6-tC-z51" firstAttribute="top" secondItem="ZL6-sK-41j" secondAttribute="bottom" constant="55" id="W2j-q4-2OD"/>
+                            <constraint firstItem="Xv6-tC-z51" firstAttribute="top" secondItem="ZL6-sK-41j" secondAttribute="bottom" constant="35" id="W2j-q4-2OD"/>
                             <constraint firstItem="Vgm-I7-MBy" firstAttribute="centerX" secondItem="7xg-sp-eq8" secondAttribute="centerX" id="XEN-bZ-peD"/>
                             <constraint firstItem="Xv6-tC-z51" firstAttribute="leading" secondItem="7xg-sp-eq8" secondAttribute="leading" constant="16" id="XMz-z2-hIc"/>
                             <constraint firstItem="RkE-mH-bNb" firstAttribute="leading" secondItem="7xg-sp-eq8" secondAttribute="leading" id="aS2-o5-9EB"/>

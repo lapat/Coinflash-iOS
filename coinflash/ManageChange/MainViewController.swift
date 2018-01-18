@@ -170,7 +170,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
             case .success( _):
                 let json = JSON(response.result.value!)
                 self.coinflashUser3ResponseObject = json[0]
-                print(json)
+                //print(json)
                 globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
                 SVProgressHUD.dismiss()
                 
@@ -388,7 +388,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
             case .success( _):
                 let data = response.result.value as? NSDictionary
                 let SliderUpdated = data?.value(forKey: "success")
-                print(data)
+                //print(data)
                 //let data = response.result.value as! [String: String]
                 if SliderUpdated != nil
                 {

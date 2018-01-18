@@ -592,7 +592,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 self.BitcoinCryptodates.removeAll()
                 self.BitcoinCryptoprices.removeAll()
                 
-                print(response.result.value)
+                //print(response.result.value)
                 let count = 0
                 if let array = response.result.value as? NSDictionary {
                     if array == nil{
@@ -683,7 +683,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 
                 let datatransation = response.result.value as! NSDictionary
                 
-                print(datatransation)
+                //print(datatransation)
                 
                 // Ehter
                 if datatransation["price_right_now_eth"] != nil{
