@@ -775,7 +775,12 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                     }
                 }
                 // Loading the data in the Table
-                self.DataToBeLoaded = self.cryptoTransactionInfoDic[1]!; // 1 = code for btc
+                if self.cryptoTransactionInfoDic[1] == nil{
+                    self.DataToBeLoaded = [TCryptoInfo]()
+                }else{
+                    self.DataToBeLoaded = (self.cryptoTransactionInfoDic[1]!) // 1 = code for btc
+                }
+                
                 self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: CryptoCurrency.bitcoin)
                 self.changThemeToBitCoin()
                 self.loadPieChart()
