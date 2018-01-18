@@ -649,11 +649,14 @@ class MainViewController: UIViewController, UITableViewDataSource{
             let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
                 
             })
+            let buyAction = UIAlertAction(title: "Buy Now", style: UIAlertActionStyle.default, handler: { (alertAction) in
+                self.performSegue(withIdentifier: "mainViewToInAppPurchaseViewSegue", sender: self)
+            })
             alert.addAction(action)
+            alert.addAction(buyAction)
             self.present(alert, animated: true, completion: nil)
             return
         }
-        
         
         /// checking if there is a coinbase account with allow_buy = true
         var allow_buy = false

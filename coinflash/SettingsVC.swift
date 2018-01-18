@@ -14,7 +14,6 @@ import SwiftyJSON
 
 class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate{
     
-    
     @IBOutlet weak var monthlyButton: UIButton?
     @IBOutlet weak var weeklyButton: UIButton?
     @IBOutlet weak var investChangeControl: UISwitch!
@@ -341,6 +340,10 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
         }else{
             self.validSubscriotionWarningIcon.isHidden = false
             self.validSubscriptionTextLabel.text = "Not Active"
+        }
+        
+        if indexPath.row == 3{
+            return 0
         }
         
         if indexPath.row == 5{
