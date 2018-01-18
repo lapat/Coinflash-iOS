@@ -85,14 +85,24 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     var priceOfCryptoToday : Double = 0.0
     
     // Check Gain
+    var m_amount_eth_owned : Double = 0.0
     var m_price_right_now_eth : Double = 0.0
-    var m_total_amount_spent_on_btc : Double = 0.0
+    var m_total_amount_spent_on_eth : Double = 0.0
     
+    // Check Gain
     var m_amount_btc_owned : Double = 0.0
     var m_price_right_now_btc : Double = 0.0
+    var m_total_amount_spent_on_btc : Double = 0.0
     
-    var m_amount_eth_owned : Double = 0.0
-    var m_total_amount_spent_on_eth : Double = 0.0
+    // Check Gain
+    var m_amount_ltc_owned : Double = 0.0
+    var m_price_right_now_ltc : Double = 0.0
+    var m_total_amount_spent_on_ltc : Double = 0.0
+    
+    // Check Gain
+    var m_amount_bch_owned : Double = 0.0
+    var m_price_right_now_bch : Double = 0.0
+    var m_total_amount_spent_on_bch : Double = 0.0
     
     
     @IBOutlet weak var CrypotEitherBitPieChart: PieChartView!
@@ -186,15 +196,15 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     func changThemeToEther(){
         btcBtn?.isEnabled  = true
         btcEth?.isEnabled  = false
-        LabelCoin?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
-        LabelCurrency?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
-        LabelGroth?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
-        LabelType?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
+        LabelCoin?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .ether)
+        LabelCurrency?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .ether)
+        //LabelGroth?.textColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
+        LabelType?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .ether)
        // boundryCricleImage?.image = UIImage(named: "circleGreen")
         self.PriceTypeLabel.text = "Ethereum Price"
         // Value assignement
         //self.DataToBeLoaded = self.EitherTransation
-        self.DataToBeLoadedwithColor = UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1)
+        self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: .ether)
         self.CryptoTransationTableView.reloadData()
         self.LabelCoin?.text =  String(self.m_amount_eth_owned)
         
@@ -209,22 +219,24 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.Cryptodates = self.EitherCryptodates
         self.Cryptoprices = self.EitherCryptoprices
         setCryptochartView(datetags: self.Cryptodates, prices: self.Cryptoprices)
-        self.loadNetGainEther()
+        
+        self.loadNetGainGencoin(amout_own: m_amount_eth_owned, price_now: m_price_right_now_eth, amount_spent: m_total_amount_spent_on_eth)
+        
         self.unhideLabels()
         
     }
     func changThemeToBitCoin(){
         btcBtn?.isEnabled  = false
         btcEth?.isEnabled  = true
-        LabelCoin?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
-        LabelCurrency?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
-        LabelGroth?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
-        LabelType?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
+        LabelCoin?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoin)
+        LabelCurrency?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoin)
+        //LabelGroth?.textColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
+        LabelType?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoin)
         //boundryCricleImage?.image = UIImage(named: "circleBlue")
         self.PriceTypeLabel.text = "Bitcoin Price"
         // Value assignement
         //self.DataToBeLoaded = self.BitcoinTransation
-        self.DataToBeLoadedwithColor = UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)
+        self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoin)
         self.CryptoTransationTableView.reloadData()
         self.LabelCoin?.text =  String(self.m_amount_btc_owned)
         
@@ -237,52 +249,55 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.Cryptodates = self.BitcoinCryptodates
         self.Cryptoprices = self.BitcoinCryptoprices
         setCryptochartView(datetags: self.Cryptodates, prices: self.Cryptoprices)
-        self.loadNetGainBitcoin()
+        self.loadNetGainGencoin(amout_own: m_amount_btc_owned, price_now: m_price_right_now_btc, amount_spent: m_total_amount_spent_on_btc)
+        
         self.unhideLabels()
         
     }
     func changThemeToLtc(){
         LabelCoin?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
         LabelCurrency?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
-        LabelGroth?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
+        //LabelGroth?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
         LabelType?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
         self.PriceTypeLabel.text = "Litecoin Price"
         
         self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)
-        self.LabelCoin?.text =  String(self.m_amount_btc_owned)
+        self.LabelCoin?.text =  String(self.m_amount_ltc_owned)
         
-        var total_price_of_bitcoin = m_amount_btc_owned * m_price_right_now_btc
-        var total_price_of_bitcoin_rounded = round(num: total_price_of_bitcoin, to: 2)
-        self.LabelCurrency?.text = "$ " + String(total_price_of_bitcoin_rounded)
+        var total_price_of_ltc = m_amount_ltc_owned * m_price_right_now_ltc
+        var total_price_of_ltc_rounded = round(num: total_price_of_ltc, to: 2)
+        self.LabelCurrency?.text = "$ " + String(total_price_of_ltc_rounded)
         
         self.CurrencyRatePolixCode = "USDT_LTC"
         self.LabelType?.text = "LTC"
         self.Cryptodates = self.LitecoinCryptodates
         self.Cryptoprices = self.LitecoinCryptoprices
         setCryptochartView(datetags: self.Cryptodates, prices: self.Cryptoprices)
-        self.loadNetGainBitcoin()
+        self.loadNetGainGencoin(amout_own: m_amount_ltc_owned , price_now: m_price_right_now_ltc, amount_spent: m_total_amount_spent_on_ltc)
+        
         self.unhideLabels()
         
     }
     func changThemeToLBch(){
         LabelCoin?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
         LabelCurrency?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
-        LabelGroth?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
+        //LabelGroth?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
         LabelType?.textColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
         self.PriceTypeLabel.text = "BitCoin Cash Price"
         
         self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)
-        self.LabelCoin?.text =  String(self.m_amount_btc_owned)
+        self.LabelCoin?.text =  String(self.m_amount_bch_owned)
         
-        var total_price_of_bitcoin = m_amount_btc_owned * m_price_right_now_btc
-        var total_price_of_bitcoin_rounded = round(num: total_price_of_bitcoin, to: 2)
-        self.LabelCurrency?.text = "$ " + String(total_price_of_bitcoin_rounded)
+        var total_price_of_bitcoin_cash = m_amount_bch_owned * m_price_right_now_bch
+        var total_price_of_bitcoin_cash_rounded = round(num: total_price_of_bitcoin_cash, to: 2)
+        self.LabelCurrency?.text = "$ " + String(total_price_of_bitcoin_cash_rounded)
         
         self.CurrencyRatePolixCode = "USDT_BCH"
         self.LabelType?.text = "BCH"
         self.Cryptodates = self.BitcoinCashCryptodates
         self.Cryptoprices = self.BitcoinCashCryptoprices
         setCryptochartView(datetags: self.Cryptodates, prices: self.Cryptoprices)
+        self.loadNetGainGencoin(amout_own: m_amount_bch_owned , price_now: m_price_right_now_bch, amount_spent: m_total_amount_spent_on_bch)
         self.unhideLabels()
         
     }
@@ -390,18 +405,47 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         }
         
     }
-    
+    func loadNetGainGencoin(amout_own : Double , price_now : Double,amount_spent :Double ){
+        
+        var GainLoss = (amout_own * price_now) - amount_spent
+        if GainLoss == 0{
+            self.LabelGroth?.isHidden = true
+            self.ImageArrow?.isHidden = true
+        }
+        else{
+            self.LabelGroth?.isHidden = false
+            self.ImageArrow?.isHidden = false
+        }
+        
+        
+        if GainLoss > 0{
+            self.LabelGroth?.text = "$ " + round(num: GainLoss, to: 2) + " Net Gain"
+            self.ImageArrow?.image = UIImage(named:"gainUp")!
+        }
+        else{
+            GainLoss = GainLoss * -1
+            self.LabelGroth?.text = "$ " + round(num: GainLoss, to: 2) + " Net Loss"
+            self.ImageArrow?.image = UIImage(named:"gainDown")!
+        }
+        
+    }
     func loadPieChart(){
         
         let price_btc = m_amount_btc_owned * m_price_right_now_btc
         let price_eth = m_amount_eth_owned * m_price_right_now_eth
+        let price_ltc = m_amount_ltc_owned * m_price_right_now_ltc
+        let price_bch = m_amount_bch_owned * m_price_right_now_bch
+        
         if price_btc != 0 || price_eth != 0{
-            let ratio_btc = (price_btc / (price_btc + price_eth)) * 100
-            let ratio_eth = (price_eth / (price_btc + price_eth)) * 100
-            let type = ["ETH", "BIT"]
+            let ratio_btc = (price_btc / (price_btc + price_eth + price_ltc + price_bch)) * 100
+            let ratio_eth = (price_eth / (price_btc + price_eth + price_ltc + price_bch)) * 100
+            let ratio_ltc = (price_ltc / (price_btc + price_eth + price_ltc + price_bch)) * 100
+            let ratio_bch = (price_bch / (price_btc + price_eth + price_ltc + price_bch)) * 100
+            
+            let type = ["ETH", "BIT" , "LTC" , "BCH"]
             
             self.CrypotEitherBitPieChart.isHidden = false
-            let percentage = [ratio_eth,ratio_btc]
+            let percentage = [ratio_eth,ratio_btc,ratio_ltc,ratio_bch]
             self.setCryptoPieChart(dataPoints: type, values:percentage)
             
         }
@@ -451,8 +495,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         let pieChartData = PieChartData(dataSet: pieChartDataSet)
         CrypotEitherBitPieChart.data = pieChartData
         
-        
-        var colors: [UIColor] = [UIColor(red: 110/255, green: 176/255, blue: 56/255, alpha: 1), UIColor(red: 56/255, green: 113/255, blue: 177/255, alpha: 1)]
+        var colors: [UIColor] = [HelperFunctions.getColorForCryptoCurrency(currency: .ether),HelperFunctions.getColorForCryptoCurrency(currency: .bitcoin) , HelperFunctions.getColorForCryptoCurrency(currency: .litecoin) , HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)]
         
         pieChartDataSet.colors = colors
     }
@@ -642,26 +685,50 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 
                 print(datatransation)
                 
+                // Ehter
                 if datatransation["price_right_now_eth"] != nil{
                     self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_eth") as! Double
                 }
+                if datatransation["total_amount_spent_on_eth"] != nil{
+                    self.m_total_amount_spent_on_eth = datatransation.value(forKey: "total_amount_spent_on_eth") as! Double
+                }
+                if datatransation["amount_eth_owned"] != nil{
+                    self.m_amount_eth_owned = datatransation.value(forKey: "amount_eth_owned") as! Double
+                }
+                // btc
                 if datatransation["total_amount_spent_on_btc"] != nil{
                     self.m_total_amount_spent_on_btc = datatransation.value(forKey: "total_amount_spent_on_btc") as! Double
                 }
                 if datatransation["amount_btc_owned"] != nil{
                     self.m_amount_btc_owned = datatransation.value(forKey: "amount_btc_owned") as! Double
-                    //self.m_amount_btc_owned = self.m_amount_btc_owned.roundToPlaces(7)
                 }
                 if datatransation["price_right_now_btc"] != nil{
                     self.m_price_right_now_btc = datatransation.value(forKey: "price_right_now_btc") as! Double
                 }
-                if datatransation["amount_eth_owned"] != nil{
-                    self.m_amount_eth_owned = datatransation.value(forKey: "amount_eth_owned") as! Double
-                    //self.m_amount_btc_owned = self.m_amount_btc_owned.roundToPlaces(7)
+                // ltc
+                if datatransation["price_right_now_ltc"] != nil{
+                    self.m_price_right_now_ltc = datatransation.value(forKey: "price_right_now_ltc") as! Double
                 }
-                if datatransation["total_amount_spent_on_eth"] != nil{
-                    self.m_total_amount_spent_on_eth = datatransation.value(forKey: "total_amount_spent_on_eth") as! Double
+                if datatransation["total_amount_spent_on_ltc"] != nil{
+                    self.m_total_amount_spent_on_ltc = datatransation.value(forKey: "total_amount_spent_on_ltc") as! Double
                 }
+                if datatransation["amount_ltc_owned"] != nil{
+                    self.m_amount_ltc_owned = datatransation.value(forKey: "amount_ltc_owned") as! Double
+                }
+                // bch
+                if datatransation["price_right_now_bch"] != nil{
+                    self.m_price_right_now_eth = datatransation.value(forKey: "price_right_now_bch") as! Double
+                }
+                if datatransation["total_amount_spent_on_bch"] != nil{
+                    self.m_total_amount_spent_on_bch = datatransation.value(forKey: "total_amount_spent_on_bch") as! Double
+                }
+                if datatransation["amount_bch_owned"] != nil{
+                    self.m_amount_bch_owned = datatransation.value(forKey: "amount_bch_owned") as! Double
+                }
+                
+                
+                
+                
                 
                 let transations = datatransation.value(forKey: "coinflash_transactions") as? NSArray
                 if (transations != nil) {
