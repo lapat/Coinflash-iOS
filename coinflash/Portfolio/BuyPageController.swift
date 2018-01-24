@@ -462,7 +462,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         
     }
     func loadPieChart(){
-        let type = [ "BIT" ,"ETH", "LTC" , "BCH"]
+        let type = [ "BIT" ,"ETH","BCH", "LTC"]
         
  
         
@@ -481,7 +481,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             
             self.CrypotEitherBitPieChart.isHidden = false
             
-            let percentage = [ratio_btc,ratio_eth,ratio_ltc,ratio_bch]
+            let percentage = [ratio_btc,ratio_eth,ratio_bch,ratio_ltc]
             self.setCryptoPieChart(dataPoints: type, values:percentage)
             
         }
@@ -530,7 +530,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         let pieChartData = PieChartData(dataSet: pieChartDataSet)
         CrypotEitherBitPieChart.data = pieChartData
         
-        var colors: [UIColor] = [HelperFunctions.getColorForCryptoCurrency(currency: .ether),HelperFunctions.getColorForCryptoCurrency(currency: .bitcoin) , HelperFunctions.getColorForCryptoCurrency(currency: .litecoin) , HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash)]
+        var colors: [UIColor] = [HelperFunctions.getColorForCryptoCurrency(currency: .bitcoin),HelperFunctions.getColorForCryptoCurrency(currency: .ether) , HelperFunctions.getColorForCryptoCurrency(currency: .bitcoinCash) , HelperFunctions.getColorForCryptoCurrency(currency: .litecoin)]
         
         pieChartDataSet.colors = colors
     }
