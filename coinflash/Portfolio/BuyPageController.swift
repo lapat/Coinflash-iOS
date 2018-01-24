@@ -635,8 +635,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                             var Date = DataDic!["date"] as! String
                             Date = String(Date.characters.dropFirst(5))
                             let price = DataDic!["price"] as! Double
-                           // self.LitecoinCryptodates.append(Date)
-                           // self.LitecoinCryptoprices.append(price)
+                            self.LitecoinCryptodates.append(Date)
+                            self.LitecoinCryptoprices.append(price)
                         }
                     }
                     if array["BCH"] != nil{
@@ -646,8 +646,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                             var Date = DataDic!["date"] as! String
                             Date = String(Date.characters.dropFirst(5))
                             let price = DataDic!["price"] as! Double
-                           // self.BitcoinCashCryptodates.append(Date)
-                           // self.BitcoinCashCryptoprices.append(price)
+                            self.BitcoinCashCryptodates.append(Date)
+                           self.BitcoinCashCryptoprices.append(price)
                         }
                     }
                     
