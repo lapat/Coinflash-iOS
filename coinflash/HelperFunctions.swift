@@ -318,7 +318,21 @@ class HelperFunctions: NSObject {
         }
         return "UNK"
     }
-    
+    static func getCurrencyFullName(currency: CryptoCurrency) -> String{
+        if currency == .bitcoin{
+            return "Bitcoin"
+        }
+        if currency == .ether{
+            return "Ethereum"
+        }
+        if currency == .litecoin{
+            return "Litecoin"
+        }
+        if currency == .bitcoinCash{
+            return "BitCoin Cash"
+        }
+        return "UNK"
+    }
     static func getCodeFromCryptoCurrency(currency: CryptoCurrency) -> Int{
         if currency == .bitcoin{
             return 1
@@ -363,6 +377,38 @@ class HelperFunctions: NSObject {
         }
         if currency == .bitcoinCash{
             return "price_right_now_bch" /// ON server this is 7
+        }
+        return "unknown"
+    }
+    
+    static func getTotalAmountSpentKeyForCryptoCurrency(currency: CryptoCurrency) -> String{
+        if currency == .bitcoin{
+            return "total_amount_spent_on_btc"
+        }
+        if currency == .ether{
+            return "total_amount_spent_on_eth"
+        }
+        if currency == .litecoin{
+            return "total_amount_spent_on_ltc"
+        }
+        if currency == .bitcoinCash{
+            return "total_amount_spent_on_bch" /// ON server this is 7
+        }
+        return "unknown"
+    }
+    
+    static func getCryptoOwnedKeyForCryptoCurrency(currency: CryptoCurrency) -> String{
+        if currency == .bitcoin{
+            return "amount_btc_owned"
+        }
+        if currency == .ether{
+            return "amount_eth_owned"
+        }
+        if currency == .litecoin{
+            return "amount_ltc_owned"
+        }
+        if currency == .bitcoinCash{
+            return "amount_bch_owned" /// ON server this is 7
         }
         return "unknown"
     }
