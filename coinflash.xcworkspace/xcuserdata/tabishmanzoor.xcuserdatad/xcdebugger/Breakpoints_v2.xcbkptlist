@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/HelperFunctions.swift"
-            timestampString = "531231255.372278"
+            timestampString = "538510965.248692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "77"
@@ -954,11 +954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.836418"
+            timestampString = "538510965.249899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "648"
-            endingLineNumber = "648"
+            startingLineNumber = "685"
+            endingLineNumber = "685"
             landmarkName = "requestCryptoRates(mobile_secret:user_id_mobile:mobile_access_token:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -970,11 +970,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.839525"
+            timestampString = "538510965.251462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "637"
-            endingLineNumber = "637"
+            startingLineNumber = "674"
+            endingLineNumber = "674"
             landmarkName = "requestCryptoRates(mobile_secret:user_id_mobile:mobile_access_token:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -986,12 +986,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.8407969"
+            timestampString = "538510965.254548"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "886"
-            endingLineNumber = "886"
-            landmarkName = "didPressPickerDoneButton(sender:)"
+            startingLineNumber = "922"
+            endingLineNumber = "922"
+            landmarkName = "didTapOnCurrenyPicker(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1002,12 +1002,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.84228"
+            timestampString = "538510965.256593"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "883"
-            endingLineNumber = "883"
-            landmarkName = "didPressPickerDoneButton(sender:)"
+            startingLineNumber = "921"
+            endingLineNumber = "921"
+            landmarkName = "didTapOnCurrenyPicker(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1018,11 +1018,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.8432389"
+            timestampString = "538510965.258111"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "777"
-            endingLineNumber = "777"
+            startingLineNumber = "817"
+            endingLineNumber = "817"
             landmarkName = "requestCoinFlashFeatchwallet(mobile_secret:user_id_mobile:mobile_access_token:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1034,12 +1034,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.844227"
+            timestampString = "538510965.259487"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "871"
-            endingLineNumber = "871"
-            landmarkName = "didPressPickerDoneButton(sender:)"
+            startingLineNumber = "909"
+            endingLineNumber = "909"
+            landmarkName = "didTapOnCurrenyPicker(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1050,12 +1050,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.8450921"
+            timestampString = "538510965.261386"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "505"
-            endingLineNumber = "505"
-            landmarkName = "setCryptochartView(datetags:prices:)"
+            startingLineNumber = "540"
+            endingLineNumber = "540"
+            landmarkName = "loadPieChart()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1066,12 +1066,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.845863"
+            timestampString = "538510965.263963"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "529"
-            endingLineNumber = "529"
-            landmarkName = "setCryptochartView(datetags:prices:)"
+            startingLineNumber = "564"
+            endingLineNumber = "564"
+            landmarkName = "setCryptoPieChart(dataPoints:values:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1082,12 +1082,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.8466311"
+            timestampString = "538510965.265545"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "508"
-            endingLineNumber = "508"
-            landmarkName = "setCryptochartView(datetags:prices:)"
+            startingLineNumber = "543"
+            endingLineNumber = "543"
+            landmarkName = "unhideLabels()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1098,12 +1098,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.847554"
+            timestampString = "538510965.2669851"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "515"
-            endingLineNumber = "515"
-            landmarkName = "setCryptochartView(datetags:prices:)"
+            startingLineNumber = "550"
+            endingLineNumber = "550"
+            landmarkName = "round(num:to:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1114,13 +1114,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.849337"
+            timestampString = "538510965.268512"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "524"
-            endingLineNumber = "524"
-            landmarkName = "setCryptochartView(datetags:prices:)"
-            landmarkType = "7">
+            startingLineNumber = "559"
+            endingLineNumber = "559"
+            landmarkName = "BuyPageController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1130,13 +1130,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "coinflash/Portfolio/BuyPageController.swift"
-            timestampString = "538423216.85098"
+            timestampString = "538510965.271323"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "526"
-            endingLineNumber = "526"
-            landmarkName = "setCryptochartView(datetags:prices:)"
-            landmarkType = "7">
+            startingLineNumber = "561"
+            endingLineNumber = "561"
+            landmarkName = "BuyPageController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
