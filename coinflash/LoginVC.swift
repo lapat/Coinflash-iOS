@@ -23,6 +23,9 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     
     @IBOutlet weak var signInButton: GIDSignInButton!
     
+    var fbLoginResult: LoginResult!
+    var googleLoginUSer: GIDGoogleUser!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -198,11 +201,11 @@ extension LoginVC: LoginButtonDelegate{
             print(error)
         case .success(let grantedPermissions, let declinedPermissions, let token):
             let authToken = token.authenticationToken
+            self.fbLoginResult = result
             self.requestFBLoginToServer(token: authToken)
         default:
             print("meh")
         }
-        
     }
     
     func loginButtonDidLogOut(_ loginButton: LoginButton) {
@@ -230,8 +233,12 @@ extension LoginVC: LoginButtonDelegate{
                         HelperFunctions.updateVariablesForUserLoggingOut()
                         return
                     }
-                   // HelperFunctions.saveLoginInfo(user: userID, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
+                    HelperFunctions.saveLoginInfo( userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
                     //User.mainUser = User(setFromGoogleLogin: user)
+                 //   let userIDMobile = data["user_id_mobile"]
+                  //  let accessToken = data["mobile_access_token"]
+                   // let onBoardStatus = data["onboard_status"]
+                    User.mainUser = User(setFromFBLogin: self.fbLoginResult)
                     if HelperFunctions.isTOCAccepted(){
                         OperationQueue.main.addOperation
                             {

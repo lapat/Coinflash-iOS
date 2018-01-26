@@ -26,7 +26,9 @@ class MenuVC: UIViewController {
         self.nameLabel.text = googleUser.profile.name
         self.userImageView.sd_setShowActivityIndicatorView(true)
         self.userImageView.sd_setIndicatorStyle(UIActivityIndicatorViewStyle.gray)
-        self.userImageView.sd_setImage(with: googleUser.profile.imageURL(withDimension: 200), completed: nil)
+        //self.userImageView.sd_setImage(with: googleUser.profile.imageURL(withDimension: 200), completed: nil)
+        
+        self.userImageView.sd_setImage(with: User.mainUser.profilePicURL, completed: nil)
     }
     
     

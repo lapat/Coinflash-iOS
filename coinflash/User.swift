@@ -8,16 +8,17 @@
 
 import UIKit
 import FacebookLogin
+import FacebookCore
 
 class User: NSObject {
     // Properties
     var firstName = "", secondName = "", lastName = "", email: String = ""
     /// Keeps User profile pucture url. Could have been fetched from coinflashServer, gmail or fb
-    var profilePicURL: NSURL!
+    var profilePicURL: URL!
     /// 1 = fb user , 2 = google user
     private var userType: Int = 1
-    private var fbAuthenticationToken : String!
-    private var googlAuthenitcationToken: String!
+    private var fbToken : AccessToken!
+    private var googlAuthUser: GIDGoogleUser!
     
     static var mainUser = User()
     
@@ -25,6 +26,7 @@ class User: NSObject {
         super.init()
     }
     
+    //MARK: - Facebook
     /// Sets the fb login info from fb login result object - Seriously fb why no prefix in object names?????
     convenience init(setFromFBLogin fbResult: LoginResult){
         self.init()
@@ -36,19 +38,30 @@ class User: NSObject {
         case .success(let grantedPermissions, let declinedPermissions, let token):
             let _ = grantedPermissions
             let _ = declinedPermissions
-            self.fbAuthenticationToken = token.authenticationToken
+            self.parseFBToken(token: token)
+            userType = 1
         }
     }
     
-    /// Sets the user object from google user login info
-    convenience init(setFromGoogleLogin gLogin: GIDGoogleUser){
-        self.init()
-        self.googlAuthenitcationToken = gLogin.authentication.accessToken
+    func parseFBToken(token: AccessToken){
+        self.fbToken = token
+        let pic = String(format: "https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", token.userId!)
+        profilePicURL = URL(string: pic)
     }
+    
+    //MARK:- Google
+    /// Sets the user object from google user login info
+    convenience init(setFromGoogleLogin gUser: GIDGoogleUser){
+        self.init()
+        self.googlAuthUser = gUser
+        userType = 2
+    }
+    
+    
+    //MARK: - General
     
     /// Checks if user is a fb or google user and with respect to that logs the user out
     func logOutUser(){
         
     }
-    
 }
