@@ -30,6 +30,7 @@
 		77610D0A200985DE008F4DE2 /* CryptoPercentSliderControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77610D09200985DE008F4DE2 /* CryptoPercentSliderControll.swift */; };
 		77610D0D2009C16E008F4DE2 /* MainViewController+UIPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77610D0C2009C16E008F4DE2 /* MainViewController+UIPicker.swift */; };
 		77610D10200D343D008F4DE2 /* BuyPageController+UIPickerVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77610D0F200D343D008F4DE2 /* BuyPageController+UIPickerVIew.swift */; };
+		776343EC20197F6F0000417C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776343EB20197F6F0000417C /* User.swift */; };
 		7769E6812006D7E6000E256E /* UIView+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7769E6802006D7E6000E256E /* UIView+Color.swift */; };
 		777CBC001F89B80A00724DC5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */; };
 		777F3D011FC614F400EA890B /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777F3D001FC614F400EA890B /* StoreKitHelper.swift */; };
@@ -105,6 +106,7 @@
 		77610D09200985DE008F4DE2 /* CryptoPercentSliderControll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoPercentSliderControll.swift; sourceTree = "<group>"; };
 		77610D0C2009C16E008F4DE2 /* MainViewController+UIPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+UIPicker.swift"; sourceTree = "<group>"; };
 		77610D0F200D343D008F4DE2 /* BuyPageController+UIPickerVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuyPageController+UIPickerVIew.swift"; sourceTree = "<group>"; };
+		776343EB20197F6F0000417C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7769E6802006D7E6000E256E /* UIView+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Color.swift"; sourceTree = "<group>"; };
 		777CBBFF1F89B7E400724DC5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		777F3D001FC614F400EA890B /* StoreKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				3FCC026B1F790E0A00DD6558 /* SettingsVC.swift */,
 				ACA3DA921F7FE9C500185245 /* AccountSettingVC.swift */,
 				ACA3DA9B1F7FF4F400185245 /* LoginVC.swift */,
+				776343EB20197F6F0000417C /* User.swift */,
 				3F012E321F84D2550026EFC0 /* MenuVC.swift */,
 				7787AF2C1FA0C39A00082093 /* TOCVC.swift */,
 				777F3D021FC7257600EA890B /* InAppPurchaseVC.swift */,
@@ -515,8 +518,15 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-coinflash/Pods-coinflash-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/ChartsRealm/ChartsRealm.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
@@ -539,8 +549,15 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChartsRealm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
@@ -624,6 +641,7 @@
 				3FAAB76C1F904E8F00DF423B /* PopUpViewBuyNowSelector.swift in Sources */,
 				3F5BBF131F8AC68A00BCA472 /* ccTransationCellView.swift in Sources */,
 				7769E6812006D7E6000E256E /* UIView+Color.swift in Sources */,
+				776343EC20197F6F0000417C /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

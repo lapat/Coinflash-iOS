@@ -18,6 +18,9 @@ target 'coinflash' do
   pod 'NotificationBannerSwift', '~> 1.4.4'
   pod 'SwiftyStoreKit'
   pod 'RMPickerViewController'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
   use_frameworks!
   
   target 'coinflashTests' do

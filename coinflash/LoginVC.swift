@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Alamofire
 import SVProgressHUD
+import FacebookLogin
 
 class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     
@@ -20,6 +21,8 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     var familyName: String = ""
     var email: String = ""
     
+    @IBOutlet weak var signInButton: GIDSignInButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,6 +30,16 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().clientID = "678747170744-6o53mljo3a5q9o9avn6jvbm1r7vsjtv9.apps.googleusercontent.com"
+        
+        let loginButton = LoginButton(readPermissions: [ .publicProfile ])
+        
+        loginButton.center = CGPoint(x: view.center.x, y: view.frame.height - 50)
+        loginButton.delegate = self
+        view.addSubview(loginButton)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         
     }
     
@@ -134,10 +147,11 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
                     let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil)
                     alert.addAction(okayAction)
                     self.present(alert, animated: true, completion: nil)
-                    
+                    HelperFunctions.updateVariablesForUserLoggingOut()
                     return
                 }
-                HelperFunctions.saveLoginInfo(user: user, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
+                HelperFunctions.saveLoginInfo(userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
+                //User.mainUser = User(setFromGoogleLogin: user)
                 if HelperFunctions.isTOCAccepted(){
                     OperationQueue.main.addOperation
                     {
@@ -160,8 +174,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
       //  print(segue.identifier)
     }
-    
-    @IBOutlet weak var signInButton: GIDSignInButton!
+
     
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
                 withError error: NSError!) {
@@ -171,5 +184,70 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         } else {
          //   print("\(error.localizedDescription)")
         }
-    }    
+    }
+}
+
+//MARK:- Facebook Login
+extension LoginVC: LoginButtonDelegate{
+    func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
+        // mage saving the login results here.
+        switch result {
+        case .cancelled:
+            print("canceled")
+        case .failed(let error):
+            print(error)
+        case .success(let grantedPermissions, let declinedPermissions, let token):
+            let authToken = token.authenticationToken
+            self.requestFBLoginToServer(token: authToken)
+        default:
+            print("meh")
+        }
+        
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: LoginButton) {
+        
+    }
+    
+    func requestFBLoginToServer(token: String){
+        //let header: HTTPHeaders = ["content-type": "application/x-www-form-urlencoded"]
+        let parameter: Parameters = ["accessToken": token, "mobile_secret": user_mobile_secret]
+        SVProgressHUD.show()
+        Alamofire.request("https://coinflashapp.com/Social/SignInFB", method: HTTPMethod.post, parameters: parameter)
+            .responseJSON { (response) in
+                switch response.result{
+                case .success:
+                    print(response.value)
+                    SVProgressHUD.dismiss()
+                    let data = response.result.value as! [String: Any]
+                    //print(response)
+                    if data["Invalid ID token"] != nil{
+                        // make user login again
+                        let alert = UIAlertController(title: "Error", message: "Kindly login again", preferredStyle: UIAlertControllerStyle.alert)
+                        let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil)
+                        alert.addAction(okayAction)
+                        self.present(alert, animated: true, completion: nil)
+                        HelperFunctions.updateVariablesForUserLoggingOut()
+                        return
+                    }
+                   // HelperFunctions.saveLoginInfo(user: userID, userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
+                    //User.mainUser = User(setFromGoogleLogin: user)
+                    if HelperFunctions.isTOCAccepted(){
+                        OperationQueue.main.addOperation
+                            {
+                                [weak self] in
+                                self?.performSegue(withIdentifier: "mainPageSegue", sender: self)
+                        }
+                    }else{
+                        OperationQueue.main.addOperation {
+                            [weak self] in
+                            self?.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+                        }
+                    }
+                case .failure:
+                    print(response.error)
+                    SVProgressHUD.dismiss()
+                }
+        }
+    }
 }

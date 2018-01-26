@@ -18,8 +18,8 @@ extension Notification.Name {
 
 class HelperFunctions: NSObject {
 
-    static func saveLoginInfo(user: GIDGoogleUser, userIdMobile: String!, mobileAccessToken: String!, onboardStatus: String!){
-        googleUser = user
+    static func saveLoginInfo( userIdMobile: String!, mobileAccessToken: String!, onboardStatus: String!){
+        //googleUser = user
         user_mobile_access_token = mobileAccessToken
         user_id_mobile = userIdMobile
         user_isLoggedIn = true

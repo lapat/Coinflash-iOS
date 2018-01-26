@@ -2213,7 +2213,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vut-ZC-G23" customClass="GIDSignInButton">
-                                <rect key="frame" x="112" y="591" width="150" height="56"/>
+                                <rect key="frame" x="112" y="541" width="150" height="56"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -2226,7 +2226,7 @@
                         <constraints>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="height" secondItem="B4l-sA-hWh" secondAttribute="height" constant="10" id="1sq-Oc-fOc"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" constant="-5" id="Ejv-qs-59Z"/>
-                            <constraint firstItem="aPe-3H-acc" firstAttribute="bottom" secondItem="Vut-ZC-G23" secondAttribute="bottom" constant="20" id="FyN-hm-pNT"/>
+                            <constraint firstItem="aPe-3H-acc" firstAttribute="bottom" secondItem="Vut-ZC-G23" secondAttribute="bottom" constant="70" id="FyN-hm-pNT"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="jzD-OA-f9v" secondAttribute="centerX" id="HMe-Xx-ehf"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="DLh-QT-8QI" secondAttribute="centerX" id="Rez-NA-cKD"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="width" secondItem="B4l-sA-hWh" secondAttribute="width" id="UZA-Q1-nPA"/>
