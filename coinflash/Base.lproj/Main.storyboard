@@ -205,6 +205,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="J0P-8e-jfc"/>
                     <connections>
+                        <outlet property="logoutButton" destination="TCN-xd-Tqu" id="HHi-n0-IRc"/>
                         <outlet property="nameLabel" destination="ZL6-sK-41j" id="P5G-96-qbc"/>
                         <outlet property="userImageView" destination="MbZ-jR-YmH" id="kaT-LE-Z6h"/>
                     </connections>

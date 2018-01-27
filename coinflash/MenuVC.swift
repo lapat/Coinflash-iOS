@@ -10,11 +10,14 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 import SDWebImage
+import FacebookLogin
+import FacebookCore
 
 class MenuVC: UIViewController {
 
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var userImageView: UIImageView!
+    @IBOutlet var logoutButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +26,20 @@ class MenuVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.userImageView.clipsToBounds = true
         self.userImageView.layer.cornerRadius = self.userImageView.bounds.width/2
-        self.nameLabel.text = googleUser.profile.name
+        //self.nameLabel.text = googleUser.profile.name
+        self.nameLabel.text = User.mainUser.name
         self.userImageView.sd_setShowActivityIndicatorView(true)
         self.userImageView.sd_setIndicatorStyle(UIActivityIndicatorViewStyle.gray)
         //self.userImageView.sd_setImage(with: googleUser.profile.imageURL(withDimension: 200), completed: nil)
         
         self.userImageView.sd_setImage(with: User.mainUser.profilePicURL, completed: nil)
+        
+        if User.mainUser.type == .facebook{
+            
+        }
+        if User.mainUser.type == .google{
+            
+        }
     }
     
     
@@ -90,6 +101,11 @@ class MenuVC: UIViewController {
     }
     
     @IBAction func didTapLogoutButton(){
+        
+        // logout from fb
+        let manager = LoginManager(loginBehavior: .browser, defaultAudience: .everyone)
+        manager.logOut()
+        
         //let header: HTTPHeaders = []
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token]
         SVProgressHUD.show()
@@ -113,9 +129,18 @@ class MenuVC: UIViewController {
  
                     HelperFunctions.updateVariablesForUserLoggingOut()
                     
+                    //User.mainUser.logOutUser()
                     SVProgressHUD.dismiss()
                 case .failure:
                  //   print(response.error as Any)
+                    // get the present storyboard
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let newViewController = storyboard.instantiateViewController(withIdentifier: "login-view")
+                    self.show(newViewController, sender: self)
+                    
+                    HelperFunctions.updateVariablesForUserLoggingOut()
+                    //User.mainUser.logOutUser()
+                    
                     SVProgressHUD.dismiss()
                 }
         }
@@ -131,4 +156,16 @@ class MenuVC: UIViewController {
     }
     */
 
+}
+
+extension MenuVC: LoginButtonDelegate{
+    func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
+        
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: LoginButton) {
+        self.didTapLogoutButton()
+    }
+    
+    
 }

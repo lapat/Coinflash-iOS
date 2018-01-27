@@ -34,7 +34,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().clientID = "678747170744-6o53mljo3a5q9o9avn6jvbm1r7vsjtv9.apps.googleusercontent.com"
         
-        let loginButton = LoginButton(readPermissions: [ .publicProfile ])
+        let loginButton = LoginButton(readPermissions: [ .publicProfile, .email ])
         
         loginButton.center = CGPoint(x: view.center.x, y: view.frame.height - 50)
         loginButton.delegate = self
@@ -52,10 +52,23 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         if user_isLoggedIn == true{
             if HelperFunctions.isTOCAccepted(){
                 //self.performSegue(withIdentifier: "mainPageSegue", sender: self)
-                self.requestServerForLoginConfirmation(googleUser: googleUser)
+                if User.mainUser.type == .facebook{
+                    self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+                    //self.requestFBLoginToServer(token: User.mainUser.getAuthToken())
+                }
+                if User.mainUser.type == .google{
+                    User.mainUser.googleAuthUser = googleUser
+                    self.requestServerForLoginConfirmation(googleUser: User.mainUser.googleAuthUser)
+                }
                 //self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
             }else{
-                self.requestServerForLoginConfirmation(googleUser: googleUser)
+                if User.mainUser.type == .facebook{
+                    self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
+                    //self.requestFBLoginToServer(token: User.mainUser.getAuthToken())
+                }
+                if User.mainUser.type == .google{
+                    self.requestServerForLoginConfirmation(googleUser: User.mainUser.googleAuthUser)
+                }
                 //self.performSegue(withIdentifier: "tocAcceptSegue", sender: self)
                 //self.
             }
@@ -153,8 +166,9 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
                     HelperFunctions.updateVariablesForUserLoggingOut()
                     return
                 }
+                googleUser = user
                 HelperFunctions.saveLoginInfo(userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
-                //User.mainUser = User(setFromGoogleLogin: user)
+                User.mainUser = User(setFromGoogleLogin: user)
                 if HelperFunctions.isTOCAccepted(){
                     OperationQueue.main.addOperation
                     {
@@ -212,6 +226,10 @@ extension LoginVC: LoginButtonDelegate{
         
     }
     
+    func confirmFBLoginFromServer(token: String){
+        
+    }
+    
     func requestFBLoginToServer(token: String){
         //let header: HTTPHeaders = ["content-type": "application/x-www-form-urlencoded"]
         let parameter: Parameters = ["accessToken": token, "mobile_secret": user_mobile_secret]
@@ -238,7 +256,8 @@ extension LoginVC: LoginButtonDelegate{
                  //   let userIDMobile = data["user_id_mobile"]
                   //  let accessToken = data["mobile_access_token"]
                    // let onBoardStatus = data["onboard_status"]
-                    User.mainUser = User(setFromFBLogin: self.fbLoginResult)
+                    User.mainUser = User(setFromFBLogin: self.fbLoginResult, userName: data["name"] as! String)
+                    HelperFunctions.saveNSUserDefaults()
                     if HelperFunctions.isTOCAccepted(){
                         OperationQueue.main.addOperation
                             {

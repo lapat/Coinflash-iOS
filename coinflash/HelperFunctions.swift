@@ -65,6 +65,7 @@ class HelperFunctions: NSObject {
         user_id_mobile = ""
         user_isLoggedIn = false
         GIDSignIn.sharedInstance().signOut()
+        User.mainUser.logOut()
         self.saveNSUserDefaults()
     }
     
@@ -141,6 +142,12 @@ class HelperFunctions: NSObject {
             let googleData  = NSKeyedArchiver.archivedData(withRootObject: googleUser)
             UserDefaults.standard.set(googleData, forKey: "googleUser")
         }
+        
+        if User.mainUser != nil{
+            let user  = NSKeyedArchiver.archivedData(withRootObject: User.mainUser)
+            UserDefaults.standard.set(user, forKey: "user")
+        }
+        
         /*
         UserDefaults.standard.set(globalSettings, forKey: "globalSettings")
         UserDefaults.standard.set(cctransaction_global, forKey: "cctransaction_global")
@@ -168,6 +175,15 @@ class HelperFunctions: NSObject {
         if let loadedData = UserDefaults.standard.value(forKey: "googleUser"){
             if let user = NSKeyedUnarchiver.unarchiveObject(with: loadedData as! Data) as? GIDGoogleUser{
                 googleUser = user
+            }
+        }
+        
+        if let loadedData = UserDefaults.standard.value(forKey: "user"){
+            if let user = NSKeyedUnarchiver.unarchiveObject(with: loadedData as! Data) as? User{
+                User.mainUser = user
+                if User.mainUser.type == .google{
+                    User.mainUser.googleAuthUser = googleUser
+                }
             }
         }
         /*
