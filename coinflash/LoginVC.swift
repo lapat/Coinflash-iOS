@@ -167,8 +167,8 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
                     return
                 }
                 googleUser = user
-                HelperFunctions.saveLoginInfo(userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
                 User.mainUser = User(setFromGoogleLogin: user)
+                HelperFunctions.saveLoginInfo(userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
                 if HelperFunctions.isTOCAccepted(){
                     OperationQueue.main.addOperation
                     {

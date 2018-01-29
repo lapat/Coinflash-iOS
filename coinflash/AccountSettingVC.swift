@@ -269,7 +269,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                                      "code": coinbaseInfoObject.accessToken, "redirect_url": "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", "coinbase_refresh_access_token": coinbaseInfoObject.refreshToken]
         SVProgressHUD.show(withStatus: "Linking Coinbase")
         UIApplication.shared.beginIgnoringInteractionEvents()
-        Alamofire.request("\(baseUrl)auththirdparty3/", method: HTTPMethod.post, parameters: parameter)
+        Alamofire.request("\(baseUrl)auththirdparty5/", method: HTTPMethod.post, parameters: parameter)
             .responseJSON { (response) in
                 switch response.result{
                 case .success:
