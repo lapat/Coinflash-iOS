@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.4.2</string>
+	<string>1.4.3</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -52,14 +52,14 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>coinflashdev.com</key>
+			<key>coinflashapp.com</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 				<key>NSIncludesSubdomains</key>
 				<true/>
 			</dict>
-			<key>coinflashapp.com</key>
+			<key>coinflashdev.com</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
