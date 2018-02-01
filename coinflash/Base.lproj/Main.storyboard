@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYF-Qi-s9i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYF-Qi-s9i">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -2038,7 +2038,7 @@
                                 <rect key="frame" x="45" y="628" width="286" height="31"/>
                                 <state key="normal" image="createCoinbaseAccount"/>
                                 <connections>
-                                    <action selector="didtaponCreatAccount:" destination="1mL-Jc-yYf" eventType="touchUpInside" id="irZ-VY-SBB"/>
+                                    <segue destination="88I-GS-U5R" kind="showDetail" id="gkt-1K-RU3"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y2S-Pc-HDg">
@@ -2169,6 +2169,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0En-jd-fws" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2324" y="2381.5592203898054"/>
+        </scene>
+        <!--Creat Coinbase AccountVC-->
+        <scene sceneID="iwR-QO-dQ3">
+            <objects>
+                <viewController id="88I-GS-U5R" customClass="CreatCoinbaseAccountVC" customModule="coinflash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Kn8-dV-vBe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQ1-YR-IcC">
+                                <rect key="frame" x="0.0" y="59" width="375" height="647"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zLj-Ee-WXP">
+                                <rect key="frame" x="16" y="29" width="25" height="22"/>
+                                <state key="normal" image="back"/>
+                                <connections>
+                                    <action selector="didTapOnBackButtonWithSender:" destination="88I-GS-U5R" eventType="touchUpInside" id="T5M-W7-qSY"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yQ1-YR-IcC" firstAttribute="top" secondItem="KUG-QQ-V8M" secondAttribute="bottom" constant="-608" id="Afp-F0-pfK"/>
+                            <constraint firstItem="yQ1-YR-IcC" firstAttribute="top" secondItem="zLj-Ee-WXP" secondAttribute="bottom" constant="8" id="CiF-a4-o1T"/>
+                            <constraint firstItem="yQ1-YR-IcC" firstAttribute="height" secondItem="KUG-QQ-V8M" secondAttribute="height" id="atZ-eM-Te0"/>
+                            <constraint firstItem="KUG-QQ-V8M" firstAttribute="leading" secondItem="zLj-Ee-WXP" secondAttribute="trailing" constant="-41" id="egr-8R-MDT"/>
+                            <constraint firstItem="yQ1-YR-IcC" firstAttribute="width" secondItem="KUG-QQ-V8M" secondAttribute="width" id="fWu-zV-QTe"/>
+                            <constraint firstItem="yQ1-YR-IcC" firstAttribute="leading" secondItem="KUG-QQ-V8M" secondAttribute="trailing" constant="-375" id="nIW-qF-Z29"/>
+                            <constraint firstItem="KUG-QQ-V8M" firstAttribute="top" secondItem="zLj-Ee-WXP" secondAttribute="bottom" constant="-31" id="rXf-qY-prV"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="KUG-QQ-V8M"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Vop-Rz-746"/>
+                    <connections>
+                        <outlet property="WebView" destination="yQ1-YR-IcC" id="edQ-sW-Z2q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o79-7o-ekG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1370.4000000000001" y="2856.521739130435"/>
         </scene>
         <!--Nav View Controller-->
         <scene sceneID="obb-R0-mfg">
@@ -2387,6 +2428,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="sk6-yj-Zxu"/>
-        <segue reference="I5M-EP-JW7"/>
+        <segue reference="pdj-mW-GPu"/>
     </inferredMetricsTieBreakers>
 </document>

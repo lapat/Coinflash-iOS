@@ -174,8 +174,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     }
     
     @IBAction func didtaponCreatAccount(_ sender: Any) {
-        UIApplication.shared.openURL(NSURL(string: "https://www.coinbase.com/join/5924d7298fb60a02816ccc08") as! URL)
-        dismiss(animated: true, completion: nil)
+       // UIApplication.shared.openURL(NSURL(string: "https://www.coinbase.com/join/5924d7298fb60a02816ccc08") as! URL)
+            dismiss(animated: true, completion: nil)
     }
     func viewDidEnterForground(notificaiton: NSNotification){
         if (UIApplication.shared.delegate as! AppDelegate).processingBacklink == true{
