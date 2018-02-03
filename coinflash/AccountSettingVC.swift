@@ -428,8 +428,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 
                 /// Check if plaid and coinbase are linked and use is not registered for subscriptions.. Then show in app purchases view
                 if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
-                    if globalCoinflashUser3ResponseValue["has_payment"].string == "0"{
-                        self.loadInAppPurchaseView()
+                    if globalCoinflashUser3ResponseValue != nil {
+                        if globalCoinflashUser3ResponseValue["has_payment"].string == "0"{
+                            self.loadInAppPurchaseView()
+                        }
                     }
                 }
             }
