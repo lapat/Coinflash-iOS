@@ -422,7 +422,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
                 HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
                 self.getCoinFlashUserInfo()
-                    self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
+                    //self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
                 HelperFunctions.managePlaidLinked()
                 self.updateViews()
                 
@@ -526,7 +526,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     plaidInfoObject.loggedIn = false
                     self.plaidAccounts = []
                     self.bankTable.reloadData()
-                    self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
+                    //self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
                     HelperFunctions.managePlaidDelinking()
                     self.updateViews()
                     
@@ -620,7 +620,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     plaidInfoObject.loggedIn = false
                     self.plaidAccounts = []
                     self.bankTable.reloadData()
-                    self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
+                    //self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
                     HelperFunctions.managePlaidDelinking()
                     self.updateViews()
                     
