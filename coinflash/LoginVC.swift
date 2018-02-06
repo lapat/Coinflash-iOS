@@ -22,6 +22,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
     var email: String = ""
     
     @IBOutlet weak var signInButton: GIDSignInButton!
+    @IBOutlet weak var reloginPrompt: UILabel!
     
     var fbLoginResult: LoginResult!
     var googleLoginUSer: GIDGoogleUser!
@@ -40,10 +41,11 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
         loginButton.delegate = self
         view.addSubview(loginButton)
         
+        reloginPrompt.textColor = UIColor.red
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        reloginPrompt.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -162,7 +164,9 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
                     let alert = UIAlertController(title: "Error", message: "Kindly login again", preferredStyle: UIAlertControllerStyle.alert)
                     let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil)
                     alert.addAction(okayAction)
-                    self.present(alert, animated: true, completion: nil)
+                    //self.present(alert, animated: true, completion: nil)
+                    // Instead of alert just show the prompt label
+                    self.reloginPrompt.isHidden = false
                     HelperFunctions.updateVariablesForUserLoggingOut()
                     return
                 }
@@ -238,7 +242,7 @@ extension LoginVC: LoginButtonDelegate{
             .responseJSON { (response) in
                 switch response.result{
                 case .success:
-                    print(response.value)
+                    //print(response.value)
                     SVProgressHUD.dismiss()
                     let data = response.result.value as! [String: Any]
                     //print(response)
@@ -247,7 +251,8 @@ extension LoginVC: LoginButtonDelegate{
                         let alert = UIAlertController(title: "Error", message: "Kindly login again", preferredStyle: UIAlertControllerStyle.alert)
                         let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil)
                         alert.addAction(okayAction)
-                        self.present(alert, animated: true, completion: nil)
+                        //self.present(alert, animated: true, completion: nil)
+                        self.reloginPrompt.isHidden = false
                         HelperFunctions.updateVariablesForUserLoggingOut()
                         return
                     }

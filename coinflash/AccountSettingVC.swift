@@ -265,7 +265,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     func didTapOnCoinbaseCreditCard(sender: Any){
         
     }
-        
+    
     // MARK: - API
     func requestCoinbaseLinkAPIRequest(){
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,

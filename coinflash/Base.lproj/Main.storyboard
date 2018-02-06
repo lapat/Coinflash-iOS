@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYF-Qi-s9i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYF-Qi-s9i">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -2263,6 +2263,15 @@
                                     <constraint firstAttribute="height" constant="56" id="gSt-EE-FRN"/>
                                 </constraints>
                             </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login expired. Kindly relogin." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKS-C1-0Ko">
+                                <rect key="frame" x="112" y="484" width="150" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="hxb-vN-oYa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.17485795020552697" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -2270,10 +2279,12 @@
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" constant="-5" id="Ejv-qs-59Z"/>
                             <constraint firstItem="aPe-3H-acc" firstAttribute="bottom" secondItem="Vut-ZC-G23" secondAttribute="bottom" constant="70" id="FyN-hm-pNT"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="jzD-OA-f9v" secondAttribute="centerX" id="HMe-Xx-ehf"/>
+                            <constraint firstItem="PKS-C1-0Ko" firstAttribute="centerX" secondItem="Vut-ZC-G23" secondAttribute="centerX" id="PNb-sf-uAh"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="DLh-QT-8QI" secondAttribute="centerX" id="Rez-NA-cKD"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="width" secondItem="B4l-sA-hWh" secondAttribute="width" id="UZA-Q1-nPA"/>
                             <constraint firstItem="Vut-ZC-G23" firstAttribute="centerX" secondItem="aPe-3H-acc" secondAttribute="centerX" id="ahs-Wv-kjb"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="centerY" secondItem="aPe-3H-acc" secondAttribute="centerY" constant="-5" id="eXJ-cD-9Ko"/>
+                            <constraint firstItem="Vut-ZC-G23" firstAttribute="top" secondItem="PKS-C1-0Ko" secondAttribute="bottom" constant="16" id="g1V-vJ-HwR"/>
                             <constraint firstItem="DLh-QT-8QI" firstAttribute="centerX" secondItem="aPe-3H-acc" secondAttribute="centerX" id="gXG-AT-ZwJ"/>
                             <constraint firstAttribute="height" secondItem="jzD-OA-f9v" secondAttribute="height" constant="-10" id="hKQ-6h-G1s"/>
                             <constraint firstItem="jzD-OA-f9v" firstAttribute="width" secondItem="B4l-sA-hWh" secondAttribute="width" id="mw1-q1-AG0"/>
@@ -2284,6 +2295,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="dfA-ms-Na2"/>
                     <connections>
+                        <outlet property="reloginPrompt" destination="PKS-C1-0Ko" id="gsZ-Uh-qQb"/>
                         <outlet property="signInButton" destination="Vut-ZC-G23" id="8GD-aS-9fB"/>
                         <segue destination="qF3-WI-LvA" kind="show" identifier="mainPageSegue" id="01D-cS-7Xy"/>
                         <segue destination="Xuc-AV-kpA" kind="show" identifier="tocAcceptSegue" id="WVq-0v-IlK"/>
@@ -2427,7 +2439,7 @@
         <image name="warning" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sk6-yj-Zxu"/>
-        <segue reference="pdj-mW-GPu"/>
+        <segue reference="dy2-48-K8r"/>
+        <segue reference="I5M-EP-JW7"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -726,7 +726,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         if identifier  == "generalSettingsSegue"{
             if globalCoinflashUser3ResponseValue == nil{
                 self.requestCoinflashUser5(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-                HelperFunctions.showToast(withString: "Error! Trying to reload Data", onViewController: self)
+                HelperFunctions.showToast(withString: "Error! Loading Data", onViewController: self)
                 return false
             }
         }
