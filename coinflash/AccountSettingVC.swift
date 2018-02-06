@@ -422,14 +422,16 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 self.presentAlertViewWithTitle("Bank Account Link", message: "Account Linked")
                 HelperFunctions.SaveBankInfo(m_token_id: self.plaid_public_token, m_logged_in: "false") // was true
                 self.getCoinFlashUserInfo()
-                    self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
+                    //self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGreenicon")
                 HelperFunctions.managePlaidLinked()
                 self.updateViews()
                 
                 /// Check if plaid and coinbase are linked and use is not registered for subscriptions.. Then show in app purchases view
                 if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
-                    if globalCoinflashUser3ResponseValue["has_payment"].string == "0"{
-                        self.loadInAppPurchaseView()
+                    if globalCoinflashUser3ResponseValue != nil {
+                        if globalCoinflashUser3ResponseValue["has_payment"].string == "0"{
+                            self.loadInAppPurchaseView()
+                        }
                     }
                 }
             }
@@ -524,7 +526,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     plaidInfoObject.loggedIn = false
                     self.plaidAccounts = []
                     self.bankTable.reloadData()
-                    self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
+                    //self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
                     HelperFunctions.managePlaidDelinking()
                     self.updateViews()
                     
@@ -618,7 +620,7 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     plaidInfoObject.loggedIn = false
                     self.plaidAccounts = []
                     self.bankTable.reloadData()
-                    self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
+                    //self.plaidLinkedImageView.image = UIImage(imageLiteralResourceName: "bankGray")
                     HelperFunctions.managePlaidDelinking()
                     self.updateViews()
                     
