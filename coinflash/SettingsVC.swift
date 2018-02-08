@@ -452,17 +452,15 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                                      "user_set_primary_coinbase_btc_account_id":self.btcPrimaryWalletAccountsID, "User_set_primary_coinbase_eth_account_id":self.ethPrimaryWalletAccountID,
                                      "user_set_primary_coinflash_debit_wallet_id":""]
         SVProgressHUD.show(withStatus: "Updating Info")
-        UIApplication.shared.beginIgnoringInteractionEvents()
         Alamofire.request("\(baseUrl)coinflashuser3/", method: HTTPMethod.post, parameters: parameter)
             .validate()
             .responseJSON { (response) in
                 switch response.result{
                 case .success(let value):
                     let json = JSON(value)
-                  //  print(json)
+                    print(json)
                     // dismiss the progress hud
                     SVProgressHUD.dismiss()
-                    UIApplication.shared.endIgnoringInteractionEvents()
                     if self.monthlyButton?.isSelected == true{
                         globalSettings.investHowOften = .monthly
                     }else{
@@ -479,7 +477,6 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                 case .failure:
                  //   print(response.error as Any)
                     SVProgressHUD.dismiss()
-                    UIApplication.shared.endIgnoringInteractionEvents()
                     self.loadGlobalSettings()
                 }
         }

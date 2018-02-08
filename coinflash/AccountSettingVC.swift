@@ -183,7 +183,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     func viewDidEnterForground(notificaiton: NSNotification){
         if (UIApplication.shared.delegate as! AppDelegate).processingBacklink == true{
             //SVProgressHUD.show(withStatus: "Processing Login")
-            //UIApplication.shared.beginIgnoringInteractionEvents()
             
         }else{
             if HelperFunctions.isPlaidLoggedIn() == true{
@@ -200,7 +199,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     func coinBaseAuthenticationCompleted(withNotification notificaion: NSNotification){
         SVProgressHUD.dismiss()
-        UIApplication.shared.endIgnoringInteractionEvents()
         if HelperFunctions.isCoinbaseLoggedIn() == true{
             //self.coinbaseLinkedLabel.text = "Coinbase Linked"
             //self.DlinkCoinBase.isHidden = false
@@ -271,7 +269,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,
                                      "code": coinbaseInfoObject.accessToken, "redirect_url": "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", "coinbase_refresh_access_token": coinbaseInfoObject.refreshToken]
         SVProgressHUD.show(withStatus: "Linking Coinbase")
-        UIApplication.shared.beginIgnoringInteractionEvents()
         Alamofire.request("\(baseUrl)auththirdparty5/", method: HTTPMethod.post, parameters: parameter)
             .responseJSON { (response) in
                 switch response.result{
@@ -284,7 +281,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     self.coinbaseLinkedLabel.text = "Coinbase Linked"
                     //self.DlinkCoinBase.isHidden = false
                     self.addCoinbaseButton.isHidden = true
-                    UIApplication.shared.endIgnoringInteractionEvents()
                     self.addCoinbaseButton.isHidden = true
                     self.coinbaseLinkedImageView.image = UIImage(imageLiteralResourceName: "coinbaseGreen")
                     HelperFunctions.manageCoinBaseLinking()
@@ -292,7 +288,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                 case .failure:
                  //   print(response.error as Any)
                     SVProgressHUD.dismiss()
-                    UIApplication.shared.endIgnoringInteractionEvents()
                     self.addCoinbaseButton.isHidden = false
                     self.updateViews()
                 }
@@ -302,7 +297,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     func getCoinFlashUserInfo(){
         let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token]
         SVProgressHUD.show(withStatus: "Loading Account info")
-        UIApplication.shared.beginIgnoringInteractionEvents()
         Alamofire.request("\(baseUrl)coinflashuser3/", method: HTTPMethod.post, parameters: parameter)
             .validate()
             .responseJSON { (response) in
@@ -316,12 +310,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
                     self.bankTable.reloadData()
                     // dismiss the progress hud
                     SVProgressHUD.dismiss()
-                    UIApplication.shared.endIgnoringInteractionEvents()
                     self.updateViews()
                 case .failure:
                //     print(response.error as Any)
                     SVProgressHUD.dismiss()
-                    UIApplication.shared.endIgnoringInteractionEvents()
                 }
         }
     }
@@ -490,7 +482,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             case .failure:
             //    print(response.error as Any)
                 SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
                 self.presentAlertViewWithTitle("CoinBase", message: "DeLinking Fail : Retry")
                 self.presentAlertViewWithTitle("Coinbase", message: " Your Coinbase account dLink Failed: Please Retry ")
                 
@@ -547,7 +538,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
              //   print(response.error as Any)
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Failure", message: "De Linking Failed : Retry")
-                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
     }
@@ -584,7 +574,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             case .failure:
              //   print(response.error as Any)
                 SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
                 self.presentAlertViewWithTitle("CoinBase", message: "DeLinking Fail")
                 self.presentAlertViewWithTitle("Coinbase", message: " Your Coinbase account dLink Failed: Please Retry ")
                 
@@ -641,7 +630,6 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
             //    print(response.error as Any)
                 SVProgressHUD.dismiss()
                 self.presentAlertViewWithTitle("Failure", message: "DeLinking Failed")
-                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
     }

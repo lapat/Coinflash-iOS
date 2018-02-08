@@ -706,7 +706,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 SVProgressHUD.dismiss()
             case .failure:
                 SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
     }
@@ -840,7 +839,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
                 SVProgressHUD.dismiss()
             case .failure:
                 SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
     }

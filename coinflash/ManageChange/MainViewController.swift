@@ -51,6 +51,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
     var coinflashUser3ResponseObject: JSON!
     var cctransaction2ResponseObject: JSON!
     
+    // MARK: - View Function
+    
     override func viewDidLoad() {
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.size.width * 0.75
         SideMenuManager.default.menuDismissOnPush = true
@@ -66,9 +68,10 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
-        //self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         self.requestCoinflashUser5(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        // The following function will be called when the top one is completed
+        //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        //self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
     }
     
@@ -89,6 +92,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     override func viewWillLayoutSubviews() {
+        // Show a prompt on settings button... if user hasnt subscribed to in app purchase
         if self.warningImageView != nil{
             self.warningImageView.layer.frame = CGRect(x: settingsPageButton.layer.frame.origin.x + settingsPageButton.frame.width - 8, y: settingsPageButton.layer.frame.origin.y, width: settingsPageButton.layer.frame.width/1.5, height: settingsPageButton.frame.height/1.5)
             if StoreKitHelper.sharedInstance.userHasValidMonthlySubscription() == true{
@@ -133,6 +137,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
         //self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
     }
     
+    // MARK: - Table View
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell") as! ccTransationCellView
@@ -153,7 +159,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     //MARK: - General Server Calls
-    func requestCoinflashUser5(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+    func requestCoinflashUser5(mobile_secret: String,user_id_mobile: String,mobile_access_token: String ){
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
@@ -168,11 +174,15 @@ class MainViewController: UIViewController, UITableViewDataSource{
         Alamofire.request("https://coinflashapp.com/coinflashuser5/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             switch response.result{
             case .success( _):
+                SVProgressHUD.dismiss()
+                self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: self.m_user_id, mobile_access_token: self.m_access_token)
+                
+                
                 let json = JSON(response.result.value!)
                 self.coinflashUser3ResponseObject = json[0]
                 //print(json)
                 globalCoinflashUser3ResponseValue = self.coinflashUser3ResponseObject
-                SVProgressHUD.dismiss()
+                print(globalCoinflashUser3ResponseValue["user_set_primary_coinbase_account_id"])
                 
                 if globalCoinflashUser3ResponseValue["how_paying"] != JSON.null{
                     //print(globalCoinflashUser3ResponseValue["how_paying"].string)
@@ -229,9 +239,16 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 }
                 
             case .failure:
-                //print(response.error as Any)
                 SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
+                let alert = UIAlertController(title: "Error", message: "Network Error. Kindly check your connection and retry!", preferredStyle: UIAlertControllerStyle.alert)
+                let retryAction = UIAlertAction(title: "Retry", style: UIAlertActionStyle.default, handler: { (action) in
+                    self.viewWillAppear(false)
+                })
+                alert.addAction(retryAction)
+                self.present(alert, animated: true, completion: nil)
+                //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: self.m_user_id, mobile_access_token: self.m_access_token)
+                
+                //print(response.error as Any)
             }
         }
     }
@@ -245,28 +262,31 @@ class MainViewController: UIViewController, UITableViewDataSource{
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
             ]
-        SVProgressHUD.show()
+        SVProgressHUD.show(withStatus: "Loading Transactions")
         
         Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers)
             .responseJSON { response in
                 switch response.result{
                 case .success( _):
+                    SVProgressHUD.dismiss()
                     
                         if response.result.value == nil {
                             HelperFunctions.showToast(withString: "Check Your Internet Connection", onViewController: self)
-                            SVProgressHUD.dismiss()
                         }
                         let data = response.result.value as! [String: Any]
                         //print(data)
                         if data["cc_transactions_array"] == nil
                         {
-                            SVProgressHUD.dismiss()
                             return
                         }
                         let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
                         let user_preferences = data["user_preferences"] as! [String: Any]
                         if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
                             self.m_spare_change_accrued_percent_to_invest = Double(user_preferences["spare_change_accrued_percent_to_invest"] as! String)!
+                            let sliderProgress = Float(globalCoinflashUser3ResponseValue["btc_percentage"].string!)!;
+                            let leftCurrency = HelperFunctions.getCryptoCurrencyFromServerCode(code: globalCoinflashUser3ResponseValue["left_side"].int!)
+                            let rightCurrency = HelperFunctions.getCryptoCurrencyFromServerCode(code: globalCoinflashUser3ResponseValue["right_side"].int!)
+                            self.updateCryptoInvestmentSlider(value: sliderProgress, leftCurrency: leftCurrency, rightCurrency: rightCurrency)
                             //self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
                         }
                         if user_preferences["percent_to_invest"] != nil{
@@ -319,7 +339,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
                                 }
                                 if transation["cctransaction_date"] != nil{
                                     var date: String = transation["cctransaction_date"] as! String
-                                    let truncated = String(date.characters.dropFirst(5))
+                                    let truncated = String(date.dropFirst(5))
                                     singleTransation?.cctransaction_date = truncated
                                 }
                                 if transation["cctransaction_amount"] != nil{
@@ -357,11 +377,15 @@ class MainViewController: UIViewController, UITableViewDataSource{
                         self.updateViewInvestmentInformation()
                         SVProgressHUD.dismiss()
                         
-                    
                 case .failure:
                     //print(response.error as Any)
+                    let alert = UIAlertController(title: "Error", message: "Network Error. Kindly check your connection and retry!", preferredStyle: UIAlertControllerStyle.alert)
+                    let retryAction = UIAlertAction(title: "Retry", style: UIAlertActionStyle.default, handler: { (action) in
+                        self.viewWillAppear(false)
+                    })
+                    alert.addAction(retryAction)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
-                    UIApplication.shared.endIgnoringInteractionEvents()
                 }
         }
     }
@@ -399,7 +423,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
             case .failure:
                 //print(response.error as Any)
                 SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
     }
@@ -634,7 +657,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
             case .failure:
                 //print(response.error as Any)
                 SVProgressHUD.dismiss()
-                UIApplication.shared.endIgnoringInteractionEvents()
             }
         }
     }
