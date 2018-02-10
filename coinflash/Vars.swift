@@ -20,6 +20,7 @@ var user_onboard_status: OnBoardStatus!
 
 var googleUser: GIDGoogleUser!
 var globalCoinflashUser3ResponseValue: JSON!
+var globalCCTransactionUserResponseValue: JSON!
 
 var GraphOptionSelected : Int = 0
 var isGraphOptionSelected : Bool = false

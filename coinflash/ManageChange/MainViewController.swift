@@ -65,10 +65,24 @@ class MainViewController: UIViewController, UITableViewDataSource{
             self.warningImageView = UIImageView(image: UIImage(named: "warning"))
             self.view.addSubview(self.warningImageView)
         }
+        
+        if globalCoinflashUser3ResponseValue == nil{
+            self.requestCoinflashUser5(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, showLoader: true)
+        }
+        // The following function will be called when the top one is completed
+        //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        //self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        HelperFunctions.LoadBankInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.requestCoinflashUser5(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+        if SVProgressHUD.isVisible() || globalCCTransactionUserResponseValue == nil{
+            HelperFunctions.LoadBankInfo()
+            return
+        }
+        self.loadCCTRansactionFromGlobalVar()
+        updateViewInvestmentInformation()
+        //self.requestCoinflashUser5(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, showLoader: false)
         // The following function will be called when the top one is completed
         //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         //self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
@@ -104,8 +118,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     func updateViewInvestmentInformation(){
-        self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested Every Monday"
-         self.LabelSinceChange?.text = "Spare Change Accrued Since Monday"
+        self.LabelChangeTip?.text = String(Int(globalSettings.percentOfChangeToInvest)) + "% Of Your Change Will Be Invested Every Monday"
+        self.LabelSinceChange?.text = "Spare Change Accrued Since Monday"
         // check to see the label
         
         if globalSettings.investHowOften == .monthly{
@@ -115,8 +129,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
             let days = cal.range(of: Calendar.Component.day, in: Calendar.Component.month, for: currentDate)
             let daysTillNextMonth = (days?.count)! - cal.component(Calendar.Component.day, from: currentDate)
             
-            self.LabelChangeTip?.text = String(Int(self.m_percent_to_invest)) + "% Of Your Change Will Be Invested In \(daysTillNextMonth + 1) days"
-           self.LabelSinceChange?.text = "Spare Change Accrued This Month"
+            self.LabelChangeTip?.text = String(Int(globalSettings.percentOfChangeToInvest)) + "% Of Your Change Will Be Invested In \(daysTillNextMonth + 1) days"
+            self.LabelSinceChange?.text = "Spare Change Accrued This Month"
         }
         
         self.LabelChange?.text = "$ " + String(self.m_spare_change_accrued_percent_to_invest)
@@ -135,6 +149,13 @@ class MainViewController: UIViewController, UITableViewDataSource{
         //let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(etherRate/100.0)
         //let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float(bitrate/100.0)
         //self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
+        
+        // If investment is off
+        if !globalSettings.investChange{
+            self.LabelChangeTip?.text = "Investing Change Has Been Turned Off"
+        }else{
+            print("Invest change is not off")
+        }
     }
     
     // MARK: - Table View
@@ -159,7 +180,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     //MARK: - General Server Calls
-    func requestCoinflashUser5(mobile_secret: String,user_id_mobile: String,mobile_access_token: String ){
+    func requestCoinflashUser5(mobile_secret: String,user_id_mobile: String,mobile_access_token: String, showLoader: Bool ){
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
@@ -169,14 +190,15 @@ class MainViewController: UIViewController, UITableViewDataSource{
             "mobile_access_token" : mobile_access_token,
             ]
         
-        SVProgressHUD.show(withStatus: "Loading Data")
+        if showLoader == true{
+            SVProgressHUD.show(withStatus: "Loading Data")
+        }
         
         Alamofire.request("https://coinflashapp.com/coinflashuser5/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             switch response.result{
             case .success( _):
                 SVProgressHUD.dismiss()
-                self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: self.m_user_id, mobile_access_token: self.m_access_token)
-                
+                self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: self.m_user_id, mobile_access_token: self.m_access_token, showLoader: showLoader)
                 
                 let json = JSON(response.result.value!)
                 self.coinflashUser3ResponseObject = json[0]
@@ -253,7 +275,86 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
     }
     
-    func requestCoinFlashFeatchccTransations(mobile_secret: String,user_id_mobile: String,mobile_access_token: String){
+    func loadCCTRansactionFromGlobalVar(){
+        
+        let data = globalCCTransactionUserResponseValue.dictionaryObject
+        
+        let TransationArray = data!["cc_transactions_array"] as! [[String: Any]]
+        let user_preferences = data!["user_preferences"] as! [String: Any]
+        if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
+            self.m_spare_change_accrued_percent_to_invest = Double(user_preferences["spare_change_accrued_percent_to_invest"] as! String)!
+            let sliderProgress = Float(globalCoinflashUser3ResponseValue["btc_percentage"].string!)!;
+            let leftCurrency = HelperFunctions.getCryptoCurrencyFromServerCode(code: globalCoinflashUser3ResponseValue["left_side"].int!)
+            let rightCurrency = HelperFunctions.getCryptoCurrencyFromServerCode(code: globalCoinflashUser3ResponseValue["right_side"].int!)
+            self.updateCryptoInvestmentSlider(value: sliderProgress, leftCurrency: leftCurrency, rightCurrency: rightCurrency)
+            //self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
+        }
+        
+        if user_preferences["spare_change_accrued"] != nil{
+            self.m_spare_change_accrued = Double(user_preferences["spare_change_accrued"] as! String)!
+        }
+        if user_preferences["btc_to_invest"] != nil{
+            self.m_btc_to_invest = user_preferences["btc_to_invest"] as! Double
+            self.m_btc_to_invest = Double(round(100 * self.m_btc_to_invest)/100)
+            
+        }
+        
+        if user_preferences["btc_percentage"] != nil{
+            //self.m_btc_percentage = user_preferences["btc_percentage"] as! Double
+        }
+        
+        self.cctransations.removeAll()
+        /// Bound error occuring check
+        var TransationToAdd = true
+        if TransationArray.count > 0{
+            for index in 0...TransationArray.count - 1 {
+                let transation = TransationArray[index]
+                TransationToAdd = true
+                var singleTransation = cctransaction_global
+                if transation["cctransaction_name"] != nil{
+                    singleTransation?.cctransaction_name = transation["cctransaction_name"] as! String
+                }
+                if transation["cctransaction_date"] != nil{
+                    var date: String = transation["cctransaction_date"] as! String
+                    let truncated = String(date.dropFirst(5))
+                    singleTransation?.cctransaction_date = truncated
+                }
+                if transation["cctransaction_amount"] != nil{
+                    singleTransation?.cctransaction_amount = transation["cctransaction_amount"] as! String!
+                    let RowData = transation["cctransaction_amount"] as! String!
+                    let cctransationCopy = Double(RowData!)
+                    let difference = 1 - ( (cctransationCopy!) - (Double(Int(cctransationCopy!))))
+                    
+                    if difference <= 0 {
+                        TransationToAdd = false
+                        
+                    }
+                    else
+                    {
+                        let transation = self.roundtoPlace(num: difference, to: 2)
+                        singleTransation?.cctransaction_amount  = "$ "+transation
+                        
+                    }
+                    
+                }
+                if transation["coinbase_transaction_id"] != nil{
+                    singleTransation?.cctransaction_coinbase_transaction_id = transation["coinbase_transaction_id"] as! String
+                    singleTransation?.cctransaction_invested = "invested"
+                }
+                else{
+                    singleTransation?.cctransaction_invested = "Not invested"
+                }
+                if TransationToAdd == true{
+                    self.cctransations.append(singleTransation)
+                }
+            }
+        }
+        
+        self.ccTransationTableView?.reloadData()
+        self.updateViewInvestmentInformation()
+    }
+    
+    func requestCoinFlashFeatchccTransations(mobile_secret: String,user_id_mobile: String,mobile_access_token: String, showLoader: Bool){
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
@@ -262,7 +363,10 @@ class MainViewController: UIViewController, UITableViewDataSource{
             "user_id_mobile" : user_id_mobile,
             "mobile_access_token" : mobile_access_token,
             ]
-        SVProgressHUD.show(withStatus: "Loading Transactions")
+        
+        if showLoader == true{
+            SVProgressHUD.show(withStatus: "Loading Transactions")
+        }
         
         Alamofire.request("https://coinflashapp.com/cctransactions2/", method: HTTPMethod.post, parameters: parameters,headers: headers)
             .responseJSON { response in
@@ -279,6 +383,10 @@ class MainViewController: UIViewController, UITableViewDataSource{
                         {
                             return
                         }
+                    
+                        let json = JSON(response.result.value)
+                        globalCCTransactionUserResponseValue = json
+                    
                         let TransationArray = data["cc_transactions_array"] as! [[String: Any]]
                         let user_preferences = data["user_preferences"] as! [String: Any]
                         if user_preferences["spare_change_accrued_percent_to_invest"] != nil{
@@ -320,6 +428,11 @@ class MainViewController: UIViewController, UITableViewDataSource{
                         }
                         if user_preferences["invest_on"] != nil{
                             self.m_invest_on = Double(user_preferences["invest_on"] as! String)!
+                            if self.m_invest_on == 1{
+                                globalSettings.investChange = true
+                            }else{
+                                globalSettings.investChange = false
+                            }
                         }
                         
                         if user_preferences["btc_percentage"] != nil{
@@ -447,6 +560,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     //MARK: - Currency Selector
     var currencyPicker: UIPickerView!
     var pickerToolbar: UIToolbar!
+    var currencyPickerIsAnimating: Bool!
     var currencyNamesForPickerView: [String] = ["Bitcoin","Ether","Litecoin","BitcoinCash"]
     @IBOutlet weak var currencySelctorLeftCurrencyIcon: UIImageView!
     @IBOutlet weak var currencySelctorLeftCurrencyLabel: UILabel!
@@ -496,18 +610,43 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     func didPressPickerDoneButton(sender: UIBarButtonItem){
-        UIView.animate(withDuration: 0.5) {
-            let width = self.view.frame.size.width
-            let height = self.view.frame.size.height/2.8
-            let x = self.view.frame.origin.x
-            let y  = self.view.frame.origin.y + self.view.frame.height + 50
-            self.currencyPicker.frame = CGRect(x: x, y: y, width: width, height: height)
+        /// Check if picker has same item in both areas:
+        if currencyPicker.selectedRow(inComponent: 0) == currencyPicker.selectedRow(inComponent: 1){
+            // do a delay for such that the animation is completed
+//            let timer = Timer(timeInterval: 1, repeats: false, block: { (timer) in
+//                UIView.animate(withDuration: 0.5) {
+//                    let width = self.view.frame.size.width
+//                    let height = self.view.frame.size.height/2.8
+//                    let x = self.view.frame.origin.x
+//                    let y  = self.view.frame.origin.y + self.view.frame.height + 50
+//                    self.currencyPicker.frame = CGRect(x: x, y: y, width: width, height: height)
+//
+//                    self.pickerToolbar.frame = CGRect(x: x, y: y-50, width: width, height: 50)
+//                }
+//                let firstCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: self.currencyPicker.selectedRow(inComponent: 0)+1)
+//                let secondCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: self.currencyPicker.selectedRow(inComponent: 1)+1)
+//                self.updateViewForNewlySlectedCurrency(firstCurrency: firstCurrency, secondCurrency: secondCurrency)
+//
+//                self.sendSliderVaueToServerWithCurrency(mobile_secret: self.m_mobile_secret, user_id_mobile: self.m_user_id, mobile_access_token: self.m_access_token, SliderValue: (self.self.cryptoInvestmentSlider?.rightPercent)!, leftCurrencyCode: HelperFunctions.getCodeFromCryptoCurrencyForServerSide(currency: firstCurrency), rightCurrencyCode: HelperFunctions.getCodeFromCryptoCurrencyForServerSide(currency: secondCurrency))
+//            })
             
-            self.pickerToolbar.frame = CGRect(x: x, y: y-50, width: width, height: 50)
+        }else{
+            print("Timer: %d && %d",currencyPicker.selectedRow(inComponent: 0), currencyPicker.selectedRow(inComponent: 1))
+            UIView.animate(withDuration: 0.5) {
+                let width = self.view.frame.size.width
+                let height = self.view.frame.size.height/2.8
+                let x = self.view.frame.origin.x
+                let y  = self.view.frame.origin.y + self.view.frame.height + 50
+                self.currencyPicker.frame = CGRect(x: x, y: y, width: width, height: height)
+                
+                self.pickerToolbar.frame = CGRect(x: x, y: y-50, width: width, height: 50)
+            }
+            let firstCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: currencyPicker.selectedRow(inComponent: 0)+1)
+            let secondCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: currencyPicker.selectedRow(inComponent: 1)+1)
+            self.updateViewForNewlySlectedCurrency(firstCurrency: firstCurrency, secondCurrency: secondCurrency)
+            
+            self.sendSliderVaueToServerWithCurrency(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, SliderValue: (cryptoInvestmentSlider?.rightPercent)!, leftCurrencyCode: HelperFunctions.getCodeFromCryptoCurrencyForServerSide(currency: firstCurrency), rightCurrencyCode: HelperFunctions.getCodeFromCryptoCurrencyForServerSide(currency: secondCurrency))
         }
-        let firstCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: currencyPicker.selectedRow(inComponent: 0)+1)
-        let secondCurrency = HelperFunctions.getCryptoCurrencyFromCode(code: currencyPicker.selectedRow(inComponent: 1)+1)
-        self.updateViewForNewlySlectedCurrency(firstCurrency: firstCurrency, secondCurrency: secondCurrency)
     }
     
     /// Just updates the labels and icosn of the crypto currency selector view.
@@ -747,7 +886,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier  == "generalSettingsSegue"{
             if globalCoinflashUser3ResponseValue == nil{
-                self.requestCoinflashUser5(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
+                self.requestCoinflashUser5(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, showLoader: true)
                 HelperFunctions.showToast(withString: "Error! Loading Data", onViewController: self)
                 return false
             }

@@ -47,7 +47,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     var pickerViewData: [String]!
     
     override func viewDidLoad() {
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         // CapOnInvestmentTextField initializations
@@ -471,13 +471,35 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
                     }else{
                         globalSettings.investChange = false
                     }
+                    globalSettings.percentOfChangeToInvest = self.tempChangeCapValue
                     
                     globalSettings.percentOfChangeToInvest = self.tempChangeCapValue
                     globalSettings.capOnInvestment = self.tempCapOnInvestmentValue
+                    if investChange == 1{
+                        globalSettings.investChange = true
+                    }else{
+                        globalSettings.investChange = false
+                    }
+                    
+                    // MANIPULATE THE USER3 Response global object
+                    globalCoinflashUser3ResponseValue["user_set_primary_coinbase_account_id"].string = self.coinbasePrimaryAccountID
+                    globalCoinflashUser3ResponseValue["user_set_primary_coinbase_btc_account_id"].string = self.btcPrimaryWalletAccountsID
+                    globalCoinflashUser3ResponseValue["User_set_primary_coinbase_eth_account_id"].string = self.ethPrimaryWalletAccountID
+                    
                 case .failure:
                  //   print(response.error as Any)
                     SVProgressHUD.dismiss()
                     self.loadGlobalSettings()
+                    let alert = UIAlertController(title: "Error", message: "Kindly check your internet connection and retry", preferredStyle: UIAlertControllerStyle.alert)
+                    let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (alert) in
+                        
+                    })
+                    let retry = UIAlertAction(title: "Retry", style: UIAlertActionStyle.default, handler: { (alert) in
+                        self.saveGlobalSettings()
+                    })
+                    alert.addAction(cancel)
+                    alert.addAction(retry)
+                    self.present(alert, animated: true, completion: nil)
                 }
         }
     }

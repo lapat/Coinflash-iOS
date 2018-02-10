@@ -167,6 +167,7 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
                     //self.present(alert, animated: true, completion: nil)
                     // Instead of alert just show the prompt label
                     self.reloginPrompt.isHidden = false
+                    self.reloginPrompt.text = "Login expired. Kindly relogin."
                     HelperFunctions.updateVariablesForUserLoggingOut()
                     return
                 }
@@ -188,6 +189,8 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
             case .failure:
              //   print(response.error)
                 SVProgressHUD.dismiss()
+                self.reloginPrompt.isHidden = false
+                self.reloginPrompt.text = "Kindly check your internet connection"
             }
         }
     }
@@ -253,6 +256,7 @@ extension LoginVC: LoginButtonDelegate{
                         alert.addAction(okayAction)
                         //self.present(alert, animated: true, completion: nil)
                         self.reloginPrompt.isHidden = false
+                        self.reloginPrompt.text = "Login expired. Kindly relogin."
                         HelperFunctions.updateVariablesForUserLoggingOut()
                         return
                     }
@@ -278,6 +282,8 @@ extension LoginVC: LoginButtonDelegate{
                 case .failure:
                     print(response.error)
                     SVProgressHUD.dismiss()
+                    self.reloginPrompt.isHidden = false
+                    self.reloginPrompt.text = "Kindly check your internet connection"
                 }
         }
     }

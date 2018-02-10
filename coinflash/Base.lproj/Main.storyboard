@@ -301,7 +301,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="ZEF-4j-x7q" customClass="CryptoPercentSliderControll" customModule="coinflash" customModuleProvider="target">
-                                        <rect key="frame" x="6" y="376" width="363" height="31"/>
+                                        <rect key="frame" x="13" y="376" width="349" height="31"/>
                                         <connections>
                                             <action selector="didSlideCryptoInvestmentSliderWithSender:" destination="Lae-RI-fL0" eventType="valueChanged" id="QYS-4c-oi9"/>
                                             <action selector="onCryptoInvestmentSliderRelease:" destination="Lae-RI-fL0" eventType="touchUpInside" id="wHG-kg-DJK"/>
@@ -499,7 +499,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="RIb-fi-kFU" firstAttribute="centerX" secondItem="vEW-fz-OwK" secondAttribute="centerX" id="0eD-RJ-sip"/>
-                                    <constraint firstItem="ZEF-4j-x7q" firstAttribute="leading" secondItem="eWs-4Y-eQC" secondAttribute="leading" constant="8" id="28i-fd-mYg"/>
+                                    <constraint firstItem="ZEF-4j-x7q" firstAttribute="leading" secondItem="eWs-4Y-eQC" secondAttribute="leading" constant="15" id="28i-fd-mYg"/>
                                     <constraint firstItem="AU1-NH-nn0" firstAttribute="centerX" secondItem="e3q-Di-Db0" secondAttribute="centerX" id="59N-nr-PHu"/>
                                     <constraint firstAttribute="trailing" secondItem="vEW-fz-OwK" secondAttribute="trailing" constant="8" id="8Y6-Ib-G9s"/>
                                     <constraint firstItem="aZ7-nO-Msi" firstAttribute="top" secondItem="q2i-it-pCR" secondAttribute="bottom" id="ABD-Nm-NQd"/>
@@ -535,7 +535,7 @@
                                     <constraint firstItem="gQ9-RF-qbu" firstAttribute="top" secondItem="mTn-h5-dVu" secondAttribute="bottom" constant="1.5" id="oYy-XS-yPM"/>
                                     <constraint firstAttribute="bottom" secondItem="mTn-h5-dVu" secondAttribute="bottom" constant="325.5" id="rUA-oP-aUJ"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nyv-gv-yRd" secondAttribute="trailing" constant="20" symbolic="YES" id="uOP-xO-jr0"/>
-                                    <constraint firstAttribute="trailing" secondItem="ZEF-4j-x7q" secondAttribute="trailing" constant="8" id="vi7-qF-LOv"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZEF-4j-x7q" secondAttribute="trailing" constant="15" id="vi7-qF-LOv"/>
                                     <constraint firstItem="mTn-h5-dVu" firstAttribute="leading" secondItem="eWs-4Y-eQC" secondAttribute="leading" constant="8" id="w9P-ap-lz0"/>
                                     <constraint firstItem="mTn-h5-dVu" firstAttribute="centerX" secondItem="eWs-4Y-eQC" secondAttribute="centerX" id="yZS-1U-OTD"/>
                                     <constraint firstItem="mTn-h5-dVu" firstAttribute="top" secondItem="eWs-4Y-eQC" secondAttribute="top" id="zG8-Xg-VKs"/>
@@ -782,7 +782,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="67" id="HYY-ph-Uo6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="19"/>
                                 <color key="textColor" red="0.40266746282577515" green="0.59298241138458252" blue="0.22872918844223022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -797,7 +797,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="67" id="ZYd-Mh-MhG"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="19"/>
                                 <color key="textColor" red="0.40266746279999999" green="0.59298241139999996" blue="0.22872918840000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1009,7 +1009,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="50" maxValue="400" translatesAutoresizingMaskIntoConstraints="NO" id="h0I-ic-qmE">
-                                                    <rect key="frame" x="6" y="69" width="361" height="37"/>
+                                                    <rect key="frame" x="13" y="69" width="349" height="37"/>
                                                     <color key="minimumTrackTintColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="changeToInvestSliderChangedWithSender:" destination="xam-tU-CdB" eventType="valueChanged" id="Vd3-j4-YjP"/>
@@ -1022,7 +1022,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="225%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZb-rD-IWV">
-                                                    <rect key="frame" x="171.5" y="115" width="30.5" height="17"/>
+                                                    <rect key="frame" x="172.5" y="115" width="30.5" height="17"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="12"/>
                                                     <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1051,7 +1051,7 @@
                                                 <constraint firstItem="IIM-rO-Ue8" firstAttribute="leading" secondItem="zZn-dn-dvw" secondAttribute="leading" constant="8" id="Jxk-pP-EAY"/>
                                                 <constraint firstItem="h0I-ic-qmE" firstAttribute="top" secondItem="IIM-rO-Ue8" secondAttribute="bottom" constant="8" id="Ldc-kS-XcY"/>
                                                 <constraint firstAttribute="bottom" secondItem="wZb-rD-IWV" secondAttribute="bottom" constant="8" id="NQU-7p-RDj"/>
-                                                <constraint firstAttribute="trailing" secondItem="h0I-ic-qmE" secondAttribute="trailing" constant="10" id="Ruh-iv-ND2"/>
+                                                <constraint firstAttribute="trailing" secondItem="h0I-ic-qmE" secondAttribute="trailing" constant="15" id="Ruh-iv-ND2"/>
                                                 <constraint firstItem="CCf-qN-306" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zZn-dn-dvw" secondAttribute="leading" constant="20" symbolic="YES" id="Svi-y8-gaa"/>
                                                 <constraint firstItem="YLr-k1-18c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zZn-dn-dvw" secondAttribute="leading" constant="20" symbolic="YES" id="TYJ-Tu-ESb"/>
                                                 <constraint firstAttribute="trailing" secondItem="CCf-qN-306" secondAttribute="trailing" constant="10" id="YFb-Hw-HBp"/>
@@ -1060,7 +1060,7 @@
                                                 <constraint firstItem="YLr-k1-18c" firstAttribute="top" secondItem="h0I-ic-qmE" secondAttribute="bottom" constant="10" id="h3I-gc-yNg"/>
                                                 <constraint firstItem="wZb-rD-IWV" firstAttribute="centerX" secondItem="h0I-ic-qmE" secondAttribute="centerX" id="kJA-cD-jrO"/>
                                                 <constraint firstAttribute="trailing" secondItem="YLr-k1-18c" secondAttribute="trailing" constant="8" id="mSd-yg-oqJ"/>
-                                                <constraint firstItem="h0I-ic-qmE" firstAttribute="leading" secondItem="zZn-dn-dvw" secondAttribute="leading" constant="8" id="oIg-7s-gg0"/>
+                                                <constraint firstItem="h0I-ic-qmE" firstAttribute="leading" secondItem="zZn-dn-dvw" secondAttribute="leading" constant="15" id="oIg-7s-gg0"/>
                                                 <constraint firstItem="c5r-v2-bfc" firstAttribute="leading" secondItem="zZn-dn-dvw" secondAttribute="leading" constant="8" id="ocG-FN-7sz"/>
                                                 <constraint firstItem="IIM-rO-Ue8" firstAttribute="top" secondItem="zZn-dn-dvw" secondAttribute="top" constant="11" id="p7T-X3-Q9i"/>
                                                 <constraint firstItem="CCf-qN-306" firstAttribute="centerY" secondItem="IIM-rO-Ue8" secondAttribute="centerY" id="ws8-iU-F4f"/>
