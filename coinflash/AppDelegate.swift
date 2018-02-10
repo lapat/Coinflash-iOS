@@ -54,6 +54,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        // set the status bar
+        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        statusBar.backgroundColor = UIColor(red: 171/255, green: 194/255, blue: 222/255, alpha: 1)
+        
         return true
     }
     

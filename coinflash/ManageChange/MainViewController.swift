@@ -82,7 +82,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
         self.loadCCTRansactionFromGlobalVar()
         updateViewInvestmentInformation()
-        //self.requestCoinflashUser5(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, showLoader: false)
+        self.requestCoinflashUser5(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token, showLoader: false)
         // The following function will be called when the top one is completed
         //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         //self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
