@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SideMenu
 
 class NavViewController: UINavigationController {
 

@@ -58,8 +58,8 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     @IBOutlet weak var AddBankLink: UIButton!
     @IBOutlet weak var DlinkAccounts: UILabel!
+    @IBOutlet weak var menuButton: UIButton!
     var plaidAccounts: [JSON]!
-    
     
     @IBOutlet weak var createCoinbaseAccount: UIButton!
     @IBOutlet weak var createCoinbaseAccountLabel: UILabel!
@@ -653,6 +653,10 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         if HelperFunctions.isCoinbaseLoggedIn() == true{
             DlinkCoinbaseCombine(mobile_secret: m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         }
+    }
+    
+    @IBAction func didPerformScreenEdgePanGesture(gesture: UIScreenEdgePanGestureRecognizer){
+        self.menuButton.sendActions(for: .touchUpInside)
     }
     
 }

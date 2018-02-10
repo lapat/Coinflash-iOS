@@ -30,7 +30,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var BuyNowButton: UIButton!
     @IBOutlet weak var selectCurrency: UIView!
     @IBOutlet weak var selectCoinPairGestureRecognizer: UITapGestureRecognizer!
-    
+    @IBOutlet weak var menuButton: UIButton!
     
     var warningImageView: UIImageView!
     
@@ -73,6 +73,9 @@ class MainViewController: UIViewController, UITableViewDataSource{
         //self.requestCoinFlashFeatchccTransations(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         //self.requestCoinflashUser3Values(mobile_secret: self.m_mobile_secret, user_id_mobile: m_user_id, mobile_access_token: m_access_token)
         HelperFunctions.LoadBankInfo()
+        
+        // side menu gesture		
+        //SideMenuManager.default.menuAddPanGestureToPresent(toView: (self.navigationController?.view)!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -142,13 +145,6 @@ class MainViewController: UIViewController, UITableViewDataSource{
         
         self.LabelEtherInvestmentRate?.text = String(Int(etherRate)) + "%"
         self.LabelBitcoinInvestmentRate?.text = String(Int(bitrate)) + "%"
-        //self.cryptoInvestmentSlider?.value = Float(etherRate)
-        //self.InvestmentRateSlider(self.cryptoInvestmentSlider!)
-        
-        // Set the ether and bitcoin rate in the top label with respect to the percentage
-        //let dollarToInvestInBTC = Float(self.m_spare_change_accrued_percent_to_invest)*Float(etherRate/100.0)
-        //let dollarToInvestETH = Float(self.m_spare_change_accrued_percent_to_invest)*Float(bitrate/100.0)
-        //self.LabelChange?.text = String(format: "$ %.2f / %.2f", dollarToInvestInBTC,dollarToInvestETH)
         
         // If investment is off
         if !globalSettings.investChange{
@@ -893,6 +889,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         }
         return true
     }
+    
     func roundtoPlace(num: Double, to places: Int) -> String {
         let p = log10(abs(num))
         let f = pow(10, p.rounded() - Double(places) + 1)
@@ -902,5 +899,8 @@ class MainViewController: UIViewController, UITableViewDataSource{
         _ = Double(conversion)
         return conversion
     }
+    
+    @IBAction func didPerformScreenEdgePanGesture(gesture: UIScreenEdgePanGestureRecognizer){
+        self.menuButton.sendActions(for: .touchUpInside)
+    }
 }
-

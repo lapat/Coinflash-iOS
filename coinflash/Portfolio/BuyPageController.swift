@@ -26,6 +26,7 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
     @IBOutlet weak var boundryCricleImage: UIImageView?
     @IBOutlet weak var ImageArrow: UIImageView?
     @IBOutlet weak var CryptoTransationTableView: UITableView!
+    @IBOutlet weak var menuButton: UIButton!
     
     
     @IBOutlet weak var CryptoPriceGraph: LineChartView!
@@ -944,6 +945,8 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
         self.DataToBeLoadedwithColor = HelperFunctions.getColorForCryptoCurrency(currency: currency)
     }
     
-    
+    @IBAction func didPerformScreenEdgePanGesture(gesture: UIScreenEdgePanGestureRecognizer){
+        self.menuButton.sendActions(for: .touchUpInside)
+    }
     
 }

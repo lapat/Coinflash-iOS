@@ -47,7 +47,7 @@ class SettingsVC: UITableViewController, UIGestureRecognizerDelegate, UITextFiel
     var pickerViewData: [String]!
     
     override func viewDidLoad() {
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         // CapOnInvestmentTextField initializations
