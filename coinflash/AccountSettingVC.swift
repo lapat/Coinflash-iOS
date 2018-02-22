@@ -216,9 +216,11 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
         SVProgressHUD.show()
     }
     
+    // MARK: - Table View
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
-        if indexPath.row == 0 && plaidAccounts == nil || plaidAccounts.count < 1{
+        if indexPath.row == 0 && plaidAccounts == nil || plaidAccounts.count < 1 {
             cell = tableView.dequeueReusableCell(withIdentifier: "disabledCell")
             plaidInfoObject.loggedIn = false
             //self.AddBankLink.isHidden = false
@@ -244,8 +246,12 @@ class AccountSettingsVC: UIViewController, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if plaidAccounts == nil || plaidAccounts.count < 1{
-            return 1
+            tableView.isHidden = true
+            plaidInfoObject.loggedIn = false
+            return 0
         }else{
+            tableView.isHidden = false
+            plaidInfoObject.loggedIn = true
             return plaidAccounts.count
         }
     }

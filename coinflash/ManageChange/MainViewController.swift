@@ -93,6 +93,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        // Show banners with respect to coinbase and plaid linkage info
         if !HelperFunctions.isCoinbaseLoggedIn() && !HelperFunctions.isPlaidLoggedIn(){
             let banner = NotificationBanner(title: "", subtitle: "Connect your coinbase account and bank to start investing.", style: .danger)
             banner.show()
@@ -150,7 +151,7 @@ class MainViewController: UIViewController, UITableViewDataSource{
         if !globalSettings.investChange{
             self.LabelChangeTip?.text = "Investing Change Has Been Turned Off"
         }else{
-            print("Invest change is not off")
+            //print("Invest change is not off")
         }
     }
     
@@ -528,6 +529,10 @@ class MainViewController: UIViewController, UITableViewDataSource{
                     // Update the global vars with respect to the change:
                     //self.m_btc_percentage = Double(SliderValue)
                 }
+                
+                globalCoinflashUser3ResponseValue["right_side"].int = rightCurrencyCode
+                globalCoinflashUser3ResponseValue["left_side"].int = leftCurrencyCode
+                globalCoinflashUser3ResponseValue["btc_percentage"].string = String(100 - SliderValue)
                 SVProgressHUD.dismiss()
             case .failure:
                 //print(response.error as Any)

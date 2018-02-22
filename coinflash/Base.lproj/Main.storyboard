@@ -1632,6 +1632,7 @@
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="syc-EO-atS" firstAttribute="top" secondItem="RYU-nE-Nkd" secondAttribute="bottom" constant="-1" id="0PO-8Y-348"/>
                                     <constraint firstAttribute="trailing" secondItem="r3i-pe-kmq" secondAttribute="trailing" constant="8" id="0UJ-hV-Mmj"/>
@@ -1674,7 +1675,7 @@
                                     <constraint firstItem="Qw9-c0-4cb" firstAttribute="top" secondItem="XKJ-9o-qqW" secondAttribute="bottom" constant="8" id="xsD-fj-avV"/>
                                 </constraints>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="wuD-KB-uza" appends="YES" id="GsT-oN-jVN"/>
+                                    <outletCollection property="gestureRecognizers" destination="WZi-kQ-eMX" appends="YES" id="8zm-8b-eGw"/>
                                 </connections>
                             </scrollView>
                         </subviews>
@@ -1721,9 +1722,10 @@
                         <action selector="didTapOnCurrenyPickerWithSender:" destination="vXF-hv-nJU" id="dcA-jb-xHI"/>
                     </connections>
                 </tapGestureRecognizer>
-                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="wuD-KB-uza">
+                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="WZi-kQ-eMX">
+                    <rectEdge key="edges" left="YES"/>
                     <connections>
-                        <action selector="didPerformScreenEdgePanGestureWithGesture:" destination="vXF-hv-nJU" id="egm-5k-q1A"/>
+                        <action selector="didPerformScreenEdgePanGestureWithGesture:" destination="vXF-hv-nJU" id="Nl7-7X-GYo"/>
                     </connections>
                 </screenEdgePanGestureRecognizer>
             </objects>
@@ -1864,7 +1866,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="Wgw-bi-El7">
-                                <rect key="frame" x="-0.5" y="10" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="10" width="375" height="667"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hRE-X9-uJS">
                                 <rect key="frame" x="0.0" y="20" width="375" height="52"/>
@@ -1877,7 +1879,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6B-aL-Ha1">
-                                        <rect key="frame" x="119" y="14.5" width="137" height="23.5"/>
+                                        <rect key="frame" x="119" y="14" width="137" height="24"/>
                                         <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="17"/>
                                         <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1926,19 +1928,19 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXP-Ph-oIX">
-                                <rect key="frame" x="25.5" y="243" width="39.5" height="23.5"/>
+                                <rect key="frame" x="25" y="243" width="40" height="24"/>
                                 <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="0.031372549019607843" green="0.30980392156862746" blue="0.62352941176470589" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coinbase" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYU-8W-m6Q">
-                                <rect key="frame" x="294" y="243" width="74" height="23.5"/>
+                                <rect key="frame" x="294" y="243" width="74" height="24"/>
                                 <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ysO-Ic-2rS">
-                                <rect key="frame" x="0.0" y="269" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="269" width="375" height="1"/>
                                 <color key="backgroundColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="Qxu-mP-x4S"/>
@@ -1957,13 +1959,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bankBlue" translatesAutoresizingMaskIntoConstraints="NO" id="baJ-Sm-Z22">
-                                                    <rect key="frame" x="8" y="-1" width="55" height="45.5"/>
+                                                    <rect key="frame" x="8" y="-0.5" width="55" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="Dxu-oZ-e2C"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City Bank" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DGu-wp-2qQ">
-                                                    <rect key="frame" x="79" y="8" width="72.5" height="5.5"/>
+                                                    <rect key="frame" x="79" y="8" width="73" height="6"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                                                     <color key="textColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1979,7 +1981,7 @@
                                                     <state key="normal" image="bankDelete"/>
                                                 </button>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GDH-pq-xof">
-                                                    <rect key="frame" x="301" y="10.5" width="21" height="22"/>
+                                                    <rect key="frame" x="301" y="11" width="21" height="22"/>
                                                     <state key="normal" image="bankRepeat"/>
                                                 </button>
                                             </subviews>
@@ -2064,7 +2066,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y2S-Pc-HDg">
-                                <rect key="frame" x="0.0" y="468" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="468" width="375" height="1"/>
                                 <color key="backgroundColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="hMA-fM-kbe"/>
@@ -2084,27 +2086,27 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coinbase Not Linked" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PlE-aS-C4e">
-                                <rect key="frame" x="80" y="509" width="226" height="23.5"/>
+                                <rect key="frame" x="80" y="509" width="227" height="24"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hRq-bz-VJn">
-                                <rect key="frame" x="0.0" y="572" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="572" width="375" height="1"/>
                                 <color key="backgroundColor" red="0.031372549020000001" green="0.30980392159999998" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="IyU-uP-fhD"/>
                                 </constraints>
                             </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysH-wV-Qx0">
-                                <rect key="frame" x="15" y="557" width="141" height="31"/>
+                                <rect key="frame" x="15" y="557" width="346" height="31"/>
                                 <state key="normal" image="addCoinbase"/>
                                 <connections>
                                     <action selector="didTapOnAddCoinbaseButtonWithSender:" destination="1mL-Jc-yYf" eventType="touchUpInside" id="uJQ-nU-ua8"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4N-tD-3d3">
-                                <rect key="frame" x="314" y="504" width="35" height="34"/>
+                                <rect key="frame" x="315" y="504" width="35" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="SrR-L9-KLE"/>
                                     <constraint firstAttribute="width" constant="35" id="TJB-Ch-JZU"/>
@@ -2120,6 +2122,7 @@
                         <constraints>
                             <constraint firstItem="G9M-M5-B2B" firstAttribute="top" secondItem="LHk-sl-Zq1" secondAttribute="bottom" constant="8" id="09g-sv-Pbo"/>
                             <constraint firstItem="ysH-wV-Qx0" firstAttribute="leading" secondItem="biu-qR-UdG" secondAttribute="leading" constant="15" id="0Sr-un-nFX"/>
+                            <constraint firstItem="ysH-wV-Qx0" firstAttribute="top" secondItem="G9M-M5-B2B" secondAttribute="bottom" constant="8" symbolic="YES" id="0wE-Ei-3b8"/>
                             <constraint firstItem="biu-qR-UdG" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5rS-uU-nfj" secondAttribute="trailing" constant="44" id="46L-0A-KTf"/>
                             <constraint firstItem="WR1-gl-P8u" firstAttribute="centerX" secondItem="biu-qR-UdG" secondAttribute="centerX" id="4zJ-O8-DQr"/>
                             <constraint firstItem="biu-qR-UdG" firstAttribute="trailing" secondItem="y2S-Pc-HDg" secondAttribute="trailing" id="5g5-EG-Dna"/>
@@ -2129,6 +2132,7 @@
                             <constraint firstItem="biu-qR-UdG" firstAttribute="trailing" secondItem="i8D-Kq-3Ee" secondAttribute="trailing" constant="8" id="BEW-C8-D6P"/>
                             <constraint firstItem="ysO-Ic-2rS" firstAttribute="centerX" secondItem="biu-qR-UdG" secondAttribute="centerX" id="Bk6-rM-gjg"/>
                             <constraint firstItem="LHk-sl-Zq1" firstAttribute="leading" secondItem="biu-qR-UdG" secondAttribute="leading" constant="15" id="Dh9-ra-xMh"/>
+                            <constraint firstItem="ysH-wV-Qx0" firstAttribute="centerX" secondItem="Wgw-bi-El7" secondAttribute="centerX" id="F7k-Ow-set"/>
                             <constraint firstItem="V8D-Si-3ec" firstAttribute="top" secondItem="5rS-uU-nfj" secondAttribute="bottom" constant="8" id="FSZ-de-oF7"/>
                             <constraint firstItem="IXP-Ph-oIX" firstAttribute="centerX" secondItem="V8D-Si-3ec" secondAttribute="centerX" id="I8X-QV-Ecd"/>
                             <constraint firstItem="biu-qR-UdG" firstAttribute="bottom" secondItem="hRq-bz-VJn" secondAttribute="bottom" constant="94.5" id="JIR-yp-NRN"/>
@@ -2144,7 +2148,6 @@
                             <constraint firstItem="biu-qR-UdG" firstAttribute="trailing" secondItem="hRq-bz-VJn" secondAttribute="trailing" id="XLE-ez-Ini"/>
                             <constraint firstItem="biu-qR-UdG" firstAttribute="trailing" secondItem="hRE-X9-uJS" secondAttribute="trailing" id="YPP-kX-kkV"/>
                             <constraint firstItem="y2S-Pc-HDg" firstAttribute="leading" secondItem="biu-qR-UdG" secondAttribute="leading" id="abW-pA-gm8"/>
-                            <constraint firstItem="ysH-wV-Qx0" firstAttribute="top" secondItem="G9M-M5-B2B" secondAttribute="bottom" constant="8" id="adg-hr-Tcq"/>
                             <constraint firstItem="WR1-gl-P8u" firstAttribute="top" secondItem="hRq-bz-VJn" secondAttribute="bottom" constant="23.5" id="alW-EN-sDe"/>
                             <constraint firstItem="LHk-sl-Zq1" firstAttribute="centerY" secondItem="y2S-Pc-HDg" secondAttribute="centerY" id="bCl-Do-Kyl"/>
                             <constraint firstItem="5rS-uU-nfj" firstAttribute="centerX" secondItem="biu-qR-UdG" secondAttribute="centerX" id="dT8-j8-BIe"/>
@@ -2296,8 +2299,8 @@
                                     <constraint firstAttribute="height" constant="56" id="gSt-EE-FRN"/>
                                 </constraints>
                             </view>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login expired. Kindly relogin." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKS-C1-0Ko">
-                                <rect key="frame" x="99.5" y="509" width="175" height="16"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKS-C1-0Ko">
+                                <rect key="frame" x="187" y="525" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.17485795020552697" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -2469,7 +2472,7 @@
         <image name="warning" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dy2-48-K8r"/>
-        <segue reference="I5M-EP-JW7"/>
+        <segue reference="sk6-yj-Zxu"/>
+        <segue reference="pdj-mW-GPu"/>
     </inferredMetricsTieBreakers>
 </document>

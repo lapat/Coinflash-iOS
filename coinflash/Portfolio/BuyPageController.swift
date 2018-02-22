@@ -935,7 +935,6 @@ class BuyPageController: UIViewController, UITableViewDataSource ,ChartViewDeleg
             changeThemeOfCrypto(selectedCurrency: .bitcoinCash)
         }
         
-        
         if cryptoTransactionInfoDic[index+1] == nil{
             DataToBeLoaded = [TCryptoInfo]()
         }else{

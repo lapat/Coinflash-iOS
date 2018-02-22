@@ -166,8 +166,8 @@ class LoginVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate{
                     alert.addAction(okayAction)
                     //self.present(alert, animated: true, completion: nil)
                     // Instead of alert just show the prompt label
-                    self.reloginPrompt.isHidden = false
-                    self.reloginPrompt.text = "Login expired. Kindly relogin."
+                    //self.reloginPrompt.isHidden = false
+                    //self.reloginPrompt.text = "Login expired. Kindly relogin."
                     HelperFunctions.updateVariablesForUserLoggingOut()
                     return
                 }
@@ -249,14 +249,14 @@ extension LoginVC: LoginButtonDelegate{
                     SVProgressHUD.dismiss()
                     let data = response.result.value as! [String: Any]
                     //print(response)
-                    if data["Invalid ID token"] != nil{
+                    if data["Invalid ID token"] != nil || data["user_id_mobile"] == nil{
                         // make user login again
                         let alert = UIAlertController(title: "Error", message: "Kindly login again", preferredStyle: UIAlertControllerStyle.alert)
                         let okayAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil)
                         alert.addAction(okayAction)
                         //self.present(alert, animated: true, completion: nil)
-                        self.reloginPrompt.isHidden = false
-                        self.reloginPrompt.text = "Login expired. Kindly relogin."
+                        //self.reloginPrompt.isHidden = false
+                        //self.reloginPrompt.text = "Login expired. Kindly relogin."
                         HelperFunctions.updateVariablesForUserLoggingOut()
                         return
                     }
