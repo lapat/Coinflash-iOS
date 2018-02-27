@@ -241,11 +241,12 @@ class MainViewController: UIViewController, UITableViewDataSource{
                 
                 // SET THE SLIDER VALUE VIA BTC_PERCENTAGE
                 if globalCoinflashUser3ResponseValue["btc_percentage"] != JSON.null{
-                    
                     let sliderProgress = Float(globalCoinflashUser3ResponseValue["btc_percentage"].string!)!;
                     let leftCurrency = HelperFunctions.getCryptoCurrencyFromServerCode(code: globalCoinflashUser3ResponseValue["left_side"].int!)
                     let rightCurrency = HelperFunctions.getCryptoCurrencyFromServerCode(code: globalCoinflashUser3ResponseValue["right_side"].int!)
-                    self.updateCryptoInvestmentSlider(value: sliderProgress, leftCurrency: leftCurrency, rightCurrency: rightCurrency)
+                    if showLoader == true{
+                        self.updateCryptoInvestmentSlider(value: sliderProgress, leftCurrency: leftCurrency, rightCurrency: rightCurrency)
+                    }
                 }
                 
                 if coinbaseNeedsRelinking == true && plaidNeedsRelinking == true{
@@ -391,7 +392,9 @@ class MainViewController: UIViewController, UITableViewDataSource{
                             let sliderProgress = Float(globalCoinflashUser3ResponseValue["btc_percentage"].string!)!;
                             let leftCurrency = HelperFunctions.getCryptoCurrencyFromServerCode(code: globalCoinflashUser3ResponseValue["left_side"].int!)
                             let rightCurrency = HelperFunctions.getCryptoCurrencyFromServerCode(code: globalCoinflashUser3ResponseValue["right_side"].int!)
-                            self.updateCryptoInvestmentSlider(value: sliderProgress, leftCurrency: leftCurrency, rightCurrency: rightCurrency)
+                            if showLoader == true{
+                                self.updateCryptoInvestmentSlider(value: sliderProgress, leftCurrency: leftCurrency, rightCurrency: rightCurrency)
+                            }
                             //self.m_spare_change_accrued = Double(round(100 * self.m_spare_change_accrued_percent_to_invest)/100)
                         }
                         if user_preferences["percent_to_invest"] != nil{
@@ -484,7 +487,9 @@ class MainViewController: UIViewController, UITableViewDataSource{
                         }
                         
                         self.ccTransationTableView?.reloadData()
+                    if showLoader == true{
                         self.updateViewInvestmentInformation()
+                    }
                         SVProgressHUD.dismiss()
                         
                 case .failure:
