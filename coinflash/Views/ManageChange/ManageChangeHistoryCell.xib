@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="TSTAR-PRO-Bold.otf">
+            <string>TSTARPRO-Bold</string>
+        </array>
+        <array key="TSTAR-PRO-Medium.otf">
+            <string>TSTARPRO-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="74" id="KGk-i7-Jjw" customClass="ManageChangeHistoryCell" customModule="coinflash" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="73.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" text="$0.87" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxK-LW-8Pd">
+                        <rect key="frame" x="267.5" y="10" width="37.5" height="16"/>
+                        <fontDescription key="fontDescription" name="TSTARPRO-Bold" family="TSTAR PRO" pointSize="16"/>
+                        <color key="textColor" red="0.31372549019607843" green="0.8901960784313725" blue="0.76078431372549016" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="3h ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9D-YI-ef6">
+                        <rect key="frame" x="217" y="10" width="40.5" height="16"/>
+                        <fontDescription key="fontDescription" name="TSTARPRO-Medium" family="TSTAR PRO" pointSize="14"/>
+                        <color key="textColor" red="0.34509803921568627" green="0.34509803921568627" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tlM-qo-gk7">
+                        <rect key="frame" x="15" y="10" width="38" height="16"/>
+                        <fontDescription key="fontDescription" name="TSTARPRO-Medium" family="TSTAR PRO" pointSize="16"/>
+                        <color key="textColor" red="0.14509803921568626" green="0.14509803921568626" blue="0.14509803921568626" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="L9D-YI-ef6" firstAttribute="centerY" secondItem="tlM-qo-gk7" secondAttribute="centerY" id="0DA-JA-tJM"/>
+                    <constraint firstAttribute="trailing" secondItem="zxK-LW-8Pd" secondAttribute="trailing" constant="15" id="7Um-wN-xlk"/>
+                    <constraint firstItem="zxK-LW-8Pd" firstAttribute="leading" secondItem="L9D-YI-ef6" secondAttribute="trailing" constant="10" id="Qgh-x6-r8M"/>
+                    <constraint firstItem="L9D-YI-ef6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tlM-qo-gk7" secondAttribute="trailing" constant="5" id="Uu0-n4-4tL"/>
+                    <constraint firstItem="L9D-YI-ef6" firstAttribute="top" secondItem="tlM-qo-gk7" secondAttribute="top" id="VVN-n5-FxC"/>
+                    <constraint firstItem="tlM-qo-gk7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="cdX-B9-c93"/>
+                    <constraint firstItem="tlM-qo-gk7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="lGy-I5-0BJ"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="tlM-qo-gk7" secondAttribute="bottom" constant="10" id="vFt-mU-UgA"/>
+                    <constraint firstItem="zxK-LW-8Pd" firstAttribute="centerY" secondItem="L9D-YI-ef6" secondAttribute="centerY" id="xFy-Gl-EWr"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dateLabel" destination="L9D-YI-ef6" id="zJy-xp-UQ7"/>
+                <outlet property="nameLabel" destination="tlM-qo-gk7" id="WCN-ti-Pkk"/>
+                <outlet property="valueLabel" destination="zxK-LW-8Pd" id="oh2-k6-VBN"/>
+            </connections>
+            <point key="canvasLocation" x="25" y="67"/>
+        </tableViewCell>
+    </objects>
+</document>

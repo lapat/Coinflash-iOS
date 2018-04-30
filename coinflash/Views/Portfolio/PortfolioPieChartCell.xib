@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="TSTAR-PRO-Bold.otf">
+            <string>TSTARPRO-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="275" id="KGk-i7-Jjw" customClass="PortfolioPieChartCell" customModule="coinflash" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="275"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="274.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VaK-Bf-nRq">
+                        <rect key="frame" x="90" y="15" width="140" height="140"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="140" id="3fH-9N-KS8"/>
+                            <constraint firstAttribute="height" constant="140" id="mcA-ql-GzE"/>
+                        </constraints>
+                    </view>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Blf-eI-M8t">
+                        <rect key="frame" x="40" y="170" width="240" height="28"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="● BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAU-6J-Yer">
+                                <rect key="frame" x="0.0" y="0.0" width="60" height="28"/>
+                                <fontDescription key="fontDescription" name="TSTARPRO-Bold" family="TSTAR PRO" pointSize="14"/>
+                                <color key="textColor" red="0.31372549020000001" green="0.89019607840000003" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="● ETH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uvk-Yf-4TC">
+                                <rect key="frame" x="60" y="0.0" width="60" height="28"/>
+                                <fontDescription key="fontDescription" name="TSTARPRO-Bold" family="TSTAR PRO" pointSize="14"/>
+                                <color key="textColor" red="0.36078431370000003" green="0.64313725489999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="● LTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5hE-3x-wbB">
+                                <rect key="frame" x="120" y="0.0" width="60" height="28"/>
+                                <fontDescription key="fontDescription" name="TSTARPRO-Bold" family="TSTAR PRO" pointSize="14"/>
+                                <color key="textColor" red="1" green="0.80784313730000001" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="● BCH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bV0-EN-Ufu">
+                                <rect key="frame" x="180" y="0.0" width="60" height="28"/>
+                                <fontDescription key="fontDescription" name="TSTARPRO-Bold" family="TSTAR PRO" pointSize="14"/>
+                                <color key="textColor" red="1" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="VzW-xU-Ykt"/>
+                            <constraint firstAttribute="width" constant="240" id="jrG-Oz-w5O"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="VaK-Bf-nRq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="6jj-w3-AUu"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Blf-eI-M8t" secondAttribute="bottom" constant="20" id="9by-LO-bwd"/>
+                    <constraint firstItem="Blf-eI-M8t" firstAttribute="top" secondItem="VaK-Bf-nRq" secondAttribute="bottom" constant="15" id="jxf-uU-8LD"/>
+                    <constraint firstItem="VaK-Bf-nRq" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="k6S-cI-8Kh"/>
+                    <constraint firstItem="Blf-eI-M8t" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="oAx-T3-0Mi"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="chartContainer" destination="VaK-Bf-nRq" id="6Ik-iy-ARe"/>
+            </connections>
+            <point key="canvasLocation" x="25" y="167.5"/>
+        </tableViewCell>
+    </objects>
+</document>

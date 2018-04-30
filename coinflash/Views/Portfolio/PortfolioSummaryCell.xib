@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="TSTAR-PRO-Bold.otf">
+            <string>TSTARPRO-Bold</string>
+        </array>
+        <array key="TSTAR-PRO-Medium.otf">
+            <string>TSTARPRO-Medium</string>
+        </array>
+        <array key="TSTAR-PRO-Regular.otf">
+            <string>TSTARPRO-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="511" id="KGk-i7-Jjw" customClass="PortfolioSummaryCell" customModule="coinflash" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="511"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="510.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YOUR CHANGE HAS BOUGHT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvs-QL-XyI">
+                        <rect key="frame" x="20" y="35" width="280" height="12"/>
+                        <fontDescription key="fontDescription" name="TSTARPRO-Bold" family="TSTAR PRO" pointSize="12"/>
+                        <color key="textColor" red="0.70980392156862748" green="0.70980392156862748" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7FM-vw-LEG">
+                        <rect key="frame" x="20" y="62" width="280" height="16"/>
+                        <fontDescription key="fontDescription" name="TSTARPRO-Medium" family="TSTAR PRO" pointSize="16"/>
+                        <color key="textColor" red="0.14509803921568626" green="0.14509803921568626" blue="0.14509803921568626" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+0.00 Net Gain" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHl-aP-gaH">
+                        <rect key="frame" x="20" y="145" width="280" height="16"/>
+                        <fontDescription key="fontDescription" name="TSTARPRO-Bold" family="TSTAR PRO" pointSize="16"/>
+                        <color key="textColor" red="0.31372549019607843" green="0.8901960784313725" blue="0.76078431372549016" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DHa-iU-41s">
+                        <rect key="frame" x="20" y="90" width="280" height="40"/>
+                        <fontDescription key="fontDescription" name="TSTARPRO-Regular" family="TSTAR PRO" pointSize="40"/>
+                        <color key="textColor" red="0.14509803921568626" green="0.14509803921568626" blue="0.14509803921568626" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="DHa-iU-41s" secondAttribute="trailing" constant="20" id="14D-ar-Fqf"/>
+                    <constraint firstAttribute="trailing" secondItem="gvs-QL-XyI" secondAttribute="trailing" constant="20" id="BI0-o0-OhY"/>
+                    <constraint firstAttribute="trailing" secondItem="7FM-vw-LEG" secondAttribute="trailing" constant="20" id="DAF-nT-Ps4"/>
+                    <constraint firstItem="gvs-QL-XyI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="35" id="Fcv-sM-ZkG"/>
+                    <constraint firstItem="gvs-QL-XyI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="VjY-vJ-5jz"/>
+                    <constraint firstItem="RHl-aP-gaH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Y9k-sp-1jY"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RHl-aP-gaH" secondAttribute="bottom" constant="20" id="dGA-6G-sQt"/>
+                    <constraint firstItem="DHa-iU-41s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="ihD-7p-3hd"/>
+                    <constraint firstItem="RHl-aP-gaH" firstAttribute="top" secondItem="DHa-iU-41s" secondAttribute="bottom" constant="15" id="l7k-4c-eCR"/>
+                    <constraint firstItem="DHa-iU-41s" firstAttribute="top" secondItem="7FM-vw-LEG" secondAttribute="bottom" constant="12" id="nNB-6c-GDY"/>
+                    <constraint firstItem="7FM-vw-LEG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="pqv-NT-6qi"/>
+                    <constraint firstAttribute="trailing" secondItem="RHl-aP-gaH" secondAttribute="trailing" constant="20" id="tZE-9s-upC"/>
+                    <constraint firstItem="7FM-vw-LEG" firstAttribute="top" secondItem="gvs-QL-XyI" secondAttribute="bottom" constant="15" id="ywZ-KR-xDH"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dollarLabel" destination="7FM-vw-LEG" id="F0k-Jv-dJy"/>
+                <outlet property="netGainLabel" destination="RHl-aP-gaH" id="pq3-sE-47F"/>
+                <outlet property="valueLabel" destination="DHa-iU-41s" id="Pjc-Kb-sAT"/>
+            </connections>
+            <point key="canvasLocation" x="25" y="285.5"/>
+        </tableViewCell>
+    </objects>
+</document>
