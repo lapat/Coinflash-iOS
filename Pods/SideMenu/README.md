@@ -31,6 +31,8 @@ Check out the example project to see it in action!
 | ![](etc/SlideOut.gif) | ![](etc/SlideIn.gif) | ![](etc/Dissolve.gif) | ![](etc/InOut.gif) |
 
 ## Requirements
+- [x] Xcode 9.
+- [x] Swift 4.
 - [x] iOS 8 or higher.
 
 ## Installation
@@ -126,7 +128,7 @@ dismiss(animated: true, completion: nil)
 That's it.
 ### Customization
 #### SideMenuManager
-Just type ` SideMenuManager.default.menu...` and code completion will show you everything you can customize (defaults are shown below for reference):
+Just type ` SideMenuManager.default.menu...` and code completion will show you everything you can customize (for Objective-C, use `SideMenuManager.defaultManager.menu...`). Defaults values are shown below for reference:
 ``` swift
 /**
 The push style of the menu.
@@ -224,6 +226,9 @@ of the view controller being presented in storyboard or during its initalization
 */
 open var menuDismissOnPush = true
 
+/// Forces menus to always animate when appearing or disappearing, regardless of a pushed view controller's animation.
+open var menuAlwaysAnimate = false
+
 /**
 The blur effect style of the menu if the menu's root view controller is a UITableViewController or UICollectionViewController.
 
@@ -294,6 +299,7 @@ extension MyViewController: UISideMenuNavigationControllerDelegate {
 
 }
 ```
+*Note: setting the  `sideMenuDelegate` property on `UISideMenuNavigationController` is optional. If your view controller adheres to the protocol then the methods will be called automatically.*
 ### Advanced
 For simplicity, `SideMenuManager.default` serves as the primary instance as most projects will only need one menu across all screens. If you need to show a different SideMenu, such as from a modal view controller presented from a previous SideMenu, do the following:
 1. Declare a variable containing your custom `SideMenuManager` instance. You may want it to define it globally and configure it in your app delegate if menus will be used on multiple screens.
@@ -325,7 +331,8 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 ```
 *Important: displaying SideMenu instances directly over each other is not supported. Use `menuPushStyle = .subMenu` instead.*
 ## Known Issues
-Don't try to change the status bar appearance when presenting a menu. When used with quick gestures/animations, it causes the presentation animation to not complete properly and locks the UI. This was fixed in iOS 9.3. See [radar 21961293](http://www.openradar.me/21961293) for more information.
+* Issue [#258](https://github.com/jonkykong/SideMenu/issues/258).
+* Don't try to change the status bar appearance when presenting a menu. When used with quick gestures/animations, it causes the presentation animation to not complete properly and locks the UI. This was fixed in iOS 9.3. See [radar 21961293](http://www.openradar.me/21961293) for more information.
 
 ## Thank You
 A special thank you to everyone that has [contributed](https://github.com/jonkykong/SideMenu/graphs/contributors) to this library to make it better. Your support is appreciated!

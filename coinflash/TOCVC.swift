@@ -8,11 +8,13 @@
 
 import UIKit
 import WebKit
+import Alamofire
+import SwiftyJSON
 
-class TOCVC: UIViewController {
+class TOCVC: UIViewController, MainStoryboardInstance {
 
     @IBOutlet weak var acceptButton: UIButton!
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var webView: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,24 +29,27 @@ class TOCVC: UIViewController {
     }
     
     @IBAction func didTapOnAcceptTOCButton(sende: UIButton){
-        HelperFunctions.userAcceptedTOC()
-        self.performSegue(withIdentifier: "mainPageSegue", sender: self)
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        let parameters: [String: String] = [
+            "mobile_secret" : user_mobile_secret,
+            "user_id_mobile" : user_id_mobile,
+            "mobile_access_token" : user_mobile_access_token,
+            "accept_tos": "true"
+        ]
+        showHUD()
+        Alamofire.request("https://coinflashapp.com/coinflashuser7/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseData { response in
+            hideHUD()
+            switch response.result {
+            case .success(_):
+                
+                HelperFunctions.userAcceptedTOC()
+                AppDelegate.checkOnboardStatus()
+            case .failure(_):
+                self.showAlert(title: "Error", message: "Network error. Please try again")
+            }
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

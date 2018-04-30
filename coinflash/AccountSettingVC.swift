@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import coinbase_official
 import SVProgressHUD
 import Alamofire
 import SwiftyJSON

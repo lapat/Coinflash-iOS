@@ -8,9 +8,11 @@
 
 import UIKit
 import SideMenu
-import coinbase_official
 import LinkKit
 import SVProgressHUD
+import ESTabBarController_swift
+import FBSDKCoreKit
+import SwiftyStoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,9 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
         
-        // Setting up the side menu
-        SideMenuManager.menuEnableSwipeGestures = true
-        
         HelperFunctions.loadNSUserDefaults()
         
         // Plaid Configuration
@@ -40,7 +39,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         SVProgressHUD.setDefaultMaskType(.black)
         
-       return true
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        checkLogin()
+        
+        window?.makeKeyAndVisible()
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
+            for purchase in purchases {
+                if purchase.transaction.transactionState == .purchased || purchase.transaction.transactionState == .restored {
+                    if purchase.needsFinishTransaction {
+                        // Deliver content from server, then:
+                        SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    }
+                    // print("purchased: \(purchase)")
+                }
+            }
+        }
+        
+        return true
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -69,6 +87,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        if handled {
+            return handled
+        }
         if url.scheme == "com.coinbasepermittedcoinflash.apps.coinflash-12345678"{
             CoinbaseOAuth.finishAuthentication(for: url, clientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", clientSecret: "c1206329ae9c879294696544da3406d83754a350c33920266279210389971278", completion: { (result, error) in
                 if error != nil {
@@ -92,7 +114,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
-        print("outside if \(url.scheme)")
+        if url.scheme == "com.googleusercontent.apps.678747170744-6o53mljo3a5q9o9avn6jvbm1r7vsjtv9"{
+            return GIDSignIn.sharedInstance().handle(url,
+                                                     sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                     annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        }
         return true
     }
     
@@ -120,7 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setupPlaidWithCustomConfiguration() {
         // <!-- SMARTDOWN_SETUP_CUSTOM -->
         // With custom configuration
-        let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .production, product: .auth)
+        let linkConfiguration = PLKConfiguration(key: "93bf429075d0e7ff0fc28750127c45", env: .production, product: .transactions)
         linkConfiguration.clientName = ""
         PLKPlaidLink.setup(with: linkConfiguration) { (success, error) in
             if (success) {
@@ -140,4 +166,79 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+extension AppDelegate {
+    fileprivate func checkLogin() {
+        if user_isLoggedIn {
+            let coinbaseLinked = HelperFunctions.isCoinbaseLoggedIn()
+            let plaidLinked = HelperFunctions.isPlaidLoggedIn()
+            
+            if !coinbaseLinked {
+                let vc = LinkAccountStartViewController.storyboardInstance() as LinkAccountStartViewController
+                setRootVC(vc: vc)
+            } else if !plaidLinked, coinbaseLinked {
+                let vc = LinkCardStartViewController.storyboardInstance() as LinkCardStartViewController
+                setRootVC(vc: vc)
+            } else {
+                goToMainPage()
+            }
+        } else {
+            goToLoginPage()
+        }
+    }
+    
+    func goToLoginPage() {
+        let loginVC = SignInViewController.storyboardInstance() as SignInViewController
+        setRootVC(vc: loginVC)
+    }
+    
+    private func setRootVC(vc: UIViewController) {
+        let navigationVC = UINavigationController(rootViewController: vc)
+        navigationVC.isNavigationBarHidden = true
+        window?.rootViewController = navigationVC
+    }
+    
+    func goToMainPage() {
+        let vc2 = ManageChangeViewController.storyboardInstance() as ManageChangeViewController
+        let vc1 = PortfolioViewController.storyboardInstance() as PortfolioViewController
+        let vc3 = SettingsViewController.storyboardInstance() as SettingsViewController
+        vc1.tabBarItem = ESTabBarItem.init(BasicTabbarContentView(), title: "Portfolio", image: UIImage.init(named: "portfolio_icon"), selectedImage: UIImage.init(named: "portfolio_icon_selected"))
+        vc2.tabBarItem = ESTabBarItem.init(BasicTabbarContentView(), title: "Manage", image: UIImage.init(named: "list"), selectedImage: UIImage.init(named: "list_selected"))
+        vc3.tabBarItem = ESTabBarItem.init(BasicTabbarContentView(), title: "Settings", image: UIImage.init(named: "settings"), selectedImage: UIImage.init(named: "settings_selected"))
+        let tabbarVc = ESTabBarController()
+        tabbarVc.viewControllers = [vc2, vc1, vc3]
+        tabbarVc.tabBar.barTintColor = UIColor.white
+        
+        let rootNav = UINavigationController(rootViewController: tabbarVc)
+        rootNav.isNavigationBarHidden = true
+        window?.rootViewController = rootNav
+    }
+    
+    class func goToMainPage() {
+        guard let app = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        app.goToMainPage()
+    }
+    
+    class func checkOnboardStatus() {
+        guard let app = UIApplication.shared.delegate as? AppDelegate,
+            let nav = app.window?.rootViewController as? UINavigationController else {
+            return
+        }
+        let coinbaseLinked = HelperFunctions.isCoinbaseLoggedIn()
+        let plaidLinked = HelperFunctions.isPlaidLoggedIn()
+        if !coinbaseLinked {
+            let vc = LinkAccountStartViewController.storyboardInstance() as LinkAccountStartViewController
+            nav.viewControllers = [vc]
+        } else if !plaidLinked {
+            let vc = LinkCardStartViewController.storyboardInstance() as LinkCardStartViewController
+            nav.viewControllers = [vc]
+        } else {
+            goToMainPage()
+        }
+    }
+}
+
+
 

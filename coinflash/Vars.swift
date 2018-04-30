@@ -20,13 +20,14 @@ var user_onboard_status: OnBoardStatus!
 
 var googleUser: GIDGoogleUser!
 var globalCoinflashUser3ResponseValue: JSON!
+var globalCCTransactionUserResponseValue: JSON!
 
 var GraphOptionSelected : Int = 0
 var isGraphOptionSelected : Bool = false
 
 
 
-enum OnBoardStatus{
+enum OnBoardStatus: Int{
     case didNotAcceptTOC
     case agreedTOCNoPlaidOrCoinbase
     case linkedPlaidButNoCoinbase
@@ -41,6 +42,7 @@ struct GlobalSettings{
     enum InvestChangeHowOften{
         case monthly
         case weekly
+        case daily
     }
     var percentOfChangeToInvest: Int!
     var capOnInvestment: Int!
@@ -83,12 +85,26 @@ struct TCryptoInfo{
     var TCryptoInfo_Date: String!
     var TCryptoInfo_type: String!
     var TCryptoInfo_Value: String!
+    var currency: CryptoCurrency!
     init(){
         TCryptoInfo_crypto = ""
         TCryptoInfo_price = ""
         TCryptoInfo_Date = ""
         TCryptoInfo_type = ""
         TCryptoInfo_Value = ""
+    }
+    
+    init(json: JSON) {
+        TCryptoInfo_crypto = json["coinbase_crypto_amount"].stringValue
+        TCryptoInfo_price = json["coinbase_total_amount_spent"].stringValue
+        TCryptoInfo_Value = json["coinbase_amount_spent_on_crypto"].stringValue
+        TCryptoInfo_Date = json["coinbase_time_transaction_will_payout"].stringValue
+        TCryptoInfo_type = json["crypto_type"].stringValue
+        
+        var date: String = TCryptoInfo_Date
+        var truncated = String(date.characters.dropFirst(5))
+        truncated = String(truncated.characters.dropLast(10))
+        TCryptoInfo_Date = truncated
     }
 }
 var cctransaction_global: TRansactionInfo! = TRansactionInfo()
@@ -113,7 +129,6 @@ struct CoinbaseInfo{
 
 var coinbaseInfoObject: CoinbaseInfo = CoinbaseInfo()
 
-
 // MARK: - Plaid
 struct BankAccount{
     var name: String!
@@ -130,3 +145,19 @@ struct PlaidInfo{
     }
 }
 var plaidInfoObject: PlaidInfo = PlaidInfo()
+
+
+//MARK:- CryptoCurrency
+enum CryptoCurrency: String{
+    case bitcoin = "Bitcoin"
+    case ether = "Ether"
+    case litecoin = "Lietcoin"
+    case bitcoinCash = "BitcoinCash"
+    case unknown = "Unknown"
+}
+
+let btcColor = UIColor.hexColor(hex: "50E3C2")
+let ethColor = UIColor.hexColor(hex: "5CA4FF")
+let bchColor = UIColor.hexColor(hex: "FFCE71")
+let ltcColor = UIColor.hexColor(hex: "FF7171")
+

@@ -17,8 +17,8 @@ extension Notification.Name {
 
 class HelperFunctions: NSObject {
 
-    static func saveLoginInfo(user: GIDGoogleUser, userIdMobile: String!, mobileAccessToken: String!, onboardStatus: String!){
-        googleUser = user
+    static func saveLoginInfo(userIdMobile: String!, mobileAccessToken: String!, onboardStatus: String!){
+        
         user_mobile_access_token = mobileAccessToken
         user_id_mobile = userIdMobile
         user_isLoggedIn = true
@@ -54,12 +54,13 @@ class HelperFunctions: NSObject {
     }
     
     static func updateVariablesForUserLoggingOut(){
-        googleUser = nil
         user_mobile_access_token = ""
         user_id_mobile = ""
         user_isLoggedIn = false
         GIDSignIn.sharedInstance().signOut()
         //self.saveNSUserDefaults()
+        user_onboard_status = OnBoardStatus.agreedTOCNoPlaidOrCoinbase
+        saveOnboardStatus()
     }
     
     static func userAcceptedTOC(){
@@ -93,7 +94,7 @@ class HelperFunctions: NSObject {
     static func isCoinbaseLoggedIn() -> Bool{
         if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase || user_onboard_status == OnBoardStatus.linkedCoinbaseButNoPlaid{
             return true
-        }else{
+        } else{
             return false
         }
     }
@@ -105,6 +106,7 @@ class HelperFunctions: NSObject {
         if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
             user_onboard_status = OnBoardStatus.linkedPlaidButNoCoinbase
         }
+        saveOnboardStatus()
     }
     
     static func manageCoinBaseLinking(){
@@ -114,6 +116,7 @@ class HelperFunctions: NSObject {
         if user_onboard_status == OnBoardStatus.linkedPlaidButNoCoinbase{
             user_onboard_status = OnBoardStatus.linkedPlaidAndCoinbase
         }
+        saveOnboardStatus()
     }
     
     // MARK: - Defaults
@@ -123,6 +126,7 @@ class HelperFunctions: NSObject {
         UserDefaults.standard.set(user_id_mobile, forKey: "user_id_mobile")
         UserDefaults.standard.set(user_mobile_access_token, forKey: "user_mobile_access_token")
         UserDefaults.standard.set(user_isLoggedIn, forKey: "user_isLoggedIn")
+        saveOnboardStatus()
         
         // save google user
         //let googleData  = NSKeyedArchiver.archivedData(withRootObject: googleUser)
@@ -134,12 +138,21 @@ class HelperFunctions: NSObject {
          */
     }
     
+    static func saveOnboardStatus() {
+        UserDefaults.standard.set(user_onboard_status.rawValue, forKey: "user_onboard_status")
+    }
+    
     // loads the nsuser defaults and save them to the vars
     static func loadNSUserDefaults(){
         user_id_token = UserDefaults.standard.value(forKey: "user_id_token") as? String
         user_id_mobile = UserDefaults.standard.value(forKey: "user_id_mobile") as? String
         user_mobile_access_token = UserDefaults.standard.value(forKey: "user_mobile_access_token") as? String
-        user_isLoggedIn = UserDefaults.standard.value(forKey: "user_isLoggedIn") as? Bool
+        user_isLoggedIn = UserDefaults.standard.bool(forKey: "user_isLoggedIn")
+        let onboard = UserDefaults.standard.integer(forKey: "user_onboard_status")
+        user_onboard_status = OnBoardStatus.agreedTOCNoPlaidOrCoinbase
+        if let val = OnBoardStatus(rawValue: onboard) {
+            user_onboard_status = val
+        }
         
         /*
         if let loadedData = UserDefaults.standard.value(forKey: "googleUser"){
@@ -198,6 +211,7 @@ class HelperFunctions: NSObject {
         if user_onboard_status == OnBoardStatus.linkedCoinbaseButNoPlaid{
             user_onboard_status = OnBoardStatus.linkedPlaidAndCoinbase
         }
+        saveOnboardStatus()
     }
     
     static func managePlaidDelinking(){
@@ -207,8 +221,18 @@ class HelperFunctions: NSObject {
         if user_onboard_status == OnBoardStatus.linkedPlaidAndCoinbase{
             user_onboard_status = OnBoardStatus.linkedCoinbaseButNoPlaid
         }
+        saveOnboardStatus()
     }
     
+    static func updateOnboardStatus(value: Int) {
+        if let status = OnBoardStatus(rawValue: value) {
+            user_onboard_status = status
+            saveOnboardStatus()
+            if user_onboard_status != OnBoardStatus.linkedPlaidAndCoinbase {
+                AppDelegate.checkOnboardStatus()
+            }
+        }
+    }
 }
 
 extension UIColor {
