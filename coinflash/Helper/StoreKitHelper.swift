@@ -40,6 +40,7 @@ class StoreKitHelper: NSObject {
              //   print(results)
                 self.validateReceiptWithCompletionHandler {
                     if self.monthlySubscriptionState == .valid{
+                        self.validateReceiptForSubscription()
                         completionClosure()
                     }else{
                         noPurchaseClosure()
