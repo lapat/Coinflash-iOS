@@ -920,8 +920,6 @@
 				3FCC02481F78F16700DD6558 /* Sources */,
 				3FCC02491F78F16700DD6558 /* Frameworks */,
 				3FCC024A1F78F16700DD6558 /* Resources */,
-				171FDB2D253F2B7FF4D3F841 /* [CP] Embed Pods Frameworks */,
-				EDE28C2B271BCBF531E030CD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -941,8 +939,6 @@
 				3FCC02531F78F16700DD6558 /* Sources */,
 				3FCC02541F78F16700DD6558 /* Frameworks */,
 				3FCC02551F78F16700DD6558 /* Resources */,
-				F272F710ED0413063B27371A /* [CP] Embed Pods Frameworks */,
-				7377508E9756873B7E6E25B9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1073,21 +1069,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		171FDB2D253F2B7FF4D3F841 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		64D8D8904EAB9D982E914F49 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1122,21 +1103,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7377508E9756873B7E6E25B9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflashUITests/Pods-coinflashUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		84549C962076258D002ACF54 /* remove link unused file */ = {
@@ -1235,36 +1201,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflash/Pods-coinflash-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EDE28C2B271BCBF531E030CD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflashTests/Pods-coinflashTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F272F710ED0413063B27371A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-coinflashUITests/Pods-coinflashUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
