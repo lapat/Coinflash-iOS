@@ -14,7 +14,6 @@ target 'coinflash' do
   pod 'Plaid', '1.1.1'
   pod 'SwiftyJSON'
   pod 'Toast-Swift', '~> 2.0.0'
-  pod 'SDWebImage'
   pod 'NotificationBannerSwift', '~> 1.4.4'
   pod 'ESTabBarController-swift'
   pod 'FacebookCore'

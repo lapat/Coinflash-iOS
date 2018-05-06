@@ -126,6 +126,10 @@ class HelperFunctions: NSObject {
         UserDefaults.standard.set(user_id_mobile, forKey: "user_id_mobile")
         UserDefaults.standard.set(user_mobile_access_token, forKey: "user_mobile_access_token")
         UserDefaults.standard.set(user_isLoggedIn, forKey: "user_isLoggedIn")
+        // save the expiry date
+        if StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate != nil{
+            UserDefaults.standard.set(StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate, forKey: "user_inapp_expirydate")
+        }
         saveOnboardStatus()
         
         // save google user
@@ -152,6 +156,9 @@ class HelperFunctions: NSObject {
         user_onboard_status = OnBoardStatus.agreedTOCNoPlaidOrCoinbase
         if let val = OnBoardStatus(rawValue: onboard) {
             user_onboard_status = val
+        }
+        if let date = UserDefaults.standard.value(forKey: "user_inapp_expirydate"){
+            StoreKitHelper.sharedInstance.monthlySubscriptionExpiryDate = date as! Date
         }
         
         /*

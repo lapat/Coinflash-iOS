@@ -23,6 +23,7 @@ class StoreKitHelper: NSObject {
     var monthlySubscriptionExpiryDate: Date?
     let monthlySubscriptionProductID = "monthly_subscription_1dollar"
     var monthlySubscriptionProductInfo: SKProduct? = nil
+    var localReciept: Data!
     
     private override init() {
         super.init()
@@ -61,11 +62,21 @@ class StoreKitHelper: NSObject {
     
     /// Tells if the user has a valid monthly subscription or not
     func userHasValidMonthlySubscription() -> Bool{
-        let receiptData = SwiftyStoreKit.localReceiptData
+        
+        SwiftyStoreKit.fetchReceipt(forceRefresh: true) { result in
+            switch result {
+            case .success(let receiptData):
+                self.localReciept = receiptData
+                let encryptedReceipt = receiptData.base64EncodedString(options: [])
+                print("Fetch receipt success:\n\(encryptedReceipt)")
+            case .error(let error):
+                print("Fetch receipt failed: \(error)")
+            }
+        }
         //print(receiptData)
         
       //  print(receiptData?.base64EncodedString(options: []))
-        if monthlySubscriptionExpiryDate != nil && receiptData != nil{
+        if monthlySubscriptionExpiryDate != nil && localReciept != nil{
             if monthlySubscriptionExpiryDate! > Date(){
                 return true
             }else{

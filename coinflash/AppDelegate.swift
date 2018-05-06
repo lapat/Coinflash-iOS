@@ -58,6 +58,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        SwiftyStoreKit.fetchReceipt(forceRefresh: false) { (result) in
+            SwiftyStoreKit.fetchReceipt(forceRefresh: true) { result in
+                switch result {
+                case .success(let receiptData):
+                    StoreKitHelper.sharedInstance.localReciept = receiptData
+                    let encryptedReceipt = receiptData.base64EncodedString(options: [])
+                    
+                    print("Fetch receipt success:\n\(encryptedReceipt)")
+                case .error(let error):
+                    print("Fetch receipt failed: \(error)")
+                }
+            }
+        }
         return true
     }
     
