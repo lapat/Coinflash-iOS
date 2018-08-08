@@ -162,11 +162,13 @@ class PreferencesViewController: UIViewController, MainNewStoryboardInstance {
     }
     
     func saveButtonPressed() {
+        
         let investChange = (investTypeSegment.selectedSegmentIndex == 0) ? 0 : 1
         let howOften: HowOftenType = investTypeSegment.selectedSegmentIndex == 1 ? .weekly : .monthly
         let tempChangeCapValue = Int(changeInvestSlider.value)
         let cap = handler.preference?.cap ?? ""
-        var parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,
+        let mobileSecret = String(describing: user_mobile_secret!)
+        var parameter: Parameters = ["mobile_secret": mobileSecret, "user_id_mobile": String(describing:user_id_mobile!), "mobile_access_token": String(describing:user_mobile_access_token!),
                                      "update_preferences": "true", "invest_change": investChange, "percent_to_invest": tempChangeCapValue,
                                      "how_often": howOften.rawValue, "cap": cap, "invest_on": investChange]
         if let account = selectedCoinbaseAccount {
@@ -282,19 +284,28 @@ class PreferencesViewController: UIViewController, MainNewStoryboardInstance {
     }
 
     private func updateCoinPair(coin1: CoinType, coin2: CoinType) {
+        print("update coin pair")
+        print(user_mobile_secret)
+        print(user_id_mobile)
+        print(user_mobile_access_token)
+        print(coin1.rawValue)
+        print(coin2.rawValue)
+
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
         let value = Int(distributionSlider.value)
         let parameters: [String: Any] = [
-            "mobile_secret" : user_mobile_secret,
-            "user_id_mobile" : user_id_mobile,
-            "mobile_access_token" : user_mobile_access_token,
+            "mobile_secret" : String(describing:user_mobile_secret!),
+            "user_id_mobile" : String(describing:user_id_mobile!),
+            "mobile_access_token" : String(describing:user_mobile_access_token!),
             "slider_value" : value,
             "left_side" : coin1.rawValue,
             "right_side" : coin2.rawValue
         ]
-        
+        print(coin1.rawValue)
+        print(coin2.rawValue)
+        print(value)
         SVProgressHUD.show(withStatus: "Updating Info")
         Alamofire.request("https://coinflashapp.com/coinflashuser5/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
             switch response.result{

@@ -13,6 +13,12 @@ import SVProgressHUD
 func showHUD() {
     SVProgressHUD.show()
 }
+
+func getRidOfSome(aString: String!) -> String {
+    let returnNoSome = String(describing: aString!)
+    return returnNoSome
+}
+
 func hideHUD() {
     SVProgressHUD.dismiss()
 }

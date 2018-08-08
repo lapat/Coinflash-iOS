@@ -76,7 +76,9 @@ class PortfolioViewController: UIViewController, MainNewStoryboardInstance {
         }
         isLoadingData = true
         MBProgressHUD.showAdded(to: self.view, animated: true)
-        handler.requestCoinFlashFeatchwallet(mobile_secret: user_mobile_secret, user_id_mobile: user_id_mobile, mobile_access_token: user_mobile_access_token) { [weak self] (success) in
+        let mobileSecret = String(describing: user_mobile_secret!)
+
+        handler.requestCoinFlashFeatchwallet(mobile_secret: mobileSecret, user_id_mobile: user_id_mobile, mobile_access_token: user_mobile_access_token) { [weak self] (success) in
             guard let strongSelf = self else { return }
             strongSelf.isLoadingData = false
             strongSelf.lastRefreshDate = Date()

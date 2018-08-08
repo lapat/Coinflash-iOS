@@ -38,7 +38,9 @@ class LinkAllDoneViewController: UIViewController, AuthenStoryboardInstance {
     }
 
     func getCoinFlashUserInfo(){
-        let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token]
+        let mobileSecret = String(describing: user_mobile_secret!)
+
+        let parameter: Parameters = ["mobile_secret": mobileSecret, "user_id_mobile": String(describing:user_id_mobile!), "mobile_access_token": String(describing:user_mobile_access_token!)]
         SVProgressHUD.show(withStatus: "Loading Account info")
         UIApplication.shared.beginIgnoringInteractionEvents()
         Alamofire.request("\(baseUrl)coinflashuser3/", method: HTTPMethod.post, parameters: parameter)

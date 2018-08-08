@@ -58,7 +58,9 @@ class InAppPurchaseVC: UIViewController, MainStoryboardInstance {
     
     func sendServerInAppPurchaseInfo(receipt: NSString){
         //SVProgressHUD.show(withStatus: "Finalizing Purchase")
-        let parameter = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token, "in_app_receipt": receipt] as [String : Any]
+        let mobileSecret = String(describing: user_mobile_secret!)
+
+        let parameter = ["mobile_secret": mobileSecret, "user_id_mobile": String(describing:user_id_mobile!), "mobile_access_token": String(describing:user_mobile_access_token!), "in_app_receipt": receipt] as [String : Any]
       //  print("=-------- START -------=")
       //  print(receipt)
       //  print("=-------- END -------=")

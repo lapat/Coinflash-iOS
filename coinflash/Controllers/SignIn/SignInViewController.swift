@@ -37,6 +37,7 @@ class SignInViewController: UIViewController, AuthenStoryboardInstance {
     
     fileprivate func goToLinkPages() {
         if HelperFunctions.isTOCAccepted() {
+            print("TOS ACCEPTED")
             AppDelegate.checkOnboardStatus()
         } else {
             let tocVC = TOCVC.storyboardInstance() as TOCVC
@@ -56,21 +57,34 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
     fileprivate func signInWithGoogle(user: GIDGoogleUser) {
         
         let header: HTTPHeaders = ["Content-Type": "application/x-www-form-urlencoded"]
-        let parameter: Parameters = ["id_token": user.authentication.idToken, "mobile_secret": user_mobile_secret]
-        print(user.authentication.idToken)
+        let idToken = String(describing: user.authentication.idToken!)
+        let mobileSecret = String(describing: user_mobile_secret!)
+        let parameter: Parameters = ["id_token": idToken, "mobile_secret": mobileSecret]
+        print("MOBILE SECRET")
+        print(mobileSecret)
+        print("idtoken")
+        print(idToken)
         showHUD()
         Alamofire.request("\(baseUrl)login2/", method: HTTPMethod.post, parameters: parameter, headers: header)
             .validate()
             .responseJSON { (response) in
                 switch response.result{
                 case .success:
+                    print("SUCCESS LOGIN GOOGLE")
+
                     hideHUD()
                     guard let data = response.result.value as? [String: Any], let _ = data["user_id_mobile"] as? String else {
+                        print("DAATA IS NULL")
                         return
                     }
+                    print("SAVING")
+
                     HelperFunctions.saveLoginInfo(userIdMobile: data["user_id_mobile"] as! String, mobileAccessToken: data["mobile_access_token"] as! String, onboardStatus: data["onboard_status"] as! String)
+                    print("GOING TO LINK PAGES")
+
                     self.goToLinkPages()
                 case .failure:
+                    print("FAILURE LOGIN GOOGLE")
                     hideHUD()
                 }
         }
@@ -103,7 +117,10 @@ extension SignInViewController {
     
     func requestFBLoginToServer(token: String){
         //let header: HTTPHeaders = ["content-type": "application/x-www-form-urlencoded"]
-        let parameter: Parameters = ["accessToken": token, "mobile_secret": user_mobile_secret]
+        print("token")
+        print(token)
+        let mobileSecret = String(describing: user_mobile_secret!)
+        let parameter: Parameters = ["accessToken": token, "mobile_secret": mobileSecret]
         SVProgressHUD.show()
         Alamofire.request("https://coinflashapp.com/Social/SignInFB", method: HTTPMethod.post, parameters: parameter)
             .responseJSON { (response) in

@@ -104,8 +104,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if handled {
             return handled
         }
-        if url.scheme == "com.coinbasepermittedcoinflash.apps.coinflash-12345678"{
-            CoinbaseOAuth.finishAuthentication(for: url, clientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", clientSecret: "c1206329ae9c879294696544da3406d83754a350c33920266279210389971278", completion: { (result, error) in
+        if url.scheme == "com.coinbasepermittedcoinflash1.apps.coinflash-999"{
+            CoinbaseOAuth.finishAuthentication(for: url, clientId: "fb8d49906184ea0934d6d60c05b2f336f94f93b30bf9708a1a77d0f7c7e10fc5", clientSecret: "fa28a4a8ca287761023e61d1c2c6e2fa47f37e0bb1f99c8da06edf31f93e62fa", completion: { (result, error) in
                 if error != nil {
                     // Could not authenticate.
                 } else {
@@ -237,17 +237,24 @@ extension AppDelegate {
     class func checkOnboardStatus() {
         guard let app = UIApplication.shared.delegate as? AppDelegate,
             let nav = app.window?.rootViewController as? UINavigationController else {
+                print("NULL NAV")
+
             return
         }
         let coinbaseLinked = HelperFunctions.isCoinbaseLoggedIn()
         let plaidLinked = HelperFunctions.isPlaidLoggedIn()
         if !coinbaseLinked {
+            print("NOT COINBASE LINKED")
+
             let vc = LinkAccountStartViewController.storyboardInstance() as LinkAccountStartViewController
             nav.viewControllers = [vc]
         } else if !plaidLinked {
+            print("NOT PLAID LINKED")
+
             let vc = LinkCardStartViewController.storyboardInstance() as LinkCardStartViewController
             nav.viewControllers = [vc]
         } else {
+            print("GOING TO MAIN PAGE")
             goToMainPage()
         }
     }

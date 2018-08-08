@@ -37,13 +37,22 @@ class LinkCoinbaseViewController: UIViewController, AuthenStoryboardInstance {
     }
     
     fileprivate func goToBankLinkingPage() {
-        let vc = LinkCardStartViewController.storyboardInstance() as LinkCardStartViewController
-        navigationController?.pushViewController(vc, animated: true)
+        print("goToBankLinkingPage")
+        if (!HelperFunctions.isPlaidLoggedIn()){
+          let vc = LinkCardStartViewController.storyboardInstance() as LinkCardStartViewController
+          navigationController?.pushViewController(vc, animated: true)
+        }else{
+            guard let app = UIApplication.shared.delegate as? AppDelegate else {
+            return
+            }
+            app.goToMainPage()
+        }
     }
+        
     
     fileprivate func startLinkingCoinbase() {
         (UIApplication.shared.delegate as! AppDelegate).processingBacklink = true
-        CoinbaseOAuth.startAuthentication(withClientId: "723e663bdd30aac0f9641160de28ce520e1a065853febbd9a9c983569753bcf3", scope: "wallet:user:email,wallet:user:read,wallet:buys:create,wallet:buys:read,wallet:payment-methods:read,wallet:accounts:read,wallet:addresses:read,wallet:transactions:send,wallet:transactions:send:bypass-2fa,wallet:addresses:create", redirectUri: "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", meta: ["send_limit_amount": "5.00", " send_limit_currency": "USD", "send_limit_period": "week"])
+        CoinbaseOAuth.startAuthentication(withClientId: "fb8d49906184ea0934d6d60c05b2f336f94f93b30bf9708a1a77d0f7c7e10fc5", scope: "wallet:user:email,wallet:user:read,wallet:buys:create,wallet:buys:read,wallet:payment-methods:read,wallet:accounts:read,wallet:addresses:read,wallet:transactions:send,wallet:addresses:create", redirectUri: "com.coinbasepermittedcoinflash1.apps.coinflash-999://coinbase-oauth", meta: ["send_limit_amount": "1.00", " send_limit_currency": "USD", "send_limit_period": "week"])
     }
     
     func coinBaseAuthenticationCompleted(withNotification notificaion: NSNotification){
@@ -62,8 +71,19 @@ class LinkCoinbaseViewController: UIViewController, AuthenStoryboardInstance {
     
     // MARK: - API
     func requestCoinbaseLinkAPIRequest(){
-        let parameter: Parameters = ["mobile_secret": user_mobile_secret, "user_id_mobile": user_id_mobile, "mobile_access_token": user_mobile_access_token,
-                                     "code": coinbaseInfoObject.accessToken, "redirect_url": "com.coinbasepermittedcoinflash.apps.coinflash-12345678://coinbase-oauth", "coinbase_refresh_access_token": coinbaseInfoObject.refreshToken]
+        let mobileSecret = String(describing: user_mobile_secret!)
+        print("user_id_mobile")
+        print(user_id_mobile)
+        print("user_mobile_secret")
+        print(user_mobile_secret)
+        print("coinbaseInfoObject.accessToken")
+        print(coinbaseInfoObject.accessToken)
+        print("coinbaseInfoObject.refreshToken")
+        print(coinbaseInfoObject.refreshToken)
+        print("user_mobile_access_token")
+        print(user_mobile_access_token)
+        let parameter: Parameters = ["mobile_secret": mobileSecret, "user_id_mobile": String(describing: user_id_mobile!), "mobile_access_token": String(describing: user_mobile_access_token!),
+                                     "code": String(describing: coinbaseInfoObject.accessToken!), "redirect_url": "com.coinbasepermittedcoinflash1.apps.coinflash-999://coinbase-oauth", "coinbase_refresh_access_token": String(describing: coinbaseInfoObject.refreshToken!)]
         SVProgressHUD.show(withStatus: "Linking Coinbase")
         UIApplication.shared.beginIgnoringInteractionEvents()
         Alamofire.request("\(baseUrl)auththirdparty3/", method: HTTPMethod.post, parameters: parameter)

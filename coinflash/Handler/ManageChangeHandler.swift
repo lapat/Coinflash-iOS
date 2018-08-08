@@ -28,9 +28,9 @@ class ManageChangeHandler {
             "Content-Type": "application/x-www-form-urlencoded"
         ]
         let parameters: [String: String] = [
-            "mobile_secret" : user_mobile_secret,
-            "user_id_mobile" : user_id_mobile,
-            "mobile_access_token" : user_mobile_access_token,
+            "mobile_secret" : String(describing:user_mobile_secret!),
+            "user_id_mobile" : String(describing:user_id_mobile!),
+            "mobile_access_token" : String(describing:user_mobile_access_token!),
             ]
         
         Alamofire.request("https://coinflashapp.com/coinflashuser5/", method: HTTPMethod.post, parameters: parameters,headers: headers).responseJSON { response in
